@@ -798,3 +798,27 @@ test-shader-normalmapped: $(OUT)/reriff-match $(OUT)/shader_normalmapped_ctor.bi
 
 test-recovered: test-shader-normalmapped
 .PHONY: test-shader-normalmapped
+
+$(OUT)/shader_fxaa_ctor.bin: native/shader_fxaa_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_fxaa_ctor.o
+	ld -m elf_i386 -Ttext=0x5794f0 -e original_shader_fxaa_ctor $(OUT)/shader_fxaa_ctor.o -o $(OUT)/shader_fxaa_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_fxaa_ctor.elf $@
+
+test-shader-fxaa: $(OUT)/reriff-match $(OUT)/shader_fxaa_ctor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-fxaa-ctor $(OUT)/shader_fxaa_ctor.bin $(OUT)/shader-fxaa-ctor-comparison.json
+
+test-recovered: test-shader-fxaa
+.PHONY: test-shader-fxaa
+
+$(OUT)/shader_glass_ctor.bin: native/shader_glass_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_glass_ctor.o
+	ld -m elf_i386 -Ttext=0x579860 -e original_shader_glass_ctor $(OUT)/shader_glass_ctor.o -o $(OUT)/shader_glass_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_glass_ctor.elf $@
+
+test-shader-glass: $(OUT)/reriff-match $(OUT)/shader_glass_ctor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-glass-ctor $(OUT)/shader_glass_ctor.bin $(OUT)/shader-glass-ctor-comparison.json
+
+test-recovered: test-shader-glass
+.PHONY: test-shader-glass
