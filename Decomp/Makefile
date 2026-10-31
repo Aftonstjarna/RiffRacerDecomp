@@ -774,3 +774,15 @@ test-shader-depth-glass: $(OUT)/reriff-match $(OUT)/shader_depthwrite_ctor.bin $
 
 test-recovered: test-shader-depth-glass
 .PHONY: test-shader-depth-glass
+
+$(OUT)/shader_drift_ctor.bin: native/shader_drift_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_drift_ctor.o
+	ld -m elf_i386 -Ttext=0x5788c0 -e original_shader_drift_ctor $(OUT)/shader_drift_ctor.o -o $(OUT)/shader_drift_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_drift_ctor.elf $@
+
+test-shader-drift: $(OUT)/reriff-match $(OUT)/shader_drift_ctor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-drift-ctor $(OUT)/shader_drift_ctor.bin $(OUT)/shader-drift-ctor-comparison.json
+
+test-recovered: test-shader-drift
+.PHONY: test-shader-drift

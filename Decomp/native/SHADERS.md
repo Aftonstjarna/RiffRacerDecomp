@@ -248,3 +248,44 @@ in EAX. Same-address Ghidra exports and original instruction listings establish
 contiguous ranges; no data tables or trailing padding are included. Each is
 assembled and compared independently; external handlers, vtables, shader data
 and strings are dependencies rather than newly credited bytes.
+
+## Drift shader constructor
+
+`shader_drift_ctor.S` reconstructs VA `[0x005788C0,0x00578955)` (149 bytes),
+RVA `0x1788C0`, file offset `0x177CC0`. Provenance: existing research export
+`analysis/ghidra/recovery/005788c0.txt` (body through `0x00578954`), checked
+instruction by instruction against GNU objdump of the supported original
+Game.exe, SHA-256
+`2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2`.
+The following INT3 padding is excluded. No embedded data or alternate tails
+occur in this range. Ghidra identifies the vtable as `wsShaderDrift`.
+
+The exact ABI is ECX object input, EAX object return, ESI/EBP preservation,
+and `ret 4`, consuming one unused caller stack argument. The finalizer at
+`0x0053158E` pushes ECX before calling it at `0x00531591`; the inferred
+Ghidra fastcall prototype omits this stack slot. The constructor passes `0xE0`
+to Basic2d construction at `0x0052CA50`, then installs vtable `0x00A01734`.
+It calls slot `+0x24` on each interface at object `+0x10` and `+0x14`, with
+explicit stack arguments `(interface, 0, 0x00A0178C)`, storing results at
+`+0x15C` and `+0x160`. Original .rdata confirms that address contains the
+NUL-terminated name `driftIconParams`. It calls memset at `0x008F8D7E` to
+zero 64 bytes at object `+0x164`, with caller stack cleanup.
+
+Exception setup is retained exactly: initial state -1, handler `0x00905468`,
+saved FS:[0], encoded cookie using `0x00BAABC0 ^ EBP`, and saved object at
+`[EBP-0x10]`. State becomes 0 only after Basic2d returns. Both virtual calls
+and memset remain under that state; normal return restores FS:[0]. No null
+checks, failure branches or speculative cleanup are added. The already
+recovered shared handler selects metadata `0x00B7D1E0` and dispatches to
+`0x008F8968`; metadata and dispatcher recovery remain open, so exact cleanup
+semantics beyond the preserved state/handler references are not claimed.
+
+Fixed-address GNU assembly/linking and `native-check` report 149 equal bytes,
+zero differences and zero masks. Fragment SHA-256:
+`c1b508dc554c24ef34d5af2f78dfb5ce55edb9510da403bd16ba72212fe98950`.
+`make -C Decomp OUT=../build/decomp-container coverage test-draft -j2` passed
+inside development from the assigned cloud worktree: all 82 fragments match,
+62,317 / 8,635,392 bytes (0.72164645%). No original binary bytes were embedded
+as source. This is fragment equality, not a complete PE rebuild or execution
+test. External vtable/string data, memset/runtime and unwind metadata receive
+no additional coverage credit.

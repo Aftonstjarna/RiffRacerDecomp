@@ -82,7 +82,8 @@ inline std::vector<NativeBlock> nativeBlocks() {
                      NativeBlock{"shader-carlights-ctor",0x176f00,313},
                      NativeBlock{"shader-sea-ctor",0x177320,533},
                      NativeBlock{"shader-depthwrite-ctor",0x177f00,327},
-                     NativeBlock{"shader-carglass-ctor",0x178350,407}};
+                     NativeBlock{"shader-carglass-ctor",0x178350,407},
+                     NativeBlock{"shader-drift-ctor",0x1788c0,149}};
 }
 inline NativeBlock nativeBlock(const std::string &name) {
   for (auto block : nativeBlocks())
