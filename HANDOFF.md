@@ -12,8 +12,7 @@ SHA-256: 2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2.
 Ghidra's inferred signature misses the unused stack argument. Preserved ECX
 object/EAX return, RET 4, ESI/EBP, FS:[0], cookie setup and state -1 to 0.
 
-Validation ran inside Distrobox development, working only in
-`/home/afton/.dev/RiffRacer-worktrees/cloud`:
+Validation ran inside a development Distrobox, from the recovery worktree root:
 
 ```
 make -C Decomp OUT=../build/decomp-container coverage test-draft -j2

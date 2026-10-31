@@ -12,10 +12,10 @@
   routine confirmations or small progress checkpoints; ask the user only for
   an unresolved error, missing input, or a decision that genuinely needs them.
 
-- Use the existing Distrobox container named `development` for development
-  commands and builds. Enter with `distrobox enter development -- ...` and work
-  in `/home/afton/.dev/RiffRacer`. Install any needed build packages inside that
-  container, not on the Bazzite host. Container verification outputs currently
+- Use a Distrobox development container for commands and builds, working
+  from the repository root. Examples use `distrobox enter development -- ...`;
+  substitute your container name. Install needed build packages inside the
+  container rather than on the host. Container verification outputs currently
   use `build/decomp-container`.
 
 - The user requires the original Windows decompilation to start from a 100%

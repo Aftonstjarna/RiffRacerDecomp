@@ -112,8 +112,7 @@ Import-table evidence resolves the four calls:
 ## Reproduce in the development container
 
 ```sh
-distrobox enter development -- bash -lc \
-  'cd /home/afton/.dev/RiffRacer && make -C Decomp OUT=../build/decomp-container all test-recovered -j2'
+distrobox enter development -- make -C "$PWD/Decomp" OUT=../build/decomp-container all test-recovered -j2
 ```
 
 The fixed-address link of `crt_entry.S` resolves only the two original targets;
