@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 63855,
-  "remaining_bytes": 8571537,
-  "verified_percent": 0.7394568770010672,
-  "registered_blocks": 85,
-  "exact_blocks": 85,
+  "verified_bytes": 63989,
+  "remaining_bytes": 8571403,
+  "verified_percent": 0.7410086305288747,
+  "registered_blocks": 87,
+  "exact_blocks": 87,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -452,6 +452,24 @@
       "byte_equal": true,
       "reference_sha256": "3256de7fb78dc0cf30e9585a4fd3a3d87dad3d3d0b10e01785c81de9ffa30f4d",
       "candidate_sha256": "3256de7fb78dc0cf30e9585a4fd3a3d87dad3d3d0b10e01785c81de9ffa30f4d"
+    },
+    {
+      "name": "save-device-dispose",
+      "file_offset": 1264496,
+      "size": 34,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "12ca4a36051d878985ed6e72eb2a2aa094dc30ea4a9030d1480c9121f42e2378",
+      "candidate_sha256": "12ca4a36051d878985ed6e72eb2a2aa094dc30ea4a9030d1480c9121f42e2378"
+    },
+    {
+      "name": "save-device-destruct",
+      "file_offset": 1264544,
+      "size": 100,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "65f8931277328b3ffd586a1de508926aaa849c940fb89c6346e77a337224ef98",
+      "candidate_sha256": "65f8931277328b3ffd586a1de508926aaa849c940fb89c6346e77a337224ef98"
     },
     {
       "name": "save-device-exists",

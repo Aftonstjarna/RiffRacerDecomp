@@ -34,6 +34,8 @@ inline std::vector<NativeBlock> nativeBlocks() {
                      NativeBlock{"load-graphics",0xa2460,474},
                      NativeBlock{"resize-resources",0x128f80,299},
                      NativeBlock{"save-graphics",0xa2640,394},
+                     NativeBlock{"save-device-dispose",0x135770,34},
+                     NativeBlock{"save-device-destruct",0x1357a0,100},
                      NativeBlock{"save-device-ctor",0x135710,81},
                      NativeBlock{"save-device-close",0x135c20,38},
                      NativeBlock{"save-device-delete",0x135cc0,189},

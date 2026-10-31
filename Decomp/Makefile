@@ -822,3 +822,21 @@ test-shader-glass: $(OUT)/reriff-match $(OUT)/shader_glass_ctor.bin
 
 test-recovered: test-shader-glass
 .PHONY: test-shader-glass
+
+$(OUT)/save_device_destruct.elf: native/save_device_destruct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/save_device_destruct.o
+	ld -m elf_i386 -e original_save_device_dispose --section-start=.save_device_dispose=0x00535770 --section-start=.save_device_destruct=0x005357A0 $(OUT)/save_device_destruct.o -o $@
+
+$(OUT)/save_device_dispose.bin: $(OUT)/save_device_destruct.elf
+	objcopy -O binary --only-section=.save_device_dispose $< $@
+
+$(OUT)/save_device_destruct.bin: $(OUT)/save_device_destruct.elf
+	objcopy -O binary --only-section=.save_device_destruct $< $@
+
+test-save-device-destruct: $(OUT)/reriff-match $(OUT)/save_device_dispose.bin $(OUT)/save_device_destruct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" save-device-dispose $(OUT)/save_device_dispose.bin $(OUT)/save-device-dispose-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" save-device-destruct $(OUT)/save_device_destruct.bin $(OUT)/save-device-destruct-comparison.json
+
+test-recovered: test-save-device-destruct
+.PHONY: test-save-device-destruct
