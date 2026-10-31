@@ -4,9 +4,9 @@ This repository tracks the original Windows Game.exe reconstruction separately
 from the ReRiff Linux port and server restoration work. The baseline objective
 is a source-built executable matching all 8,635,392 original bytes.
 
-Current verified source-built fragment coverage: **62,919 / 8,635,392 bytes
-(0.72861776%)**, across 83 registered fragments. No complete matching EXE has
-been produced. Extracted bytes and analysis output receive no reconstruction credit.
+The authoritative verified source-built fragment coverage is recorded in
+[verification/coverage.json](verification/coverage.json). No complete matching
+EXE has been produced. Extracted bytes and analysis output receive no reconstruction credit.
 
 Build and verify using the existing development Distrobox:
 
@@ -33,4 +33,7 @@ exports were copied locally for continuity; they are not matching source.
 The existing Ghidra database remains `/tmp/reriff-ghidra/ReRiffNative` inside
 development, and the export script now resolves this repository's paths.
 The previous workspace README is retained in `docs/previous-workspace-readme.md`.
-No remote or publication is configured by this setup.
+The canonical remote is https://github.com/Aftonstjarna/RiffRacerDecomp,
+with matching reconstruction on `decomp`. ReRiff server, launcher and native-port
+work remains in https://github.com/Aftonstjarna/ReRiff.
+The local repository and queue worktree paths remain unchanged.
