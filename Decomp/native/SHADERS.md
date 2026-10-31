@@ -289,3 +289,49 @@ inside development from the assigned cloud worktree: all 82 fragments match,
 as source. This is fragment equality, not a complete PE rebuild or execution
 test. External vtable/string data, memset/runtime and unwind metadata receive
 no additional coverage credit.
+
+## NormalMapped shader constructor
+
+`shader_normalmapped_ctor.S` recovers only VA `[0x005789C0,0x00578C1A)`,
+602 bytes (RVA 0x1789C0, file offset 0x177DC0). Evidence: existing Ghidra
+export `analysis/ghidra/recovery/005789c0.txt`, body ending inclusively at
+0x00578C19, and instruction-by-instruction review of original Game.exe GNU
+objdump output. Original SHA-256:
+`2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2`.
+The retained local listing is `build/decomp-container/normalmapped-original.asm`.
+All 132 instructions are contiguous; RET 12 at 0x578C17 ends the function.
+Following INT3 padding is excluded; there are no embedded tables or shared tails.
+The draft tool supplied mnemonic transcription, reviewed against those instructions
+and Ghidra; no extracted machine-code arrays are used as source.
+
+ABI: x86 thiscall, object in ECX, three DWORD stack arguments, object returned
+in EAX, callee pops 12 bytes. EBP, ESI and EDI are restored. Original caller
+0x531D9E pushes 0, 0x9FF3AC, 0x51, moves object to ECX and calls at 0x531DA9;
+this was separately checked against original instructions. Argument one indexes
+the manager at 0xBFCD04 with 16-byte stride; argument two goes to object +0x58,
+argument three to +0x0C. Base construction calls 0x5421B0 before derived writes.
+Vtable 0xA01808 is identified as wsShaderNormalMapped by Ghidra. Original ordered
+zero/float-one writes at +0x84..+0xC0 and manager accesses are preserved.
+Sixteen calls to parameter lookup 0x542340 retain original string addresses,
+interface selection and result offsets (+0x5C..+0x80, +0xF4..+0x108).
+The two byte fields +0x110/+0x111 test shader indices 0x53/0x5B respectively;
+common-parameter setup calls 0x542230 with ECX restored to the object.
+
+Exception paths preserve initial state -1, saved FS:[0], handler 0x905468,
+cookie 0xBAABC0 XOR EBP and saved object [EBP-0x10]. State becomes 0 after
+base construction and remains 0 through lookups/common setup. Normal exit
+restores FS:[0]. There are no local failure branches or invented cleanup paths.
+The already registered handler validates the cookie via 0x8F8958 and dispatches
+with metadata 0xB7D1E0 to 0x8F8968. Metadata and runtime unwinding remain
+unresolved dependencies; exact handler references/state are retained without
+claiming reconstructed cleanup semantics. Vtable, manager contents, strings,
+cookie/global layout and runtime are external and receive no new byte credit.
+
+Validation inside development from the assigned cloud worktree:
+`make -C Decomp OUT=../build/decomp-container coverage test-draft -j2`.
+The fixed-address GNU as/ld target at 0x5789C0 produces 602/602 equal bytes,
+zero differences/masks; SHA-256
+`94014251bf32480ae256c6af95b66fae1ac2a7c6fb91957a1fa1130cab73e7c1`.
+All 83 registered fragments and matching/IL/drafter regression checks pass:
+62,919 / 8,635,392 bytes (0.72861776%). This establishes fragment equality,
+not a complete source-built PE or runtime execution test.

@@ -786,3 +786,15 @@ test-shader-drift: $(OUT)/reriff-match $(OUT)/shader_drift_ctor.bin
 
 test-recovered: test-shader-drift
 .PHONY: test-shader-drift
+
+$(OUT)/shader_normalmapped_ctor.bin: native/shader_normalmapped_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_normalmapped_ctor.o
+	ld -m elf_i386 -Ttext=0x5789c0 -e original_shader_normalmapped_ctor $(OUT)/shader_normalmapped_ctor.o -o $(OUT)/shader_normalmapped_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_normalmapped_ctor.elf $@
+
+test-shader-normalmapped: $(OUT)/reriff-match $(OUT)/shader_normalmapped_ctor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-normalmapped-ctor $(OUT)/shader_normalmapped_ctor.bin $(OUT)/shader-normalmapped-ctor-comparison.json
+
+test-recovered: test-shader-normalmapped
+.PHONY: test-shader-normalmapped

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 62317,
-  "remaining_bytes": 8573075,
-  "verified_percent": 0.7216464521819044,
-  "registered_blocks": 82,
-  "exact_blocks": 82,
+  "verified_bytes": 62919,
+  "remaining_bytes": 8572473,
+  "verified_percent": 0.7286177628068303,
+  "registered_blocks": 83,
+  "exact_blocks": 83,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -623,6 +623,15 @@
       "byte_equal": true,
       "reference_sha256": "c1b508dc554c24ef34d5af2f78dfb5ce55edb9510da403bd16ba72212fe98950",
       "candidate_sha256": "c1b508dc554c24ef34d5af2f78dfb5ce55edb9510da403bd16ba72212fe98950"
+    },
+    {
+      "name": "shader-normalmapped-ctor",
+      "file_offset": 1539520,
+      "size": 602,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "94014251bf32480ae256c6af95b66fae1ac2a7c6fb91957a1fa1130cab73e7c1",
+      "candidate_sha256": "94014251bf32480ae256c6af95b66fae1ac2a7c6fb91957a1fa1130cab73e7c1"
     },
     {
       "name": "object-5cfb10",
