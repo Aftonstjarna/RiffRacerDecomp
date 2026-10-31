@@ -1,0 +1,8 @@
+/build/
+/analysis/
+*.exe
+*.dll
+*.log
+*.o
+*.elf
+*.bin
