@@ -859,3 +859,15 @@ test-path-composition: $(OUT)/reriff-match $(OUT)/path_compose.bin $(OUT)/wide_p
 
 test-recovered: test-path-composition
 .PHONY: test-path-composition
+
+$(OUT)/runtime_fp_convert.bin: native/runtime_fp_convert.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/runtime_fp_convert.o
+	ld -m elf_i386 -Ttext=0x008f9320 -e original_runtime_fp_convert $(OUT)/runtime_fp_convert.o -o $(OUT)/runtime_fp_convert.elf
+	objcopy -O binary --only-section=.text $(OUT)/runtime_fp_convert.elf $@
+
+test-runtime-fp-convert: $(OUT)/reriff-match $(OUT)/runtime_fp_convert.bin
+	$(OUT)/reriff-match native-check "$(GAME)" runtime-fp-convert $(OUT)/runtime_fp_convert.bin $(OUT)/runtime-fp-convert-comparison.json
+
+test-recovered: test-runtime-fp-convert
+.PHONY: test-runtime-fp-convert
