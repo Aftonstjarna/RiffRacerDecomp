@@ -133,3 +133,32 @@ jumps through IAT 0x92D4C4 to __CxxFrameHandler3. Unwind metadata is not credite
 Both files are mnemonic assembly drafted from contiguous original instruction
 ranges and reviewed against Ghidra exports. No data blobs, masks or external
 helper bodies are counted as reconstructed code by these additions.
+
+## Shared base initialization and name lookup
+
+`shader_base_ctor.S` covers [0x5421B0,0x542222), 114 bytes. It installs the
+wsShader vtable at 0x9FE7E0 and returns ECX in EAX. It clears only the DWORDs
+at offsets 0x0C through 0x38 inclusive, plus 0x44, 0x50 and 0x54. The remaining
+fields are not initialized here; replacing this with whole-object zeroing would
+change original behavior.
+
+`shader_parameter_lookup.S` covers [0x542340,0x5423D5), 149 bytes. Two stack
+arguments supply the constant table and requested name; RET 8 removes them.
+A null table or nonzero return from vtable offset 0x14 returns zero. Otherwise
+it enumerates the reported constant count through vtable offset 0x20 with a
+null parent, skips null handles, and obtains one descriptor through offset
+0x18. It does not check that descriptor call's return status. Its inlined,
+case-sensitive byte comparison examines two characters per loop, terminates
+at NUL, and returns the first matching handle; exhaustion returns zero. The
+reconstruction preserves original assumptions about valid name/descriptor
+pointers and does not add defensive behavior absent from the executable.
+
+`shader_basic2d_handler.S` covers [0x905468,0x905483), 27 bytes. It derives the
+cookie from [EDX-0x10] XOR (EDX+0x0C), calls 0x8F8958, loads the original
+metadata pointer 0xB7D1E0, and tail-jumps to 0x8F8968. This differs from the
+finalizer handler's cookie displacement and metadata; those differences are
+preserved. The referenced unwind metadata is still unresolved and uncredited.
+
+All three ranges are contiguous instruction bodies with no embedded tables;
+trailing alignment is excluded. Evidence: same-address Ghidra exports and
+original objdump listings, followed by assembly and unmasked native-check.

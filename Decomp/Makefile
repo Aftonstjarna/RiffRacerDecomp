@@ -679,3 +679,29 @@ test-shader-dependencies: $(OUT)/reriff-match $(OUT)/shader_basic2d_ctor.bin $(O
 
 test-recovered: test-shader-dependencies
 .PHONY: test-shader-dependencies
+
+$(OUT)/shader_base_ctor.bin: native/shader_base_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_base_ctor.o
+	ld -m elf_i386 -Ttext=0x5421b0 -e original_shader_base_ctor $(OUT)/shader_base_ctor.o -o $(OUT)/shader_base_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_base_ctor.elf $@
+
+$(OUT)/shader_parameter_lookup.bin: native/shader_parameter_lookup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_parameter_lookup.o
+	ld -m elf_i386 -Ttext=0x542340 -e original_shader_parameter_lookup $(OUT)/shader_parameter_lookup.o -o $(OUT)/shader_parameter_lookup.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_parameter_lookup.elf $@
+
+$(OUT)/shader_basic2d_handler.bin: native/shader_basic2d_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_basic2d_handler.o
+	ld -m elf_i386 -Ttext=0x905468 -e original_shader_basic2d_handler $(OUT)/shader_basic2d_handler.o -o $(OUT)/shader_basic2d_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_basic2d_handler.elf $@
+
+test-shader-base: $(OUT)/reriff-match $(OUT)/shader_base_ctor.bin $(OUT)/shader_parameter_lookup.bin $(OUT)/shader_basic2d_handler.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-base-ctor $(OUT)/shader_base_ctor.bin $(OUT)/shader-base-ctor-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" shader-parameter-lookup $(OUT)/shader_parameter_lookup.bin $(OUT)/shader-parameter-lookup-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" shader-basic2d-handler $(OUT)/shader_basic2d_handler.bin $(OUT)/shader-basic2d-handler-comparison.json
+
+test-recovered: test-shader-base
+.PHONY: test-shader-base

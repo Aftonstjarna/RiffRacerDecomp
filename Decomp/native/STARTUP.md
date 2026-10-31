@@ -180,3 +180,9 @@ fragments. Matching-verifier and assembly-drafter tests pass. Next dependencies:
 base shader constructor 0x5421B0, parameter helper 0x542340, constructor handler
 0x905468, and original unwind metadata. The shared cookie check was already
 recovered and has not been counted again.
+
+Base shader initialization, constant-name lookup and the Basic2d exception
+thunk now add 290 matching bytes. All 74 fragments match: 59,808 / 8,635,392
+bytes (0.69259160%). Verifier and drafter tests pass. Original unwind metadata,
+shared handler dispatch and the remaining derived shader constructors remain
+open; the next adjacent constructor/helper to inspect is 0x00542230.

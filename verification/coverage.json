@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 59518,
-  "remaining_bytes": 8575874,
-  "verified_percent": 0.6892333318510613,
-  "registered_blocks": 71,
-  "exact_blocks": 71,
+  "verified_bytes": 59808,
+  "remaining_bytes": 8575584,
+  "verified_percent": 0.6925916044112416,
+  "registered_blocks": 74,
+  "exact_blocks": 74,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -526,6 +526,24 @@
       "candidate_sha256": "0e723183ac027a2341306359fc6ebd16cfb6905ca20e71fa2e81cb687fe9b6e8"
     },
     {
+      "name": "shader-base-ctor",
+      "file_offset": 1316272,
+      "size": 114,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54",
+      "candidate_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54"
+    },
+    {
+      "name": "shader-parameter-lookup",
+      "file_offset": 1316672,
+      "size": 149,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "e79a234e1adda80e130c14c0a268d94798e2214e6ef9d950e946e3a2dbbbbb68",
+      "candidate_sha256": "e79a234e1adda80e130c14c0a268d94798e2214e6ef9d950e946e3a2dbbbbb68"
+    },
+    {
       "name": "buffer-allocate",
       "file_offset": 1318304,
       "size": 155,
@@ -632,6 +650,15 @@
       "byte_equal": true,
       "reference_sha256": "2f52b9d543812194b296dbad695ae0351408ee32037dc98387764deb1fe96499",
       "candidate_sha256": "2f52b9d543812194b296dbad695ae0351408ee32037dc98387764deb1fe96499"
+    },
+    {
+      "name": "shader-basic2d-handler",
+      "file_offset": 5261416,
+      "size": 27,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "c2cd6ada98f600e834aaf4cf2b24eb129b44f95a03b8757c36c5a1831280d6bd",
+      "candidate_sha256": "c2cd6ada98f600e834aaf4cf2b24eb129b44f95a03b8757c36c5a1831280d6bd"
     },
     {
       "name": "shader-finalize-handler",
