@@ -161,3 +161,15 @@ bytes from symbolic assembly. See [shader recovery](SHADERS.md) for creation
 ordering, failure accumulation, cleanup and provenance. Verified fragment
 coverage is now 37,061 / 8,635,392 bytes (0.42917565%), across 65 fragments.
 Shader data and callees are not included in this new coverage.
+
+Shader creation, release and callback-table cleanup now add 410 verified bytes.
+All 68 registered fragments match: 37,471 / 8,635,392 bytes (0.43392356%).
+The source and failure-path review are documented in SHADERS.md. The large
+success finalizer at 0x00530200 is the next unresolved shader lifetime stage;
+its Ghidra export includes discontiguous ranges that need instruction review.
+
+The 0x00530200 finalizer body now matches all 21,553 bytes, including internal
+alignment and exception frame setup. Coverage is 59,024 / 8,635,392 bytes
+(0.68351269%), across 69 fragments. Next unresolved dependencies include the
+handler at 0x00906264, unwind metadata at 0x00B7D300 and the object constructors.
+See SHADERS.md for boundaries, table initialization and validation evidence.

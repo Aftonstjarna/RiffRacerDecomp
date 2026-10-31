@@ -622,3 +622,41 @@ test-shader-setup: $(OUT)/reriff-match $(OUT)/shader_setup.bin
 
 test-recovered: test-shader-setup
 .PHONY: test-shader-setup
+
+$(OUT)/shader_pair_create.bin: native/shader_pair_create.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_pair_create.o
+	ld -m elf_i386 -Ttext=0x52d840 -e original_shader_pair_create $(OUT)/shader_pair_create.o -o $(OUT)/shader_pair_create.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_pair_create.elf $@
+
+$(OUT)/shader_release.bin: native/shader_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_release.o
+	ld -m elf_i386 -Ttext=0x52f4c0 -e original_shader_release $(OUT)/shader_release.o -o $(OUT)/shader_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_release.elf $@
+
+$(OUT)/shader_binding_cleanup.bin: native/shader_binding_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_binding_cleanup.o
+	ld -m elf_i386 -Ttext=0x52f5b0 -e original_shader_binding_cleanup $(OUT)/shader_binding_cleanup.o -o $(OUT)/shader_binding_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_binding_cleanup.elf $@
+
+test-shader-lifetime: $(OUT)/reriff-match $(OUT)/shader_pair_create.bin $(OUT)/shader_release.bin $(OUT)/shader_binding_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-pair-create $(OUT)/shader_pair_create.bin $(OUT)/shader-pair-create-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" shader-release $(OUT)/shader_release.bin $(OUT)/shader-release-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" shader-binding-cleanup $(OUT)/shader_binding_cleanup.bin $(OUT)/shader-binding-cleanup-comparison.json
+
+test-recovered: test-shader-lifetime
+.PHONY: test-shader-lifetime
+
+$(OUT)/shader_finalize.bin: native/shader_finalize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_finalize.o
+	ld -m elf_i386 -Ttext=0x530200 -e original_shader_finalize $(OUT)/shader_finalize.o -o $(OUT)/shader_finalize.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_finalize.elf $@
+
+test-shader-finalize: $(OUT)/reriff-match $(OUT)/shader_finalize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-finalize $(OUT)/shader_finalize.bin $(OUT)/shader-finalize-comparison.json
+
+test-recovered: test-shader-finalize
+.PHONY: test-shader-finalize

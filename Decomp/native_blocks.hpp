@@ -66,7 +66,11 @@ inline std::vector<NativeBlock> nativeBlocks() {
                      NativeBlock{"graphics-options",0xa27d0,502},
                      NativeBlock{"minimum-caps",0xa59e0,281},
                      NativeBlock{"display-modes",0xa29d0,520},
-                     NativeBlock{"shader-setup",0x12db30,6539}};
+                     NativeBlock{"shader-setup",0x12db30,6539},
+                     NativeBlock{"shader-pair-create",0x12d840,189},
+                     NativeBlock{"shader-release",0x12f4c0,154},
+                     NativeBlock{"shader-binding-cleanup",0x12f5b0,67},
+                     NativeBlock{"shader-finalize",0x130200,21553}};
 }
 inline NativeBlock nativeBlock(const std::string &name) {
   for (auto block : nativeBlocks())

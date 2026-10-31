@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 37061,
-  "remaining_bytes": 8598331,
-  "verified_percent": 0.4291756529408277,
-  "registered_blocks": 65,
-  "exact_blocks": 65,
+  "verified_bytes": 59024,
+  "remaining_bytes": 8576368,
+  "verified_percent": 0.6835126882485474,
+  "registered_blocks": 69,
+  "exact_blocks": 69,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -391,6 +391,15 @@
       "candidate_sha256": "d69af9c1955a683325732e23b08f91b2b916472598fee17f4d85ce01bfc54fd3"
     },
     {
+      "name": "shader-pair-create",
+      "file_offset": 1231936,
+      "size": 189,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "411bdc1471fdce31b7a16ea7776aaf989bd8c960dee4f97c5333840bbeba6e36",
+      "candidate_sha256": "411bdc1471fdce31b7a16ea7776aaf989bd8c960dee4f97c5333840bbeba6e36"
+    },
+    {
       "name": "shader-setup",
       "file_offset": 1232688,
       "size": 6539,
@@ -398,6 +407,33 @@
       "byte_equal": true,
       "reference_sha256": "9b758e4115b324ecef8cdd5fe469353df0ad9469755b556485db6cadf9bfcbfa",
       "candidate_sha256": "9b758e4115b324ecef8cdd5fe469353df0ad9469755b556485db6cadf9bfcbfa"
+    },
+    {
+      "name": "shader-release",
+      "file_offset": 1239232,
+      "size": 154,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "8521b73c6708ed2b9f079cdda2e7cfdd84ed16b00d335046b771a47ea48b199e",
+      "candidate_sha256": "8521b73c6708ed2b9f079cdda2e7cfdd84ed16b00d335046b771a47ea48b199e"
+    },
+    {
+      "name": "shader-binding-cleanup",
+      "file_offset": 1239472,
+      "size": 67,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "18c1496f730c968d61f550d68c6fc59c3ea6f74d8a5c706e39ad0e71674b5786",
+      "candidate_sha256": "18c1496f730c968d61f550d68c6fc59c3ea6f74d8a5c706e39ad0e71674b5786"
+    },
+    {
+      "name": "shader-finalize",
+      "file_offset": 1242624,
+      "size": 21553,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "cc7c3bdfe3311b8a93904991dd0f2f0d3ae09b6e671f167e423293d82e0f60f8",
+      "candidate_sha256": "cc7c3bdfe3311b8a93904991dd0f2f0d3ae09b6e671f167e423293d82e0f60f8"
     },
     {
       "name": "save-device-ctor",
