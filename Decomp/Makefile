@@ -610,3 +610,15 @@ test-capability-helpers: $(OUT)/reriff-match $(OUT)/minimum_caps.bin $(OUT)/disp
 
 test-recovered: test-capability-helpers
 .PHONY: test-capability-helpers
+
+$(OUT)/shader_setup.bin: native/shader_setup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_setup.o
+	ld -m elf_i386 -Ttext=0x52db30 -e original_shader_setup $(OUT)/shader_setup.o -o $(OUT)/shader_setup.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_setup.elf $@
+
+test-shader-setup: $(OUT)/reriff-match $(OUT)/shader_setup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-setup $(OUT)/shader_setup.bin $(OUT)/shader-setup-comparison.json
+
+test-recovered: test-shader-setup
+.PHONY: test-shader-setup

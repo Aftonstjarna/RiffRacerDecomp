@@ -153,3 +153,11 @@ No assembled block was executed as a substitute Windows runtime in these tests;
 the validation is exact byte comparison of source-generated fragments. A full
 PE build, relocations and original source/toolchain reconstruction remain open.
 DLL modifications for the working sync server are outside this EXE reconstruction.
+
+## Shader initialization recovery
+
+The graphics-startup shader initialization at 0x0052DB30 now matches all 6,539
+bytes from symbolic assembly. See [shader recovery](SHADERS.md) for creation
+ordering, failure accumulation, cleanup and provenance. Verified fragment
+coverage is now 37,061 / 8,635,392 bytes (0.42917565%), across 65 fragments.
+Shader data and callees are not included in this new coverage.

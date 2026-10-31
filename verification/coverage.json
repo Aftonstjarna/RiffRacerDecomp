@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 30522,
-  "remaining_bytes": 8604870,
-  "verified_percent": 0.353452396833867,
-  "registered_blocks": 64,
-  "exact_blocks": 64,
+  "verified_bytes": 37061,
+  "remaining_bytes": 8598331,
+  "verified_percent": 0.4291756529408277,
+  "registered_blocks": 65,
+  "exact_blocks": 65,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -389,6 +389,15 @@
       "byte_equal": true,
       "reference_sha256": "d69af9c1955a683325732e23b08f91b2b916472598fee17f4d85ce01bfc54fd3",
       "candidate_sha256": "d69af9c1955a683325732e23b08f91b2b916472598fee17f4d85ce01bfc54fd3"
+    },
+    {
+      "name": "shader-setup",
+      "file_offset": 1232688,
+      "size": 6539,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "9b758e4115b324ecef8cdd5fe469353df0ad9469755b556485db6cadf9bfcbfa",
+      "candidate_sha256": "9b758e4115b324ecef8cdd5fe469353df0ad9469755b556485db6cadf9bfcbfa"
     },
     {
       "name": "save-device-ctor",
