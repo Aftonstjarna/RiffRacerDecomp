@@ -871,3 +871,22 @@ test-runtime-fp-convert: $(OUT)/reriff-match $(OUT)/runtime_fp_convert.bin
 
 test-recovered: test-runtime-fp-convert
 .PHONY: test-runtime-fp-convert
+
+$(OUT)/wide_append_substring.bin: native/wide_append_substring.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_append_substring.o
+	ld -m elf_i386 -Ttext=0x5360b0 -e original_wide_append_substring $(OUT)/wide_append_substring.o -o $(OUT)/wide_append_substring.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_append_substring.elf $@
+
+$(OUT)/wide_append_pointer.bin: native/wide_append_pointer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_append_pointer.o
+	ld -m elf_i386 -Ttext=0x536160 -e original_wide_append_pointer $(OUT)/wide_append_pointer.o -o $(OUT)/wide_append_pointer.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_append_pointer.elf $@
+
+test-wide-append: $(OUT)/reriff-match $(OUT)/wide_append_substring.bin $(OUT)/wide_append_pointer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-append-substring $(OUT)/wide_append_substring.bin $(OUT)/wide-append-substring-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-append-pointer $(OUT)/wide_append_pointer.bin $(OUT)/wide-append-pointer-comparison.json
+
+test-recovered: test-wide-append
+.PHONY: test-wide-append

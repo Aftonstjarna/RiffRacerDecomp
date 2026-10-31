@@ -3,7 +3,9 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"runtime-fp-convert",0x4f9320,171},
+  return {NativeBlock{"wide-append-substring",0x1360b0,161},
+                     NativeBlock{"wide-append-pointer",0x136160,192},
+                     NativeBlock{"runtime-fp-convert",0x4f9320,171},
                      NativeBlock{"security-cookie",0x4f9b78,156},
                      NativeBlock{"crt-entry",0x4f8a84,10},
                      NativeBlock{"crt-startup",0x4f8a8e,436},
