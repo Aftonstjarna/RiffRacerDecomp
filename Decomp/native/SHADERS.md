@@ -187,3 +187,27 @@ The constructor preserves the FS:[0] frame and uses the already recovered
 unwind metadata or vtable. Both functions were reviewed against same-address
 Ghidra exports and original disassembly; no embedded data or external shared
 tails lie inside the registered ranges. Trailing padding is excluded.
+
+## ShadowDraw and CarLights constructors
+
+`shader_shadowdraw_ctor.S` covers [0x576C20,0x576CE0), 192 bytes. Ghidra
+identifies wsShaderShadowDraw at vtable 0xA013D8. Following base initialization,
+it clears offsets 0x64 and 0x68, stores its argument at 0x6C, and selects shader
+pointers using argument*16 and the global manager at 0xBFCD04. It resolves
+matWorldViewProj into 0x58 and texelOffset from both vertex/pixel constant tables
+into 0x5C/0x60, then invokes common parameter binding.
+
+`shader_carlights_ctor.S` covers [0x576F00,0x577039), 313 bytes. Its original
+wsShaderCarLights vtable is 0xA0145C. It stores the argument at 0xA0 but always
+selects the manager's shader pointers at 0x8E8, 0x8F0, 0x8EC and 0x8F4. The
+argument is not a shader index here. Fields 0x60, 0x74, 0x88 and 0x9C receive
+float 1.0 (0x3F800000), with the intervening twelve specified DWORDs cleared.
+Direct constant-table virtual calls at slot 0x24 bind matWorldViewProj and
+lightColour into 0x58/0x5C. These direct calls are preserved rather than replaced
+with the enumeration helper. Common parameter binding follows.
+
+Both constructors return the original object in EAX, use RET 4, preserve ESI,
+and install/restore FS:[0] using the shared 0x905468 handler. Same-address
+Ghidra exports were checked against original objdump listings before assembly.
+The registered spans contain contiguous instructions and exclude trailing
+padding. Vtables, strings, shader data and unwind metadata are not credited.

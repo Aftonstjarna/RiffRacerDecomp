@@ -191,3 +191,8 @@ Common shader parameter binding and DrawPrim construction now add 588 matching
 bytes. All 76 fragments match: 60,396 / 8,635,392 bytes (0.69940079%). Verifier
 and drafter tests pass. Remaining derived constructors in the finalizer include
 0x00576C20 and 0x00576F00; unwind metadata and original shader data remain open.
+
+ShadowDraw and CarLights constructors add 505 exact bytes. All 78 fragments
+match: 60,901 / 8,635,392 bytes (0.70524882%). Matching-verifier and assembly
+drafter tests pass. Next finalizer constructor dependencies include 0x577320,
+0x577F00 and 0x578350. Shared unwind metadata and shader/vtable data remain open.

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 60396,
-  "remaining_bytes": 8574996,
-  "verified_percent": 0.6994007915332622,
-  "registered_blocks": 76,
-  "exact_blocks": 76,
+  "verified_bytes": 60901,
+  "remaining_bytes": 8574491,
+  "verified_percent": 0.7052488178880588,
+  "registered_blocks": 78,
+  "exact_blocks": 78,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -569,6 +569,24 @@
       "byte_equal": true,
       "reference_sha256": "d9da646c6196338b9e46cb6b94d249816c8a6bd3a752d92b406005109ce9eaac",
       "candidate_sha256": "d9da646c6196338b9e46cb6b94d249816c8a6bd3a752d92b406005109ce9eaac"
+    },
+    {
+      "name": "shader-shadowdraw-ctor",
+      "file_offset": 1531936,
+      "size": 192,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "9d96a49e104c81d1c251d7d19d94fc5cb7094d223b70358bab2a5149057e14fa",
+      "candidate_sha256": "9d96a49e104c81d1c251d7d19d94fc5cb7094d223b70358bab2a5149057e14fa"
+    },
+    {
+      "name": "shader-carlights-ctor",
+      "file_offset": 1532672,
+      "size": 313,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "30f3e600affda6abbd9ad47d6e4139d46ee2a18e5643d578628ddf8e8ff641d1",
+      "candidate_sha256": "30f3e600affda6abbd9ad47d6e4139d46ee2a18e5643d578628ddf8e8ff641d1"
     },
     {
       "name": "object-5cfb10",

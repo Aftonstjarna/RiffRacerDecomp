@@ -724,3 +724,22 @@ test-shader-drawprim: $(OUT)/reriff-match $(OUT)/shader_common_parameters.bin $(
 
 test-recovered: test-shader-drawprim
 .PHONY: test-shader-drawprim
+
+$(OUT)/shader_shadowdraw_ctor.bin: native/shader_shadowdraw_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_shadowdraw_ctor.o
+	ld -m elf_i386 -Ttext=0x576c20 -e original_shader_shadowdraw_ctor $(OUT)/shader_shadowdraw_ctor.o -o $(OUT)/shader_shadowdraw_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_shadowdraw_ctor.elf $@
+
+$(OUT)/shader_carlights_ctor.bin: native/shader_carlights_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_carlights_ctor.o
+	ld -m elf_i386 -Ttext=0x576f00 -e original_shader_carlights_ctor $(OUT)/shader_carlights_ctor.o -o $(OUT)/shader_carlights_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_carlights_ctor.elf $@
+
+test-shader-shadow-lights: $(OUT)/reriff-match $(OUT)/shader_shadowdraw_ctor.bin $(OUT)/shader_carlights_ctor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-shadowdraw-ctor $(OUT)/shader_shadowdraw_ctor.bin $(OUT)/shader-shadowdraw-ctor-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" shader-carlights-ctor $(OUT)/shader_carlights_ctor.bin $(OUT)/shader-carlights-ctor-comparison.json
+
+test-recovered: test-shader-shadow-lights
+.PHONY: test-shader-shadow-lights

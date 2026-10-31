@@ -77,7 +77,9 @@ inline std::vector<NativeBlock> nativeBlocks() {
                      NativeBlock{"shader-parameter-lookup",0x142340,149},
                      NativeBlock{"shader-basic2d-handler",0x505468,27},
                      NativeBlock{"shader-common-parameters",0x142230,261},
-                     NativeBlock{"shader-drawprim-ctor",0x1675a0,327}};
+                     NativeBlock{"shader-drawprim-ctor",0x1675a0,327},
+                     NativeBlock{"shader-shadowdraw-ctor",0x176c20,192},
+                     NativeBlock{"shader-carlights-ctor",0x176f00,313}};
 }
 inline NativeBlock nativeBlock(const std::string &name) {
   for (auto block : nativeBlocks())
