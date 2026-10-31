@@ -1,7 +1,7 @@
 # Riff Racer original EXE reconstruction
 
 This repository tracks the original Windows Game.exe reconstruction separately
-from the ReRiff Linux port and server restoration work. The baseline objective
+from port and server restoration work. The baseline objective
 is a source-built executable matching all 8,635,392 original bytes.
 
 The authoritative verified source-built fragment coverage is recorded in
