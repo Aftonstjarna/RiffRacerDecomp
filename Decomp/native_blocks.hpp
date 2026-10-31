@@ -45,6 +45,8 @@ inline std::vector<NativeBlock> nativeBlocks() {
                      NativeBlock{"save-device-exists",0x135810,212},
                      NativeBlock{"save-device-create",0x1358f0,533},
                      NativeBlock{"save-device-size",0x135c50,99},
+                     NativeBlock{"path-compose",0x136220,42},
+                     NativeBlock{"wide-prepend",0x136250,205},
                      NativeBlock{"application-worker",0x1282e0,1611},
                      NativeBlock{"worker-queue",0x128930,417},
                      NativeBlock{"application-frame",0xa0af0,3441},

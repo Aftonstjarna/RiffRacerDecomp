@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 63989,
-  "remaining_bytes": 8571403,
-  "verified_percent": 0.7410086305288747,
-  "registered_blocks": 87,
-  "exact_blocks": 87,
+  "verified_bytes": 64236,
+  "remaining_bytes": 8571156,
+  "verified_percent": 0.7438689523301316,
+  "registered_blocks": 89,
+  "exact_blocks": 89,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -542,6 +542,24 @@
       "byte_equal": true,
       "reference_sha256": "0e723183ac027a2341306359fc6ebd16cfb6905ca20e71fa2e81cb687fe9b6e8",
       "candidate_sha256": "0e723183ac027a2341306359fc6ebd16cfb6905ca20e71fa2e81cb687fe9b6e8"
+    },
+    {
+      "name": "path-compose",
+      "file_offset": 1267232,
+      "size": 42,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f240b6e32ffa74cd17c729c3898eba535ef541c7a55d264d6684d30ef2ac2571",
+      "candidate_sha256": "f240b6e32ffa74cd17c729c3898eba535ef541c7a55d264d6684d30ef2ac2571"
+    },
+    {
+      "name": "wide-prepend",
+      "file_offset": 1267280,
+      "size": 205,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f6a26a2bbd4f846f5639469d6c99a0d6a212b1e12cf4a6114e54751827fcac16",
+      "candidate_sha256": "f6a26a2bbd4f846f5639469d6c99a0d6a212b1e12cf4a6114e54751827fcac16"
     },
     {
       "name": "shader-base-ctor",

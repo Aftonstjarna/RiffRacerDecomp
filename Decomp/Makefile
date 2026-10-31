@@ -840,3 +840,22 @@ test-save-device-destruct: $(OUT)/reriff-match $(OUT)/save_device_dispose.bin $(
 
 test-recovered: test-save-device-destruct
 .PHONY: test-save-device-destruct
+
+$(OUT)/path_compose.bin: native/path_compose.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/path_compose.o
+	ld -m elf_i386 -Ttext=0x00536220 -e original_path_compose $(OUT)/path_compose.o -o $(OUT)/path_compose.elf
+	objcopy -O binary --only-section=.text $(OUT)/path_compose.elf $@
+
+$(OUT)/wide_prepend.bin: native/wide_prepend.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_prepend.o
+	ld -m elf_i386 -Ttext=0x00536250 -e original_wide_prepend $(OUT)/wide_prepend.o -o $(OUT)/wide_prepend.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_prepend.elf $@
+
+test-path-composition: $(OUT)/reriff-match $(OUT)/path_compose.bin $(OUT)/wide_prepend.bin
+	$(OUT)/reriff-match native-check "$(GAME)" path-compose $(OUT)/path_compose.bin $(OUT)/path-compose-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-prepend $(OUT)/wide_prepend.bin $(OUT)/wide-prepend-comparison.json
+
+test-recovered: test-path-composition
+.PHONY: test-path-composition
