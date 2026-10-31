@@ -4,8 +4,8 @@ This repository tracks the original Windows Game.exe reconstruction separately
 from the ReRiff Linux port and server restoration work. The baseline objective
 is a source-built executable matching all 8,635,392 original bytes.
 
-Current verified source-built fragment coverage: **60,901 / 8,635,392 bytes
-(0.35345240%)**, across 64 registered fragments. No complete matching EXE has
+Current verified source-built fragment coverage: **62,168 / 8,635,392 bytes
+(0.71992099%)**, across 81 registered fragments. No complete matching EXE has
 been produced. Extracted bytes and analysis output receive no reconstruction credit.
 
 Build and verify using the existing development Distrobox:

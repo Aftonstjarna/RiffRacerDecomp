@@ -196,3 +196,9 @@ ShadowDraw and CarLights constructors add 505 exact bytes. All 78 fragments
 match: 60,901 / 8,635,392 bytes (0.70524882%). Matching-verifier and assembly
 drafter tests pass. Next finalizer constructor dependencies include 0x577320,
 0x577F00 and 0x578350. Shared unwind metadata and shader/vtable data remain open.
+
+Sea, DepthWrite and CarGlass constructors add 1,267 matching bytes. All 81
+fragments match: 62,168 / 8,635,392 bytes (0.71992099%). Verifier and drafter
+checks pass. Their distinct handlers at 0x907FB6/0x907FE8/0x9080C6 and metadata
+remain unresolved. Next finalizer constructor dependencies include 0x5788C0
+and 0x5789C0. The README's stale fragment count and percentage are corrected.

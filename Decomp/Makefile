@@ -743,3 +743,34 @@ test-shader-shadow-lights: $(OUT)/reriff-match $(OUT)/shader_shadowdraw_ctor.bin
 
 test-recovered: test-shader-shadow-lights
 .PHONY: test-shader-shadow-lights
+
+$(OUT)/shader_sea_ctor.bin: native/shader_sea_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_sea_ctor.o
+	ld -m elf_i386 -Ttext=0x577320 -e original_shader_sea_ctor $(OUT)/shader_sea_ctor.o -o $(OUT)/shader_sea_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_sea_ctor.elf $@
+
+test-shader-sea: $(OUT)/reriff-match $(OUT)/shader_sea_ctor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-sea-ctor $(OUT)/shader_sea_ctor.bin $(OUT)/shader-sea-ctor-comparison.json
+
+test-recovered: test-shader-sea
+.PHONY: test-shader-sea
+
+$(OUT)/shader_depthwrite_ctor.bin: native/shader_depthwrite_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_depthwrite_ctor.o
+	ld -m elf_i386 -Ttext=0x577f00 -e original_shader_depthwrite_ctor $(OUT)/shader_depthwrite_ctor.o -o $(OUT)/shader_depthwrite_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_depthwrite_ctor.elf $@
+
+$(OUT)/shader_carglass_ctor.bin: native/shader_carglass_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_carglass_ctor.o
+	ld -m elf_i386 -Ttext=0x578350 -e original_shader_carglass_ctor $(OUT)/shader_carglass_ctor.o -o $(OUT)/shader_carglass_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_carglass_ctor.elf $@
+
+test-shader-depth-glass: $(OUT)/reriff-match $(OUT)/shader_depthwrite_ctor.bin $(OUT)/shader_carglass_ctor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-depthwrite-ctor $(OUT)/shader_depthwrite_ctor.bin $(OUT)/shader-depthwrite-ctor-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" shader-carglass-ctor $(OUT)/shader_carglass_ctor.bin $(OUT)/shader-carglass-ctor-comparison.json
+
+test-recovered: test-shader-depth-glass
+.PHONY: test-shader-depth-glass

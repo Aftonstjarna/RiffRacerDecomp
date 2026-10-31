@@ -211,3 +211,40 @@ and install/restore FS:[0] using the shared 0x905468 handler. Same-address
 Ghidra exports were checked against original objdump listings before assembly.
 The registered spans contain contiguous instructions and exclude trailing
 padding. Vtables, strings, shader data and unwind metadata are not credited.
+
+## Sea shader constructor
+
+`shader_sea_ctor.S` covers [0x577320,0x577535), 533 bytes, excluding trailing
+padding. Same-address Ghidra export identifies wsShaderSea, vtable 0xA015D0.
+Original objdump instructions confirm all 135 instructions and a single RET.
+After base construction it installs the vtable, clears the specified fields,
+and writes the low byte of the exception state to 1. Shader pointers come from
+manager offsets 0x918/0x920/0x91C/0x924, not a caller-selected index. Four fields
+at 0x88, 0x9C, 0xB0 and 0xC4 receive 0x3F800000; byte 0xC8 is cleared.
+Direct constant-table slot-0x24 lookups bind world/projection matrices, eye
+position, sun angle, timer, bump/texture/wave parameters and colors. Common
+binding runs afterward, including its original overwrites of shared handles.
+The ECX object returns in EAX; ESI and FS:[0] are restored. The distinct handler
+at 0x907FB6 remains an external dependency, not credited by this body. Strings,
+vtable, shader data and unwind metadata remain outside this fragment's credit.
+
+## DepthWrite and CarGlass constructors
+
+`shader_depthwrite_ctor.S`: [0x577F00,0x578047), 327 bytes. wsShaderDepthWrite
+vtable 0xA01638, handler 0x907FE8. The two DWORD arguments are stored at 0x58
+and 0x5C; the first indexes the shader pair (16-byte stride). Vertex constants
+matWorldViewProj, matWorld and matWorldRot populate 0x60/0xA4/0xA8. Original
+zeroing and float-one writes at 0x64/0x78/0x8C/0xA0 precede common binding.
+
+`shader_carglass_ctor.S`: [0x578350,0x5784E7), 407 bytes. wsShaderCarGlass
+vtable 0xA016D8, handler 0x9080C6. Only the low bytes of two stack arguments
+are copied to 0x58/0x59. It selects fixed manager fields 0x8D8/0x8E0/0x8DC/0x8E4.
+Direct constant-table lookups bind matWorldViewProj, matInvView, vCameraPos,
+diffuse and reflectiveness. It clears the original fields, sets float ones at
+0x74/0x88/0x9C/0xB0, and changes the exception state's low byte to 1.
+
+Both preserve ECX object semantics, ESI, FS:[0] and RET 8, returning the object
+in EAX. Same-address Ghidra exports and original instruction listings establish
+contiguous ranges; no data tables or trailing padding are included. Each is
+assembled and compared independently; external handlers, vtables, shader data
+and strings are dependencies rather than newly credited bytes.
