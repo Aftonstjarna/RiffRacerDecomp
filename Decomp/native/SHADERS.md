@@ -104,3 +104,32 @@ No claim is made that this isolated body can execute independently of them.
 All 69 registered fragments match after compiling this addition; matching tests
 and assembly-drafter acceptance/rejection tests pass. Total source-built fragment
 coverage is 59,024 / 8,635,392 bytes (0.68351269%), not a complete PE rebuild.
+
+## Basic2d constructor and finalizer exception thunk
+
+`shader_basic2d_ctor.S` covers [0x52CA50,0x52CC23), 467 bytes. Ghidra identifies
+its original vtable as wsShaderBasic2d at 0x9FE83C. The reviewed instructions
+call the base constructor at 0x5421B0 and select a shader record using the
+stack argument multiplied by 16 and the global at 0xBFCD04. Vertex/pixel shader
+and constant-table pointers populate offsets 4, 8, 0x10 and 0x14.
+
+The two direct constant-table lookups resolve matWorldViewProj and gMtxTexture.
+Further calls to 0x542340 preserve original names for palette, lighting, camera,
+world matrices, fake walls/floors and screen size. Three 64-byte regions at
+0x98, 0xD8 and 0x118 are zeroed through the original memset target. The byte at
+0x158 is set exactly when the constructor argument equals 3. EAX returns the
+object and RET 4 removes the argument. Exception registration and restoration
+remain intact; the constructor's external handler at 0x905468 is unresolved.
+These shader parameter names do not establish gameplay collision behavior.
+
+`shader_finalize_handler.S` covers [0x906264,0x90627F), 27 bytes, excluding the
+trailing INT3. It obtains the establisher frame from [ESP+8], derives the cookie
+from [EDX-0x2C] XOR (EDX+0xC), calls the already recovered check at 0x8F8958,
+loads metadata address 0xB7D300 into EAX, and tail-jumps to 0x8F8968. Ghidra
+includes the shared import thunk in its function body; this fragment explicitly
+excludes it to avoid conflating shared code with the local handler. The thunk
+jumps through IAT 0x92D4C4 to __CxxFrameHandler3. Unwind metadata is not credited.
+
+Both files are mnemonic assembly drafted from contiguous original instruction
+ranges and reviewed against Ghidra exports. No data blobs, masks or external
+helper bodies are counted as reconstructed code by these additions.

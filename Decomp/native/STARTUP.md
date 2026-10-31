@@ -173,3 +173,10 @@ alignment and exception frame setup. Coverage is 59,024 / 8,635,392 bytes
 (0.68351269%), across 69 fragments. Next unresolved dependencies include the
 handler at 0x00906264, unwind metadata at 0x00B7D300 and the object constructors.
 See SHADERS.md for boundaries, table initialization and validation evidence.
+
+The Basic2d constructor and finalizer exception-handler thunk now add 494 exact
+bytes. Coverage is 59,518 / 8,635,392 bytes (0.68923333%), across 71 matching
+fragments. Matching-verifier and assembly-drafter tests pass. Next dependencies:
+base shader constructor 0x5421B0, parameter helper 0x542340, constructor handler
+0x905468, and original unwind metadata. The shared cookie check was already
+recovered and has not been counted again.

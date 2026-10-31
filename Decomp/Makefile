@@ -660,3 +660,22 @@ test-shader-finalize: $(OUT)/reriff-match $(OUT)/shader_finalize.bin
 
 test-recovered: test-shader-finalize
 .PHONY: test-shader-finalize
+
+$(OUT)/shader_basic2d_ctor.bin: native/shader_basic2d_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_basic2d_ctor.o
+	ld -m elf_i386 -Ttext=0x52ca50 -e original_shader_basic2d_ctor $(OUT)/shader_basic2d_ctor.o -o $(OUT)/shader_basic2d_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_basic2d_ctor.elf $@
+
+$(OUT)/shader_finalize_handler.bin: native/shader_finalize_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_finalize_handler.o
+	ld -m elf_i386 -Ttext=0x906264 -e original_shader_finalize_handler $(OUT)/shader_finalize_handler.o -o $(OUT)/shader_finalize_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_finalize_handler.elf $@
+
+test-shader-dependencies: $(OUT)/reriff-match $(OUT)/shader_basic2d_ctor.bin $(OUT)/shader_finalize_handler.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-basic2d-ctor $(OUT)/shader_basic2d_ctor.bin $(OUT)/shader-basic2d-ctor-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" shader-finalize-handler $(OUT)/shader_finalize_handler.bin $(OUT)/shader-finalize-handler-comparison.json
+
+test-recovered: test-shader-dependencies
+.PHONY: test-shader-dependencies

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 59024,
-  "remaining_bytes": 8576368,
-  "verified_percent": 0.6835126882485474,
-  "registered_blocks": 69,
-  "exact_blocks": 69,
+  "verified_bytes": 59518,
+  "remaining_bytes": 8575874,
+  "verified_percent": 0.6892333318510613,
+  "registered_blocks": 71,
+  "exact_blocks": 71,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -391,6 +391,15 @@
       "candidate_sha256": "d69af9c1955a683325732e23b08f91b2b916472598fee17f4d85ce01bfc54fd3"
     },
     {
+      "name": "shader-basic2d-ctor",
+      "file_offset": 1228368,
+      "size": 467,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f5084456765a3562874d7e574b3aa9cae76a5f88f03e5fe0e7c67120f915a334",
+      "candidate_sha256": "f5084456765a3562874d7e574b3aa9cae76a5f88f03e5fe0e7c67120f915a334"
+    },
+    {
       "name": "shader-pair-create",
       "file_offset": 1231936,
       "size": 189,
@@ -623,6 +632,15 @@
       "byte_equal": true,
       "reference_sha256": "2f52b9d543812194b296dbad695ae0351408ee32037dc98387764deb1fe96499",
       "candidate_sha256": "2f52b9d543812194b296dbad695ae0351408ee32037dc98387764deb1fe96499"
+    },
+    {
+      "name": "shader-finalize-handler",
+      "file_offset": 5264996,
+      "size": 27,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "befa55aceafdd458d6259e9539aeb62a51df6328d3bf7d372bd1a458fcccb829",
+      "candidate_sha256": "befa55aceafdd458d6259e9539aeb62a51df6328d3bf7d372bd1a458fcccb829"
     },
     {
       "name": "crt-scope",
