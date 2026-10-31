@@ -22,17 +22,32 @@ Its required SHA-256 is
 See [reconstruction instructions](Decomp/README.md) and
 [recovered spans](Decomp/native/STARTUP.md).
 
-## Repository separation
+## Project goals
 
-The initial source snapshot comes from ReRiff's `Decomp` directory.
-Continue EXE recovery in this repository.
-`Decomp/support` contains the existing verifier's shared header dependencies,
-including the MIT-licensed nlohmann JSON header. These are tool support, not
-recovered game code, and earn no byte credit. No Linux viewer is included.
+### Recover the original game
 
-Local analysis files and Ghidra research exports are ignored by Git; they are
-not matching source. See [Ghidra instructions](Decomp/GHIDRA.md) for analysis setup.
-The previous workspace README is retained in `docs/previous-workspace-readme.md`.
-The canonical repository is [RiffRacerDecomp](https://github.com/Aftonstjarna/RiffRacerDecomp),
-with matching reconstruction on `decomp`. Server, launcher and native-port
-work remains in [ReRiff](https://github.com/Aftonstjarna/ReRiff).
+Reconstruct the original Windows executable from source and verify it byte for
+byte, including code, metadata, resources and executable layout. This matching
+baseline comes first: it establishes the original behavior before porting or
+gameplay changes are introduced.
+
+### Enable a faithful native Linux port
+
+Use recovered code and original asset formats to reproduce track generation,
+spline evaluation, road orientation, vehicle physics, rendering and music
+synchronization on Linux. The goal is the original game's behavior on a native
+runtime, grounded in its implementation rather than approximate replacements.
+Port development remains separate from matching reconstruction; this repository
+does not yet provide a complete matching executable or a playable native port.
+
+### Build a foundation for modding
+
+Make the game's systems and data formats understandable enough to support
+deliberate changes to vehicles, tracks, visuals and gameplay. Keep modifications
+separate from the verified baseline so their effects can be identified and
+tested against original behavior. Modding tools and extension points are future
+goals, not currently supported features.
+
+Matching recovery belongs on `decomp`; intentional behavior changes belong on
+`redux` or dedicated modification branches. The modified server, launcher and
+current native-port work remain in [ReRiff](https://github.com/Aftonstjarna/ReRiff).
