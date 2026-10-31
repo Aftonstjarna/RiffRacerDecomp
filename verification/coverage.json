@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 59808,
-  "remaining_bytes": 8575584,
-  "verified_percent": 0.6925916044112416,
-  "registered_blocks": 74,
-  "exact_blocks": 74,
+  "verified_bytes": 60396,
+  "remaining_bytes": 8574996,
+  "verified_percent": 0.6994007915332622,
+  "registered_blocks": 76,
+  "exact_blocks": 76,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -535,6 +535,15 @@
       "candidate_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54"
     },
     {
+      "name": "shader-common-parameters",
+      "file_offset": 1316400,
+      "size": 261,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "eb5304bad20ac272a7b1dacf6456209295aeb45ae87fac11979763b1e9c26d59",
+      "candidate_sha256": "eb5304bad20ac272a7b1dacf6456209295aeb45ae87fac11979763b1e9c26d59"
+    },
+    {
       "name": "shader-parameter-lookup",
       "file_offset": 1316672,
       "size": 149,
@@ -551,6 +560,15 @@
       "byte_equal": true,
       "reference_sha256": "238530e4d647ec71e6544340354bc940eb16f531aee10fa1b8584e58aec62923",
       "candidate_sha256": "238530e4d647ec71e6544340354bc940eb16f531aee10fa1b8584e58aec62923"
+    },
+    {
+      "name": "shader-drawprim-ctor",
+      "file_offset": 1468832,
+      "size": 327,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "d9da646c6196338b9e46cb6b94d249816c8a6bd3a752d92b406005109ce9eaac",
+      "candidate_sha256": "d9da646c6196338b9e46cb6b94d249816c8a6bd3a752d92b406005109ce9eaac"
     },
     {
       "name": "object-5cfb10",

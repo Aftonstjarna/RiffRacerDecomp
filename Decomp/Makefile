@@ -705,3 +705,22 @@ test-shader-base: $(OUT)/reriff-match $(OUT)/shader_base_ctor.bin $(OUT)/shader_
 
 test-recovered: test-shader-base
 .PHONY: test-shader-base
+
+$(OUT)/shader_common_parameters.bin: native/shader_common_parameters.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_common_parameters.o
+	ld -m elf_i386 -Ttext=0x542230 -e original_shader_common_parameters $(OUT)/shader_common_parameters.o -o $(OUT)/shader_common_parameters.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_common_parameters.elf $@
+
+$(OUT)/shader_drawprim_ctor.bin: native/shader_drawprim_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_drawprim_ctor.o
+	ld -m elf_i386 -Ttext=0x5675a0 -e original_shader_drawprim_ctor $(OUT)/shader_drawprim_ctor.o -o $(OUT)/shader_drawprim_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_drawprim_ctor.elf $@
+
+test-shader-drawprim: $(OUT)/reriff-match $(OUT)/shader_common_parameters.bin $(OUT)/shader_drawprim_ctor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-common-parameters $(OUT)/shader_common_parameters.bin $(OUT)/shader-common-parameters-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" shader-drawprim-ctor $(OUT)/shader_drawprim_ctor.bin $(OUT)/shader-drawprim-ctor-comparison.json
+
+test-recovered: test-shader-drawprim
+.PHONY: test-shader-drawprim

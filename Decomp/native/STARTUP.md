@@ -186,3 +186,8 @@ thunk now add 290 matching bytes. All 74 fragments match: 59,808 / 8,635,392
 bytes (0.69259160%). Verifier and drafter tests pass. Original unwind metadata,
 shared handler dispatch and the remaining derived shader constructors remain
 open; the next adjacent constructor/helper to inspect is 0x00542230.
+
+Common shader parameter binding and DrawPrim construction now add 588 matching
+bytes. All 76 fragments match: 60,396 / 8,635,392 bytes (0.69940079%). Verifier
+and drafter tests pass. Remaining derived constructors in the finalizer include
+0x00576C20 and 0x00576F00; unwind metadata and original shader data remain open.

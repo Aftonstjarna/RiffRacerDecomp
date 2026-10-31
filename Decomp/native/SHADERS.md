@@ -162,3 +162,28 @@ preserved. The referenced unwind metadata is still unresolved and uncredited.
 All three ranges are contiguous instruction bodies with no embedded tables;
 trailing alignment is excluded. Evidence: same-address Ghidra exports and
 original objdump listings, followed by assembly and unmasked native-check.
+
+## Common parameters and DrawPrim construction
+
+`shader_common_parameters.S` reconstructs [0x542230,0x542335), 261 bytes.
+The ECX object is retained in ESI. Sixteen ordered calls to 0x542340 store
+handles at the original offsets: reposition parameters from both constant
+tables, pixel fog/height/alpha/specular/ambient/diffuse parameters, vertex
+shadowMapPos, pixel maskColor and shadowColor, and vertex skinMatrixArray and
+g_morphAmounts. Null lookup results are stored as-is; there is no early exit.
+The original string addresses are referenced, not credited as reconstructed data.
+
+`shader_drawprim_ctor.S` reconstructs [0x5675A0,0x5676E7), 327 bytes. Ghidra
+identifies wsShaderDrawPrim at vtable 0xA00CD4. After the recovered base
+constructor, it selects the shader record using argument*16 plus the global
+at 0xBFCD04, and installs shader/constant-table pointers. Named lookups populate
+matrix, inverse-projection, softness, distortion, light-position, light-color
+and eye-direction handles. The byte at object+0xC0 is true exactly for argument
+0x11. The eyeDir result is stored at 0xB4, then the shared parameter binder runs.
+EAX returns the object; RET 4 removes the index argument.
+
+The constructor preserves the FS:[0] frame and uses the already recovered
+0x905468 handler. Matching its local code does not reconstruct the external
+unwind metadata or vtable. Both functions were reviewed against same-address
+Ghidra exports and original disassembly; no embedded data or external shared
+tails lie inside the registered ranges. Trailing padding is excluded.
