@@ -1,4 +1,6 @@
 # Original-game recovery
+- Matching Game.exe reconstruction belongs on branch `decomp`. Reserve `redux`
+  for intentional behavior changes; never integrate matching-only work there.
 
 - Use suitable tools from the explicitly supplied project/tool directories to
   accelerate recovery. Use Ghidra for native analysis and ILSpy for managed IL;
