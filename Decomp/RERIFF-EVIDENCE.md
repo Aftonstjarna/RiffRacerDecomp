@@ -120,3 +120,23 @@ distinct. None of this ledger claims a complete matching executable.
   UI-scaling integration remain unresolved; failed experiments receive no credit.
 - `elMatrix.scaleBy` is now an exact separately source-built 146-byte fragment;
   see `native/UI-MATRIX.md`. This does not validate a ReRiff manual UI transform.
+
+## Graphics selector and scrolling visibility
+
+Checked against the original supported executable's CLI MethodDef table and IL:
+
+- `gaGraphicsOptions.showResolutionText`: token 0x06001177, IL RVA 0x2EC76C,
+  code size 186 bytes. Selection lives at menu +300; text-vector begin/end at
+  +280/+284. It wraps indices using the display-mode vector at +268/+272,
+  returns without changing visibility when the selected index is unchanged,
+  otherwise hides all text entries and shows the selected entry. Therefore a
+  scrolling mod must restore the selected label after hiding it; an unchanged
+  call to this function will not restore visibility.
+- `elUI.createButtonSprite`: token 0x060016E5, native RVA 0x222C0. Original
+  `gaGraphicsOptions.initScreens` creates resolution buttons with sprites 59/60,
+  IDs 1/2, shortcut mask 0, and origins 3/5. ReRiff's fullscreen selector extends
+  this original factory/artwork/input instead of creating another repeat system.
+
+These are verified original semantics and mod-integration evidence, not new
+source-built reconstruction. Verified coverage remains 67,275 / 8,635,392 bytes
+(0.77906133%); this documentation adds no matching-byte credit.
