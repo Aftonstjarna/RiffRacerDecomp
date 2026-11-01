@@ -4,7 +4,7 @@ This repository tracks the original Windows Game.exe reconstruction separately
 from port and server restoration work. The baseline objective
 is a source-built executable matching all 8,635,392 original bytes.
 
-Verified source-built fragment coverage: **65,799 / 8,635,392 bytes (0.76197%)**.
+Verified source-built fragment coverage: **66,668 / 8,635,392 bytes (0.77203%)**.
 
 The authoritative verified source-built fragment coverage is recorded in
 [verification/coverage.json](verification/coverage.json). No complete matching

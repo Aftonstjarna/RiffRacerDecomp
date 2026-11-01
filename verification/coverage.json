@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 65799,
-  "remaining_bytes": 8569593,
-  "verified_percent": 0.7619688834044824,
-  "registered_blocks": 98,
-  "exact_blocks": 98,
+  "verified_bytes": 66668,
+  "remaining_bytes": 8568724,
+  "verified_percent": 0.7720321208348156,
+  "registered_blocks": 103,
+  "exact_blocks": 103,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -38,6 +38,51 @@
       "byte_equal": true,
       "reference_sha256": "8eb49457191f2dddedaa2e1aca69357e8fb3905017ba1db4b3b6d4f0ac9f0312",
       "candidate_sha256": "8eb49457191f2dddedaa2e1aca69357e8fb3905017ba1db4b3b6d4f0ac9f0312"
+    },
+    {
+      "name": "wide-assign-substring",
+      "file_offset": 323376,
+      "size": 247,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "8e601bd20e4bf3ec7c8f891398fcb1a64f4406272420f33320a425762fdda00a",
+      "candidate_sha256": "8e601bd20e4bf3ec7c8f891398fcb1a64f4406272420f33320a425762fdda00a"
+    },
+    {
+      "name": "wide-truncate",
+      "file_offset": 323824,
+      "size": 63,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "d685e9cc24e5fc42e9e60b710c4a2607243620d05717fae3674e6e57b1d99c50",
+      "candidate_sha256": "d685e9cc24e5fc42e9e60b710c4a2607243620d05717fae3674e6e57b1d99c50"
+    },
+    {
+      "name": "wide-erase",
+      "file_offset": 323888,
+      "size": 165,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "4e8411332ccfa463d0689e0848caf3ed04dac87f91a5683bac16004a2fa06cfa",
+      "candidate_sha256": "4e8411332ccfa463d0689e0848caf3ed04dac87f91a5683bac16004a2fa06cfa"
+    },
+    {
+      "name": "wide-grow",
+      "file_offset": 324064,
+      "size": 345,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "d0db4ce5a2d1bd0693292d5feaa3bb13802a7eecdd9dfe2d738612c53f67dd4a",
+      "candidate_sha256": "d0db4ce5a2d1bd0693292d5feaa3bb13802a7eecdd9dfe2d738612c53f67dd4a"
+    },
+    {
+      "name": "wide-allocate",
+      "file_offset": 324416,
+      "size": 49,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "4784b3422d95d6a71aa348979fe526859d880060cba3b8cc80ab52df473e125b",
+      "candidate_sha256": "4784b3422d95d6a71aa348979fe526859d880060cba3b8cc80ab52df473e125b"
     },
     {
       "name": "window-frame",

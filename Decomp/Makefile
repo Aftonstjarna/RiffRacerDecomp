@@ -942,3 +942,43 @@ test-path-refresh: $(OUT)/reriff-match $(OUT)/save_device_refresh.bin $(OUT)/wid
 
 test-recovered: test-path-refresh
 .PHONY: test-path-refresh
+
+$(OUT)/wide_assign_substring.bin: native/wide_assign_substring.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_assign_substring.o
+	ld -m elf_i386 -Ttext=0x44fb30 -e original_wide_assign_substring $(OUT)/wide_assign_substring.o -o $(OUT)/wide_assign_substring.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_assign_substring.elf $@
+
+$(OUT)/wide_truncate.bin: native/wide_truncate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_truncate.o
+	ld -m elf_i386 -Ttext=0x44fcf0 -e original_wide_truncate $(OUT)/wide_truncate.o -o $(OUT)/wide_truncate.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_truncate.elf $@
+
+$(OUT)/wide_erase.bin: native/wide_erase.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_erase.o
+	ld -m elf_i386 -Ttext=0x44fd30 -e original_wide_erase $(OUT)/wide_erase.o -o $(OUT)/wide_erase.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_erase.elf $@
+
+$(OUT)/wide_grow.bin: native/wide_grow.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_grow.o
+	ld -m elf_i386 -Ttext=0x44fde0 -e original_wide_grow $(OUT)/wide_grow.o -o $(OUT)/wide_grow.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_grow.elf $@
+
+$(OUT)/wide_allocate.bin: native/wide_allocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_allocate.o
+	ld -m elf_i386 -Ttext=0x44ff40 -e original_wide_allocate $(OUT)/wide_allocate.o -o $(OUT)/wide_allocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_allocate.elf $@
+
+test-wide-storage: $(OUT)/reriff-match $(OUT)/wide_assign_substring.bin $(OUT)/wide_truncate.bin $(OUT)/wide_erase.bin $(OUT)/wide_grow.bin $(OUT)/wide_allocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-assign-substring $(OUT)/wide_assign_substring.bin $(OUT)/wide-assign-substring-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-truncate $(OUT)/wide_truncate.bin $(OUT)/wide-truncate-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-erase $(OUT)/wide_erase.bin $(OUT)/wide-erase-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-grow $(OUT)/wide_grow.bin $(OUT)/wide-grow-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-allocate $(OUT)/wide_allocate.bin $(OUT)/wide-allocate-comparison.json
+
+test-recovered: test-wide-storage
+.PHONY: test-wide-storage
