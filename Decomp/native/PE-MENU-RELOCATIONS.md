@@ -20,3 +20,27 @@ or operand masks are used; the original executable hash check remains required.
 observed Windows base. The original and relocated images pass; opcode/operand
 mutations are rejected. This is runtime-hook validation evidence, not additional
 byte-for-byte recovered source or proof of live Windows gameplay compatibility.
+
+## Discardable relocation records
+
+For the same supported original hash, `.reloc` section characteristics are
+`0x42000040`: initialized, readable data with `IMAGE_SCN_MEM_DISCARDABLE` set.
+A live Windows image is therefore not required to retain readable relocation
+records after the loader applies them. ReRiff must read/copy these records from
+its hash-verified original file when validating adjusted absolute operands.
+
+This does not weaken instruction comparisons or alter original executable bytes.
+A ReRiff fixture makes the live relocation region `PAGE_NOACCESS` after applying
+the original relocations; exact live-prologue validation still succeeds using the
+verified original records and continues to reject opcode/operand mutations.
+This is validation evidence, not additional byte-for-byte source recovery credit.
+
+Original Parse transport evidence: preserved vanilla Parse.NetFx45.dll SHA-256
+`4e2f65147faec13ae5333337e3c7cd9e25028f3119fe817e059b1d2eab678522`,
+method token `0x06000023`, `Parse.Internal.HttpClient.ExecuteAsync` returns
+`Task<Tuple<HttpStatusCode,string>>`. It obtains `HttpRequest.Uri` and `.Method`
+before request construction and returns its original task at IL `0x0291`.
+ReRiff's client-note adapter intentionally extends that result; it is not
+original-game reconstruction. Original Game.exe News menu ordering remains at
+`gaNewsMenu.NewsItem.sortItems`, token `0x0600149E`; original News rendering and
+input are preserved by the adapter.
