@@ -1034,3 +1034,15 @@ test-wide-range: $(OUT)/reriff-match $(OUT)/wide_reserve.bin $(OUT)/wide_append_
 
 test-recovered: test-wide-range
 .PHONY: test-wide-range
+
+$(OUT)/ui_matrix_scale.bin: native/ui_matrix_scale.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_matrix_scale.o
+	ld -m elf_i386 -Ttext=0x00458810 -e original_ui_matrix_scale $(OUT)/ui_matrix_scale.o -o $(OUT)/ui_matrix_scale.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_matrix_scale.elf $@
+
+test-ui-matrix-scale: $(OUT)/reriff-match $(OUT)/ui_matrix_scale.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-matrix-scale $(OUT)/ui_matrix_scale.bin $(OUT)/ui-matrix-scale-comparison.json
+
+test-recovered: test-ui-matrix-scale
+.PHONY: test-ui-matrix-scale

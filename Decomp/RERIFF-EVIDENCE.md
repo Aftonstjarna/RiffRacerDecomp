@@ -98,3 +98,25 @@ layout evidence. Recheck original IL/native bytes, recover a source-built span,
 and pass the strict comparator before adding coverage. Keep observed mod
 behavior, inferred prototypes and independently verified original semantics
 distinct. None of this ledger claims a complete matching executable.
+
+
+## November 1 UI research: verified facts and remaining gaps
+
+- Native UI dimensions come from `elUI.getResolution`, VA 0x0041FA50, including
+  ratio floats at RVAs 0x7AACAC/0x7AACB0. These are distinct from the public
+  graphics device resolution. ReRiff Auto mode retains the original behavior.
+- Original `gaMenu.setupStandardBackground` (IL RVA 0x2DD3C0) centers its visual
+  during creation. `gaMenu.applyBackgroundEffect` (token 0x0600112F, IL RVA
+  0x2E1FF8) recomputes cover scale and animated zoom; it does not recenter the
+  existing visual. These distinct responsibilities matter when a mod changes
+  logical UI dimensions. The mod itself is not matching reconstruction.
+- Native Settings uses menu transition state 0 when ready for input; state 1
+  must not be substituted as an idle guard. The original Audio tick remains
+  the authority for its repeat masks, mouse drag and slider artwork.
+- `elUIScreen.getRenderGroup` (token 0x060010FA) reads screen +8. That group is
+  optional: the native add routine at VA 0x0048E8D0 checks for null before
+  assigning it to an item through vtable slot 18. A mod may not assume all PC
+  menu screens already have a group. Rendering semantics and a correct manual
+  UI-scaling integration remain unresolved; failed experiments receive no credit.
+- `elMatrix.scaleBy` is now an exact separately source-built 146-byte fragment;
+  see `native/UI-MATRIX.md`. This does not validate a ReRiff manual UI transform.
