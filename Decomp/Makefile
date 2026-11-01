@@ -890,3 +890,29 @@ test-wide-append: $(OUT)/reriff-match $(OUT)/wide_append_substring.bin $(OUT)/wi
 
 test-recovered: test-wide-append
 .PHONY: test-wide-append
+
+$(OUT)/save_device_set_name.bin: native/save_device_set_name.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/save_device_set_name.o
+	ld -m elf_i386 -Ttext=0x535e30 -e original_save_device_set_name $(OUT)/save_device_set_name.o -o $(OUT)/save_device_set_name.elf
+	objcopy -O binary --only-section=.text $(OUT)/save_device_set_name.elf $@
+
+$(OUT)/wide_assign.bin: native/wide_assign.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_assign.o
+	ld -m elf_i386 -Ttext=0x536030 -e original_wide_assign $(OUT)/wide_assign.o -o $(OUT)/wide_assign.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_assign.elf $@
+
+$(OUT)/wide_prefix_construct.bin: native/wide_prefix_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_prefix_construct.o
+	ld -m elf_i386 -Ttext=0x536070 -e original_wide_prefix_construct $(OUT)/wide_prefix_construct.o -o $(OUT)/wide_prefix_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_prefix_construct.elf $@
+
+test-save-string-helpers: $(OUT)/reriff-match $(OUT)/save_device_set_name.bin $(OUT)/wide_assign.bin $(OUT)/wide_prefix_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" save-device-set-name $(OUT)/save_device_set_name.bin $(OUT)/save-device-set-name-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-assign $(OUT)/wide_assign.bin $(OUT)/wide-assign-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-prefix-construct $(OUT)/wide_prefix_construct.bin $(OUT)/wide-prefix-construct-comparison.json
+
+test-recovered: test-save-string-helpers
+.PHONY: test-save-string-helpers
