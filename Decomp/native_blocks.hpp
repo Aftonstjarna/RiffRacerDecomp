@@ -3,7 +3,15 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"ui-matrix-scale",0x58810,146},
+  return {NativeBlock{"decode-worker-ctor",0x8d6e0,234},
+                     NativeBlock{"decode-worker-dispatch",0x8d9c0,444},
+                     NativeBlock{"member-cleanup",0x8d800,106},
+                     NativeBlock{"narrow-range-destroy",0x268f0,64},
+                     NativeBlock{"ui-matrix-scale",0x58810,146},
+                     NativeBlock{"lifetime-adjust16",0x5004f,8},
+                     NativeBlock{"lifetime-adjust20",0x50057,8},
+                     NativeBlock{"lifetime-dispose",0x4eae0,34},
+                     NativeBlock{"lifetime-destruct",0x4eb10,202},
                      NativeBlock{"wide-reserve",0x4fc30,182},
                      NativeBlock{"wide-append-range",0x4ff80,207},
                      NativeBlock{"wide-append-range-handler",0x4ffa20,27},

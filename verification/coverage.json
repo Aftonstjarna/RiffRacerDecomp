@@ -2,16 +2,25 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 67275,
-  "remaining_bytes": 8568117,
-  "verified_percent": 0.779061332710779,
-  "registered_blocks": 111,
-  "exact_blocks": 111,
+  "verified_bytes": 68375,
+  "remaining_bytes": 8567017,
+  "verified_percent": 0.791799607939049,
+  "registered_blocks": 119,
+  "exact_blocks": 119,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
   "masked_bytes": 0,
   "blocks": [
+    {
+      "name": "narrow-range-destroy",
+      "file_offset": 154864,
+      "size": 64,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "9eff101c1b398fb7c94aeff99f296a6b01527955d1ae13aaf528c8cd275076eb",
+      "candidate_sha256": "9eff101c1b398fb7c94aeff99f296a6b01527955d1ae13aaf528c8cd275076eb"
+    },
     {
       "name": "floor-float",
       "file_offset": 155936,
@@ -20,6 +29,24 @@
       "byte_equal": true,
       "reference_sha256": "f90a7cbb32a5ccb797b26ae4f0c8a954ee0ded32d17396827d443a24fc7194df",
       "candidate_sha256": "f90a7cbb32a5ccb797b26ae4f0c8a954ee0ded32d17396827d443a24fc7194df"
+    },
+    {
+      "name": "lifetime-dispose",
+      "file_offset": 319200,
+      "size": 34,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "12ca4a36051d878985ed6e72eb2a2aa094dc30ea4a9030d1480c9121f42e2378",
+      "candidate_sha256": "12ca4a36051d878985ed6e72eb2a2aa094dc30ea4a9030d1480c9121f42e2378"
+    },
+    {
+      "name": "lifetime-destruct",
+      "file_offset": 319248,
+      "size": 202,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "53f1af86941146c0427dfff46a801417a831754fd6711b0784c5232ce709c668",
+      "candidate_sha256": "53f1af86941146c0427dfff46a801417a831754fd6711b0784c5232ce709c668"
     },
     {
       "name": "wide-append-char",
@@ -103,6 +130,24 @@
       "candidate_sha256": "fc83bd7315add3808e6c812c9ac4e37d312529aabc2a440113e9df7fe63a7683"
     },
     {
+      "name": "lifetime-adjust16",
+      "file_offset": 324687,
+      "size": 8,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "5a01fb9e5cd3aac45fe14ba8c588523f32edbc1617df9fac1509e2817d6f65e9",
+      "candidate_sha256": "5a01fb9e5cd3aac45fe14ba8c588523f32edbc1617df9fac1509e2817d6f65e9"
+    },
+    {
+      "name": "lifetime-adjust20",
+      "file_offset": 324695,
+      "size": 8,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "bac594fa8a9d2dcac8aedd99738b2ceaac69d9b27dbf35c2a8967c8cb9f806dc",
+      "candidate_sha256": "bac594fa8a9d2dcac8aedd99738b2ceaac69d9b27dbf35c2a8967c8cb9f806dc"
+    },
+    {
       "name": "ui-matrix-scale",
       "file_offset": 359440,
       "size": 146,
@@ -146,6 +191,33 @@
       "byte_equal": true,
       "reference_sha256": "c5b070dfc400cc5c301448680ad562e0ce8a4a7483605d98c86692ef8fe269f6",
       "candidate_sha256": "c5b070dfc400cc5c301448680ad562e0ce8a4a7483605d98c86692ef8fe269f6"
+    },
+    {
+      "name": "decode-worker-ctor",
+      "file_offset": 576224,
+      "size": 234,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f1402b729a93df1272e48c6cbece6d2ce815d708e738216519f76c2e1011721d",
+      "candidate_sha256": "f1402b729a93df1272e48c6cbece6d2ce815d708e738216519f76c2e1011721d"
+    },
+    {
+      "name": "member-cleanup",
+      "file_offset": 576512,
+      "size": 106,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f5db8acd5dfe3c4d7ab120df1e6ca6464e2cf216cd785c1b7b7ac528a8e69c33",
+      "candidate_sha256": "f5db8acd5dfe3c4d7ab120df1e6ca6464e2cf216cd785c1b7b7ac528a8e69c33"
+    },
+    {
+      "name": "decode-worker-dispatch",
+      "file_offset": 576960,
+      "size": 444,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "ca1607cbf6866400c50cb751e1cdd2d1cf9e91b2ff2873e8bed3ab7b0e149443",
+      "candidate_sha256": "ca1607cbf6866400c50cb751e1cdd2d1cf9e91b2ff2873e8bed3ab7b0e149443"
     },
     {
       "name": "worker-delete",

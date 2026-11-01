@@ -1035,6 +1035,39 @@ test-wide-range: $(OUT)/reriff-match $(OUT)/wide_reserve.bin $(OUT)/wide_append_
 test-recovered: test-wide-range
 .PHONY: test-wide-range
 
+$(OUT)/lifetime_adjust16.bin: native/lifetime_adjust16.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_adjust16.o
+	ld -m elf_i386 -Ttext=0x45004f -e original_lifetime_adjust16 $(OUT)/lifetime_adjust16.o -o $(OUT)/lifetime_adjust16.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_adjust16.elf $@
+
+$(OUT)/lifetime_adjust20.bin: native/lifetime_adjust20.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_adjust20.o
+	ld -m elf_i386 -Ttext=0x450057 -e original_lifetime_adjust20 $(OUT)/lifetime_adjust20.o -o $(OUT)/lifetime_adjust20.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_adjust20.elf $@
+
+$(OUT)/lifetime_dispose.bin: native/lifetime_dispose.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_dispose.o
+	ld -m elf_i386 -Ttext=0x44eae0 -e original_lifetime_dispose $(OUT)/lifetime_dispose.o -o $(OUT)/lifetime_dispose.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_dispose.elf $@
+
+$(OUT)/lifetime_destruct.bin: native/lifetime_destruct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_destruct.o
+	ld -m elf_i386 -Ttext=0x44eb10 -e original_lifetime_destruct $(OUT)/lifetime_destruct.o -o $(OUT)/lifetime_destruct.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_destruct.elf $@
+
+test-lifetime: $(OUT)/reriff-match $(OUT)/lifetime_adjust16.bin $(OUT)/lifetime_adjust20.bin $(OUT)/lifetime_dispose.bin $(OUT)/lifetime_destruct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-adjust16 $(OUT)/lifetime_adjust16.bin $(OUT)/lifetime-adjust16-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-adjust20 $(OUT)/lifetime_adjust20.bin $(OUT)/lifetime-adjust20-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-dispose $(OUT)/lifetime_dispose.bin $(OUT)/lifetime-dispose-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-destruct $(OUT)/lifetime_destruct.bin $(OUT)/lifetime-destruct-comparison.json
+
+test-recovered: test-lifetime
+.PHONY: test-lifetime
+
 $(OUT)/ui_matrix_scale.bin: native/ui_matrix_scale.S
 	mkdir -p $(OUT)
 	as --32 $< -o $(OUT)/ui_matrix_scale.o
@@ -1046,3 +1079,41 @@ test-ui-matrix-scale: $(OUT)/reriff-match $(OUT)/ui_matrix_scale.bin
 
 test-recovered: test-ui-matrix-scale
 .PHONY: test-ui-matrix-scale
+
+$(OUT)/member_cleanup.bin: native/member_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/member_cleanup.o
+	ld -m elf_i386 -Ttext=0x48d800 -e original_member_cleanup $(OUT)/member_cleanup.o -o $(OUT)/member_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/member_cleanup.elf $@
+
+$(OUT)/narrow_range_destroy.bin: native/narrow_range_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_range_destroy.o
+	ld -m elf_i386 -Ttext=0x4268f0 -e original_narrow_range_destroy $(OUT)/narrow_range_destroy.o -o $(OUT)/narrow_range_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_range_destroy.elf $@
+
+test-cleanup-dependencies: $(OUT)/reriff-match $(OUT)/member_cleanup.bin $(OUT)/narrow_range_destroy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" member-cleanup $(OUT)/member_cleanup.bin $(OUT)/member-cleanup-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-range-destroy $(OUT)/narrow_range_destroy.bin $(OUT)/narrow-range-destroy-comparison.json
+
+test-recovered: test-cleanup-dependencies
+.PHONY: test-cleanup-dependencies
+
+$(OUT)/decode_worker_ctor.bin: native/decode_worker_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_worker_ctor.o
+	ld -m elf_i386 -Ttext=0x48d6e0 -e original_decode_worker_ctor $(OUT)/decode_worker_ctor.o -o $(OUT)/decode_worker_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_worker_ctor.elf $@
+
+$(OUT)/decode_worker_dispatch.bin: native/decode_worker_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_worker_dispatch.o
+	ld -m elf_i386 -Ttext=0x48d9c0 -e original_decode_worker_dispatch $(OUT)/decode_worker_dispatch.o -o $(OUT)/decode_worker_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_worker_dispatch.elf $@
+
+test-decode-worker: $(OUT)/reriff-match $(OUT)/decode_worker_ctor.bin $(OUT)/decode_worker_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" decode-worker-ctor $(OUT)/decode_worker_ctor.bin $(OUT)/decode-worker-ctor-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" decode-worker-dispatch $(OUT)/decode_worker_dispatch.bin $(OUT)/decode-worker-dispatch-comparison.json
+
+test-recovered: test-decode-worker
+.PHONY: test-decode-worker
