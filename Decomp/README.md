@@ -157,3 +157,9 @@ call references alongside ILSpy's managed-code research.
    behavioral tests there, but label their narrower guarantees accurately.
 
 No whole-program byte-equivalence or 100% matching completion is claimed today.
+
+## Knowledge carried over from ReRiff
+
+The [ReRiff evidence ledger](RERIFF-EVIDENCE.md) records newer menu, input,
+renderer, cache and decoder meanings learned by the experimental mod. These
+are recovery leads with provenance, not extra reconstructed-byte credit.

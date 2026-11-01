@@ -201,3 +201,25 @@ fragments match: 62,168 / 8,635,392 bytes (0.71992099%). Verifier and drafter
 checks pass. Their distinct handlers at 0x907FB6/0x907FE8/0x9080C6 and metadata
 remain unresolved. Next finalizer constructor dependencies include 0x5788C0
 and 0x5789C0. The README's stale fragment count and percentage are corrected.
+
+Wide-string reserve/trim, range append and the range exception dispatcher add
+416 exact bytes: VA ranges [0x44fc30,0x44fce6), [0x44ff80,0x45004f), and
+[0x8ffa20,0x8ffa3b). Sources are wide_reserve.S, wide_append_range.S and
+wide_append_range_handler.S. The range-append EH-only cleanup at 0x45000d
+frees heap storage, restores empty inline capacity 7 and rethrows; Ghidra's
+ordinary function extent omits this landing pad. The following two adjustor
+thunks are excluded. Reserve uses existing growth and memcpy helpers, with
+inline WCHAR capacity 7, length +0x10 and capacity +0x14. Original IAT targets,
+FuncInfo 0xb77fd4 and other unwind tables remain external dependencies.
+
+Private evidence is in /tmp/reriff-recovery-resume (Ghidra exports from a
+private copy of Strings, disassemblies and verification.log). No original byte
+arrays are embedded. Development-container coverage, matching-verifier and
+drafter checks pass: 67,129 / 8,635,392 bytes (0.77737062%), 110 exact fragments.
+No complete matching executable is claimed. ReRiff's newer semantic evidence is
+indexed separately in ../RERIFF-EVIDENCE.md; it earns no coverage credit.
+
+Follow-up [range exception findings](RANGE-EXCEPTIONS.md) decode the original
+88-byte FuncInfo/unwind/try/handler graph and identify adjacent adjustors sharing
+a scalar-deleting destructor. These findings are not new reconstructed bytes;
+verified coverage remains 67,129 / 8,635,392 bytes (0.77737062%).

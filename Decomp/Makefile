@@ -890,3 +890,147 @@ test-wide-append: $(OUT)/reriff-match $(OUT)/wide_append_substring.bin $(OUT)/wi
 
 test-recovered: test-wide-append
 .PHONY: test-wide-append
+
+$(OUT)/save_device_set_name.bin: native/save_device_set_name.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/save_device_set_name.o
+	ld -m elf_i386 -Ttext=0x535e30 -e original_save_device_set_name $(OUT)/save_device_set_name.o -o $(OUT)/save_device_set_name.elf
+	objcopy -O binary --only-section=.text $(OUT)/save_device_set_name.elf $@
+
+$(OUT)/wide_assign.bin: native/wide_assign.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_assign.o
+	ld -m elf_i386 -Ttext=0x536030 -e original_wide_assign $(OUT)/wide_assign.o -o $(OUT)/wide_assign.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_assign.elf $@
+
+$(OUT)/wide_prefix_construct.bin: native/wide_prefix_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_prefix_construct.o
+	ld -m elf_i386 -Ttext=0x536070 -e original_wide_prefix_construct $(OUT)/wide_prefix_construct.o -o $(OUT)/wide_prefix_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_prefix_construct.elf $@
+
+test-save-string-helpers: $(OUT)/reriff-match $(OUT)/save_device_set_name.bin $(OUT)/wide_assign.bin $(OUT)/wide_prefix_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" save-device-set-name $(OUT)/save_device_set_name.bin $(OUT)/save-device-set-name-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-assign $(OUT)/wide_assign.bin $(OUT)/wide-assign-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-prefix-construct $(OUT)/wide_prefix_construct.bin $(OUT)/wide-prefix-construct-comparison.json
+
+test-recovered: test-save-string-helpers
+.PHONY: test-save-string-helpers
+
+$(OUT)/save_device_refresh.bin: native/save_device_refresh.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/save_device_refresh.o
+	ld -m elf_i386 -Ttext=0x535ec0 -e original_save_device_refresh $(OUT)/save_device_refresh.o -o $(OUT)/save_device_refresh.elf
+	objcopy -O binary --only-section=.text $(OUT)/save_device_refresh.elf $@
+
+$(OUT)/wide_append_char.bin: native/wide_append_char.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_append_char.o
+	ld -m elf_i386 -Ttext=0x44f8f0 -e original_wide_append_char $(OUT)/wide_append_char.o -o $(OUT)/wide_append_char.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_append_char.elf $@
+
+$(OUT)/wide_assign_range.bin: native/wide_assign_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_assign_range.o
+	ld -m elf_i386 -Ttext=0x44f9b0 -e original_wide_assign_range $(OUT)/wide_assign_range.o -o $(OUT)/wide_assign_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_assign_range.elf $@
+
+test-path-refresh: $(OUT)/reriff-match $(OUT)/save_device_refresh.bin $(OUT)/wide_append_char.bin $(OUT)/wide_assign_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" save-device-refresh $(OUT)/save_device_refresh.bin $(OUT)/save-device-refresh-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-append-char $(OUT)/wide_append_char.bin $(OUT)/wide-append-char-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-assign-range $(OUT)/wide_assign_range.bin $(OUT)/wide-assign-range-comparison.json
+
+test-recovered: test-path-refresh
+.PHONY: test-path-refresh
+
+$(OUT)/wide_assign_substring.bin: native/wide_assign_substring.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_assign_substring.o
+	ld -m elf_i386 -Ttext=0x44fb30 -e original_wide_assign_substring $(OUT)/wide_assign_substring.o -o $(OUT)/wide_assign_substring.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_assign_substring.elf $@
+
+$(OUT)/wide_truncate.bin: native/wide_truncate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_truncate.o
+	ld -m elf_i386 -Ttext=0x44fcf0 -e original_wide_truncate $(OUT)/wide_truncate.o -o $(OUT)/wide_truncate.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_truncate.elf $@
+
+$(OUT)/wide_erase.bin: native/wide_erase.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_erase.o
+	ld -m elf_i386 -Ttext=0x44fd30 -e original_wide_erase $(OUT)/wide_erase.o -o $(OUT)/wide_erase.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_erase.elf $@
+
+$(OUT)/wide_grow.bin: native/wide_grow.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_grow.o
+	ld -m elf_i386 -Ttext=0x44fde0 -e original_wide_grow $(OUT)/wide_grow.o -o $(OUT)/wide_grow.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_grow.elf $@
+
+$(OUT)/wide_allocate.bin: native/wide_allocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_allocate.o
+	ld -m elf_i386 -Ttext=0x44ff40 -e original_wide_allocate $(OUT)/wide_allocate.o -o $(OUT)/wide_allocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_allocate.elf $@
+
+test-wide-storage: $(OUT)/reriff-match $(OUT)/wide_assign_substring.bin $(OUT)/wide_truncate.bin $(OUT)/wide_erase.bin $(OUT)/wide_grow.bin $(OUT)/wide_allocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-assign-substring $(OUT)/wide_assign_substring.bin $(OUT)/wide-assign-substring-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-truncate $(OUT)/wide_truncate.bin $(OUT)/wide-truncate-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-erase $(OUT)/wide_erase.bin $(OUT)/wide-erase-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-grow $(OUT)/wide_grow.bin $(OUT)/wide-grow-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-allocate $(OUT)/wide_allocate.bin $(OUT)/wide-allocate-comparison.json
+
+test-recovered: test-wide-storage
+.PHONY: test-wide-storage
+
+$(OUT)/wide_growth_runtime.elf: native/wide_growth_runtime.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_growth_runtime.o
+	ld -m elf_i386 -e original_wide_grow_handler --section-start=.wide_grow_handler=0x8ffa00 --section-start=.cxx_frame_handler_import=0x8f8968 --section-start=.cxx_throw_import=0x8f8d5a --section-start=.memcpy_import=0x8f8d66 $(OUT)/wide_growth_runtime.o -o $@
+
+$(OUT)/wide_grow_handler.bin: $(OUT)/wide_growth_runtime.elf
+	objcopy -O binary --only-section=.wide_grow_handler $< $@
+
+$(OUT)/cxx_frame_handler_import.bin: $(OUT)/wide_growth_runtime.elf
+	objcopy -O binary --only-section=.cxx_frame_handler_import $< $@
+
+$(OUT)/cxx_throw_import.bin: $(OUT)/wide_growth_runtime.elf
+	objcopy -O binary --only-section=.cxx_throw_import $< $@
+
+$(OUT)/memcpy_import.bin: $(OUT)/wide_growth_runtime.elf
+	objcopy -O binary --only-section=.memcpy_import $< $@
+
+test-wide-growth-runtime: $(OUT)/reriff-match $(OUT)/wide_grow_handler.bin $(OUT)/cxx_frame_handler_import.bin $(OUT)/cxx_throw_import.bin $(OUT)/memcpy_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-grow-handler $(OUT)/wide_grow_handler.bin $(OUT)/wide-grow-handler-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" cxx-frame-handler-import $(OUT)/cxx_frame_handler_import.bin $(OUT)/cxx-frame-handler-import-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" cxx-throw-import $(OUT)/cxx_throw_import.bin $(OUT)/cxx-throw-import-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" memcpy-import $(OUT)/memcpy_import.bin $(OUT)/memcpy-import-comparison.json
+
+test-recovered: test-wide-growth-runtime
+.PHONY: test-wide-growth-runtime
+
+$(OUT)/wide_reserve.bin: native/wide_reserve.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_reserve.o
+	ld -m elf_i386 -Ttext=0x44fc30 -e original_wide_reserve $(OUT)/wide_reserve.o -o $(OUT)/wide_reserve.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_reserve.elf $@
+
+$(OUT)/wide_append_range.bin: native/wide_append_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_append_range.o
+	ld -m elf_i386 -Ttext=0x44ff80 -e original_wide_append_range $(OUT)/wide_append_range.o -o $(OUT)/wide_append_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_append_range.elf $@
+
+$(OUT)/wide_append_range_handler.bin: native/wide_append_range_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_append_range_handler.o
+	ld -m elf_i386 -Ttext=0x8ffa20 -e original_wide_append_range_handler $(OUT)/wide_append_range_handler.o -o $(OUT)/wide_append_range_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_append_range_handler.elf $@
+
+test-wide-range: $(OUT)/reriff-match $(OUT)/wide_reserve.bin $(OUT)/wide_append_range.bin $(OUT)/wide_append_range_handler.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-reserve $(OUT)/wide_reserve.bin $(OUT)/wide_reserve-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-append-range $(OUT)/wide_append_range.bin $(OUT)/wide_append_range-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-append-range-handler $(OUT)/wide_append_range_handler.bin $(OUT)/wide_append_range_handler-comparison.json
+
+test-recovered: test-wide-range
+.PHONY: test-wide-range
