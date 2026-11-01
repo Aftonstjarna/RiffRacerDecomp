@@ -140,3 +140,31 @@ Checked against the original supported executable's CLI MethodDef table and IL:
 These are verified original semantics and mod-integration evidence, not new
 source-built reconstruction. Verified coverage remains 67,275 / 8,635,392 bytes
 (0.77906133%); this documentation adds no matching-byte credit.
+
+## Native Apply selection and reusable save-prompt evidence
+
+Checked against supported original Game.exe metadata, IL and native instructions:
+
+- `gaGraphicsOptions.initScreens` (IL RVA 0x2EDD4C), IL offsets
+  0x0ABD..0x0AD4, clears bit 1 at Apply item +372 using AND 253. Apply is
+  the existing sprite-35 button with ID 3; disabling directional selection
+  is deliberate original behavior, not evidence of a missing sprite.
+- `elUIItem.setAsMenuItem`, token 0x060016AA, native VA 0x44B530, sets
+  both flag bits 1 and 2 at item +372 from its boolean argument. The original
+  instructions at 0x44B56F..0x44B592 establish these writes. The routine also
+  assigns the native menu material; it is not merely a raw bit-1 setter.
+  Input masks at +76 remain a separate concern. ReRiff's test doubles were
+  extended to check focus/highlight and screen-mask integration; actual
+  controller/hover behavior remains a live mod-validation question.
+- `gaQuitConfirmMenu` is overlay state 9, established by its original ctor
+  (IL RVA 0x3607F8). Its original input handler (IL RVA 0x360B14) uses selection
+  2 for quit and otherwise pops the overlay except for -1. Its original Back
+  handling (IL RVA 0x360B6C) pops the overlay directly. A save/discard adaptation
+  must intercept the quit action and distinguish Back from an explicit choice.
+- `gaStateManager.setOverlayState` / `popOverlayState` are tokens
+  0x0600129B/0x0600129C, IL RVAs 0x2FE0A0/0x2FDFC4. The manager singleton is
+  RVA 0x7EEFE0; its current overlay pointer is +44. ReRiff reuses these methods
+  and the original dialog art/lifecycle, deferring callbacks until removal.
+
+These are original-function findings and intentional mod integration, not
+additional reconstructed spans. This ledger claims no new matching-byte credit.
