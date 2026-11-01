@@ -1008,3 +1008,29 @@ test-wide-growth-runtime: $(OUT)/reriff-match $(OUT)/wide_grow_handler.bin $(OUT
 
 test-recovered: test-wide-growth-runtime
 .PHONY: test-wide-growth-runtime
+
+$(OUT)/wide_reserve.bin: native/wide_reserve.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_reserve.o
+	ld -m elf_i386 -Ttext=0x44fc30 -e original_wide_reserve $(OUT)/wide_reserve.o -o $(OUT)/wide_reserve.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_reserve.elf $@
+
+$(OUT)/wide_append_range.bin: native/wide_append_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_append_range.o
+	ld -m elf_i386 -Ttext=0x44ff80 -e original_wide_append_range $(OUT)/wide_append_range.o -o $(OUT)/wide_append_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_append_range.elf $@
+
+$(OUT)/wide_append_range_handler.bin: native/wide_append_range_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_append_range_handler.o
+	ld -m elf_i386 -Ttext=0x8ffa20 -e original_wide_append_range_handler $(OUT)/wide_append_range_handler.o -o $(OUT)/wide_append_range_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_append_range_handler.elf $@
+
+test-wide-range: $(OUT)/reriff-match $(OUT)/wide_reserve.bin $(OUT)/wide_append_range.bin $(OUT)/wide_append_range_handler.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-reserve $(OUT)/wide_reserve.bin $(OUT)/wide_reserve-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-append-range $(OUT)/wide_append_range.bin $(OUT)/wide_append_range-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-append-range-handler $(OUT)/wide_append_range_handler.bin $(OUT)/wide_append_range_handler-comparison.json
+
+test-recovered: test-wide-range
+.PHONY: test-wide-range

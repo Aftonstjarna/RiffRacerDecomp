@@ -3,7 +3,10 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"wide-grow-handler",0x4ffa00,27},
+  return {NativeBlock{"wide-reserve",0x4fc30,182},
+                     NativeBlock{"wide-append-range",0x4ff80,207},
+                     NativeBlock{"wide-append-range-handler",0x4ffa20,27},
+                     NativeBlock{"wide-grow-handler",0x4ffa00,27},
                      NativeBlock{"cxx-frame-handler-import",0x4f8968,6},
                      NativeBlock{"cxx-throw-import",0x4f8d5a,6},
                      NativeBlock{"memcpy-import",0x4f8d66,6},
