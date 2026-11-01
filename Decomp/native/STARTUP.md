@@ -218,3 +218,8 @@ arrays are embedded. Development-container coverage, matching-verifier and
 drafter checks pass: 67,129 / 8,635,392 bytes (0.77737062%), 110 exact fragments.
 No complete matching executable is claimed. ReRiff's newer semantic evidence is
 indexed separately in ../RERIFF-EVIDENCE.md; it earns no coverage credit.
+
+Follow-up [range exception findings](RANGE-EXCEPTIONS.md) decode the original
+88-byte FuncInfo/unwind/try/handler graph and identify adjacent adjustors sharing
+a scalar-deleting destructor. These findings are not new reconstructed bytes;
+verified coverage remains 67,129 / 8,635,392 bytes (0.77737062%).
