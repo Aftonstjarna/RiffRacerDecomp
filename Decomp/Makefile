@@ -916,3 +916,29 @@ test-save-string-helpers: $(OUT)/reriff-match $(OUT)/save_device_set_name.bin $(
 
 test-recovered: test-save-string-helpers
 .PHONY: test-save-string-helpers
+
+$(OUT)/save_device_refresh.bin: native/save_device_refresh.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/save_device_refresh.o
+	ld -m elf_i386 -Ttext=0x535ec0 -e original_save_device_refresh $(OUT)/save_device_refresh.o -o $(OUT)/save_device_refresh.elf
+	objcopy -O binary --only-section=.text $(OUT)/save_device_refresh.elf $@
+
+$(OUT)/wide_append_char.bin: native/wide_append_char.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_append_char.o
+	ld -m elf_i386 -Ttext=0x44f8f0 -e original_wide_append_char $(OUT)/wide_append_char.o -o $(OUT)/wide_append_char.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_append_char.elf $@
+
+$(OUT)/wide_assign_range.bin: native/wide_assign_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_assign_range.o
+	ld -m elf_i386 -Ttext=0x44f9b0 -e original_wide_assign_range $(OUT)/wide_assign_range.o -o $(OUT)/wide_assign_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_assign_range.elf $@
+
+test-path-refresh: $(OUT)/reriff-match $(OUT)/save_device_refresh.bin $(OUT)/wide_append_char.bin $(OUT)/wide_assign_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" save-device-refresh $(OUT)/save_device_refresh.bin $(OUT)/save-device-refresh-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-append-char $(OUT)/wide_append_char.bin $(OUT)/wide-append-char-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" wide-assign-range $(OUT)/wide_assign_range.bin $(OUT)/wide-assign-range-comparison.json
+
+test-recovered: test-path-refresh
+.PHONY: test-path-refresh

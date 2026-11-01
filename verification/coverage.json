@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 65021,
-  "remaining_bytes": 8570371,
-  "verified_percent": 0.7529594487430333,
-  "registered_blocks": 95,
-  "exact_blocks": 95,
+  "verified_bytes": 65799,
+  "remaining_bytes": 8569593,
+  "verified_percent": 0.7619688834044824,
+  "registered_blocks": 98,
+  "exact_blocks": 98,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -20,6 +20,24 @@
       "byte_equal": true,
       "reference_sha256": "f90a7cbb32a5ccb797b26ae4f0c8a954ee0ded32d17396827d443a24fc7194df",
       "candidate_sha256": "f90a7cbb32a5ccb797b26ae4f0c8a954ee0ded32d17396827d443a24fc7194df"
+    },
+    {
+      "name": "wide-append-char",
+      "file_offset": 322800,
+      "size": 177,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "d97d1b75e528935ef308082c3463f5b5db43f565013d94e312b1ac020d62c65f",
+      "candidate_sha256": "d97d1b75e528935ef308082c3463f5b5db43f565013d94e312b1ac020d62c65f"
+    },
+    {
+      "name": "wide-assign-range",
+      "file_offset": 322992,
+      "size": 246,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "8eb49457191f2dddedaa2e1aca69357e8fb3905017ba1db4b3b6d4f0ac9f0312",
+      "candidate_sha256": "8eb49457191f2dddedaa2e1aca69357e8fb3905017ba1db4b3b6d4f0ac9f0312"
     },
     {
       "name": "window-frame",
@@ -551,6 +569,15 @@
       "byte_equal": true,
       "reference_sha256": "57ffdf74200ec0a9c57bee17680c149ff3d9905752c3f4dae0e52ea7b904439b",
       "candidate_sha256": "57ffdf74200ec0a9c57bee17680c149ff3d9905752c3f4dae0e52ea7b904439b"
+    },
+    {
+      "name": "save-device-refresh",
+      "file_offset": 1266368,
+      "size": 355,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "71a5720c25a2668c4fa46a3dd247f4655baf09a4c13801d1e923b21e701d31b3",
+      "candidate_sha256": "71a5720c25a2668c4fa46a3dd247f4655baf09a4c13801d1e923b21e701d31b3"
     },
     {
       "name": "wide-assign",
