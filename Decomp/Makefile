@@ -1117,3 +1117,36 @@ test-decode-worker: $(OUT)/reriff-match $(OUT)/decode_worker_ctor.bin $(OUT)/dec
 
 test-recovered: test-decode-worker
 .PHONY: test-decode-worker
+
+$(OUT)/decode_request_prepare.bin: native/decode_request_prepare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_request_prepare.o
+	ld -m elf_i386 -Ttext=0x48d870 -e original_decode_request_prepare $(OUT)/decode_request_prepare.o -o $(OUT)/decode_request_prepare.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_request_prepare.elf $@
+
+$(OUT)/decode_request_unwind.bin: native/decode_request_unwind.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_request_unwind.o
+	ld -m elf_i386 -Ttext=0x901770 -e original_decode_request_unwind $(OUT)/decode_request_unwind.o -o $(OUT)/decode_request_unwind.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_request_unwind.elf $@
+
+$(OUT)/decode_request_handler.bin: native/decode_request_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_request_handler.o
+	ld -m elf_i386 -Ttext=0x901778 -e original_decode_request_handler $(OUT)/decode_request_handler.o -o $(OUT)/decode_request_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_request_handler.elf $@
+
+$(OUT)/resource_reference_release.bin: native/resource_reference_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_reference_release.o
+	ld -m elf_i386 -Ttext=0x41cd10 -e original_resource_reference_release $(OUT)/resource_reference_release.o -o $(OUT)/resource_reference_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_reference_release.elf $@
+
+test-decode-request: $(OUT)/reriff-match $(OUT)/decode_request_prepare.bin $(OUT)/decode_request_unwind.bin $(OUT)/decode_request_handler.bin $(OUT)/resource_reference_release.bin
+	$(OUT)/reriff-match native-check "$(GAME)" decode-request-prepare $(OUT)/decode_request_prepare.bin $(OUT)/decode-request-prepare-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" decode-request-unwind $(OUT)/decode_request_unwind.bin $(OUT)/decode-request-unwind-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" decode-request-handler $(OUT)/decode_request_handler.bin $(OUT)/decode-request-handler-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" resource-reference-release $(OUT)/resource_reference_release.bin $(OUT)/resource-reference-release-comparison.json
+
+test-recovered: test-decode-request
+.PHONY: test-decode-request

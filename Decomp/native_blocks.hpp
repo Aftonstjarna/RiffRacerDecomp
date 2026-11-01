@@ -120,7 +120,11 @@ inline std::vector<NativeBlock> nativeBlocks() {
                      NativeBlock{"shader-drift-ctor",0x1788c0,149},
                      NativeBlock{"shader-normalmapped-ctor",0x1789c0,602},
                      NativeBlock{"shader-fxaa-ctor",0x1794f0,351},
-                     NativeBlock{"shader-glass-ctor",0x179860,585}};
+                     NativeBlock{"shader-glass-ctor",0x179860,585},
+                     NativeBlock{"decode-request-prepare",0x8d870,323},
+                     NativeBlock{"decode-request-unwind",0x501770,8},
+                     NativeBlock{"decode-request-handler",0x501778,27},
+                     NativeBlock{"resource-reference-release",0x1cd10,18}};
 }
 inline NativeBlock nativeBlock(const std::string &name) {
   for (auto block : nativeBlocks())

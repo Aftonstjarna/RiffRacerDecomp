@@ -2,16 +2,25 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 68375,
-  "remaining_bytes": 8567017,
-  "verified_percent": 0.791799607939049,
-  "registered_blocks": 119,
-  "exact_blocks": 119,
+  "verified_bytes": 68751,
+  "remaining_bytes": 8566641,
+  "verified_percent": 0.7961537820170758,
+  "registered_blocks": 123,
+  "exact_blocks": 123,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
   "masked_bytes": 0,
   "blocks": [
+    {
+      "name": "resource-reference-release",
+      "file_offset": 114960,
+      "size": 18,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "83d5e760d05b204d65cdcbde4d091f4e7f46fe8dddf5fb15ae4fd46feb323f6e",
+      "candidate_sha256": "83d5e760d05b204d65cdcbde4d091f4e7f46fe8dddf5fb15ae4fd46feb323f6e"
+    },
     {
       "name": "narrow-range-destroy",
       "file_offset": 154864,
@@ -209,6 +218,15 @@
       "byte_equal": true,
       "reference_sha256": "f5db8acd5dfe3c4d7ab120df1e6ca6464e2cf216cd785c1b7b7ac528a8e69c33",
       "candidate_sha256": "f5db8acd5dfe3c4d7ab120df1e6ca6464e2cf216cd785c1b7b7ac528a8e69c33"
+    },
+    {
+      "name": "decode-request-prepare",
+      "file_offset": 576624,
+      "size": 323,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "b71301e24b39f47a9f301a118c0a9f52ce64ccc6c64e54c66f19cb65079edacf",
+      "candidate_sha256": "b71301e24b39f47a9f301a118c0a9f52ce64ccc6c64e54c66f19cb65079edacf"
     },
     {
       "name": "decode-worker-dispatch",
@@ -1055,6 +1073,24 @@
       "byte_equal": true,
       "reference_sha256": "23853f377ba5cdf5eba878b542a0038b83c2b222684e96cad65fb4e90d4c0a9f",
       "candidate_sha256": "23853f377ba5cdf5eba878b542a0038b83c2b222684e96cad65fb4e90d4c0a9f"
+    },
+    {
+      "name": "decode-request-unwind",
+      "file_offset": 5245808,
+      "size": 8,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "0269bf07abb1117748e50373cdb49c6763d0506249345d9c789a202b8597bf2f",
+      "candidate_sha256": "0269bf07abb1117748e50373cdb49c6763d0506249345d9c789a202b8597bf2f"
+    },
+    {
+      "name": "decode-request-handler",
+      "file_offset": 5245816,
+      "size": 27,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "ce8fdd6f365beffc8bc99de50263e30e24bb927795ab95f3977caa0d9f63b808",
+      "candidate_sha256": "ce8fdd6f365beffc8bc99de50263e30e24bb927795ab95f3977caa0d9f63b808"
     },
     {
       "name": "shader-basic2d-handler",
