@@ -982,3 +982,29 @@ test-wide-storage: $(OUT)/reriff-match $(OUT)/wide_assign_substring.bin $(OUT)/w
 
 test-recovered: test-wide-storage
 .PHONY: test-wide-storage
+
+$(OUT)/wide_growth_runtime.elf: native/wide_growth_runtime.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_growth_runtime.o
+	ld -m elf_i386 -e original_wide_grow_handler --section-start=.wide_grow_handler=0x8ffa00 --section-start=.cxx_frame_handler_import=0x8f8968 --section-start=.cxx_throw_import=0x8f8d5a --section-start=.memcpy_import=0x8f8d66 $(OUT)/wide_growth_runtime.o -o $@
+
+$(OUT)/wide_grow_handler.bin: $(OUT)/wide_growth_runtime.elf
+	objcopy -O binary --only-section=.wide_grow_handler $< $@
+
+$(OUT)/cxx_frame_handler_import.bin: $(OUT)/wide_growth_runtime.elf
+	objcopy -O binary --only-section=.cxx_frame_handler_import $< $@
+
+$(OUT)/cxx_throw_import.bin: $(OUT)/wide_growth_runtime.elf
+	objcopy -O binary --only-section=.cxx_throw_import $< $@
+
+$(OUT)/memcpy_import.bin: $(OUT)/wide_growth_runtime.elf
+	objcopy -O binary --only-section=.memcpy_import $< $@
+
+test-wide-growth-runtime: $(OUT)/reriff-match $(OUT)/wide_grow_handler.bin $(OUT)/cxx_frame_handler_import.bin $(OUT)/cxx_throw_import.bin $(OUT)/memcpy_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-grow-handler $(OUT)/wide_grow_handler.bin $(OUT)/wide-grow-handler-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" cxx-frame-handler-import $(OUT)/cxx_frame_handler_import.bin $(OUT)/cxx-frame-handler-import-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" cxx-throw-import $(OUT)/cxx_throw_import.bin $(OUT)/cxx-throw-import-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" memcpy-import $(OUT)/memcpy_import.bin $(OUT)/memcpy-import-comparison.json
+
+test-recovered: test-wide-growth-runtime
+.PHONY: test-wide-growth-runtime

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 66668,
-  "remaining_bytes": 8568724,
-  "verified_percent": 0.7720321208348156,
-  "registered_blocks": 103,
-  "exact_blocks": 103,
+  "verified_bytes": 66713,
+  "remaining_bytes": 8568679,
+  "verified_percent": 0.7725532320941539,
+  "registered_blocks": 107,
+  "exact_blocks": 107,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -859,6 +859,15 @@
       "candidate_sha256": "4e6da30c0b91afc6ba6caff866ef0f8a0cf4c5599632fc7812960e2d92fa5fa2"
     },
     {
+      "name": "cxx-frame-handler-import",
+      "file_offset": 5209448,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "4be57f214eb0a8316faef2261e4731d6bc31d89f048f4df5308becd3a3a01906",
+      "candidate_sha256": "4be57f214eb0a8316faef2261e4731d6bc31d89f048f4df5308becd3a3a01906"
+    },
+    {
       "name": "crt-entry",
       "file_offset": 5209732,
       "size": 10,
@@ -875,6 +884,24 @@
       "byte_equal": true,
       "reference_sha256": "d6d6523f2c601f05d64a4378ee0ee9507a016b867d25a3903eb4f419f6400844",
       "candidate_sha256": "d6d6523f2c601f05d64a4378ee0ee9507a016b867d25a3903eb4f419f6400844"
+    },
+    {
+      "name": "cxx-throw-import",
+      "file_offset": 5210458,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "c808d2678a24812882e1db5b8d6a148d22818015938c16a310e742f7d803c4c6",
+      "candidate_sha256": "c808d2678a24812882e1db5b8d6a148d22818015938c16a310e742f7d803c4c6"
+    },
+    {
+      "name": "memcpy-import",
+      "file_offset": 5210470,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "d05fd5d905112eeb13e48d0fec230e6b1638868a7830f8a5fd8df989e05361c8",
+      "candidate_sha256": "d05fd5d905112eeb13e48d0fec230e6b1638868a7830f8a5fd8df989e05361c8"
     },
     {
       "name": "runtime-fp-convert",
@@ -911,6 +938,15 @@
       "byte_equal": true,
       "reference_sha256": "2f52b9d543812194b296dbad695ae0351408ee32037dc98387764deb1fe96499",
       "candidate_sha256": "2f52b9d543812194b296dbad695ae0351408ee32037dc98387764deb1fe96499"
+    },
+    {
+      "name": "wide-grow-handler",
+      "file_offset": 5238272,
+      "size": 27,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "8d4c52f7e3f2c320f9115517da66b436fb3bd6b1bb029259f65da55d2af90da1",
+      "candidate_sha256": "8d4c52f7e3f2c320f9115517da66b436fb3bd6b1bb029259f65da55d2af90da1"
     },
     {
       "name": "shader-basic2d-handler",
