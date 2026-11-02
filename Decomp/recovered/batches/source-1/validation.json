@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "959beea799f2b105104f88619ee3b9cb73b368f218d23df901a88a8d247d291d",
+    "impl.hpp": "a646e5093c7f17ace6644735333e957e9311ad06199c20ae2bf46040378a9dba",
+    "test.cpp": "0bc9335609342a829c2a078920598bc9fa5820529b66309b1d3b3d4b83c954cd"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 64,
+      "candidate_size": 64,
+      "candidate_sha256": "7577fddbde8bd43edecbd7d94c45d1573225a57c2a08021d8f77ae219fa173c1",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "7577fddbde8bd43edecbd7d94c45d1573225a57c2a08021d8f77ae219fa173c1",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "narrow-inline-swap",
+      "rva": 335120,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "82b1cd50e7faa4a3d7640c5d9693140a57d92272",
+  "test_output": "narrow-inline-swap: all comparisons passed\n"
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, accepted assembly, and original executable disassembly. Control flow preserves forward overlapping swaps, equality and unsigned-wrap early returns, ABI expectations, and storage-only side effects. Independently verified the reference's 64 bytes against Game.exe, rebuilt the candidate, and passed its differential tests calling that verified original routine. Tests cover overlap in both directions, alignment, equality, disjoint storage, wrap cases, and full-buffer changes. Documented pointer-access and platform limitations remain; sampled validation does not establish all-input equivalence or exact matching."
+}
