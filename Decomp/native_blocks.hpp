@@ -3,7 +3,10 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"narrow-reset-handler",0x501748,40},
+  return {NativeBlock{"narrow-destroy",0x15b60,39},
+                     NativeBlock{"narrow-reset-unwind",0x501740,8},
+                     NativeBlock{"narrow-assign-substring",0x15fe0,279},
+                     NativeBlock{"narrow-reset-handler",0x501748,40},
                      NativeBlock{"narrow-inline-swap",0x51d10,64},
                      NativeBlock{"narrow-storage-swap",0x51b60,117},
                      NativeBlock{"narrow-string-reset",0x8d630,166},

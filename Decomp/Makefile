@@ -1183,3 +1183,29 @@ test-narrow-reset: $(OUT)/reriff-match $(OUT)/narrow_string_reset.bin $(OUT)/nar
 
 test-recovered: test-narrow-reset
 .PHONY: test-narrow-reset
+
+$(OUT)/narrow_destroy.bin: native/narrow_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_destroy.o
+	ld -m elf_i386 -Ttext=0x415b60 -e original_narrow_destroy $(OUT)/narrow_destroy.o -o $(OUT)/narrow_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_destroy.elf $@
+
+$(OUT)/narrow_reset_unwind.bin: native/narrow_reset_unwind.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_reset_unwind.o
+	ld -m elf_i386 -Ttext=0x901740 -e original_narrow_reset_unwind $(OUT)/narrow_reset_unwind.o -o $(OUT)/narrow_reset_unwind.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_reset_unwind.elf $@
+
+$(OUT)/narrow_assign_substring.bin: native/narrow_assign_substring.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_assign_substring.o
+	ld -m elf_i386 -Ttext=0x415fe0 -e original_narrow_assign_substring $(OUT)/narrow_assign_substring.o -o $(OUT)/narrow_assign_substring.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_assign_substring.elf $@
+
+test-narrow-dependencies: $(OUT)/reriff-match $(OUT)/narrow_destroy.bin $(OUT)/narrow_reset_unwind.bin $(OUT)/narrow_assign_substring.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-destroy $(OUT)/narrow_destroy.bin $(OUT)/narrow-destroy-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-reset-unwind $(OUT)/narrow_reset_unwind.bin $(OUT)/narrow-reset-unwind-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-assign-substring $(OUT)/narrow_assign_substring.bin $(OUT)/narrow-assign-substring-comparison.json
+
+test-recovered: test-narrow-dependencies
+.PHONY: test-narrow-dependencies
