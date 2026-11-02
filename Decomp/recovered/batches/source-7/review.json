@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Readable unmatched C++ correctly recovers the close routine’s control flow and side effects.",
+  "reason": "Reviewed every submitted source/header, metadata, reference assembly and relevant documentation. Independently built and ran the tests with the original routine and import slot mapped at their actual addresses; full comparisons passed. Verified the 38 reference bytes against immutable Game.exe. Tests cover null/non-null handles, state patterns, close errors, callback mutations, write ordering, guards and repeated closes. ABI adaptation and unresolved layout/runtime limits are explicit. This supports sampled behavioral recovery only, with zero matching-source byte credit and no all-input equivalence claim."
+}

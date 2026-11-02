@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Save device stream close",
+  "summary": "Recovered VA 0x535C20: null handle leaves all fields unchanged; otherwise clear +0xC, call cdecl fclose import, clear +0x10, return true regardless of fclose result. Original is no-argument i386 thiscall with boolean AL result. Portable source injects the platform close dependency.",
+  "targets": ["save-device-close"],
+  "references": ["save-device-close"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare full guarded object against expected effects for five state patterns, four opaque stream values, five fclose return values, callback mutation on/off, and repeated closes. Callback verifies argument, call count and pre-call field ordering. Compare directly with original for every case when test-only .oracle_import is linked at 0x92D470; otherwise compare original null cases and recovered nonnull cases, explicitly reporting that limitation. Local verification maps the slot and original routine at their actual addresses and checks accepted assembly bytes against Game.exe.",
+  "known_limits": [
+    "Meaning of the 32-bit field at +0xC and complete class layout remain unresolved; only the touched prefix is modeled.",
+    "Real Windows CRT fclose behavior is an external dependency, tested through an instrumented cdecl callback rather than real files.",
+    "Nonnull direct-original tests require .oracle_import at 0x92D470. A trusted link that does not map that test data section runs only null-handle original comparisons and reports this explicitly.",
+    "Null this is invalid in the original; invalid stream pointers are passed through to the external runtime. No validation or recovery was invented.",
+    "Upper EAX bits are unspecified for the original boolean return; tests compare only the declared bool result. Callback exceptions and nonlocal exits are not modeled."
+  ]
+}
