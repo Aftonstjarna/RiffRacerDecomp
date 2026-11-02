@@ -1150,3 +1150,36 @@ test-decode-request: $(OUT)/reriff-match $(OUT)/decode_request_prepare.bin $(OUT
 
 test-recovered: test-decode-request
 .PHONY: test-decode-request
+
+$(OUT)/narrow_string_reset.bin: native/narrow_string_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_string_reset.o
+	ld -m elf_i386 -Ttext=0x48d630 -e original_narrow_string_reset $(OUT)/narrow_string_reset.o -o $(OUT)/narrow_string_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_string_reset.elf $@
+
+$(OUT)/narrow_storage_swap.bin: native/narrow_storage_swap.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_storage_swap.o
+	ld -m elf_i386 -Ttext=0x451b60 -e original_narrow_storage_swap $(OUT)/narrow_storage_swap.o -o $(OUT)/narrow_storage_swap.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_storage_swap.elf $@
+
+$(OUT)/narrow_inline_swap.bin: native/narrow_inline_swap.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_inline_swap.o
+	ld -m elf_i386 -Ttext=0x451d10 -e original_narrow_inline_swap $(OUT)/narrow_inline_swap.o -o $(OUT)/narrow_inline_swap.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_inline_swap.elf $@
+
+$(OUT)/narrow_reset_handler.bin: native/narrow_reset_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_reset_handler.o
+	ld -m elf_i386 -Ttext=0x901748 -e original_narrow_reset_handler $(OUT)/narrow_reset_handler.o -o $(OUT)/narrow_reset_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_reset_handler.elf $@
+
+test-narrow-reset: $(OUT)/reriff-match $(OUT)/narrow_string_reset.bin $(OUT)/narrow_storage_swap.bin $(OUT)/narrow_inline_swap.bin $(OUT)/narrow_reset_handler.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-string-reset $(OUT)/narrow_string_reset.bin $(OUT)/narrow-string-reset-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-storage-swap $(OUT)/narrow_storage_swap.bin $(OUT)/narrow-storage-swap-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-inline-swap $(OUT)/narrow_inline_swap.bin $(OUT)/narrow-inline-swap-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-reset-handler $(OUT)/narrow_reset_handler.bin $(OUT)/narrow-reset-handler-comparison.json
+
+test-recovered: test-narrow-reset
+.PHONY: test-narrow-reset
