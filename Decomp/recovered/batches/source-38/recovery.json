@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Save device destructor",
+  "summary": "Recovered the ordinary thiscall destructor at VA 0x5357a0 from original disassembly and byte-verified accepted assembly. Installs derived vtables, conditionally deletes second then first wide-string storage using unsigned capacity >= 8, resets each string, and installs the base primary vtable. The scalar-deleting caller at 0x535770 was inspected but is outside recovered scope. Deallocation is an explicit cdecl callback dependency for porting.",
+  "targets": ["save-device-destruct"],
+  "references": ["save-device-destruct"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Built with specified C++17 i386 freestanding flags and ran 192 differential cases against original_save_device_destruct at its original address. Capacities 0, 1, 7, 8, 9, 0x7fffffff, 0x80000000, and 0xffffffff are crossed for both fields, with null, distinct, and aliased synthetic pointers and inconsistent lengths. A cdecl callback bound to the original import slot records pointer order and full object snapshots at each delete. Tests compare original and recovered results, independently assert intermediate vtable and reset states, compare all object bytes including untouched storage tails and unknown fields, and verify surrounding guards. Accepted oracle bytes were compared directly with all 100 bytes in Game.exe. All cases passed.",
+  "known_limits": [
+    "Actual allocator internals and exception propagation are external dependencies; test callback observes deletion without freeing synthetic pointers. Real heap allocation/free integration is not tested.",
+    "Only the observed 0x44-byte object prefix and string layout are named; unknown fields and full class inheritance are unresolved. No fields beyond this prefix are accessed by the original routine.",
+    "Vtable values preserve original Windows address identities; a Linux port must bind corresponding native class metadata. No virtual methods are invoked here.",
+    "Invalid this pointers and throwing callbacks are not tested. There is no original null-this guard or local exception cleanup.",
+    "The recovered entry uses an explicit additional deallocator argument; the original ordinary destructor receives only this in ECX and resolves its cdecl deallocator through import address 0x92d4b0. The scalar-deleting wrapper is not recovered."
+  ]
+}
