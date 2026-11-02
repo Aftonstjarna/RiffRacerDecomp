@@ -1,13 +1,22 @@
-# Matching original reconstruction
+# Original behavior recovery and byte comparison
 
-The baseline objective is a source-built Windows `Game.exe` that matches the
-supported original **byte for byte across the entire file**. The native Linux
-C++ port is separate work and cannot be used to claim that baseline is complete.
+The primary goal is understandable, buildable recovery of the original game's
+behavior that supports a faithful native Linux port and modding. Non-byte-matching
+C++ is useful when grounded in original code and validated against reference
+behavior. Record tests, known differences and unresolved paths explicitly.
+
+A Windows `Game.exe` matching every original byte is an optional research target,
+not a prerequisite for this work. The strict comparator below validates byte
+claims; it is not the only acceptance criterion for useful recovery. Keep native
+port changes and intentional gameplay modifications identifiable separately.
 
 **Current status: no matching source rebuild exists.** ILSpy's `Module.cs` is
 research output with unsupported native functions/data and decompiler errors;
 it is not compilable recovered game source. Numerical parity tests exercise
 selected behavior and do not prove equivalence for every input or binary identity.
+The accepted fragment ledger currently contains assembly-level reference matches,
+not compiled high-level game-source coverage. See the [project status](../README.md#current-status)
+for the separate metrics and their limits.
 
 ## Evidence established
 
@@ -119,7 +128,7 @@ All 30,382 code/padding bytes and 140 data bytes rebuild from
 assembly source and match exactly in the development container. See [startup recovery](native/STARTUP.md)
 for the original behavior, scope, addresses and reproduction command.
 
-## Required recovery work
+## Recovery workflow
 
 The [symbolic assembly drafter](DRAFTING.md) reduces manual transcription for
 reviewed native ranges; it never grants coverage credit to unreviewed output.
@@ -140,21 +149,26 @@ Regression tests cover overlap, duplicates, out-of-bounds spans, missing output,
 wrong lengths, byte mismatches and the distinction between coverage and a full
 source rebuild. Adding a registered block still requires reviewed source and a
 build rule; raw extracted bytes are not reconstruction evidence.
+These checks establish span-level byte equality only. Keep assembly transcription,
+semantic review and high-level source recovery distinct when reporting progress;
+the current ledger does not enforce the newer provenance classifications.
 
 The supplied [Ghidra workflow](GHIDRA.md) provides native decompilation and
 call references alongside ILSpy's managed-code research.
 
-1. Identify and reproduce the original mixed managed/native x86 toolchain,
-   libraries, compiler/linker options, metadata ordering and PE layout. The
-   existing CLR diagnostic host is not that build toolchain.
-2. Recover buildable original code and data while preserving tokens, exception
-   regions, calling conventions and native function boundaries. Keep decompiler
-   uncertainty explicit and consult original IL/machine code.
-3. Compile that reconstruction and use the strict comparator iteratively. Retain
-   reproducible build provenance. Copied binary sections do not count as recovered
-   source, even if they make a comparison pass.
-4. Derive platform changes in the Linux port from the recovered baseline. Continue
-   behavioral tests there, but label their narrower guarantees accurately.
+1. Recover buildable source and documented data formats from original IL, native
+   instructions and execution evidence. Preserve addresses/tokens, exception
+   paths, calling conventions and data layouts; record decompiler uncertainty.
+2. Validate behavior using original/reference cases. Record inputs, outputs,
+   side effects, error paths, tolerances and untested cases. Useful recovery may
+   compile differently; a passing sample is not proof of all-input equivalence.
+3. Where exact matching is useful, record compiler/linker/dependency versions,
+   reproduce the relevant layout and compare bytes without masks or patched
+   instruction blobs. Original mixed-mode toolchain recovery is a separate line
+   of investigation, not a prerequisite for steps 1 and 2.
+4. Use the recovered behavior to support Linux platform adaptations and explicit
+   modding changes. Keep those changes separate from the original reference and
+   validate the affected behavior. Copied binary sections never count as source.
 
 No whole-program byte-equivalence or 100% matching completion is claimed today.
 
