@@ -168,3 +168,26 @@ Checked against supported original Game.exe metadata, IL and native instructions
 
 These are original-function findings and intentional mod integration, not
 additional reconstructed spans. This ledger claims no new matching-byte credit.
+
+## Original Graphics toggle and Audio slider input (2026-11-01)
+
+Reference: DepotDownloader depot 351991, build 1687655, manifest
+8951408038967536554; Game.exe SHA-256
+`2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2`.
+
+- `gaGraphicsOptions.setTogglebarVars`, token `0x0600117D`, chooses thumb
+  sprite 75/74 and origin 3/5 from the fullscreen byte at menu +305. It copies
+  the bar position, subtracts bar width times menu +60 scale only when Off, and
+  adds +25 or -25 times that scale for Off or On. ReRiff's alignment regression
+  came from subsequently restoring an old thumb position in its added scrolling
+  layout; that is an intentional mod integration error, not original behaviour.
+- `gaOptionsMenu.tick`, token `0x0600119A`, polls native Left/Right masks
+  256/512 through pressed and held-repeat methods. The UI Scale adaptation must
+  retain one input owner rather than also activating button shortcuts.
+- Native direction handler VA `0x44AA60` uses +0x98 navigation mode; mode 1
+  selects +0x9C/+0xA0 for Up/Down and +0xA4/+0xA8 for Left/Right. At VA
+  `0x44AAF3`, bytes `83 F8 FF 74 66` compare the target to -1 and branch to
+  VA `0x44AB5E` without changing focus. Verified from original objdump output.
+
+This is original metadata/instruction evidence and mod integration guidance.
+No reconstructed source span or additional matching-byte credit is claimed.
