@@ -51,6 +51,12 @@ native Linux port. A systematic count of behavior-validated source and working
 port features has not yet been established; no overall port-completion
 percentage is claimed.
 
+The first [readable render-helper batch](Decomp/recovered/README.md) adds three
+unmatched C++ routines for matrix scaling, shader initialization and binding
+callbacks. Sampled tests compare their results and side effects to byte-checked
+original assembly. The documented GCC configuration passes; an optimized-build
+NaN difference and remaining ABI/platform limitations are recorded explicitly.
+
 The following are **byte-comparison metrics**, not overall recovery or port
 completion. They describe the accepted recovery on the
 [`decomp` branch](https://github.com/Aftonstjarna/RiffRacerDecomp/tree/decomp):
