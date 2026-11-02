@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Control flow preserves both groups’ reverse release order, load-before-clear sequencing, i386 thiscall/stdcall ABI, offsets and callback side effects. Independently verified the 83-byte reference against immutable Game.exe and rebuilt/reran all 384 differential cases, covering null masks, aliasing, callback mutations, resource effects and surrounding bytes. Tests actually call the verified original routine. No instruction blobs, inline assembly or disabled checks appear in submitted sources. Documented limitations are consistent with the evidence; sampled validation does not establish all-input equivalence or an exact matching rebuild."
+}
