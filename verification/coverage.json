@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 69464,
-  "remaining_bytes": 8565928,
-  "verified_percent": 0.8044105004150361,
-  "registered_blocks": 130,
-  "exact_blocks": 130,
+  "verified_bytes": 69983,
+  "remaining_bytes": 8565409,
+  "verified_percent": 0.810420650272738,
+  "registered_blocks": 133,
+  "exact_blocks": 133,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -29,6 +29,24 @@
       "byte_equal": true,
       "reference_sha256": "22836cf95d7c114547c60b566449fc9b5e399410063666086690797c2f1945e6",
       "candidate_sha256": "22836cf95d7c114547c60b566449fc9b5e399410063666086690797c2f1945e6"
+    },
+    {
+      "name": "narrow-erase",
+      "file_offset": 88672,
+      "size": 155,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "24207d0f5485ed71ccc383a6476313f916726fe113601253238a4fd447a8ed85",
+      "candidate_sha256": "24207d0f5485ed71ccc383a6476313f916726fe113601253238a4fd447a8ed85"
+    },
+    {
+      "name": "narrow-grow",
+      "file_offset": 89232,
+      "size": 337,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "b559287c865252dcb8d12fbb1fb309eba80dffb68b381de9bd2b29106e9879d2",
+      "candidate_sha256": "b559287c865252dcb8d12fbb1fb309eba80dffb68b381de9bd2b29106e9879d2"
     },
     {
       "name": "resource-reference-release",
@@ -1100,6 +1118,15 @@
       "byte_equal": true,
       "reference_sha256": "2f52b9d543812194b296dbad695ae0351408ee32037dc98387764deb1fe96499",
       "candidate_sha256": "2f52b9d543812194b296dbad695ae0351408ee32037dc98387764deb1fe96499"
+    },
+    {
+      "name": "narrow-handler",
+      "file_offset": 5229440,
+      "size": 27,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "992a3b8c42876d43d0a6018dbf527c2538d49b57905736af70fe1ebce67bc2d6",
+      "candidate_sha256": "992a3b8c42876d43d0a6018dbf527c2538d49b57905736af70fe1ebce67bc2d6"
     },
     {
       "name": "wide-grow-handler",

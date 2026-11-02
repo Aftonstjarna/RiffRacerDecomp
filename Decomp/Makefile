@@ -1209,3 +1209,29 @@ test-narrow-dependencies: $(OUT)/reriff-match $(OUT)/narrow_destroy.bin $(OUT)/n
 
 test-recovered: test-narrow-dependencies
 .PHONY: test-narrow-dependencies
+
+$(OUT)/narrow_erase.bin: native/narrow_erase.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_erase.o
+	ld -m elf_i386 -Ttext=0x416660 -e original_narrow_erase $(OUT)/narrow_erase.o -o $(OUT)/narrow_erase.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_erase.elf $@
+
+$(OUT)/narrow_grow.bin: native/narrow_grow.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_grow.o
+	ld -m elf_i386 -Ttext=0x416890 -e original_narrow_grow $(OUT)/narrow_grow.o -o $(OUT)/narrow_grow.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_grow.elf $@
+
+$(OUT)/narrow_handler.bin: native/narrow_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_handler.o
+	ld -m elf_i386 -Ttext=0x8fd780 -e original_narrow_handler $(OUT)/narrow_handler.o -o $(OUT)/narrow_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_handler.elf $@
+
+test-narrow-growth: $(OUT)/reriff-match $(OUT)/narrow_erase.bin $(OUT)/narrow_grow.bin $(OUT)/narrow_handler.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-erase $(OUT)/narrow_erase.bin $(OUT)/narrow-erase-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-grow $(OUT)/narrow_grow.bin $(OUT)/narrow-grow-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-handler $(OUT)/narrow_handler.bin $(OUT)/narrow-handler-comparison.json
+
+test-recovered: test-narrow-growth
+.PHONY: test-narrow-growth
