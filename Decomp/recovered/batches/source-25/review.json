@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, metadata, reference assembly and original caller disassembly. Control flow, 24-byte layout, unsigned capacity threshold, delete arguments and reset side effects agree within the documented scope. Independently rebuilt and ran all 360 range comparisons with the original IAT mapped; they passed. Verified the assembled oracle against all 64 immutable original bytes and checked source hashes. Tests cover boundary capacities, null deletion, callback state/order, untouched bytes and canaries. The default validation’s empty-only original comparisons and ABI, allocator and fault limitations are explicitly disclosed. Sampled validation does not establish all-input equivalence."
+}
