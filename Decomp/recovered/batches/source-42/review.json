@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source preserves the original callback order, conditional calls, load-before-clear timing, field offsets, calling conventions, and AL boolean result. Tests genuinely call the original and compare callback snapshots, counts, return value, and final memory across 96 meaningful cases including aliasing and callback mutations. Independently rebuilt and ran the differential test, and verified all 111 oracle bytes directly against the immutable original. ABI uncertainties and untested behavior are explicitly documented; sampled validation does not establish all-input equivalence or an exact rebuild."
+}
