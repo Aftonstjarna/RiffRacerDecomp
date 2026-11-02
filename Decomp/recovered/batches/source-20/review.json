@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, unmatched recovery of the constructor wrapper, with zero matching-source byte credit.",
+  "reason": "Source matches the reference control flow, i386 ABI, 24-byte layout, initialization order, helper delegation and return behavior. Independently rebuilt and ran differential tests; verified all four linked reference routines against immutable Game.exe bytes. Tests meaningfully check aliasing, count boundaries, ignored arguments, return pointers and complete storage preservation. Nonempty copying, allocation and exception paths remain explicitly untested original-helper dependencies. Evidence supports this limited scope, not all-input equivalence or a native standalone implementation."
+}
