@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit layouts, calling conventions, callback-array reloads, release ordering and pointer clearing agree with the reference routines. Independently rebuilt and ran all seven differential scenarios, and verified both reference fragments against immutable Game.exe bytes. Tests meaningfully cover nulls, boundaries, full occupancy, sharing, aliasing and callback mutations. Native Windows validation records compilation of actual impl.cpp under three profiles without exact matches. Fixed-address helper dependency, mock-only behavior and invalid-input limitations are documented. Sampled validation does not establish all-input equivalence."
+}

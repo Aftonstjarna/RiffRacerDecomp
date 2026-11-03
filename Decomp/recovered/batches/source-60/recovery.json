@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Shader manager resource release",
+  "summary": "Recovered 0x52F4C0 thiscall release as a genuine ShaderManager member. Preserves binding-cleanup dependency, 280 slot-zero calls with argument 1, callback-array reloads, and 225 ordered COM release records including load-before-clear sequencing. Original callers include manager teardown at 0x52DA16 and shader setup failure at 0x52F4B0. Original instructions were directly disassembled and compared with accepted assembly.",
+  "targets": ["shader-release"],
+  "references": ["shader-release", "shader-binding-cleanup"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 differential harness executes original_shader_release at 0x52F4C0 with accepted shader-binding-cleanup at 0x52F5B0. Seven scenarios cover all null, first/last entries, full occupancy, repeated/shared pointers, callbacks aliasing the first binding table, callback replacement of the callback-array field, and cleanup/destruction/resource callbacks mutating shader records. Compares every callback kind, identity, argument and hash of all manager/array bytes at callback entry; compares final manager and external arrays byte-for-byte, including untouched header fields, retained binding tables and array sentinels. Asserts all shader fields are cleared and compares repeated-release callback traces. Local test passed under the specified fixed flags.",
+  "known_limits": [
+    "Only the assigned release routine is recovered. Binding cleanup remains an external accepted original helper invoked at fixed address 0x52F5B0; a standalone native port must supply and rebind that dependency.",
+    "Callback class names and slot-zero/slot-four semantic names are unresolved. Slot zero may be a scalar deleting destructor; no actual deallocation or Direct3D implementation is supplied by this unit.",
+    "The layout and virtual-call ABIs target 32-bit pointers. Invalid pointers, undersized callback arrays, throwing callbacks and dangling shared objects retain original invalid-input assumptions and are not tested.",
+    "Differential mocks exercise observable call ordering and state changes, not real Direct3D driver behavior. Hashes summarize intermediate object bytes; final state is compared byte-for-byte.",
+    "No matching-code claim. Optional pinned MSVC toolchain is absent from this sandbox; native Windows compilation is left to the trusted validation stage."
+  ]
+}
