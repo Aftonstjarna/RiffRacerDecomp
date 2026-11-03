@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Shader constant name lookup",
+  "summary": "Recovered stdcall helper at 0x542340 (149 bytes): query constant-table description, enumerate top-level constants, skip null handles and return the first exact case-sensitive name match. COM slots 5, 6 and 8 use stdcall. Table description is 12 bytes and constant description is 48 bytes on i386. Callers shader_common_parameters and shader_drawprim_ctor pass table pointers from object fields and store returned handles. No caller object fields are accessed by this helper. Only descriptor callbacks can cause externally visible writes.",
+  "targets": ["shader-parameter-lookup"],
+  "references": ["shader-parameter-lookup"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct original/recovered comparison using instrumented COM callbacks: null table/name early exits, zero constants, positive and negative table status, all eight names, odd/even string lengths, empty and high-bit names, case/prefix mismatch, first duplicate match, null handles, bounded enumeration, ignored parameter status, and descriptor count reset. Compare returned handles and complete callback logs and fake-table memory; independently verify immutable fields and guards. Original is linked at 0x542340.",
+  "known_limits": ["Requires valid COM table callbacks and valid terminated names on reached descriptor comparisons, as the original does. Invalid pointers and callbacks failing to initialize descriptors have undefined behavior and are not exercised.", "COM type names and field meanings follow the D3DX constant-table layout implied by slot offsets and sizes; no actual Direct3D runtime is required or tested.", "No byte-match claim. C++ compares one character per loop rather than the original two-character unrolling; equality and valid-string access boundaries are preserved."]
+}
