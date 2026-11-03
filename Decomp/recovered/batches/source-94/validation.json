@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "8e5b72b6480cea274aa33bc3f11d3d2f4ada283059d2c365148627e776a77390",
+    "impl.hpp": "2a2e38091e98570692f41af3cc061ae2f22b1fc72cd29a3172641443f9fbe24f",
+    "test.cpp": "342b7b3a1ddecc00d55220ab117fd817f7a242735edd032af7fdd892adfc2edb"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 201,
+      "candidate_size": 201,
+      "candidate_sha256": "d67e5bfe4ccf684d563ddd40d59e0757ef029590b9873b9092ef80dcc2d201f7",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "d67e5bfe4ccf684d563ddd40d59e0757ef029590b9873b9092ef80dcc2d201f7",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "query-create",
+      "rva": 674896,
+      "whole_executable_compared": false
+    },
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 83,
+      "candidate_size": 83,
+      "candidate_sha256": "efbef3b8ddca2a24c3d52ade14a20ad2c221c6847cbdad432c7109730376fcc5",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "efbef3b8ddca2a24c3d52ade14a20ad2c221c6847cbdad432c7109730376fcc5",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "query-release",
+      "rva": 675104,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "3c8db7e2ceec75b28a4886953a2a227acec23aa2",
+  "test_output": "query-create differential tests passed\n",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "aaff6538132fd4a423a8ab060a2997139844d28710fc5ae25c6aa861320955f3",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "4a5d8271dbe017743eeb9633602a993fa02334c67a5938fbe30794d770a74769",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "9816e12df69fa37daac694d3b7f9bc0273d4c2cb10baa1cb28851337bbcfd7d1",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "query-create",
+        "code_sections": 2,
+        "relocations": 1,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "requires_function_linking"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "query-create",
+        "code_sections": 2,
+        "relocations": 1,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "requires_function_linking"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "query-create",
+        "code_sections": 2,
+        "relocations": 1,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "requires_function_linking"
+      }
+    ]
+  }
+}
