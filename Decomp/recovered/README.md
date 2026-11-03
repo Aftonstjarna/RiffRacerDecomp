@@ -110,11 +110,19 @@ leaving the unnamed gaps untouched; the earlier loop-based method generated
 different code. No instruction arrays, inline assembly, binary patching,
 relocation masking or padding trimming is involved.
 
-These **345 bytes are source-built fragment candidates pending certification**,
-not headline matching-source credit or a complete rebuilt executable. The
-original checker independently compares each fragment. `comparison.json` and
-`validation.json` retain scope, hashes, flags and limitations. Original fixed
-data addresses and x86 layouts remain unsuitable for direct use in a Linux port.
+These **345 function bytes are now certified compiler-built matching source**
+in the [source ledger](../../verification/source-coverage.json). The
+[certification receipt](../../verification/source-certifications/msvc-render-helpers-v1/)
+binds source hashes, native Windows builds, an independent original-free sandbox
+rebuild with pinned MSVC, exact comparisons, actual compiled-fragment behavior
+tests and controller source review. Replaying publication adds zero bytes.
+
+Earlier `comparison.json` and `validation.json` files retain their historical
+pending classification; a standalone comparison still grants no credit. The
+source ledger is the acceptance authority. This is not a complete rebuilt
+executable. Original fixed data addresses and x86 layouts remain unsuitable
+for direct use in a Linux port. Callback exceptions, invalid objects,
+concurrency and unmasked floating-point traps remain untested.
 
 With the pinned x86 compiler on PATH, `msvc/build.cmd OUTPUT_DIRECTORY` rebuilds
 the four objects. Build the inspection helper from the repository root with

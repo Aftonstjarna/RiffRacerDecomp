@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "id": "msvc-render-helpers-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "ui-matrix-scale",
+      "source": "Decomp/recovered/msvc/matrix.cpp",
+      "sha256": "82489d75a2c2170bc89b42bf94dfe358f84743605477ad61b5b0aa9065237089",
+      "stem": "matrix"
+    },
+    {
+      "scope": "shader-binding-cleanup",
+      "source": "Decomp/recovered/msvc/binding.cpp",
+      "sha256": "e088e8616d454041702d20042064f55b0966d0c4ca910bb49a01bac0d91b5501",
+      "stem": "binding"
+    },
+    {
+      "scope": "resource-reference-release",
+      "source": "Decomp/recovered/msvc/release.cpp",
+      "sha256": "063e3f4f5a79ebe2cfa5592cbface0371bf89bea6ab9756bc81619126a9c20c9",
+      "stem": "release"
+    },
+    {
+      "scope": "shader-base-ctor",
+      "source": "Decomp/recovered/msvc/shader.cpp",
+      "sha256": "8f8c8af98739e411008a18dadc380c77b9f98cc1f770f731c74733059c2d436e",
+      "stem": "shader"
+    }
+  ]
+}

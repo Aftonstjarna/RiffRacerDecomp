@@ -57,9 +57,12 @@ callbacks. Sampled tests compare their results and side effects to byte-checked
 original assembly. The documented GCC configuration passes; an optimized-build
 NaN difference and remaining ABI/platform limitations are recorded explicitly.
 
-Native Windows MSVC2013 now builds [four original-ABI source candidates](Decomp/recovered/README.md#native-windows-compiler-candidates)
-whose 345 function bytes match their original fragments exactly. They remain
-pending source-tier certification and are excluded from the headline below.
+Four [original-ABI C++ functions](Decomp/recovered/README.md#native-windows-compiler-candidates)
+now contribute 345 certified matching-source bytes. Native Windows MSVC2013 and
+an independent source-only sandbox rebuild reproduce their complete fragments;
+the actual native fragments pass differential behavior tests and controller
+source review. The [source ledger](verification/source-coverage.json) and
+[certification evidence](verification/source-certifications/msvc-render-helpers-v1/) record that scope.
 Three existing portable routines also pass native compiler compatibility checks;
 their original-behavior tests have been rerun with audited callback bindings.
 
@@ -75,19 +78,22 @@ completion. They describe the accepted recovery on the
 
 | Evidence | Whole executable | `.text` section |
 |---|---:|---:|
-| Compiler-built matching high-level source | 0 / 8,635,392 bytes (0.00000%) | 0 / 5,421,056 bytes (0.00000%) |
+| Compiler-built matching high-level source | 345 / 8,635,392 bytes (0.00400%) | 345 / 5,421,056 bytes (0.00636%) |
 | Existing assembly-level byte matches | 69,983 / 8,635,392 bytes (0.81042%) | 69,955 / 5,421,056 bytes (1.29043%) |
 
-The [byte-comparison ledger](https://github.com/Aftonstjarna/RiffRacerDecomp/blob/decomp/verification/coverage.json)
+The [legacy assembly byte-comparison ledger](verification/coverage.json)
 contains 133 accepted spans. The provenance audit maps all of them to assembly
-sources, including mechanical transcription; none currently contributes to the
-high-level matching row. Stricter assembly qualification remains pending, so the
-assembly row is reference evidence, not certified semantic recovery. The ledger
-does not yet encode those provenance classes.
+sources, including mechanical transcription. Assembly alone earns no high-level
+source credit. The separate source ledger admits only reviewed, independently
+rebuilt C++ function spans. Its four ranges overlap existing assembly evidence;
+the two rows must not be added together. Stricter assembly qualification remains
+pending, so the assembly row is reference evidence, not certified semantic recovery.
 
 The 28 bytes outside `.text` are exception metadata in `.rdata`. The `.text`
 denominator includes padding and is not a proven instruction-only total.
-`source_rebuild_verified` and `whole_executable_compared` remain false: no
+The source ledger verifies its admitted spans only. The legacy assembly ledger's
+`source_rebuild_verified` remains false, and `whole_executable_compared` is false
+for both tiers: no
 complete source-built executable has been compared successfully to the original.
 
 ## Repository scope
