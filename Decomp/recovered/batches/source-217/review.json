@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed all submitted source, layouts, ABI, reference control flow, rollback side effects, validation and native compilation records. Independent fixed-address builds passed 50,376 original differential cases at O0 and O2, comparing guarded state, callback traces, request/window changes and MXCSR. Independently verified the reference routine against Game.exe. Meaningful edge cases and limitations are documented; sampled validation does not establish all-input equivalence or validate external dependencies."
+}
