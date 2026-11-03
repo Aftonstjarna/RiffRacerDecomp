@@ -72,6 +72,16 @@ passes exhaustive signed-16-bit value and block-length checks, and compiles
 with native MSVC2013. Full decoder and resampler source remain unrecovered;
 this slice earns no matching-source credit.
 
+The [reviewed C++ batches](Decomp/recovered/batches/) also recover string
+operations, buffer allocation, resource cleanup, window-frame handling and
+shader management. Recent additions include
+[wide-string character append](Decomp/recovered/batches/source-81/) and
+[shader-pair creation](Decomp/recovered/batches/source-86/), including partial
+failure cleanup. Each batch records its original reference, tests, review and
+remaining dependencies. These implementations remain unmatched source and add
+no certified matching bytes; sampled behavior tests do not prove full-game
+equivalence or portable Windows dependency replacements.
+
 The following are **byte-comparison metrics**, not overall recovery or port
 completion. They describe the accepted recovery on the
 [`decomp` branch](https://github.com/Aftonstjarna/RiffRacerDecomp/tree/decomp):
@@ -93,8 +103,8 @@ The 28 bytes outside `.text` are exception metadata in `.rdata`. The `.text`
 denominator includes padding and is not a proven instruction-only total.
 The source ledger verifies its admitted spans only. The legacy assembly ledger's
 `source_rebuild_verified` remains false, and `whole_executable_compared` is false
-for both tiers: no
-complete source-built executable has been compared successfully to the original.
+for both tiers: no complete source-built executable has been compared
+successfully to the original.
 
 ## Repository scope
 
