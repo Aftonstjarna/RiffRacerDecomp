@@ -63,6 +63,12 @@ pending source-tier certification and are excluded from the headline below.
 Three existing portable routines also pass native compiler compatibility checks;
 their original-behavior tests have been rerun with audited callback bindings.
 
+The [original FLAC PCM conversion](Decomp/native/FLAC-ANALYSIS-RATE.md) is also
+recovered as a small, behavior-validated C++ slice. It retains channel zero,
+passes exhaustive signed-16-bit value and block-length checks, and compiles
+with native MSVC2013. Full decoder and resampler source remain unrecovered;
+this slice earns no matching-source credit.
+
 The following are **byte-comparison metrics**, not overall recovery or port
 completion. They describe the accepted recovery on the
 [`decomp` branch](https://github.com/Aftonstjarna/RiffRacerDecomp/tree/decomp):

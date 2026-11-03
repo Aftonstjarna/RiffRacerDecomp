@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "classification": "native_windows_compile_only",
+  "compiler": "18.00.40629.0 built by: REL",
+  "toolchain_manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+  "sources": [
+    {
+      "name": "impl.hpp",
+      "sha256": "ab99cc16c234ca0df9c9aac76f70c764d1e6ae3af5d747a6ec428576b2e3193c"
+    },
+    {
+      "name": "impl.cpp",
+      "sha256": "639e3ea7a89ede1c0cad87f25f2182bd7db1f42fcf0359bea844d62c970c8974"
+    }
+  ],
+  "attempts": [
+    {
+      "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+      "exit_code": 0,
+      "source": "impl.cpp",
+      "profile": "O1",
+      "object": "impl-O1.obj",
+      "object_sha256": "79676d8366ca4a1ec35a5795849a15ee4565af0673411f42bad7fbb419d4dfdd",
+      "log": "impl.cpp\r\n"
+    },
+    {
+      "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+      "exit_code": 0,
+      "source": "impl.cpp",
+      "profile": "O2",
+      "object": "impl-O2.obj",
+      "object_sha256": "0c3213a58bd45ab326e25036de75e948cd321461c9209fc536687297248726ab",
+      "log": "impl.cpp\r\n"
+    },
+    {
+      "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+      "exit_code": 0,
+      "source": "impl.cpp",
+      "profile": "O2-frame",
+      "object": "impl-O2-frame.obj",
+      "object_sha256": "352263155a74342f4e85ef0624f886d998c1a89070bb1887872a076b03e7664f",
+      "log": "impl.cpp\r\n"
+    }
+  ],
+  "all_compiled": true,
+  "matching_bytes_added": 0
+}

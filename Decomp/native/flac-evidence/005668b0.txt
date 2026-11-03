@@ -1,0 +1,35 @@
+Research output only; not verified reconstructed source.
+Program: Game.exe
+SHA256: 2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2
+Language: x86:LE:32:default
+Function: FUN_005668b0 005668b0
+Body: [[005668b0, 00566952]]
+Callers:
+004f9080 FUN_004f9080
+Callees:
+
+uint __fastcall FUN_005668b0(int param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  *(undefined4 *)(param_1 + 0x470) = *(undefined4 *)(param_1 + 0x430);
+  *(undefined4 *)(param_1 + 0x478) = *(undefined4 *)(param_1 + 0x434);
+  *(undefined4 *)(param_1 + 0x474) = 0;
+  (**(code **)(*(int *)(param_1 + 0x20) + 0x18))();
+  uVar1 = func_0x005bd110(&UNK_0059c300,&UNK_0059c320,&UNK_0059c330,&UNK_0059c340);
+  if (uVar1 == 0) {
+    func_0x005bd830();
+    uVar1 = func_0x005bd600();
+    *(undefined4 *)(param_1 + 0x480) = 0;
+    *(undefined4 *)(param_1 + 0x484) = 0;
+    if ((*(int *)(param_1 + 0x444) == 2) &&
+       (uVar2 = *(uint *)(param_1 + 0x450) | *(uint *)(param_1 + 0x454), uVar1 = 0, uVar2 != 0)) {
+      return CONCAT31((int3)(uVar2 >> 8),1);
+    }
+  }
+  return uVar1 & 0xffffff00;
+}
+
+

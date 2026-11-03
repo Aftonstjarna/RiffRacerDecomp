@@ -191,3 +191,21 @@ Reference: DepotDownloader depot 351991, build 1687655, manifest
 
 This is original metadata/instruction evidence and mod integration guidance.
 No reconstructed source span or additional matching-byte credit is claimed.
+
+## Original FLAC PCM conversion and analysis-rate research
+
+The [FLAC research note](native/FLAC-ANALYSIS-RATE.md) preserves the original
+worker/decoder/resampler findings behind ReRiff's sample-rate patch, with the
+pre-patch Git revision, exact source hashes and original disassembly. Ghidra
+exports remain research leads with unresolved inferred prototypes. Earlier
+full-DSP test results are attributed to ReRiff and were not rerun here.
+
+The original wrapper selects every second signed 16-bit word and scales it by
+1/32768; it does not average stereo channels. The extracted
+[C++ PCM conversion](recovered/flac-pcm/impl.cpp) passes differential checks for
+all signed 16-bit values and block lengths 0 through 4096 against a byte-checked
+original loop. Native Windows MSVC builds all three tested profiles. This is a
+partial, behavior-validated source recovery; the decoder ABI, metadata/error
+paths and resampling DSP remain unrecovered. The intentional CALL redirection
+and added resampling stay in ReRiff. No matching-source or assembly-ledger
+coverage is added.

@@ -1,0 +1,89 @@
+Research output only; not verified reconstructed source.
+Program: Game.exe
+SHA256: 2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2
+Language: x86:LE:32:default
+Function: FUN_005623e0 005623e0
+Body: [[005623e0, 00562627]]
+Callers:
+Callees:
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+int * FUN_005623e0(void)
+
+{
+  double dVar1;
+  int *piVar2;
+  double *pdVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  int iVar9;
+  double in_XMM1_Qa;
+  double in_XMM2_Qa;
+  
+  if (((0.0 < in_XMM1_Qa) && (0.0 < in_XMM2_Qa)) && (in_XMM1_Qa <= in_XMM2_Qa)) {
+    piVar2 = (int *)malloc();
+    *(double *)(piVar2 + 6) = in_XMM1_Qa;
+    *(double *)(piVar2 + 8) = in_XMM2_Qa;
+    piVar2[3] = 0x23;
+    piVar2[2] = 0x3f800000;
+    piVar2[4] = 0x11000;
+    pdVar3 = (double *)malloc();
+    func_0x00599340();
+    iVar4 = malloc();
+    *piVar2 = iVar4;
+    iVar5 = malloc();
+    piVar2[1] = iVar5;
+    iVar9 = 0;
+    do {
+      dVar1 = *pdVar3;
+      pdVar3 = pdVar3 + 1;
+      *(float *)(iVar9 + iVar4) = (float)dVar1;
+      iVar9 = iVar9 + 4;
+    } while (iVar9 < 0x44000);
+    iVar9 = 0;
+    do {
+      *(float *)(iVar9 + iVar5) = *(float *)(iVar9 + 4 + iVar4) - *(float *)(iVar9 + iVar4);
+      iVar9 = iVar9 + 4;
+    } while (iVar9 < 0x43ffc);
+    *(uint *)(iVar5 + 0x43ffc) = *(uint *)(iVar4 + 0x43ffc) ^ _DAT_00a071e0;
+    free();
+    uVar6 = func_0x008f9131();
+    uVar7 = func_0x008f9131();
+    if (uVar7 < uVar6) {
+      uVar7 = uVar6;
+    }
+    uVar6 = uVar7 * 2 + 10;
+    piVar2[0xe] = uVar7;
+    uVar8 = 0x1000;
+    if (0x1000 < uVar6) {
+      uVar8 = uVar6;
+    }
+    piVar2[10] = uVar8;
+    iVar4 = malloc();
+    piVar2[0xb] = iVar4;
+    iVar5 = 0;
+    piVar2[0xc] = uVar7;
+    piVar2[0xd] = uVar7;
+    if (0 < (int)uVar7) {
+      do {
+        *(undefined4 *)(iVar4 + iVar5 * 4) = 0;
+        iVar5 = iVar5 + 1;
+      } while (iVar5 < (int)uVar7);
+    }
+    piVar2[0xf] = (int)(((double)(int)uVar8 + *(double *)(&UNK_00a071b0 + ((int)uVar8 >> 0x1f) * -8)
+                        ) * in_XMM2_Qa + _DAT_00a06620);
+    iVar4 = malloc();
+    piVar2[0x10] = iVar4;
+    piVar2[0x11] = 0;
+    *(double *)(piVar2 + 0x12) =
+         (double)(int)uVar7 + *(double *)(&UNK_00a071b0 + ((int)uVar7 >> 0x1f) * -8);
+    return piVar2;
+  }
+  return (int *)0x0;
+}
+
+
