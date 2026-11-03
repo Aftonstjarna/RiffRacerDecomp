@@ -10,7 +10,7 @@
 // are not API outputs. All 16 bytes, including unused string tail, are swapped.
 void narrow_inline_swap(void* first, void* second) {
     if (first == second) return;
-    using Address = __UINTPTR_TYPE__;
+    using Address = decltype(sizeof(0));
     const Address start = reinterpret_cast<Address>(first);
     // x86 unsigned end-pointer comparison suppresses all access on wrap.
     // Address width follows the port; in the original i386 ABI it is 32 bits.

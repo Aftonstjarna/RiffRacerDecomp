@@ -8,7 +8,7 @@
   "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
   "source_sha256": {
     "impl.cpp": "24a047b6f429b987c9582d3af03315755b95f95d5c5b56e614ed03075c49b550",
-    "impl.hpp": "181687da29a69b0c6c95f5e1053f3f90f6a6592aca3ea948e9bde57614ecfa18",
+    "impl.hpp": "0786da2439b02ac8d04b591d026efb6335a9346cac2c348b2fb7f690ea71a1d8",
     "test.cpp": "fa46453ab7c3c37231280f9bf27acf567e748cd50fc697cc1fa752490b744ea1"
   },
   "reference_checks": [
@@ -31,6 +31,103 @@
     }
   ],
   "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
-  "base_commit": "235c3c8842e5bb12e312b8e9855771c04c79ea01",
-  "test_output": "PASS: null original; nonnull C++ only (IAT not mapped)\n"
+  "base_commit": "4c92534b9dec17d53623d051f9ed1c52b70077c6",
+  "test_output": "PASS: full original comparison\n",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "05674329ce8ec944239928da17f1c31e9d870f3870f697da094779aced0ce449",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "1095cbeb61af55e24cf2fd95a24f06e04a0796a69c0c14c02c755af774561ac0",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "c1254f5649ecc2c5cfd4a58b4136198c1d6ef8733087eb5c8df51d654641f4ae",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "save-device-close",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 31,
+        "original_size": 38
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "save-device-close",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "comparison": {
+          "schema": 1,
+          "byte_equal": false,
+          "different_bytes": 20,
+          "original_size": 38,
+          "candidate_size": 38,
+          "candidate_sha256": "d2c2c2c0188f38c94685f46af6557a4cff53d2a6d9efb87951defe50bdea742d",
+          "masked_bytes": 0,
+          "source_rebuild_verified": false,
+          "note": "Binary equality alone does not prove reconstruction from source.",
+          "difference_ranges": [
+            {
+              "offset": 2,
+              "length": 14
+            },
+            {
+              "offset": 18,
+              "length": 6
+            }
+          ],
+          "reference_fragment_sha256": "6f26050421c15c3077de15b50409b7171493e6cb8e5c9a69bf9cb0d1716de1a7",
+          "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+          "scope": "save-device-close",
+          "rva": 1268768,
+          "whole_executable_compared": false
+        },
+        "status": "compared"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "save-device-close",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 40,
+        "original_size": 38
+      }
+    ]
+  }
 }

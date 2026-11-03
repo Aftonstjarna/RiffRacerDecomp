@@ -8,7 +8,7 @@
   "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
   "source_sha256": {
     "impl.cpp": "ca4e7d62f9e5a15ba349fe561a3e37e3a2a5c65dbc455c94744f8b3df552cf95",
-    "impl.hpp": "793a65b84b3f2093bdf2c3329848781ca5444a796e5c8ddf62b22b6bf81fd988",
+    "impl.hpp": "9cfb2265f705bdceab9796c5612f8ffaf55ddfedff50816d2e44121010277d2a",
     "test.cpp": "5b47bb26254bb8e8cf2d7af99b909aa9ffea1108d665e69f23d485c816ed0d2b"
   },
   "reference_checks": [
@@ -31,6 +31,79 @@
     }
   ],
   "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
-  "base_commit": "4ae8073caca0f4762869c8abb757e420b72a8324",
-  "test_output": "Empty original comparisons passed; nonempty requires IAT mapping"
+  "base_commit": "4c92534b9dec17d53623d051f9ed1c52b70077c6",
+  "test_output": "Full original comparison passed",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "c386b3e779601c6b8bea6c94a616e55bac259be15b4409b4c78fdf79e1db7b8f",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "dd1cf3606eedbe019f84356dae1b222566efc6e10dc266ae8b53addbbb12fddd",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "d97284e11364f3f9c3498c5b78a9339daf7f3b882449d961b04797a04d11ef45",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "narrow-range-destroy",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 73,
+        "original_size": 64
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "narrow-range-destroy",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 96,
+        "original_size": 64
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "narrow-range-destroy",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 97,
+        "original_size": 64
+      }
+    ]
+  }
 }

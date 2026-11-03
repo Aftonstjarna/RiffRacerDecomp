@@ -3,10 +3,18 @@
   "classification": "high_level_unmatched",
   "title": "Forward inline string storage swap",
   "summary": "Recovered cdecl helper at VA 0x451d10: exchange 16 bytes in forward order, preserving overlap behavior and equal-pointer/unsigned end-wrap early returns. Caller at 0x451bac selects inline storage when both capacities are below 16; size and capacity are untouched. Original instructions and caller were inspected directly in Game.exe and accepted assembly. Ghidra import was attempted but failed with a database File too large error.",
-  "targets": ["narrow-inline-swap"],
-  "references": ["narrow-inline-swap"],
-  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
-  "test_description": "Direct original_narrow_inline_swap comparison for 8712 patterned overlap/equality/adjacency cases plus distant storage, checking all 128 bytes and untouched guards including trailing metadata. Disjoint cases additionally assert exact exchange. Invalid equal pointers and all 16 first-pointer wrap cases verify no access; no-access calls are followed by full-buffer comparison.",
+  "targets": [
+    "narrow-inline-swap"
+  ],
+  "references": [
+    "narrow-inline-swap"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original_narrow_inline_swap comparison for 8712 patterned overlap/equality/adjacency cases plus distant storage, checking all 128 bytes and untouched guards including trailing metadata. Disjoint cases additionally assert exact exchange. Invalid equal pointers and all 16 first-pointer wrap cases verify no access; no-access calls are followed by full-buffer comparison. Native MSVC2013 implementation compilation is additionally checked at O1, O2 and O2 with frame pointers; this does not replace behavioral validation or confer matching credit.",
   "known_limits": [
     "Non-early-return paths require both 16-byte regions accessible; invalid dereferences and second-region address wrap are not tested.",
     "Original has no defined return value; caller-clobbered registers and flags are not exposed as C++ outputs.",

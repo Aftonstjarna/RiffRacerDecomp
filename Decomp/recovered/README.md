@@ -2,8 +2,8 @@
 
 Three routines have C++ reconstructions with sampled behavioral validation
 against freshly assembled, byte-checked original references. These are
-**unmatched high-level source**, not a source-built matching EXE or a completed
-original-compiler pilot. The existing coverage ledger is unchanged.
+**unmatched high-level source**, not a source-built matching EXE. Separate native
+Windows compiler experiments are recorded below. The coverage ledger is unchanged.
 
 | Routine | Original VA range (end exclusive) | Reference bytes | GCC C++ bytes |
 |---|---|---:|---:|
@@ -90,3 +90,41 @@ Untested: unmasked FP traps, DAZ-on, invalid pointers, concurrent mutation,
 exceptions/nonlocal callback exits, full shader ownership/lifecycle, actual
 rendering and Windows/native-game integration. No universal behavioral
 equivalence, trusted isolation, or independently certified source match is claimed.
+
+## Native Windows compiler candidates
+
+The [MSVC source variants](msvc/) use original x86 member-method calling
+conventions. Native Windows MSVC 18.00.40629, `/O2 /Oy- /GS- /GR- /EHsc /Zl /Gy
+/arch:SSE2 /fp:precise`, reproduces four complete function fragments:
+
+| Source | Original routine | Matching candidate bytes |
+|---|---|---:|
+| `matrix.cpp` | `ui-matrix-scale` | 146 |
+| `binding.cpp` | `shader-binding-cleanup` | 67 |
+| `release.cpp` | `resource-reference-release` | 18 |
+| `shader.cpp` | `shader-base-ctor` | 114 |
+
+The shader variant expresses the observed initialization as a constructor with
+explicit member initializers. This restores the original scalar stores while
+leaving the unnamed gaps untouched; the earlier loop-based method generated
+different code. No instruction arrays, inline assembly, binary patching,
+relocation masking or padding trimming is involved.
+
+These **345 bytes are source-built fragment candidates pending certification**,
+not headline matching-source credit or a complete rebuilt executable. The
+original checker independently compares each fragment. `comparison.json` and
+`validation.json` retain scope, hashes, flags and limitations. Original fixed
+data addresses and x86 layouts remain unsuitable for direct use in a Linux port.
+
+With the pinned x86 compiler on PATH, `msvc/build.cmd OUTPUT_DIRECTORY` rebuilds
+the four objects. Build the inspection helper from the repository root with
+`c++ -std=c++20 -I Decomp Decomp/recovered/msvc/compare.cpp -lcrypto -o build/msvc-compare`,
+then run `build/msvc-compare ORIGINAL_EXE OBJECT_DIRECTORY BIN_DIRECTORY`.
+Use the existing `reriff-match native-check` for independent fragment comparison.
+The inspection helper never changes coverage or awards certification.
+
+The existing `source-1`, `source-7`, and `source-25` implementations also compile
+unchanged between GCC and MSVC after bounded type, layout and cdecl corrections.
+Their refreshed validation records retain original behavioral tests and native
+compiler results. The close and range tests now exercise their nonnull/nonempty
+original paths through audited test-only import-slot bindings.

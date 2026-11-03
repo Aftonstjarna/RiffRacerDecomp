@@ -1,5 +1,1 @@
-{
-  "approved": true,
-  "summary": "Readable unmatched C++ correctly recovers the close routine’s control flow and side effects.",
-  "reason": "Reviewed every submitted source/header, metadata, reference assembly and relevant documentation. Independently built and ran the tests with the original routine and import slot mapped at their actual addresses; full comparisons passed. Verified the 38 reference bytes against immutable Game.exe. Tests cover null/non-null handles, state patterns, close errors, callback mutations, write ordering, guards and repeated closes. ABI adaptation and unresolved layout/runtime limits are explicit. This supports sampled behavioral recovery only, with zero matching-source byte credit and no all-input equivalence claim."
-}
+{"approved":true,"summary":"Reviewed MSVC compatibility corrections; matching-source credit remains zero.","reason":"Compared the corrected source with its accepted predecessor: algorithm and side-effect order are unchanged. GCC original-reference differential tests passed, and all three native MSVC2013 profiles compiled. Callback IAT mappings enable nonempty/nonnull comparisons for the close and range routines. Compiler compilation alone is not behavioral or byte-equivalence certification.","previous_review_commit":"4c92534b9dec17d53623d051f9ed1c52b70077c6"}

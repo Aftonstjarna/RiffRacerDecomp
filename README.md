@@ -57,6 +57,12 @@ callbacks. Sampled tests compare their results and side effects to byte-checked
 original assembly. The documented GCC configuration passes; an optimized-build
 NaN difference and remaining ABI/platform limitations are recorded explicitly.
 
+Native Windows MSVC2013 now builds [four original-ABI source candidates](Decomp/recovered/README.md#native-windows-compiler-candidates)
+whose 345 function bytes match their original fragments exactly. They remain
+pending source-tier certification and are excluded from the headline below.
+Three existing portable routines also pass native compiler compatibility checks;
+their original-behavior tests have been rerun with audited callback bindings.
+
 The following are **byte-comparison metrics**, not overall recovery or port
 completion. They describe the accepted recovery on the
 [`decomp` branch](https://github.com/Aftonstjarna/RiffRacerDecomp/tree/decomp):

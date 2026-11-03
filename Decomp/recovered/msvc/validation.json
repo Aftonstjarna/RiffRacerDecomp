@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "classification": "source_built_fragment_candidates_pending_certification",
+  "compiler": "18.00.40629.0 built by: REL",
+  "compiler_flags": "/c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise",
+  "source_sha256": {
+    "binding.cpp": "e088e8616d454041702d20042064f55b0966d0c4ca910bb49a01bac0d91b5501",
+    "release.cpp": "063e3f4f5a79ebe2cfa5592cbface0371bf89bea6ab9756bc81619126a9c20c9",
+    "shader.cpp": "8f8c8af98739e411008a18dadc380c77b9f98cc1f770f731c74733059c2d436e",
+    "matrix.cpp": "82489d75a2c2170bc89b42bf94dfe358f84743605477ad61b5b0aa9065237089"
+  },
+  "tool_manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "certified_matching_credit": 0,
+  "limits": [
+    "Fragments compile independently; they are not a linked replacement EXE.",
+    "Original x86 ABI and data addresses are retained; this is not a 64-bit Linux renderer.",
+    "Earlier portable behavior checks do not independently certify these member-method variants.",
+    "No instruction blobs, relocation masking, padding removal, or post-build patches are used."
+  ]
+}
