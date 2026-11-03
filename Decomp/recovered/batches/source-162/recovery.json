@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Optional effect render-target creation",
+  "summary": "Recovered effect-target at VA 0x4A5530 (397 bytes) as a genuine thiscall Graphics member with an external-service adapter. Inspected accepted assembly, immutable Game.exe direct disassembly, checked callers at 0x4A385D (device creation) and 0x4A6623 (restoration), helper ABI instructions, and both original error strings. Nonzero byte +0x4BC creates a one-level render-target texture through D3D9 device +0x78 slot 23 using dimensions +0x23C/+0x240, format +0x1FC, usage 1, pool 0, and no shared handle. Texture output is +0x434; nonnegative creation then obtains level zero through texture slot 18 into +0x438. Negative HRESULTs update the narrow string at +0x54 and return false in AL. Disabled and successful paths return true. Retains failure outputs, absent rollback/Release, string ownership transfer, and free-import load timing. Adapted the accepted source-157 auxiliary-target recovery after checking the actual effect-target instructions and differing fields/format. Readable C++ compiled at O0 and O2; no matching-source claim.",
+  "targets": [
+    "effect-target"
+  ],
+  "references": [
+    "effect-target",
+    "cookie-check"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Fixed prescribed GCC i386 freestanding flags, plus warnings-as-errors, passed 1492992 direct original_effect_target comparisons and the same number of fixed-binding member comparisons against the portable adapter. Local linker script local.ld places accepted target at 0x4A5530 and cookie check at 0x8F8958; C++ string dependency spies at 0x416FA0/0x440A20/0x44F380/0x4B2D20, free slot at 0x92D4B0, exact original prefix fixtures at 0x9FC5F4/0x9FC740, cookie at 0xBAABC0, and TLS at 0xBAC000. run_oracle.py installs a TLS descriptor and FS using ptrace before ELF entry, with no code injection or oracle modifications. Sweeps enable 0/1/2/255; independent width/height 0/1/720/4096/0x80000000/0xFFFFFFFF; independent formats 0/21/22/113/0x80000000/0xFFFFFFFF; both HRESULTs 0/1/INT_MAX/INT_MIN/-1/0x8876086C; output write/null masks; prior error capacity 15/16; callback mutation off/on. Excludes null texture followed by original unconditional dereference. Verifies exact COM and helper arguments, return bool, all modeled object bytes and surrounding canaries, callback snapshots and ordering, no cleanup of failed resources, and error untouched on success/disabled. Mutation changes dimensions during creation and replaces the free import during formatting. Original target and cookie linked sections independently compared equal to all 397 and 15 bytes extracted from immutable Game.exe. GCC C++11 O2 warnings-as-errors implementation compilation also passed. Optional MSVC tool is absent.",
+  "known_limits": [
+    "D3D9 device/texture operations and game string/error formatting/free helpers remain external. Differential execution uses C++ test doubles for these dependencies, including synthetic HRESULT descriptions, and does not establish GPU or string-helper correctness.",
+    "Win32 SEH handler 0x902B50, exception unwinding, helper exceptions and invalid pointer faults are not recovered. The implementation preserves ordinary returns without emulating SEH registration or stack-cookie scaffolding.",
+    "Full original comparison requires the fixed-address dependency fixtures and initialized FS descriptor supplied by local.ld and run_oracle.py. A plain link without those mappings explicitly reports C++ assertions only. The full mapped local run passed; supporting launcher/linker files are test infrastructure, not implementation sources.",
+    "Temporary destructor heap branches are retained from instructions but the ownership-transfer spies reset consumed temporaries, so residual temporary heap cleanup branches are not dynamically exercised. Helper-return aliasing is retained in the code but not dynamically exercised.",
+    "The original unconditionally dereferences the stored texture after nonnegative creation, including an unchanged output. Invalid/null textures on this path are excluded rather than repaired.",
+    "Class/field names are descriptive and only observed offsets are modeled. Fixed layout and original-address member require 32-bit pointers. A Linux port should supply actual services via the adapter and choose its native object layout.",
+    "Only AL is the return contract; unspecified upper EAX bits are not modeled. Native MSVC2013 was unavailable locally; headers use C++11 syntax and guarded ABI declarations. No source byte equality claimed."
+  ]
+}
