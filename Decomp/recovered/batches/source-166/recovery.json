@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Secondary window lifecycle and placement",
+  "summary": "Recovered 0x48CC70 (RVA 0x8CC70), 411 bytes, as a genuine thiscall Window member with an explicit platform adapter. Sole direct caller found at 0x4A21C8 supplies width, height and a zero-extended mode byte. Preserves zero-dimension destruction only when a secondary HWND exists, ignored API failures, popup/caption styles, adjusted outer dimensions, wrapped signed horizontal centering, placement below the primary window, creation-time offsets, frame-helper reloads, and distinct existing-window positioning flags. Writes only HWND +8 and creation offsets +0x1C/+0x20 directly. Immutable executable instructions, UTF-16 strings, imports and caller inspected; linked accepted oracle and cookie-check verified byte-equal to original. No matching-source claim.",
+  "targets": [
+    "secondary-window"
+  ],
+  "references": [
+    "secondary-window",
+    "cookie-check"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Freestanding GCC i386 fixed-flags O0 harness: 7744 scenarios, each directly compared with original_secondary_window and also through the recovered original-ABI member (15488 comparisons). Suite also passed with implementation compiled O2. Crosses 11 dimension values including zero, odd values and signed/wrap boundaries, four raw mode bytes 0/1/2/255, absent/present HWND, adjustment/rectangle success and failure returns with fully populated rectangles, creation success/failure, and frame callback mutations of HWND and offsets. Checks ordered API traces, all API arguments, class/title strings, state at creation/frame boundaries, complete guarded object equality and untouched fields. Local link puts accepted secondary and cookie-check code at 0x48CC70 and 0x8F8958; ordinary C++ frame boundary at 0x48CAB0; writable import fixture .oracle_iat at 0x92D000 and .oracle_cookie at 0xBAABC0. Linked oracle sections compare exactly to all 411 and 15 original bytes. Without those fixed fixture mappings the harness explicitly reports portable checks only, rather than claiming direct comparisons.",
+  "known_limits": [
+    "Win32 calls are observing boundary doubles, not a recovered Linux window-system backend; real desktop/window-manager effects and reentrant operating-system message dispatch are not tested.",
+    "Frame helper 0x48CAB0 remains an out-of-scope thiscall dependency. Tests substitute a C++ observing/mutating callback rather than including its implementation.",
+    "GetWindowRect failure without writing consumed RECT fields leaves original stack-dependent behavior unresolved. Tests cover failure returns that still fill every field. AdjustWindowRect starts with a fully initialized RECT and ignores its return.",
+    "Only the accessed 0x24-byte object prefix is modeled; unknown fields retain their original offsets. Return-register residue is not modeled as a semantic return value.",
+    "Original import and helper addresses in secondaryWindow are a 32-bit Windows binding. Linux integrations should supply WindowApi through secondaryWithApi.",
+    "Optional MSVC helper is absent in this sandbox; implementation uses C++11-compatible constructs and compiler-specific calling convention guards, but native MSVC compilation was not locally available.",
+    "Direct oracle execution requires the documented fixed section mappings; the default unmapped harness runs and labels only portable checks."
+  ]
+}
