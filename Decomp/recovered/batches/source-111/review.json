@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Independent source review agrees with original control flow, x86 ABI/layout, error checks and side effects. Independently rebuilt tests passed against routines extracted from immutable Game.exe, checking meaningful boundaries, full storage changes and source preservation. Native compilation records cover the actual implementation. Nonempty original copies, prefix shifts, growth and exceptions remain explicitly unvalidated dependency contracts; sampled validation does not establish all-input equivalence."
+}

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Wide string substring assignment",
+  "summary": "Recovered VA 0x44fb30, 247 bytes, as a genuine thiscall member: unsigned position validation and count clamp, self truncation then prefix erasure, distinct-source length guard, capacity reuse or delegated growth, UTF-16 memcpy and length/NUL publication. Direct original disassembly and alias/prefix callers reviewed. Dependencies remain explicit integration contracts rather than expanded recovery scope.",
+  "targets": ["wide-assign-substring"],
+  "references": ["wide-assign-substring", "wide-truncate", "wide-erase"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct original comparison for inline capacities 0/1/7 and heap capacities 8/15/31, every valid length, self position zero with counts through UINT_MAX, self end position, every self position with zero count, distinct source every valid position with zero count and end position with counts through UINT_MAX. Checks returned this, full object and heap bytes including unused tails/guards, capacity/pointer retention, and source immutability. Additional C++ expected-value checks exercise distinct nonempty copies across storage combinations, embedded NUL and surrogate code units; these are explicitly not original-oracle comparisons.",
+  "known_limits": [
+    "Original distinct nonempty copies require thunk 0x8f8d66 and unavailable memcpy IAT 0x92d494. Original nonzero-prefix self ranges retaining content require unavailable memmove IAT 0x92d4a4. Those paths are not directly compared. No replacement imports are installed.",
+    "Growth at 0x44fde0 requires Windows allocation and FS/SEH runtime. Invalid position and excessive selected count require CRT throw imports 0x92d16c/0x92d168. These paths and allocation failure propagation are instruction-derived contracts, not executed oracle tests. Port integration must supply the declared dependencies.",
+    "Valid original string storage is assumed; no behavior is invented for corrupt objects, invalid pointers or overlapping distinct allocations. Original ABI layout is for 32-bit targets. No matching-byte claim."
+  ]
+}
