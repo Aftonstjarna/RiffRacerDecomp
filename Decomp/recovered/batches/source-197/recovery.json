@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Device resource destruction",
+  "summary": "Recover Game.exe VA 0x4a5c40, 566 bytes, as a genuine i386 thiscall Device::destroy member. Calls query-release first, releases non-null COM resources through stdcall vtable slot +8 in original order, clears slots and resets four words at +0x220. Preserves callback-visible next-pointer loads before preceding clears. Direct original disassembly, accepted assembly, and shutdown/creation-failure callers establish ABI and scope. Query-release is a bounded dependency only.",
+  "targets": [
+    "device-destroy"
+  ],
+  "references": [
+    "device-destroy",
+    "query-release"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "875 GCC i386 differential cases against original_device_destroy with original_query_release linked at original VAs. Tests cover empty/full owners, each of 60 individual slots, 256 deterministic mixed masks, distinct and aliased resources, repeated teardown, and two callback mutation modes at all 60 release positions. Compare complete callback-time fixture snapshots, final owner including unknown bytes and canaries, all resource call/remaining counts and event order. Independent assertions verify ordinary release order, nulling, four scalar resets and untouched bytes. Both accepted reference spans were independently compared to original Game.exe bytes. Fixed requested freestanding build flags pass.",
+  "known_limits": [
+    "No matching-source or full-game equivalence claim; native MSVC compilation is left to the trusted coordinator because /tools/msvc/msvc is unavailable in this sandbox.",
+    "Resource types and the four scalar meanings remain unresolved; offset-based names deliberately retain that uncertainty. Owner extent beyond +0x488 is unknown and not accessed.",
+    "COM implementations are test doubles; actual GPU driver destruction is external. Invalid owner/resource/vtable pointers retain original invalid behavior. No deduplication, null-owner guard, exception handling or synchronization is added.",
+    "Original incidental EAX contents are not modeled as a return value; inspected callers use this as cleanup. Tests exercise ordinary callbacks and bounded slot mutations, not all possible reentrant or faulting callbacks."
+  ]
+}
