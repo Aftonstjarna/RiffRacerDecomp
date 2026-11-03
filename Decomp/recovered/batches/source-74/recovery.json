@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "UTF-16 string erase",
+  "summary": "Recovered Game.exe VA 0x44fd30 (165 bytes) as a genuine thiscall member method. Unsigned position validation, count clamping, capacity<8 inline selection, overlapping suffix movement excluding NUL, length publication and UTF-16 termination are preserved. Capacity, allocation and unused tail remain unchanged. Direct original disassembly confirms accepted instructions; caller 0x44fb6f erases a prefix in self-substring assignment. Error handling delegates the nonreturning CRT dependency to a port integration hook.",
+  "targets": [
+    "wide-erase"
+  ],
+  "references": [
+    "wide-erase"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Fixed GCC i386 freestanding flags plus -Wall -Wextra -Werror passed. Enumerates inline capacities 0 and 7 with lengths 0..7, heap capacities 8,31,UINT_MAX with lengths 0..63, every valid position, counts 0..length+1 and UINT_MAX. Includes embedded NUL and wide units, poisoned old terminator, full backing arrays, object canaries, unused union bytes and tail comparisons. Checks returned identity, exact size/terminator writes, pointer and capacity preservation. Invalid positions 4 and UINT_MAX verify unchanged object and nonreturning error dispatch. Local original oracle has all 165 bytes verified against Game.exe and is linked at original VA. Mapped test-only CRT imports at 0x92d16c and 0x92d4a4 permit full direct original differential checks; this run passes. Ordinary unmapped run also passes: original suffix/no-op cases execute directly, shifts use independent expected-state checks, original rejection is skipped and the reduced scope is printed.",
+  "known_limits": [
+    "Original CRT memmove and std::_Xout_of_range are external imports, not accepted reference routines. Full original shift/error differential testing requires the test-only .oracle_iat section placed at 0x92d16c. Local full mapped testing passed; submitted tests detect missing placement and explicitly report reduced direct-original coverage.",
+    "Windows exception construction and unwinding are not reproduced or tested; integration must supply wide_out_of_range and must not return.",
+    "Valid addressable string storage is assumed. Malformed objects, impossible multi-gigabyte buffers and pointer arithmetic overflow are outside behavioral tests.",
+    "Pinned MSVC helper is absent in this sandbox. Implementation uses C++11-compatible syntax and compiler-guarded member calling convention; native Windows compilation remains a coordinator check.",
+    "Readable behavioral recovery only; no matching-byte credit is claimed."
+  ]
+}
