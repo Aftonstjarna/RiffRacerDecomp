@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Counted UTF-16 pointer append",
+  "summary": "Recovered Game.exe 0x536160..0x536220 as a genuine x86 thiscall member. Preserves capacity<8 storage selection, unsigned pointer interval checks, odd-address offset flooring, self-substring delegation, strict unsigned overflow rejection, reserve/copy/set-length order, post-reserve storage reload and returned identity. Caller 0x535f82 appends a path prefix before a backslash. Dependencies remain explicit integration hooks. No matching-source credit claimed.",
+  "targets": [
+    "wide-append-pointer"
+  ],
+  "references": [
+    "wide-append-pointer",
+    "wide-append-substring"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Local freestanding GCC i386 build passes with accepted pointer and substring routines linked at original addresses; both reference spans compared exactly against immutable Game.exe. Controlled C++ doubles at 0x44fc30, 0x44fab0 and 0x8f8d66, plus error IAT at 0x92d168, test reserve failure, relocation and copy/set-length side effects. Enumerates capacities 7,8,31, lengths 0..6, counts 0..4, external pointers, null plus zero, every byte offset through terminator, and growth modes. Full object guards, unused union bytes, backing arrays and helper traces compared. Overflow equality and larger counts at lengths 0,1,0x7ffffffe,0xfffffffe,0xffffffff verify nonreturning dispatch and unchanged objects via test-only builtin longjmp. Submitted harness detects missing fixed helper placement, reports limitation, runs direct original zero-count cases and independent C++ length/helper checks for nonzero cases.",
+  "known_limits": [
+    "Reserve/allocation, substring append, length publication, CRT copy and Windows exception runtime are external dependencies, not recovered scope. Substring accepted assembly is used as a reference helper.",
+    "Full differential coverage requires test helper sections .reserve=0x44fc30, .setlength=0x44fab0, .copy=0x8f8d66 and .erroriat=0x92d168. Local mapped validation passed. Ordinary trusted linking may provide only the reported reduced scope.",
+    "Allocation exceptions and native Windows unwinding are not reproduced by test doubles; error tests intercept dispatch rather than construct CRT exceptions.",
+    "Malformed objects, wrapping address intervals, inaccessible buffers and multi-gigabyte copying are not behaviorally tested. Original memcpy overlap behavior beyond valid self-substring inputs remains a dependency.",
+    "MSVC helper is absent from supplied /tools; native MSVC compilation is left to the trusted coordinator. C++11-compatible implementation and guarded thiscall declarations are provided."
+  ]
+}
