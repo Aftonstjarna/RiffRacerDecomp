@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Shader pair creation and partial-failure cleanup",
+  "summary": "Recovered VA 0x52D840 (189 bytes) as a genuine thiscall ShaderPair member plus a live-slot dependency adapter. Four pointers at offsets 0/4/8/12 hold vertex shader/constants and pixel shader/constants. Calls device COM slots 91 and 106 and imported constant-table lookup; signed HRESULT tests and original partial cleanup, null checks, output writes and reload ordering preserved. Direct original disassembly and caller 0x52DB44 inspected; accepted oracle verified byte-for-byte against immutable Game.exe. No matching-source claim.",
+  "targets": [
+    "shader-pair-create"
+  ],
+  "references": [
+    "shader-pair-create"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Freestanding GCC i386 fixed-flag build passed direct original differential tests. Local link places original first in .text at 0x52D840, .oracle_import at 0x92D64C and .oracle_owner at 0xBFCC44. Sweeps five failure locations (including none), HRESULT 0/1/INT_MAX/INT_MIN/-1, all 16 output-write masks, all 16 null masks, and callback mutation off/on; excludes only unconditional Release of null. Checks bool AL, all four resulting slots, canaries, exact call/release order, device/code/output arguments, and every slot at each callback boundary. Tests device-global replacement during constant lookup and vertex-slot mutation by table Release. Independent assertions check path-specific outputs and untouched slots. If the trusted linker does not map dependency sections, harness reports C++-only assertions explicitly and avoids an invalid original call; local full-oracle run passed. Oracle assembled bytes equal all 189 original bytes. Implementation also compiled with GCC C++11 O2 warnings-as-errors; optional MSVC helper absent.",
+  "known_limits": [
+    "Actual D3D9 and D3DX operations are external callbacks; GPU behavior and constant-table internals are not recovered.",
+    "Full original differential execution requires fixed writable dependency sections .oracle_import=0x92D64C and .oracle_owner=0xBFCC44; unconfigured links report C++-only tests.",
+    "The original assumes valid owner/device/vtables and valid shader pointers for unconditional Release; invalid pointer faults, callback exceptions and concurrency are not tested or replaced by invented defensive behavior.",
+    "Original class and field names remain unknown; descriptive names reflect observed COM layout. Only four pointers and the owner prefix are modeled. Fixed-address create is a 32-bit original-environment entry; Linux ports should provide dependencies through createUsing.",
+    "Only AL is the return contract; unspecified upper EAX bits are not modeled. No source byte equality or Windows compilation result claimed."
+  ]
+}
