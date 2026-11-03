@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow, modeled x86 layouts, cleanup, and side effects agree with the reference. Independent rebuild passed eight original differential early-exit cases and 336 portable startup/loop cases; both oracle fragments matched the immutable EXE. Native Windows compilation records cover the actual implementation. Later paths remain spy-tested, unresolved ABIs require adapters, and sampled validation does not establish all-input equivalence."
+}
