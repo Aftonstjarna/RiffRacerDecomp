@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable unmatched source for ordinary-return behavior, with zero matching-source byte credit.",
+  "reason": "Reviewed all submitted source, reference routines, validation and actual-implementation MSVC compilation records. Independently rebuilt and ran 10,368 original/adapter/constructor comparisons with fixed-address and TLS fixtures; all passed. Verified executed reference bytes against Game.exe. Tests cover null tables, HRESULT failures, missing handles, wrapping indices, callback mutations, complete object bytes and call logs. Exception unwinding and platform dependencies remain explicitly unresolved; sampled validation does not establish all-input equivalence."
+}

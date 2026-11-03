@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Glass shader construction",
+  "summary": "Recovered shader-glass-ctor at VA 0x579860..0x579AA9 (585 bytes) as a genuine thiscall GlassShader constructor plus an explicit external-services member adapter. Direct original disassembly and accepted assembly establish the three stack arguments, EAX=this return, RET 12, caller 0x53048B allocating 0xFC bytes, field layout, shader manager selection, fourteen exact ordered name lookups and subsequent common-parameter helper. Initializes the identity matrix, borrowed name, shader index, argument, zero fields and byte flag without touching unknown regions or tail padding. Uses modulo-2^32 manager address arithmetic including wrapping indices, no added null/index checks, no reference counting, and reloads table fields across external calls. Actual original string data was inspected. Normal return behavior was tested against the immutable original; SEH/unwind dependencies remain explicitly unresolved. Readable unmatched source; zero matching-byte credit.",
+  "targets": [
+    "shader-glass-ctor"
+  ],
+  "references": [
+    "shader-glass-ctor",
+    "shader-base-ctor",
+    "shader-common-parameters",
+    "shader-parameter-lookup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Fixed-flag freestanding GCC i386 build with Wall/Wextra/Werror passed. Full mapped/TLS execution passed 10368 cases comparing accepted original_shader_glass_ctor directly to the C++ services member and genuine constructor. Both source entries call the actual accepted base, lookup and common-parameter oracles, not replacement algorithms. Sweeps indices 0,1,12,0x10000000,0x80000001,0xF000000C; all four null-table combinations; borrowed name null/non-null; argument 0,1,0x80000000,0xFFFFFFFF; table HRESULT 0,1,-1; constant counts 0,7,14,29; three missing-handle patterns; no mutation or callbacks replacing later tables with another table/null. COM callbacks verify parent/count arguments, exercise ignored parameter-description HRESULT, and record full intermediate object snapshots and call order. Compares all guarded object bytes, all callback logs, returned object pointer, untouched fields/tail padding, identity matrix, selected shaders, independently expected glass handles on nonmutating cases, and restored FS registration slot. build.py builds accepted references at their original addresses and data fixtures at 0x9FE000, 0xBAABC0, 0xBAC000 and 0xBFCD04. run_oracle.py uses ptrace to install an i386 FS descriptor before entry, with no injected or modified instructions. All 585 target bytes and the 114/261/149 helper bytes were verified equal to Game.exe. Plain trusted-style linking without fixture mappings separately passed 16 null-table adapter cases using actual accepted helpers, explicitly reporting that full target comparison requires data/FS setup. GCC C++11 O2 implementation compilation also passed. Optional MSVC helper is absent locally.",
+  "known_limits": [
+    "Original Win32 SEH registration and exception unwinding are not implemented in portable C++. Handler 0x908136, metadata 0xB7F7E8, unwind table 0xB7F80C and cleanup funclets to base destructor 0x52C9F0/member +0xF4 cleanup 0x499D50 were inspected but remain external. No thrown exceptions, invalid-address faults or unwind cleanup were tested.",
+    "Base constructor, common parameter setup, constant-table lookup, manager storage, vtable and GPU objects remain external dependencies; their implementations are not expanded into this recovered scope. Synthetic COM callbacks model constant tables, not actual D3D hardware.",
+    "Full original target execution needs fixed-address string/manager/cookie fixtures and a valid FS descriptor. The full local run supplies these using build.py/run_oracle.py; an ordinary minimal trusted link runs only explicitly identified null-table adapter checks and does not silently claim target execution.",
+    "Index arithmetic wraps as on original i386, but invalid/unmapped manager entries remain undefined memory accesses and are not made safe. Tested large indices alias valid entries; arbitrary invalid pointers are not tested.",
+    "The recovered object layout is 32-bit. Field names reflect shader strings where available; unknown fields and member +0xF4 ownership type remain unresolved. Source does not claim a complete original class declaration or a 64-bit native object layout.",
+    "MSVC2013 was unavailable locally. Implementation uses C++11 syntax and compiler-guarded ABI annotations for the required native compilation stage. No matching machine-code claim is made."
+  ]
+}
