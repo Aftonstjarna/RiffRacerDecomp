@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Worker non-deleting destruction",
+  "summary": "Recover 0x0048DBB0 as a thiscall member: snapshot handle at +8, reset vtable at +0 to 0x009FBE20, call stdcall CloseHandle once, and ignore its result. No free or handle clearing. Direct original disassembly and cleanup callers support destructor-body interpretation.",
+  "targets": ["worker-destroy"],
+  "references": ["worker-destroy"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare recovered member directly to original_worker_destroy for six handles (zero, ordinary, high-bit and invalid sentinels), three initial vtables and three callback results, each twice. Assert exactly one close per call, correct handle and reset vtable visible inside callback, unchanged handle/priority/thread ID, surrounding guards and bytewise equal final objects.",
+  "known_limits": [
+    "CloseHandle is a controlled callback; actual Windows handle lifetime and OS behavior are not tested.",
+    "Windows FS/SEH and exception unwinding through cleanup thunks are not tested.",
+    "Null or inaccessible this is outside the valid object contract; original would fault.",
+    "Original incidental EAX CloseHandle result is not modeled as a return value of this void destructor body.",
+    "Vtable value is original binary identity only; remaining class members and full class hierarchy are unresolved. No byte-matching claim."
+  ]
+}
