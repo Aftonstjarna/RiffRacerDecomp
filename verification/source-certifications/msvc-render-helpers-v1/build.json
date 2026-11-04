@@ -1,0 +1,173 @@
+{
+  "schema": 1,
+  "id": "msvc-render-helpers-v1",
+  "classification": "source_match_pending_review",
+  "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "original_size": 8635392,
+  "sections": [
+    {
+      "name": ".text",
+      "rva": 4096,
+      "size": 5421056,
+      "offset": 1024
+    },
+    {
+      "name": ".rdata",
+      "rva": 5427200,
+      "size": 2574848,
+      "offset": 5422080
+    },
+    {
+      "name": ".data",
+      "rva": 8003584,
+      "size": 160256,
+      "offset": 7996928
+    },
+    {
+      "name": "_RDATA",
+      "rva": 8450048,
+      "size": 2560,
+      "offset": 8157184
+    },
+    {
+      "name": ".rsrc",
+      "rva": 8454144,
+      "size": 274944,
+      "offset": 8159744
+    },
+    {
+      "name": ".reloc",
+      "rva": 8732672,
+      "size": 200704,
+      "offset": 8434688
+    }
+  ],
+  "source_commit": "5cd0f0c3a9da99f4af8ba56edad229f5bf2fc6aa",
+  "manifest_sha256": "5c7fcf3c610d366afbd0c4b6a0ef58541daaa35caceea1148b7ff57aa55b0a64",
+  "compiler": "18.00.40629.0 built by: REL",
+  "profile": "O2-frame",
+  "flags": "/O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise",
+  "native_toolchain_manifest": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+  "isolated_toolchain_manifest": "b39d659616f00c963d876faf81da8ee88edc2e182dd811c178e7f744bb2c541e",
+  "checker_sha256": "a19b9af32525377f14aa73872c97735e9a89b445820a1becea44783e0a2b9c60",
+  "whole_executable_compared": false,
+  "certified_matching_credit": 0,
+  "functions": [
+    {
+      "scope": "ui-matrix-scale",
+      "source": "Decomp/recovered/msvc/matrix.cpp",
+      "source_sha256": "82489d75a2c2170bc89b42bf94dfe358f84743605477ad61b5b0aa9065237089",
+      "rva": 362512,
+      "file_offset": 359440,
+      "size": 146,
+      "section": ".text",
+      "code_sha256": "08634d9df20df96dd105332e4256ac7b2885b1b55be0c6e46499ce6e4a57f927",
+      "native_object_sha256": "1da9dfec894d74d1900c45259674b2f57d5f13b292f9836e1a04a5f73911039c",
+      "isolated_object_sha256": "322042a95c4a86316899459898f6a5892dd32ffb68c4d4dbb669615937bac9d5",
+      "comparison": {
+        "schema": 1,
+        "byte_equal": true,
+        "different_bytes": 0,
+        "original_size": 146,
+        "candidate_size": 146,
+        "candidate_sha256": "08634d9df20df96dd105332e4256ac7b2885b1b55be0c6e46499ce6e4a57f927",
+        "masked_bytes": 0,
+        "source_rebuild_verified": false,
+        "note": "Binary equality alone does not prove reconstruction from source.",
+        "difference_ranges": [],
+        "reference_fragment_sha256": "08634d9df20df96dd105332e4256ac7b2885b1b55be0c6e46499ce6e4a57f927",
+        "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "scope": "ui-matrix-scale",
+        "rva": 362512,
+        "whole_executable_compared": false
+      }
+    },
+    {
+      "scope": "shader-binding-cleanup",
+      "source": "Decomp/recovered/msvc/binding.cpp",
+      "source_sha256": "e088e8616d454041702d20042064f55b0966d0c4ca910bb49a01bac0d91b5501",
+      "rva": 1242544,
+      "file_offset": 1239472,
+      "size": 67,
+      "section": ".text",
+      "code_sha256": "18c1496f730c968d61f550d68c6fc59c3ea6f74d8a5c706e39ad0e71674b5786",
+      "native_object_sha256": "476e4291468539de2b3e2768d01656cc1f97555e6b17b2708285471597104443",
+      "isolated_object_sha256": "f680bab6eb057cd8febc69f5d2db823abc8c384de22f4043db5a1489e0e1b01a",
+      "comparison": {
+        "schema": 1,
+        "byte_equal": true,
+        "different_bytes": 0,
+        "original_size": 67,
+        "candidate_size": 67,
+        "candidate_sha256": "18c1496f730c968d61f550d68c6fc59c3ea6f74d8a5c706e39ad0e71674b5786",
+        "masked_bytes": 0,
+        "source_rebuild_verified": false,
+        "note": "Binary equality alone does not prove reconstruction from source.",
+        "difference_ranges": [],
+        "reference_fragment_sha256": "18c1496f730c968d61f550d68c6fc59c3ea6f74d8a5c706e39ad0e71674b5786",
+        "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "scope": "shader-binding-cleanup",
+        "rva": 1242544,
+        "whole_executable_compared": false
+      }
+    },
+    {
+      "scope": "resource-reference-release",
+      "source": "Decomp/recovered/msvc/release.cpp",
+      "source_sha256": "063e3f4f5a79ebe2cfa5592cbface0371bf89bea6ab9756bc81619126a9c20c9",
+      "rva": 118032,
+      "file_offset": 114960,
+      "size": 18,
+      "section": ".text",
+      "code_sha256": "83d5e760d05b204d65cdcbde4d091f4e7f46fe8dddf5fb15ae4fd46feb323f6e",
+      "native_object_sha256": "ad9b7f0b6d02b5a358d25ee0c56d68c6768a21d62d18597cd6429e52d32df280",
+      "isolated_object_sha256": "cbf25b88669f2b30f1ba540cfd3717344d873eb0f4a65c364c9185293ecff074",
+      "comparison": {
+        "schema": 1,
+        "byte_equal": true,
+        "different_bytes": 0,
+        "original_size": 18,
+        "candidate_size": 18,
+        "candidate_sha256": "83d5e760d05b204d65cdcbde4d091f4e7f46fe8dddf5fb15ae4fd46feb323f6e",
+        "masked_bytes": 0,
+        "source_rebuild_verified": false,
+        "note": "Binary equality alone does not prove reconstruction from source.",
+        "difference_ranges": [],
+        "reference_fragment_sha256": "83d5e760d05b204d65cdcbde4d091f4e7f46fe8dddf5fb15ae4fd46feb323f6e",
+        "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "scope": "resource-reference-release",
+        "rva": 118032,
+        "whole_executable_compared": false
+      }
+    },
+    {
+      "scope": "shader-base-ctor",
+      "source": "Decomp/recovered/msvc/shader.cpp",
+      "source_sha256": "8f8c8af98739e411008a18dadc380c77b9f98cc1f770f731c74733059c2d436e",
+      "rva": 1319344,
+      "file_offset": 1316272,
+      "size": 114,
+      "section": ".text",
+      "code_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54",
+      "native_object_sha256": "be32abdb54bc27c7154efc3ee8e5259ab9f1721e9bcd6d9d1a5acc6a21561c9a",
+      "isolated_object_sha256": "3cbdc9b2aca6f115b48de1076f9a33e9d76c4456ba7710352f6af8fc762d058c",
+      "comparison": {
+        "schema": 1,
+        "byte_equal": true,
+        "different_bytes": 0,
+        "original_size": 114,
+        "candidate_size": 114,
+        "candidate_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54",
+        "masked_bytes": 0,
+        "source_rebuild_verified": false,
+        "note": "Binary equality alone does not prove reconstruction from source.",
+        "difference_ranges": [],
+        "reference_fragment_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54",
+        "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "scope": "shader-base-ctor",
+        "rva": 1319344,
+        "whole_executable_compared": false
+      }
+    }
+  ]
+}

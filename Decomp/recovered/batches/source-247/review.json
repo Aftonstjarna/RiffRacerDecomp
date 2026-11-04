@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source matches the reference control flow, 32-bit ABI, field offsets, event ordering, separate selection reads, raw byte result and ignored API failures. Tests call the original and check intermediate state and every final object byte across meaningful edge cases. Independently rebuilt at GCC -O2: all 6400 differential cases passed; the 135-byte oracle matched immutable Game.exe. Native Windows evidence records compilation of actual impl.cpp without matching credit. Documented concurrency, OS semantics and invalid-index limits remain; sampled validation does not establish all-input equivalence."
+}

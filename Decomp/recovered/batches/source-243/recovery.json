@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Save-device construction and active-context publication",
+  "summary": "Recovered VA 0x535710 (RVA 0x135710), 81 bytes, as a genuine thiscall member returning this. Initializes the 0x44-byte save device, two empty UTF-16 small-string layouts, vtable identities and active context. Original startup caller at 0x5CFC60 allocates 0x44 bytes and guards null before calling. Original instructions were directly disassembled and compared with accepted assembly. Portable active-context storage replaces absolute VA 0xBFCB4C.",
+  "targets": ["save-device-ctor"],
+  "references": ["save-device-ctor"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 differential tests call the original at its VA with a correct thiscall declaration. All 256 byte-fill patterns and repeated initialization check returned this, every object byte, surrounding guards, untouched padding and string-buffer tails, global pointer publication and the other seven words of the exact 32-byte oracle fixture. FS setup must succeed and its head is checked after every original call.",
+  "known_limits": [
+    "Numeric vtable identities preserve constructor state; virtual functions and relocation to port dispatch tables remain outside scope.",
+    "Names for the byte at +4 and 32-bit field at +0xC are provisional; only their writes are established here.",
+    "The intermediate +8 vtable store has no normal-path observer and may be optimized away by a compiler.",
+    "Null, invalid or undersized this pointers are outside the original caller contract; no defensive behavior is invented.",
+    "No exception dispatch, unwind, OS behavior, virtual calls, or byte-matching claim is covered."
+  ]
+}

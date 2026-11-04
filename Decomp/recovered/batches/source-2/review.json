@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source matches the reference control flow, 32-bit thiscall ABI, layout, unsigned bounds check and observed writes. Tests meaningfully exercise both storage branches and compare complete fixtures. Independent rebuilding passed, including original rejection-path calls through a private import mapping; reference bytes also matched the immutable executable. CRT exception integration and input-domain limitations are explicit. Sampled validation does not establish all-input equivalence or an exact matching recovery."
+}

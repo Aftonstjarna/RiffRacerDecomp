@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, Win32 MSG layout, callback ABI, import caching, and side effects agree with the reference. Tests call the original and meaningfully check empty queues, nonzero BOOL values, WM_QUIT, callback mutation, ordering, and payload changes. Independently verified all 85 reference bytes against Game.exe, rebuilt and ran the harness, and passed additional optimized cases. Native Windows compilation covers the actual implementation. Adapter differences and untested OS, exception, and concurrency behavior are disclosed; sampled validation does not establish all-input equivalence."
+}

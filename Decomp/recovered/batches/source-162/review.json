@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed all submitted sources, reference assembly, layouts, ABI, error handling, side effects, limitations, and native compilation evidence. An independent mapped harness passed 1,492,992 comparisons calling the original routine; oracle bytes were verified against immutable Game.exe. Coverage includes HRESULT boundaries, disabled paths, output retention, callback ordering, and object canaries. External dependency doubles, untested cleanup/aliasing paths, and omitted SEH remain documented limitations. Sampled validation does not establish all-input equivalence."
+}

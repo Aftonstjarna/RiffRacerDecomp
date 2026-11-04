@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Optional auxiliary A render-target creation",
+  "summary": "Recovered aux-target-a at VA 0x4A56C0 (393 bytes) as a genuine thiscall Graphics member and portable dependency adapter. Inspected accepted assembly, direct immutable Game.exe disassembly, both callers (0x4A19CA and 0x4A662E), and helper entry instructions. Any nonzero enable byte +0xA5E creates a one-level D3D9 render-target texture in format 21 using dimensions +0x23C/+0x240 and device +0x78, writing +0x43C; a nonnegative HRESULT then obtains level zero into +0x440. Negative results update the narrow string at +0x54 using original external helpers and return false in AL. Disabled/success returns true. Preserves output writes even on failure, absence of rollback or Release, string ownership transfer, and free-import load order. The original messages say effect target even for this auxiliary target. No matching-source credit claimed.",
+  "targets": [
+    "aux-target-a"
+  ],
+  "references": [
+    "aux-target-a",
+    "cookie-check"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Fixed-flag freestanding GCC i386 build and execution passed 248832 direct comparisons against original_aux_target_a. Also checks the original-address C++ member against its adapter in every case. Local link uses local.ld to place accepted original at 0x4A56C0, accepted cookie check at 0x8F8958, C++ string dependency test doubles at 0x416FA0/0x440A20/0x44F380/0x4B2D20, free slot at 0x92D4B0, original prefix text fixtures at 0x9FC5F4/0x9FC740, cookie at 0xBAABC0, and TLS fixture at 0xBAC000. Local run_oracle.py uses ptrace to install a TLS descriptor and FS base before ELF entry, without injecting instructions or modifying oracle code. Sweeps enable 0/1/2/255, independent width/height 0/1/720/4096/0x80000000/0xFFFFFFFF, HRESULT 0/1/INT_MAX/INT_MIN/-1/0x8876086C at both calls, all four write and null masks (excluding null texture on nonnegative creation), old error capacity 15/16, and callback mutation off/on. Asserts exact COM arguments and output addresses, boolean, callback/free order, callback snapshots, complete object bytes including unknown fields and surrounding canaries, retained failure outputs and untouched old error on success. Failure helpers use synthetic descriptions and ownership-transfer fixtures; these are test doubles, not recovered dependencies. Prefix callback can replace free import and create callback can mutate dimensions. Plain default link separately passed all C++ assertions and explicitly reports that original comparison requires fixed mappings/TLS. Linked oracle and cookie fragments compared equal to all 393 and 15 original bytes, respectively; target SHA256 2d96f9e6ce7a4cf17284c381c3824fac2d7252994f4dfd13a655d86470aeee86. Implementation additionally compiles under GCC C++11 O2 with warnings as errors. Optional /tools/msvc/msvc was absent.",
+  "known_limits": [
+    "D3D9 device/texture operations and game string/error formatting/free helpers remain external. Differential tests use C++ spies at their original entry addresses and synthetic descriptions, so they establish the target control flow and ownership interactions, not correctness of those dependencies or real GPU results.",
+    "Original Win32 SEH handler 0x902B50, exception unwinding, allocation failure exceptions, and invalid pointer faults are not recovered. Ordinary return paths are modeled; source does not emulate x86 SEH registration or stack-cookie scaffolding.",
+    "Full original differential execution requires fixed-address fixtures and an initialized FS descriptor. A plain trusted link without these mappings explicitly runs C++ assertions only. The full local mapped/TLS run passed; local.ld and run_oracle.py document its infrastructure but are not implementation sources.",
+    "Temporary destructor heap branches are retained from direct instructions; the ownership-transfer doubles reset consumed temporaries, so those residual heap destructor branches are not dynamically exercised.",
+    "The original assumes a valid stored texture after any nonnegative creation result, including when the callback leaves the slot untouched. Tests exclude a null texture followed by its unconditional dereference; no defensive null check is introduced.",
+    "Only documented offsets and descriptive field names are recovered, not the complete original class declaration. The fixed layout and original-address entry are for 32-bit pointers; a Linux port must supply actual external services through the adapter and choose its native object layout.",
+    "Only AL is the return ABI contract; unspecified upper EAX bits are not modeled. Native MSVC2013 compilation was not available locally; implementation uses C++11 syntax and guarded calling conventions. No matching-byte source claim."
+  ]
+}

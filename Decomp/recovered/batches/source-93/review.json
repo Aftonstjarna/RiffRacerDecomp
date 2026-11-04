@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source and x86 ABI/layout agree with the reference control flow. Independently rebuilt and passed the differential suite with correctly mapped dependencies, and verified both reference spans against immutable Game.exe. Tests cover aliasing, odd offsets, storage thresholds, relocation, reserve failure, overflow, output buffers and helper activity. Native Windows records show the actual implementation compiled successfully. External dependencies, exception unwinding and untested extreme inputs remain explicitly limited; sampled validation does not establish all-input equivalence."
+}

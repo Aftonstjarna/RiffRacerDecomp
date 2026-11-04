@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed all submitted source, reference assembly, documentation, and native Windows compilation records. Control flow, thiscall ABI, field layouts, unsigned centering, signed division, and side effects agree within the documented dependency scope. Independently rebuilt and passed 1,445 differential cases covering both branches with controlled fitting outputs, and verified the reference routine against all 212 original executable bytes. Actual fitting arithmetic and integration bindings remain external; sampled validation does not establish all-input equivalence."
+}

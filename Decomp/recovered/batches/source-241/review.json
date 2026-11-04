@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, and original reference routines. Readable C++ preserves the i386 ABI/layout, control flow, callback ordering, handle reloads, seek failures, and unchecked ftell results. Independently verified all 99 reference bytes against Game.exe, reran 2304 differential cases, and passed an optimized countercheck that mutates the tell adapter to verify caching. Native Windows compilation records cover the actual implementation. Documented adapter and integration limitations remain; sampled validation does not establish all-input equivalence."
+}

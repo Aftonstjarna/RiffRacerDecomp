@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Device cached-state defaults",
+  "summary": "Recovered Game.exe 0x004a5e80..0x004a632a as an ECX-this member with no arguments or meaningful return. It writes 103 scalar DWORD defaults, eight parallel 16-element state arrays, and four trailing DWORDs. Integer, floating-point bit patterns and all-bits-set sentinels are preserved; all unlisted fields remain untouched. Direct callers at 0x4a3a10 and 0x4a6673 ignore EAX. There are no external dependencies or failure branches. The accepted oracle was assembled and all 1194 bytes checked against immutable Game.exe, then executed at its original virtual address. This is behavioral source recovery, not a matching-code claim.",
+  "targets": ["device-defaults"],
+  "references": ["device-defaults"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding test_main compares resetDefaults directly with original_device_defaults declared thiscall. 68 trials cover zero, FF, 55, AA and deterministic pseudorandom initial bytes; each trial repeats the reset. Every byte of the partial object, 64-byte leading guard and 128-byte trailing guard is compared. An independently audited write footprint checks untouched fields and guards against their original values, including caller-owned +0xa74 and gaps between arrays. Explicit checks cover float bit encodings, sentinels and array endpoints. MXCSR is checked under all rounding modes with FTZ/DAZ enabled and disabled. Fixed C++17 O0 build passed; additional C++11 O2 implementation build passed against the same original oracle.",
+  "known_limits": [
+    "Specific semantic names of cached state fields are unresolved; source deliberately uses documented byte offsets in a DWORD-addressed partial device view.",
+    "Only a valid, DWORD-aligned writable device object is supported. Original code performs no null, length or alignment validation; invalid pointers are not tested.",
+    "The original incidental EAX pointer and arithmetic flags are not modeled as return values; both observed direct callers ignore them and the recovered method returns void.",
+    "The original surrounding device setup/reset paths and rendering-state consumers remain outside this task.",
+    "The optional pinned MSVC helper is absent in this sandbox. Implementation uses C++11-compatible syntax and guarded member ABI declarations; native Windows compilation is left to trusted validation.",
+    "No matching machine-code claim is made. The partial view is not a reconstruction of the complete device class layout."
+  ]
+}

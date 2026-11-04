@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, metadata, reference assembly, and original disassembly. Readable C++ preserves layouts, unsigned thresholds, deletion order, vtable transitions, and partial resets. Independent rebuild passed 192 differential cases covering boundary capacities, null/aliased pointers, callback snapshots, full object bytes, and guards. The executed 100-byte oracle matches Game.exe. The added callback ABI and allocator, exception, and porting limitations are disclosed. Sampled validation does not establish all-input equivalence or exact matching."
+}

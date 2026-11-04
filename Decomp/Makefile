@@ -1034,3 +1034,204 @@ test-wide-range: $(OUT)/reriff-match $(OUT)/wide_reserve.bin $(OUT)/wide_append_
 
 test-recovered: test-wide-range
 .PHONY: test-wide-range
+
+$(OUT)/lifetime_adjust16.bin: native/lifetime_adjust16.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_adjust16.o
+	ld -m elf_i386 -Ttext=0x45004f -e original_lifetime_adjust16 $(OUT)/lifetime_adjust16.o -o $(OUT)/lifetime_adjust16.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_adjust16.elf $@
+
+$(OUT)/lifetime_adjust20.bin: native/lifetime_adjust20.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_adjust20.o
+	ld -m elf_i386 -Ttext=0x450057 -e original_lifetime_adjust20 $(OUT)/lifetime_adjust20.o -o $(OUT)/lifetime_adjust20.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_adjust20.elf $@
+
+$(OUT)/lifetime_dispose.bin: native/lifetime_dispose.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_dispose.o
+	ld -m elf_i386 -Ttext=0x44eae0 -e original_lifetime_dispose $(OUT)/lifetime_dispose.o -o $(OUT)/lifetime_dispose.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_dispose.elf $@
+
+$(OUT)/lifetime_destruct.bin: native/lifetime_destruct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_destruct.o
+	ld -m elf_i386 -Ttext=0x44eb10 -e original_lifetime_destruct $(OUT)/lifetime_destruct.o -o $(OUT)/lifetime_destruct.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_destruct.elf $@
+
+test-lifetime: $(OUT)/reriff-match $(OUT)/lifetime_adjust16.bin $(OUT)/lifetime_adjust20.bin $(OUT)/lifetime_dispose.bin $(OUT)/lifetime_destruct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-adjust16 $(OUT)/lifetime_adjust16.bin $(OUT)/lifetime-adjust16-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-adjust20 $(OUT)/lifetime_adjust20.bin $(OUT)/lifetime-adjust20-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-dispose $(OUT)/lifetime_dispose.bin $(OUT)/lifetime-dispose-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-destruct $(OUT)/lifetime_destruct.bin $(OUT)/lifetime-destruct-comparison.json
+
+test-recovered: test-lifetime
+.PHONY: test-lifetime
+
+$(OUT)/ui_matrix_scale.bin: native/ui_matrix_scale.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_matrix_scale.o
+	ld -m elf_i386 -Ttext=0x00458810 -e original_ui_matrix_scale $(OUT)/ui_matrix_scale.o -o $(OUT)/ui_matrix_scale.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_matrix_scale.elf $@
+
+test-ui-matrix-scale: $(OUT)/reriff-match $(OUT)/ui_matrix_scale.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-matrix-scale $(OUT)/ui_matrix_scale.bin $(OUT)/ui-matrix-scale-comparison.json
+
+test-recovered: test-ui-matrix-scale
+.PHONY: test-ui-matrix-scale
+
+$(OUT)/member_cleanup.bin: native/member_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/member_cleanup.o
+	ld -m elf_i386 -Ttext=0x48d800 -e original_member_cleanup $(OUT)/member_cleanup.o -o $(OUT)/member_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/member_cleanup.elf $@
+
+$(OUT)/narrow_range_destroy.bin: native/narrow_range_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_range_destroy.o
+	ld -m elf_i386 -Ttext=0x4268f0 -e original_narrow_range_destroy $(OUT)/narrow_range_destroy.o -o $(OUT)/narrow_range_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_range_destroy.elf $@
+
+test-cleanup-dependencies: $(OUT)/reriff-match $(OUT)/member_cleanup.bin $(OUT)/narrow_range_destroy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" member-cleanup $(OUT)/member_cleanup.bin $(OUT)/member-cleanup-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-range-destroy $(OUT)/narrow_range_destroy.bin $(OUT)/narrow-range-destroy-comparison.json
+
+test-recovered: test-cleanup-dependencies
+.PHONY: test-cleanup-dependencies
+
+$(OUT)/decode_worker_ctor.bin: native/decode_worker_ctor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_worker_ctor.o
+	ld -m elf_i386 -Ttext=0x48d6e0 -e original_decode_worker_ctor $(OUT)/decode_worker_ctor.o -o $(OUT)/decode_worker_ctor.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_worker_ctor.elf $@
+
+$(OUT)/decode_worker_dispatch.bin: native/decode_worker_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_worker_dispatch.o
+	ld -m elf_i386 -Ttext=0x48d9c0 -e original_decode_worker_dispatch $(OUT)/decode_worker_dispatch.o -o $(OUT)/decode_worker_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_worker_dispatch.elf $@
+
+test-decode-worker: $(OUT)/reriff-match $(OUT)/decode_worker_ctor.bin $(OUT)/decode_worker_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" decode-worker-ctor $(OUT)/decode_worker_ctor.bin $(OUT)/decode-worker-ctor-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" decode-worker-dispatch $(OUT)/decode_worker_dispatch.bin $(OUT)/decode-worker-dispatch-comparison.json
+
+test-recovered: test-decode-worker
+.PHONY: test-decode-worker
+
+$(OUT)/decode_request_prepare.bin: native/decode_request_prepare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_request_prepare.o
+	ld -m elf_i386 -Ttext=0x48d870 -e original_decode_request_prepare $(OUT)/decode_request_prepare.o -o $(OUT)/decode_request_prepare.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_request_prepare.elf $@
+
+$(OUT)/decode_request_unwind.bin: native/decode_request_unwind.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_request_unwind.o
+	ld -m elf_i386 -Ttext=0x901770 -e original_decode_request_unwind $(OUT)/decode_request_unwind.o -o $(OUT)/decode_request_unwind.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_request_unwind.elf $@
+
+$(OUT)/decode_request_handler.bin: native/decode_request_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_request_handler.o
+	ld -m elf_i386 -Ttext=0x901778 -e original_decode_request_handler $(OUT)/decode_request_handler.o -o $(OUT)/decode_request_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_request_handler.elf $@
+
+$(OUT)/resource_reference_release.bin: native/resource_reference_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_reference_release.o
+	ld -m elf_i386 -Ttext=0x41cd10 -e original_resource_reference_release $(OUT)/resource_reference_release.o -o $(OUT)/resource_reference_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_reference_release.elf $@
+
+test-decode-request: $(OUT)/reriff-match $(OUT)/decode_request_prepare.bin $(OUT)/decode_request_unwind.bin $(OUT)/decode_request_handler.bin $(OUT)/resource_reference_release.bin
+	$(OUT)/reriff-match native-check "$(GAME)" decode-request-prepare $(OUT)/decode_request_prepare.bin $(OUT)/decode-request-prepare-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" decode-request-unwind $(OUT)/decode_request_unwind.bin $(OUT)/decode-request-unwind-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" decode-request-handler $(OUT)/decode_request_handler.bin $(OUT)/decode-request-handler-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" resource-reference-release $(OUT)/resource_reference_release.bin $(OUT)/resource-reference-release-comparison.json
+
+test-recovered: test-decode-request
+.PHONY: test-decode-request
+
+$(OUT)/narrow_string_reset.bin: native/narrow_string_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_string_reset.o
+	ld -m elf_i386 -Ttext=0x48d630 -e original_narrow_string_reset $(OUT)/narrow_string_reset.o -o $(OUT)/narrow_string_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_string_reset.elf $@
+
+$(OUT)/narrow_storage_swap.bin: native/narrow_storage_swap.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_storage_swap.o
+	ld -m elf_i386 -Ttext=0x451b60 -e original_narrow_storage_swap $(OUT)/narrow_storage_swap.o -o $(OUT)/narrow_storage_swap.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_storage_swap.elf $@
+
+$(OUT)/narrow_inline_swap.bin: native/narrow_inline_swap.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_inline_swap.o
+	ld -m elf_i386 -Ttext=0x451d10 -e original_narrow_inline_swap $(OUT)/narrow_inline_swap.o -o $(OUT)/narrow_inline_swap.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_inline_swap.elf $@
+
+$(OUT)/narrow_reset_handler.bin: native/narrow_reset_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_reset_handler.o
+	ld -m elf_i386 -Ttext=0x901748 -e original_narrow_reset_handler $(OUT)/narrow_reset_handler.o -o $(OUT)/narrow_reset_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_reset_handler.elf $@
+
+test-narrow-reset: $(OUT)/reriff-match $(OUT)/narrow_string_reset.bin $(OUT)/narrow_storage_swap.bin $(OUT)/narrow_inline_swap.bin $(OUT)/narrow_reset_handler.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-string-reset $(OUT)/narrow_string_reset.bin $(OUT)/narrow-string-reset-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-storage-swap $(OUT)/narrow_storage_swap.bin $(OUT)/narrow-storage-swap-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-inline-swap $(OUT)/narrow_inline_swap.bin $(OUT)/narrow-inline-swap-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-reset-handler $(OUT)/narrow_reset_handler.bin $(OUT)/narrow-reset-handler-comparison.json
+
+test-recovered: test-narrow-reset
+.PHONY: test-narrow-reset
+
+$(OUT)/narrow_destroy.bin: native/narrow_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_destroy.o
+	ld -m elf_i386 -Ttext=0x415b60 -e original_narrow_destroy $(OUT)/narrow_destroy.o -o $(OUT)/narrow_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_destroy.elf $@
+
+$(OUT)/narrow_reset_unwind.bin: native/narrow_reset_unwind.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_reset_unwind.o
+	ld -m elf_i386 -Ttext=0x901740 -e original_narrow_reset_unwind $(OUT)/narrow_reset_unwind.o -o $(OUT)/narrow_reset_unwind.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_reset_unwind.elf $@
+
+$(OUT)/narrow_assign_substring.bin: native/narrow_assign_substring.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_assign_substring.o
+	ld -m elf_i386 -Ttext=0x415fe0 -e original_narrow_assign_substring $(OUT)/narrow_assign_substring.o -o $(OUT)/narrow_assign_substring.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_assign_substring.elf $@
+
+test-narrow-dependencies: $(OUT)/reriff-match $(OUT)/narrow_destroy.bin $(OUT)/narrow_reset_unwind.bin $(OUT)/narrow_assign_substring.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-destroy $(OUT)/narrow_destroy.bin $(OUT)/narrow-destroy-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-reset-unwind $(OUT)/narrow_reset_unwind.bin $(OUT)/narrow-reset-unwind-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-assign-substring $(OUT)/narrow_assign_substring.bin $(OUT)/narrow-assign-substring-comparison.json
+
+test-recovered: test-narrow-dependencies
+.PHONY: test-narrow-dependencies
+
+$(OUT)/narrow_erase.bin: native/narrow_erase.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_erase.o
+	ld -m elf_i386 -Ttext=0x416660 -e original_narrow_erase $(OUT)/narrow_erase.o -o $(OUT)/narrow_erase.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_erase.elf $@
+
+$(OUT)/narrow_grow.bin: native/narrow_grow.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_grow.o
+	ld -m elf_i386 -Ttext=0x416890 -e original_narrow_grow $(OUT)/narrow_grow.o -o $(OUT)/narrow_grow.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_grow.elf $@
+
+$(OUT)/narrow_handler.bin: native/narrow_handler.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_handler.o
+	ld -m elf_i386 -Ttext=0x8fd780 -e original_narrow_handler $(OUT)/narrow_handler.o -o $(OUT)/narrow_handler.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_handler.elf $@
+
+test-narrow-growth: $(OUT)/reriff-match $(OUT)/narrow_erase.bin $(OUT)/narrow_grow.bin $(OUT)/narrow_handler.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-erase $(OUT)/narrow_erase.bin $(OUT)/narrow-erase-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-grow $(OUT)/narrow_grow.bin $(OUT)/narrow-grow-comparison.json
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-handler $(OUT)/narrow_handler.bin $(OUT)/narrow-handler-comparison.json
+
+test-recovered: test-narrow-growth
+.PHONY: test-narrow-growth

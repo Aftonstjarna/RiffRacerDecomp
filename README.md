@@ -47,35 +47,77 @@ to modding work and must be identified as such.
 ## Current status
 
 This repository does not yet provide a complete rebuilt game or a playable
-native Linux port. A systematic count of behavior-validated source and working
-port features has not yet been established; no overall port-completion
-percentage is claimed.
+native Linux port. It contains **46 reviewed C++ recovery batches**, alongside
+the render-helper and FLAC work described below. Batch count does not measure
+code coverage; no overall recovery or port-completion percentage is claimed.
+
+The first [readable render-helper batch](Decomp/recovered/README.md) adds three
+unmatched C++ routines for matrix scaling, shader initialization and binding
+callbacks. Sampled tests compare their results and side effects to byte-checked
+original assembly. The documented GCC configuration passes; an optimized-build
+NaN difference and remaining ABI/platform limitations are recorded explicitly.
+
+Four [original-ABI C++ functions](Decomp/recovered/README.md#native-windows-compiler-candidates)
+now contribute 345 certified matching-source bytes. Native Windows MSVC2013 and
+an independent source-only sandbox rebuild reproduce their complete fragments;
+the actual native fragments pass differential behavior tests and controller
+source review. The [source ledger](verification/source-coverage.json) and
+[certification evidence](verification/source-certifications/msvc-render-helpers-v1/) record that scope.
+Three existing portable routines also pass native compiler compatibility checks;
+their original-behavior tests have been rerun with audited callback bindings.
+
+The [original FLAC PCM conversion](Decomp/native/FLAC-ANALYSIS-RATE.md) is also
+recovered as a small, behavior-validated C++ slice. It retains channel zero,
+passes exhaustive signed-16-bit value and block-length checks, and compiles
+with native MSVC2013. Full decoder and resampler source remain unrecovered;
+this slice earns no matching-source credit.
+
+The [reviewed C++ batches](Decomp/recovered/batches/) cover string operations,
+buffer allocation, application entry, window and device handling, shader
+management, worker threads and resource cleanup. Recent additions include the
+[message pump](Decomp/recovered/batches/source-245/),
+[worker requests](Decomp/recovered/batches/source-247/) and
+[narrow-string reset](Decomp/recovered/batches/source-248/).
+Each batch records its original reference, tests, review and remaining
+dependencies. These implementations remain unmatched source and add no certified
+matching bytes; sampled behavior tests do not prove full-game equivalence or
+portable Windows dependency replacements.
+
+The [normal-path FS test helper](Decomp/recovered/README.md#normal-path-fs-test-support)
+lets isolated Linux tests execute original routines that register and restore
+exception frames. Bounded import and global fixtures support comparisons with
+controlled dependencies. Windows exception dispatch/unwinding, throwing paths,
+and missing helper implementations remain unresolved. Test infrastructure and
+dependency substitutes receive no recovered-source byte credit.
 
 The following are **byte-comparison metrics**, not overall recovery or port
-completion. They describe the accepted recovery on the
-[`decomp` branch](https://github.com/Aftonstjarna/RiffRacerDecomp/tree/decomp):
+completion. They describe the verified spans recorded in this checkout:
 
 | Evidence | Whole executable | `.text` section |
 |---|---:|---:|
-| Compiler-built matching high-level source | 0 / 8,635,392 bytes (0.00000%) | 0 / 5,421,056 bytes (0.00000%) |
+| Compiler-built matching high-level source | 345 / 8,635,392 bytes (0.00400%) | 345 / 5,421,056 bytes (0.00636%) |
 | Existing assembly-level byte matches | 69,983 / 8,635,392 bytes (0.81042%) | 69,955 / 5,421,056 bytes (1.29043%) |
 
-The [byte-comparison ledger](https://github.com/Aftonstjarna/RiffRacerDecomp/blob/decomp/verification/coverage.json)
+The [legacy assembly byte-comparison ledger](verification/coverage.json)
 contains 133 accepted spans. The provenance audit maps all of them to assembly
-sources, including mechanical transcription; none currently contributes to the
-high-level matching row. Stricter assembly qualification remains pending, so the
-assembly row is reference evidence, not certified semantic recovery. The ledger
-does not yet encode those provenance classes.
+sources, including mechanical transcription. Assembly alone earns no high-level
+source credit. The separate source ledger admits only reviewed, independently
+rebuilt C++ function spans. Its four ranges overlap existing assembly evidence;
+the two rows must not be added together. Stricter assembly qualification remains
+pending, so the assembly row is reference evidence, not certified semantic recovery.
 
 The 28 bytes outside `.text` are exception metadata in `.rdata`. The `.text`
 denominator includes padding and is not a proven instruction-only total.
-`source_rebuild_verified` and `whole_executable_compared` remain false: no
-complete source-built executable has been compared successfully to the original.
+The source ledger verifies its admitted spans only. The legacy assembly ledger's
+`source_rebuild_verified` remains false, and `whole_executable_compared` is false
+for both tiers: no complete source-built executable has been compared
+successfully to the original.
 
 ## Repository scope
 
-Faithful recovery belongs on `decomp`, including useful non-byte-matching source
-backed by original evidence and behavioral checks. Reserve `redux` or dedicated
+`main` integrates reviewed recovery from `decomp`. Active faithful recovery
+continues on `decomp`, including useful non-byte-matching source backed by
+original evidence and behavioral checks. Reserve `redux` or dedicated
 modification branches for intentional behavior changes.
 
 The modified server, launcher and current native-port work remain in
@@ -85,8 +127,8 @@ modding tools remain goals rather than released features here.
 
 ## Verify the existing byte matches
 
-From the `decomp` checkout, build and compare the existing fragments inside a
-development Distrobox, using an unmodified, preserved copy of the game:
+From a `main` or `decomp` checkout, build and compare the existing fragments
+inside a development Distrobox, using an unmodified, preserved copy of the game:
 
 ```sh
 distrobox enter development -- make -C "$PWD/Decomp" \

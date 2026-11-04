@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "byte_equal": true,
+  "different_bytes": 0,
+  "original_size": 114,
+  "candidate_size": 114,
+  "candidate_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54",
+  "masked_bytes": 0,
+  "source_rebuild_verified": false,
+  "note": "Binary equality alone does not prove reconstruction from source.",
+  "difference_ranges": [],
+  "reference_fragment_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54",
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "scope": "shader-base-ctor",
+  "rva": 1319344,
+  "whole_executable_compared": false
+}

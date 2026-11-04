@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed all submitted files, reference assembly and documentation, and validation including actual-source MSVC compilation. Independently compiled the implementation at 32-bit O2, inspected its disassembly against Game.exe, and verified source/original hashes. Control flow, thiscall/stdcall/cdecl ABI, field offsets, unsigned allocation threshold, callback order, and observable memory effects agree. The 360-case differential test calls the original and compares arguments, per-call snapshots and final storage across meaningful boundary inputs. OS synchronization, concurrency and exception paths remain explicitly unvalidated; sampled checks do not establish all-input equivalence."
+}

@@ -1,0 +1,11 @@
+{
+ "schema":1,
+ "classification":"high_level_unmatched",
+ "title":"Wide prefix string construction",
+ "summary":"Recover VA 0x536070 as source-register thiscall construction of a 24-byte UTF-16 string: initialize capacity 7, length zero and first WCHAR zero, delegate offset-zero prefix assignment to the accepted helper, return destination. Middle stack argument is ignored. Original caller at 0x5359dc constructs a path prefix through a separator. Helper remains outside recovered scope.",
+ "targets":["wide-prefix-construct"],
+ "references":["wide-prefix-construct","wide-assign-substring","wide-truncate","wide-erase"],
+ "sources":["impl.cpp","impl.hpp","test.cpp"],
+ "test_description":"Differential execution against original_wide_prefix_construct with real original substring/truncate/erase helpers. Empty inline and heap-selected sources; nonempty sources with count zero; inline and heap self-aliasing; maximum counts 0,1,7,8,0x7fffffff,0xffffffff; ignored slot 0,7,0xffffffff. Check return pointers, full destination bytes, all unmodified storage bytes, adjacent guards, source object and backing buffer. Repeated calls exercise callee stack cleanup.",
+ "known_limits":["Nonempty distinct-source prefixes are not executed: helper calls memcpy through original VA 0x8f8d66 and IAT 0x92d494; the supplied freestanding runtime does not supply that import. Prefixes longer than seven additionally require MSVC allocation/FS exception runtime. No surrogate dependencies are installed.","Helper allocation, error and exception behavior remains delegated to original_wide_assign_substring, not recovered here. A Linux port must separately provide this helper and its runtime semantics.","Tests validate construction and alias/empty boundary behavior, not all helper paths. No matching-byte claim. Null or invalid pointers and overlapping distinct objects are not assigned new behavior."]
+}

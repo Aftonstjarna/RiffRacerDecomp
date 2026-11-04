@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Wide string in-place truncation",
+  "summary": "Recovered VA 0x44fcf0 (63 bytes): unsigned length validation, capacity<8 inline selection, length publication, one UTF-16 NUL write, and return of this. GCC i386 thiscall models ECX and RET 4. Original caller 0x44fb63 uses this during self-substring assignment before prefix erasure. Invalid positions call nonreturning std::_Xout_of_range through IAT 0x92d16c with message at 0x99995c. The portable implementation delegates that dependency to a supplied nonreturning C hook.",
+  "targets": ["wide-truncate"],
+  "references": ["wide-truncate"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct calls to original_wide_truncate and recovered_wide_truncate for every length and truncation position through inline capacities 0,1,7 and heap capacities 8,9,31,UINT_MAX with lengths 0..31. Whole fixture comparisons verify return identity, exact length/NUL writes, unchanged capacity, pointer, trailing characters, unused storage, and canaries. Recovered invalid length+1 and UINT_MAX cases use GCC builtin nonlocal transfer from a nonreturning error hook and check message and absence of writes. Local supplementary testing also intercepted the original error import at 0x92d16c using a private linker layout and passed; submitted portable tests skip invalid original calls because the trusted harness does not promise that import mapping. Local original reference was assembled at its original VA and compared to Game.exe.",
+  "known_limits": [
+    "The original MSVC exception implementation, runtime type, and unwinding are not recovered. A Linux port must implement recovered_wide_out_of_range with its chosen faithful exception integration.",
+    "Submitted tests cannot execute the original rejection path without a mapped nonreturning CRT helper at IAT 0x92d16c; this external dependency is not an accepted reference routine. Local interception verifies dispatch and untouched state but not Windows exception unwinding.",
+    "Object layout and original ABI tests target 32-bit pointers; this is not a native 64-bit object-layout port. WideUnit deliberately remains 16 bits.",
+    "Malformed objects, invalid storage pointers, and oversized lengths that do not describe accessible storage are outside tested object invariants. No allocation or validation beyond the observed length check is added."
+  ]
+}

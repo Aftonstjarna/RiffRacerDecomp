@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Viewport size and centering",
+  "summary": "Recovered 0x4A22E0 thiscall member: request storage, optional external fitting, wrapped unsigned centering, signed height/10-2, and window offset writes. Portable dependency bindings retain fitting as an external routine.",
+  "targets": [
+    "viewport-size"
+  ],
+  "references": [
+    "viewport-size"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "289 dimension pairs including zero, decimal division boundaries, common resolutions and signed/unsigned extremes; disabled branch directly compared with accepted original. Four controlled fitting outputs per pair and noncanonical true flag test both output mutations, singleton change during helper, wrapping differences, signed quotient, all object bytes and window bytes plus guards. Local fixed-address linker maps test-only fitting double and singleton for fitted original differential checks; test explicitly reports reduced coverage if these sections are not mapped by an external runner. Local GCC freestanding executable passed all 1,445 original differential cases; linked accepted assembly independently compared equal to all 212 original bytes. Implementation also checked in C++11 mode. An unmapped-dependency build passed the disabled-path original comparisons and explicitly reported fitted coverage unavailable.",
+  "known_limits": [
+    "fit_dimensions at 0x4A1C30 remains an external dependency; fitting arithmetic and CRT floor/conversion are not recovered or validated here. Fitted differential tests use an explicitly controlled helper double.",
+    "Window singleton at 0xBFCC28 is exposed as a portable binding; a game integration must bind the original helper ABI and singleton.",
+    "Consumer meaning of field +0x294 and identities of surrounding opaque fields remain unresolved.",
+    "No byte matching claimed. Null fitting callback or null window on fitting path remains invalid just as original dependencies must be valid.",
+    "Optional MSVC helper /tools/msvc/msvc is absent; Windows compilation is left to the trusted coordinator."
+  ]
+}

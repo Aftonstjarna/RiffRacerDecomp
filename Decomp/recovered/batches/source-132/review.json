@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, thiscall ABI, layouts, callback ordering, state writes and floating-point conversions agree with the reference. Independently verified all 319 linked reference bytes and conversion constants against Game.exe; mapped differential tests passed 16,134 cases with both O0 and O2 implementations, covering edge dimensions, rounding modes, callback mutations and complete state comparisons. Native Windows compilation records cover the actual implementation. Window-helper substitution, pointer assumptions and floating-point limitations are disclosed. Sampled validation does not establish all-input equivalence."
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed all submitted source, metadata, reference routines, and native Windows compilation records. Source preserves i386 ABI/layout, signed HRESULT branches, device reloads, and callback-visible release/null ordering. Independently rebuilt and ran differential tests at O0 and O2 against reference routines verified byte-for-byte against immutable Game.exe. Tests exercise all failure positions, pointer masks, status boundaries, output mutations, and callback side effects, comparing owner state, canaries, and event logs. Stated limitations are appropriate; sampled validation does not establish all-input equivalence."
+}

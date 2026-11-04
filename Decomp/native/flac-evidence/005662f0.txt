@@ -1,0 +1,73 @@
+Research output only; not verified reconstructed source.
+Program: Game.exe
+SHA256: 2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2
+Language: x86:LE:32:default
+Function: FUN_005662f0 005662f0
+Body: [[005662f0, 00566474]]
+Callers:
+004f9080 FUN_004f9080
+Callees:
+008f87c8 new[]
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 * __fastcall FUN_005662f0(undefined4 *param_1)
+
+{
+  uint uVar1;
+  undefined4 uVar2;
+  int *unaff_FS_OFFSET;
+  undefined4 uVar3;
+  int iStack_10;
+  undefined *puStack_c;
+  undefined4 uStack_8;
+  
+  puStack_c = &DAT_00907203;
+  iStack_10 = *unaff_FS_OFFSET;
+  uVar1 = _DAT_00baabc0 ^ (int)register0x00000010 - 4U;
+  *unaff_FS_OFFSET = (int)&iStack_10;
+  *param_1 = &UNK_00a008a4;
+  param_1[6] = 7;
+  param_1[5] = 0;
+  *(undefined2 *)(param_1 + 1) = 0;
+  param_1[7] = 0;
+  uStack_8 = 0;
+  param_1[8] = &UNK_00a04cbc;
+  uVar2 = func_0x005bcd20(uVar1);
+  param_1[9] = uVar2;
+  uStack_8 = CONCAT31(uStack_8._1_3_,1);
+  uVar3 = 0x80000;
+  *param_1 = &UNK_00a00af0;
+  param_1[8] = &UNK_00a00b1c;
+  param_1[0x10a] = 0;
+  param_1[0x10b] = 0;
+  param_1[0x10c] = 0;
+  param_1[0x10d] = 0;
+  param_1[0x10e] = 0;
+  *(undefined1 *)(param_1 + 0x10f) = 0;
+  param_1[0x110] = 0;
+  param_1[0x111] = 0;
+  param_1[0x112] = 0;
+  param_1[0x114] = 0;
+  param_1[0x115] = 0;
+  param_1[0x116] = 0;
+  param_1[0x117] = 0;
+  param_1[0x119] = 0;
+  param_1[0x11a] = 0;
+  param_1[0x11b] = 0;
+  param_1[0x120] = 0;
+  param_1[0x121] = 0;
+  *(undefined2 *)(param_1 + 0x122) = 0x100;
+  param_1[0x118] = 0x80000;
+  uVar1 = new__();
+  uVar2 = 0x80000;
+  param_1[0x116] = uVar1;
+  uVar1 = new__();
+  param_1[0x11a] = uVar1;
+  func_0x008f8d7e(param_1 + 10,0,0x200,uVar2,uVar3);
+  func_0x008f8d7e(param_1 + 0x8a,0,0x200);
+  *unaff_FS_OFFSET = iStack_10;
+  return param_1;
+}
+
+

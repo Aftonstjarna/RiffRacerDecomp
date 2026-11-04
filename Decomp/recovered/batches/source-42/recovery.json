@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Request resource cleanup",
+  "summary": "Recovered VA 0x4a1bc0 (RVA 0xa1bc0), 111 bytes, as readable C++ with i386 thiscall entry and stdcall interface callbacks. Calls virtual slot +8 for fields +0x440, +0x43c, +0x448, +0x444, conditionally on non-null, ignores callback results, and returns true in AL. Preserves the original load-next-before-clear-previous timing. Direct original disassembly and the request dispatcher case-1 caller at 0x4a1a61 were inspected. Accepted oracle bytes were checked against Game.exe and all 111 bytes agree. GCC freestanding differential executable passed.",
+  "targets": ["request-cleanup"],
+  "references": ["request-cleanup"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "96 original-versus-recovered cases: all 16 pointer-presence masks, distinct versus aliased interface pointers, and three callback modes (no mutation, replacing all fields plus sentinel mutations, clearing all fields). Compares boolean result, callback order/count, complete owner and tail snapshots at each callback, per-interface call counts, and final byte image. Independent assertions check fixed callback order, clearing, untouched prefix/tail bytes, and repeated cleanup with no callbacks. Callback return values include zero and high-bit-set nonzero values. Oracle linked at VA 0x4a1bc0; test_main returns zero.",
+  "known_limits": [
+    "Interface identities and resource ownership semantics are unresolved; slot +8 is Release-compatible, but no concrete COM interface is asserted.",
+    "The recovered layout names only the four known pointer fields. Unknown bytes and test tail are opaque; the enclosing object's complete type and size are not reconstructed.",
+    "Original callback calls leave ECX holding the interface pointer incidentally, while passing the interface through the stack with callee cleanup. The declared callback contract is stdcall; callbacks requiring a private extra register contract are not established by this evidence.",
+    "Null owner, invalid/dangling interface pointers, throwing callbacks, reentrant cleanup, and concurrent modification are not tested or assigned safe behavior.",
+    "Only AL is a defined return value in the original. Upper EAX bits and other caller-saved register residue are not part of the recovered boolean API.",
+    "Behavior validation uses instrumented interface callbacks rather than live game resources. This is high-level unmatched recovery, not a matching C++ rebuild."
+  ]
+}

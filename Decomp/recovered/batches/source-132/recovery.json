@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Secondary display request case 3",
+  "summary": "Readable recovery of thiscall 0x4A2130 (RVA 0xA2130, 319 bytes), reached by dispatcher case 3 at 0x4A1A7A. Compares six settings, copies five request dwords and +0x274 to +0x264 on change, invokes the secondary-window method with singleton/width/height/raw mode byte, then reloads dimensions and computes two single-precision ratios through the original signed-to-double unsigned correction. Always copies request +0x1D to object +0x4BB and returns true. The compared +0x4BF mode byte is deliberately not assigned. Original instructions and constant table were checked directly in immutable Game.exe. All 319 accepted reference bytes match Game.exe; no compiler-byte matching is claimed.",
+  "targets": ["request-case3"],
+  "references": ["request-case3"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding fixed-flags build passed 16134 original-reference differential cases with controlled thiscall secondary-window boundary at 0x48CC70, singleton storage at 0xBFCC28, and the original 0/2^32 double constants at 0xA071B0. Covers unchanged and each of six independently differing settings, mode bytes 0/1/2/255, dimensions 0/1/3/720/1080/1920/0xFFFFFF/0x1000001/0x7FFFFFFF/0x80000000/0x80000001/0xFFFFFFFF, and all four MXCSR rounding modes with masked exceptions. Checks true return, callback count and arguments, state writes preceding callback, state reload and flag read following callback, whole guarded object and request byte equality, untouched fields including +0x4BF, and MXCSR flags. A callback mutates dimensions and request flag in six additional cases. Full suite also passed with implementation compiled at GCC O2. A default link without mapped boundary sections separately passed 2304 unchanged-path oracle cases and explicitly reports skipped changed-path differential coverage.",
+  "known_limits": [
+    "The operating-system behavior of secondary_window (0x48CC70) is outside the assigned recovery scope. Changed-path tests substitute an observing and optionally mutating boundary double, not a recovered Win32 window implementation.",
+    "The default trusted linker may not position test-only .oracle_secondary, .oracle_unsigned and .oracle_window sections at their required addresses; in that case test_main prints the limitation and performs only unchanged-path original comparisons, while still checking recovered changed-path write sets. The full mapped local differential run was completed separately.",
+    "Unknown object and request fields retain offset-based names; display/window terminology follows helper behavior rather than recovered debug types. Valid live objects and requests are required; invalid pointers, concurrent mutation and overlapping object/request storage are not tested.",
+    "Floating-point tests use masked exceptions and default DAZ/FTZ settings. Unmasked FP traps and asynchronous callbacks are not tested.",
+    "Pinned MSVC helper was absent from this sandbox. Implementation uses C++11-compatible syntax, fixed-width types, genuine thiscall member ABI and guarded compiler declarations, but native MSVC compilation is delegated to the coordinator. No matching-byte credit is claimed."
+  ]
+}

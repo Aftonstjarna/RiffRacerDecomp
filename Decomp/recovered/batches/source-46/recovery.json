@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Window extended-frame placement correction",
+  "summary": "Recovered window-frame at VA 0x48CAB0 (123 bytes) as a genuine thiscall Window member and explicit platform API adapter. Loads dwmapi.dll, resolves DwmGetWindowAttribute, queries attribute 9 for the secondary HWND at +8 after GetWindowRect, adds only a signed-positive wrapped top difference to +0x20, and releases every successfully loaded module. Caller 0x48CD71 runs this after secondary-window creation and consumes +0x20 for placement. Original strings, imports, caller, and instructions inspected directly; assembled oracle checked equal to all 123 immutable executable bytes. No high-level matching claim.",
+  "targets": [
+    "window-frame"
+  ],
+  "references": [
+    "window-frame",
+    "cookie-check"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC fixed-flag i386 freestanding build and execution passed 6912 cases. Local linker places accepted original_window_frame at 0x48CAB0 and accepted cookie-check at 0x8F8958, test import slots at 0x92D000, names at 0x9FBD50 and cookie at 0xBAABC0. Each case compares the portable adapter directly with original, then checks original-ABI member against it. Varies load/lookup availability, HRESULT 0/1/-1/INT_MIN, GetWindowRect BOOL 0/1 (always writes output), all pairs of top values 0,1,7,INT_MAX,INT_MIN,UINT_MAX, and six initial offsets. Verifies entire bounded object prefix plus surrounding canaries, wrapping arithmetic, exact callback ordering/count, HWND/module/name/attribute/size arguments, release on lookup/query failure, and ignored BOOL/release results. With unmapped test sections, submitted harness explicitly reports C++-only assertions and does not call unmapped original dependencies.",
+  "known_limits": [
+    "Actual Windows DLL loading and desktop geometry are delegated platform dependencies; callbacks validate dispatch and transformation, not Windows implementation behavior.",
+    "Original stack rectangles are uninitialized. Successful queries that do not write required tops, including failed GetWindowRect without output, have indeterminate behavior and are not assigned a deterministic replacement or tested.",
+    "Local full-oracle tests require fixed data-section mappings described in test.cpp and test_description; a trusted link without these mappings runs adapter assertions only and reports this limitation.",
+    "Only the observed object prefix through +0x23 is modeled; class identity, remaining layout and other methods are unresolved. No return value is specified by the original void-like caller.",
+    "The member adapter snapshots import pointers before dispatch. Runtime modification of the IAT during a callback is outside tested behavior.",
+    "MSVC2013 syntax compatibility is provided; the optional MSVC tool was absent. Native Windows compilation and source-byte matching were not claimed."
+  ]
+}

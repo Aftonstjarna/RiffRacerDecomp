@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Release the two query resource groups",
+  "summary": "Recover VA 0x4a4d20 (83 bytes) as an i386 thiscall owner method. For each of two three-pointer groups at +0x470, release non-null entries in reverse order via stdcall COM vtable slot +8 and clear them, retaining the next-pointer load before the preceding slot clear. Release return values are ignored. Accepted assembly was checked against direct Game.exe disassembly; callers are query creation failure cleanup, device release and device destruction.",
+  "targets": ["query-release"],
+  "references": ["query-release"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "384 differential cases: all 64 null/non-null masks, distinct or aliased resources, and three callback modes. Compare original and C++ call order, all six pointers visible at each callback, resource call/refcount effects, entire owner and surrounding guards, and unchanged resource identity/vtable. Callback mutations replace/clear future pointers, replace the current slot, repopulate previously cleared slots, and modify unrelated bytes. Ordinary cases additionally assert expected order, null final slots and harmless repeated teardown.",
+  "known_limits": ["Query member names and complete owner layout are unresolved; only the observed offsets are modeled.", "External COM Release implementations are represented by stdcall test callbacks; their internals are outside scope.", "Null owner, invalid/dangling pointers, callback faults, concurrent mutation and unbounded recursive teardown are outside the valid-object test domain. No guards or synchronization have been added.", "The original leaves incidental register values rather than a defined return result; recovered API is void as supported by inspected callers."]
+}

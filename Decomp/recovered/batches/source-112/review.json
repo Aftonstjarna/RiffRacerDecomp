@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ source, with zero matching-source byte credit.",
+  "reason": "Readable source preserves the reference ABI, layouts, lookup order, null overwrites and callback-visible effects. Independently verified both oracle routines and name data against immutable Game.exe, reproduced 430 differential cases, and passed 2,176 additional mutation cases with optimized implementation code. Native Windows compilation records cover the actual implementation. External lookup integration and partial object modeling remain documented limitations; sampled validation does not establish all-input equivalence."
+}

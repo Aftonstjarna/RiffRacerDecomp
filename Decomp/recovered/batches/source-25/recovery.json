@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string range destruction",
+  "summary": "Recovered cdecl VA 0x4268f0, RVA 0x268f0, 64 bytes from original disassembly and byte-verified accepted assembly. Walks [first,last) in 24-byte records, calls cached cdecl operator delete for unsigned capacity >=16, then writes capacity=15, size=0, storage[0]=0 in that order. Does not release array storage or update caller pointers. Extra caller allocator/tag operands are unused. Portable C++ takes the original delete import as an explicit dependency. Inspected array disposal, tail erasure, clear and stdcall-wrapper callers; recovered scope remains only this routine.",
+  "targets": [
+    "narrow-range-destroy"
+  ],
+  "references": [
+    "narrow-range-destroy"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Local GCC i386 fixed-flag build passed 360 range cases spanning every subrange of eight records across eight capacity permutations. With .oracle_import linked at original IAT VA 0x92d4b0 and oracle text at 0x4268f0, direct original comparisons verify complete fixtures, surrounding canaries, untouched storage bytes, size/capacity writes, delete count/order/arguments, null delete argument and original pre-reset state visible to callbacks. Capacities include 0,1,15,16,17,INT_MAX,0x80000000,UINT_MAX. Also compares null equal endpoints and ignored trailing arguments. A second link without the IAT mapping passed: submitted test explicitly reports that only empty original ranges were compared there; recovered nonempty assertions still execute. Accepted oracle assembled bytes independently compared equal to all 64 bytes in immutable Game.exe. Native MSVC2013 implementation compilation is additionally checked at O1, O2 and O2 with frame pointers; this does not replace behavioral validation or confer matching credit.",
+  "known_limits": [
+    "Trusted validation now maps the audited original callback IAT slot and runs the nonempty/nonnull differential cases. The callback is a test spy, not a replacement implementation of the Windows CRT dependency.",
+    "Delete is observed with a cdecl test callback, not the Windows CRT allocator. Actual allocation release, allocator failures and Windows exception propagation are external dependencies, not recovered here. No synthetic cleanup is added.",
+    "Requires valid record-aligned forward range endpoints and the original 32-bit little-endian string representation. Invalid, reversed or non-stride endpoints receive no invented validation. Injecting delete preserves dependency calls but does not emulate absolute-IAT read faults or register-level behavior.",
+    "No matching-byte source claim; sampled behavioral comparisons do not establish whole-game equivalence."
+  ]
+}

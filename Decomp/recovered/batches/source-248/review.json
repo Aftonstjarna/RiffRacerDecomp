@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as scoped, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Readable source agrees with original normal-return control flow, i386 layout, unsigned capacity branch, and reset-before-delete behavior. Independently verified five oracle fragments against Game.exe, reproduced 108 differential cases, and passed 792 expanded cases at O2. Tests call the original and check meaningful boundaries, null delete arguments, neighboring storage, and repeated reset. Native Windows compilation records cover the actual implementation. Inactive inline bytes, SEH/unwinding, and allocator internals remain explicitly limited; sampled validation does not establish all-input equivalence."
+}

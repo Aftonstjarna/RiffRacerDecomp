@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source review confirms ordinary-path control flow, x86 ABI/layout, COM arguments, retained failure outputs, and string ownership/free ordering. Independently rebuilt fixed-address/TLS fixtures passed 248832 original differential cases at O0 and O2; the oracle's 393 bytes equal the immutable executable. Native Windows compilation records cover the actual implementation. External dependency doubles, untested residual destructor branches, and omitted SEH/exception behavior are disclosed limitations. Sampled validation does not establish all-input equivalence."
+}

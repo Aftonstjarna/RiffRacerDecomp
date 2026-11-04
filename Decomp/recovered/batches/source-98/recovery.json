@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "16-bit string prepend",
+  "summary": "Recovered Game.exe 0x536250..0x53631d (205 bytes) as a genuine thiscall member returning this and consuming four stack slots. Only slot two is used: a prefix string. Unsigned overflow is checked before the empty-prefix return. Nonempty prefixes call reserve(total,false), shift the current contents without their terminator, copy the prefix (or use the original same-buffer move on self-prepend), then publish length and NUL. Capacity below eight selects inline storage. The original path_compose caller at 0x536220 prepends a prefix into its mutable suffix before move construction. Direct original disassembly confirmed the target, caller, helper contracts and error text. No Ghidra analysis gap remained.",
+  "targets": [
+    "wide-prepend"
+  ],
+  "references": [
+    "wide-prepend"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Local GCC i386 fixed-flag build passed full differential tests against unchanged accepted wide_prepend.S linked at 0x536250, after verifying all 205 assembled bytes against Game.exe. Test-only C++ helper doubles are linked at 0x44e120 (copy), 0x44e140 (move), 0x44fab0 (set length), 0x44fc30 (reserve), and error import 0x92d168. Enumerates all destination/source lengths through capacities 7,8,31, self-prepend, empty/full buffers, embedded NULs, surrogate and high code units, successful spare-capacity operation, simulated relocation and reserve refusal; rejects five unsigned overflow boundaries including UINT_MAX length with empty prefix. Checks returned this, requested size, helper counts, result code units, terminator, complete object bytes, full backing arrays, unchanged source and source heap, guards and old heap after relocation against both the oracle and independent expectations. Local full-oracle executable returned zero; C++11 optimized implementation compilation also passed. Ordinary linker placement was separately tested: it reports its coverage limit and compares only empty-prefix original paths; other cases check recovered C++ with doubles. test_main returns zero when the checks applicable to its detected placement pass.",
+  "known_limits": [
+    "Allocation, Windows SEH and CRT implementations remain external dependencies, not recovered scope. Local differential tests use controlled C++ helper doubles; simulated relocation/refusal do not validate original allocator behavior. Real reserve rejects lengths above 0x7ffffffe and may throw; that policy remains in the external reserve binding.",
+    "Full nonempty oracle execution requires fixed placement of the five test dependency sections listed in test.cpp. A trusted linker that does not place them runs only empty-prefix oracle comparisons; test output explicitly reports this limitation. No test-only instruction bytes, inline assembly, or binary patching are used.",
+    "Error tests observe dispatch and unchanged state using a nonreturning longjmp double, not Windows exception unwinding. Original error text at 0x99994c was inspected directly; its absolute address is not mapped by the test.",
+    "Distinct objects must own valid separate string storage. Invalid pointers, corrupted layouts and distinct objects sharing overlapping backing storage are not assigned new semantics.",
+    "Original object ABI requires 32-bit pointers; a 64-bit port needs layout adaptation. GCC-only custom helper ABI adapters and frame intrinsics stay in test.cpp. No matching-byte credit is claimed, and pinned MSVC was unavailable in this sandbox."
+  ]
+}

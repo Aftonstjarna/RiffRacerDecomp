@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "UTF-16 string single-character append",
+  "summary": "Recovered 0x44f8f0 as a genuine x86 thiscall member: ignores first argument, checks unsigned length limits, delegates growth, appends one 16-bit code unit, updates length and writes NUL. Inline storage is selected by capacity below eight; otherwise the first field is a heap pointer. Callers include range-copy and path-separator appends.",
+  "targets": ["wide-append-char"],
+  "references": ["wide-append-char"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct GCC i386 thiscall oracle comparisons for every legal spare-capacity length at capacities 1,2,6,7,8,9,15,31,63, with NUL, ASCII, non-ASCII, isolated surrogate and FFFF code units, and varied unused arguments. Assert returned this, length, capacity, complete object bytes, inline tail, surrounding guards and complete heap buffers against both oracle and independently constructed expected mutations. No allocation or exception mocks are used to claim oracle coverage.",
+  "known_limits": [
+    "Growth at 0x44fde0 remains an external member dependency; allocation policy, allocation failures and Windows SEH are outside this recovery. Test-only dependency sentinels never run on tested inputs.",
+    "Length-error import remains an external nonreturning binding; extreme invalid lengths and exception propagation are inspected but not dynamically tested.",
+    "Original zero-length arms are retained but unreachable with the nonreturning length-error contract.",
+    "Object ABI is x86 with 32-bit pointers; wider-pointer native ports need a separate layout adaptation. No matching-byte claim."
+  ]
+}

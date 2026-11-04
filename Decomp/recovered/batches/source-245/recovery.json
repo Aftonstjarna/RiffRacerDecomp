@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Win32 message queue drain",
+  "summary": "Recovered the no-argument cdecl routine at VA 0x0048CE10 (RVA 0x8CE10), 85 bytes. It caches PeekMessageA, polls with null HWND, zero filters and PM_REMOVE, and on a nonzero result caches TranslateMessage and DispatchMessageA and invokes them in that order until a zero poll. The 28-byte Win32 MSG is stack-local and initially uninitialized. All callback results other than PeekMessageA are ignored; WM_QUIT is dispatched normally. No object state or explicit return value exists. Application-entry evidence places the call before a stop-flag recheck. Explicit injectable imports provide portable OS integration without recovering additional scope.",
+  "targets": ["message-pump"],
+  "references": ["message-pump"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding harness directly compares accepted original_message_pump and recovered message_pump on 0, 1, 2 and 17 messages, with and without import mutation. Exact call and seven-word MSG traces compare translation before dispatch, buffer identity and callback-visible payload mutation. Peek checks all five arguments and supplies 2 and -1 as true results; inputs include WM_QUIT, WM_NULL and application messages. Import replacement during initial Peek verifies delayed translate/dispatch loading, while later replacements verify cached pointers. Checks N+1 polls, N dispatches, untouched fixture words outside the three imports, 28-byte MSG layout, successful FS setup and preserved FS head after each call. Built with fixed requested GCC flags plus -Wall -Wextra -Werror and executed successfully against accepted assembly linked at its original VA.",
+  "known_limits": [
+    "OS queue, translation and window-procedure behavior are controlled callbacks, not implementations of user32.",
+    "Exception dispatch, unwinding, concurrency and a queue that never becomes empty are not executed by this finite harness.",
+    "No matching-byte claim is made for the C++ implementation. Native MSVC validation is left to the trusted coordinator; no MSVC helper exists in this sandbox.",
+    "The injectable imports adapter replaces the original fixed-address IAT binding. Pointer sizes and callback ABI model Win32 on i386; a 64-bit platform requires an OS bridge for native handles."
+  ]
+}

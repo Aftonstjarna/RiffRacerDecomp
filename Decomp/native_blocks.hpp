@@ -3,7 +3,26 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"wide-reserve",0x4fc30,182},
+  return {NativeBlock{"narrow-erase",0x16660,155},
+                     NativeBlock{"narrow-grow",0x16890,337},
+                     NativeBlock{"narrow-handler",0x4fd780,27},
+                     NativeBlock{"narrow-destroy",0x15b60,39},
+                     NativeBlock{"narrow-reset-unwind",0x501740,8},
+                     NativeBlock{"narrow-assign-substring",0x15fe0,279},
+                     NativeBlock{"narrow-reset-handler",0x501748,40},
+                     NativeBlock{"narrow-inline-swap",0x51d10,64},
+                     NativeBlock{"narrow-storage-swap",0x51b60,117},
+                     NativeBlock{"narrow-string-reset",0x8d630,166},
+                     NativeBlock{"decode-worker-ctor",0x8d6e0,234},
+                     NativeBlock{"decode-worker-dispatch",0x8d9c0,444},
+                     NativeBlock{"member-cleanup",0x8d800,106},
+                     NativeBlock{"narrow-range-destroy",0x268f0,64},
+                     NativeBlock{"ui-matrix-scale",0x58810,146},
+                     NativeBlock{"lifetime-adjust16",0x5004f,8},
+                     NativeBlock{"lifetime-adjust20",0x50057,8},
+                     NativeBlock{"lifetime-dispose",0x4eae0,34},
+                     NativeBlock{"lifetime-destruct",0x4eb10,202},
+                     NativeBlock{"wide-reserve",0x4fc30,182},
                      NativeBlock{"wide-append-range",0x4ff80,207},
                      NativeBlock{"wide-append-range-handler",0x4ffa20,27},
                      NativeBlock{"wide-grow-handler",0x4ffa00,27},
@@ -111,7 +130,11 @@ inline std::vector<NativeBlock> nativeBlocks() {
                      NativeBlock{"shader-drift-ctor",0x1788c0,149},
                      NativeBlock{"shader-normalmapped-ctor",0x1789c0,602},
                      NativeBlock{"shader-fxaa-ctor",0x1794f0,351},
-                     NativeBlock{"shader-glass-ctor",0x179860,585}};
+                     NativeBlock{"shader-glass-ctor",0x179860,585},
+                     NativeBlock{"decode-request-prepare",0x8d870,323},
+                     NativeBlock{"decode-request-unwind",0x501770,8},
+                     NativeBlock{"decode-request-handler",0x501778,27},
+                     NativeBlock{"resource-reference-release",0x1cd10,18}};
 }
 inline NativeBlock nativeBlock(const std::string &name) {
   for (auto block : nativeBlocks())

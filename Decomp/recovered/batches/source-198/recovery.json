@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Presentation mode selection and parameter refresh",
+  "summary": "Recovered 004a33f0..004a362e as a genuine thiscall member method. Selects fullscreen dimensions using exact matches and componentwise upper/lower candidates; windowed mode computes order-dependent bounds and clamps through the viewport-size dependency. Copies resulting dimensions and configuration into presentation fields. Original instructions and callers were inspected directly, and both accepted oracle fragments were linked at their original addresses and byte-compared against Game.exe before differential testing. No matching-source claim.",
+  "targets": ["presentation-parameters"],
+  "references": ["presentation-parameters", "viewport-size"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 test_main passes 2635 direct original-vs-C++ cases: zero through twenty mode records, exact and perturbed requests, fullscreen flags 0/1/2, zero and high-bit/UINT_MAX dimensions, 23 trailing bytes, unsorted/crossed/duplicate candidates, and 1500 deterministic randomized cases. Compares every object byte and every mode-record byte, checks an explicit untouched-byte whitelist, and independently asserts final dimension copies, windowed flag and zeroed field. Four additional expected-result checks cover order-dependent window bounds, incomparable fullscreen upper candidates, UINT_MAX sentinel fallback, and empty fullscreen selection. Both versions use the accepted viewport-size helper with aspect-fit disabled; one no-clamp case has aspect-fit enabled and proves the helper is skipped.",
+  "known_limits": [
+    "setViewportSize is an external integration member dependency, not newly recovered scope. test.cpp supplies its thiscall binding to original_viewport_size at 004a22e0. A standalone port must supply this helper.",
+    "Aspect-fit execution inside viewport-size (flag at 0x4b8 nonzero) is not exercised: it requires fit_dimensions at 004a1c30, rounding/conversion helpers, original constants and a renderer global at 00bfcc28. The assigned routine still delegates without changing the flag or call arguments.",
+    "Layout retains original 32-bit addresses; mode storage must be valid and reachable in the 32-bit address space. Negative, overflowing, dangling or concurrently mutated vector extents are not validated. Positive incomplete-record extents are truncated exactly as observed.",
+    "Names for flags and presentation fields follow instruction/caller context; remaining fields of the 24-byte mode record and most object fields are unresolved.",
+    "Local pinned MSVC helper is unavailable. Source uses C++11 syntax and guarded thiscall declarations for the coordinator's native MSVC2013 compilation. No original-code-generation match is claimed.",
+    "Differential sampling establishes the tested behavior, not exhaustive equivalence or full-game integration."
+  ]
+}

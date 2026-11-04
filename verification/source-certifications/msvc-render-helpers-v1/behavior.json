@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "classification": "sampled_actual_native_msvc_fragment_behavior",
+  "build_report_sha256": "61a1c6934d6b6b412a4c77fb71307336336b0cf815ec5e82a12a033d6c384a56",
+  "input_sha256": {
+    "matrix.bin": "08634d9df20df96dd105332e4256ac7b2885b1b55be0c6e46499ce6e4a57f927",
+    "matrix.S": "192050b27aec5471b436cc98f1380638abd7bd06ab059ebafb3ff426386ef90c",
+    "binding.bin": "18c1496f730c968d61f550d68c6fc59c3ea6f74d8a5c706e39ad0e71674b5786",
+    "binding.S": "f0cae7e57469a80a25508ee810e990c2d18c4352cba3b919811bf8e232711f50",
+    "release.bin": "83d5e760d05b204d65cdcbde4d091f4e7f46fe8dddf5fb15ae4fd46feb323f6e",
+    "release.S": "ad3faf30ea693ab0b9d2dfcefdcca3585faaef0f948e7873ed61fa821d96c9b7",
+    "shader.bin": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54",
+    "shader.S": "bdb6c5603124a6a43ae094d4285bc6914caabb201d0f947078eec015d5cde9f4",
+    "test_render_helpers.cpp": "e4fc34cdd3bea46ef952218ad29a5b58e1e8a814224daf6d7c5f527368474758",
+    "render_helpers.hpp": "08952ea529ba46ff54251bf153ea90f6daed9f5e2d0d76bdc6ecf2334247e48c",
+    "test_runtime.S": "28b073cf779d4b918af9ca433c7cc70dafc34d2114425371be651f87e467065f",
+    "adapters.cpp": "463f7178672ae233ac4d967ce3842fcc976ee1d568198dd683562b48d2c93ddd",
+    "test_release.cpp": "2c76e1c661e3b8f31729657120c8d81d9decf57b08342a73a35d44abc00adafe"
+  },
+  "test_executable_sha256": "0508c98165fd56f6d41f90309f0c57c849dd54f540fc316498ee727937530c14",
+  "passed": true,
+  "output": "PASS: 5896 matrix cases (bits and MXCSR), 1024 initializers, 5 callback-table scenarios\nPASS: 4098 resource counts plus null slot; original callback/flag/slot/guards agree\n",
+  "limits": [
+    "Functions are tested at relocated addresses with audited test callbacks; not a full game run",
+    "Unmasked FP traps, invalid objects, concurrent mutation and callback exceptions remain untested",
+    "Known layout/data addresses retain the original x86 ABI; not a portable renderer"
+  ]
+}

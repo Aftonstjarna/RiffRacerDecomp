@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "byte_equal": true,
+  "different_bytes": 0,
+  "original_size": 34,
+  "candidate_size": 34,
+  "original_sha256": "430adca4ab2ab2c7b1b1f6320069c214fa8ed5c2d13434b7ce3a7c02b3c11505",
+  "candidate_sha256": "430adca4ab2ab2c7b1b1f6320069c214fa8ed5c2d13434b7ce3a7c02b3c11505",
+  "masked_bytes": 0,
+  "source_rebuild_verified": false,
+  "note": "Binary equality alone does not prove reconstruction from source.",
+  "difference_ranges": [],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "original_rva": 1020400,
+  "classification": "transcribed_partial_loop_test_oracle",
+  "certified_matching_credit": 0
+}

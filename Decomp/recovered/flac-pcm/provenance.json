@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched_partial_algorithm",
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "original_exe_size": 8635392,
+  "image_base": "0x400000",
+  "original_wrapper_va": "0x4f9080",
+  "loop_va_start": "0x4f91f0",
+  "loop_va_end_exclusive": "0x4f9212",
+  "loop_bytes": 34,
+  "loop_sha256": "430adca4ab2ab2c7b1b1f6320069c214fa8ed5c2d13434b7ce3a7c02b3c11505",
+  "scale_va": "0xa06428",
+  "scale_binary32_bits": "0x38000000",
+  "sources": {
+    "impl.cpp": "639e3ea7a89ede1c0cad87f25f2182bd7db1f42fcf0359bea844d62c970c8974",
+    "impl.hpp": "ab99cc16c234ca0df9c9aac76f70c764d1e6ae3af5d747a6ec428576b2e3193c"
+  },
+  "reriff_provenance": {
+    "before_commit": "53d35aa031f9db10a9499df78d391e786ae8a728",
+    "before_path": "ExperimentalMenu/engine_menu.c",
+    "before_sha256": "d0b272b9636e65eb7b193dcfd5eaaaa70532f5af00082b14991dbb002ccfcda4",
+    "intentional_patch_path": "ExperimentalMenu/flac_sample_rate.h",
+    "inspected_uncommitted_patch_sha256": "0a6f19cc0ae033b27712cf2e653330d3d4848d5415ba57a0d00a23b0f67ba218",
+    "patch_imported_as_original": false
+  },
+  "behavior_validation": {
+    "method": "Execute byte-checked original instruction loop via test-only ABI adapter; compare with separately compiled C++",
+    "all_signed_16_bit_values": 65536,
+    "all_block_byte_lengths": [0, 4096],
+    "checks": ["output bytes", "returned count", "input preservation", "output guard agreement", "null zero-length input"],
+    "valid_domain": "Nonoverlapping buffers with adequate capacity; unsigned byte count at most original 4096-byte scratch size",
+    "result": "passed"
+  },
+  "reference_classification": "transcribed_partial_loop_test_oracle",
+  "native_msvc": "All three compilation profiles passed; Windows runtime and source-byte equality not claimed",
+  "known_limits": [
+    "Extracted slice uses a new C++ API; does not reproduce full decoder ABI or object layout",
+    "Original decoder, allocation, metadata, read retries and errors are not recovered",
+    "Full resampler and earlier ReRiff end-to-end results are not validated by this test",
+    "Ghidra exports retain inferred prototypes and must not be treated as certified source"
+  ],
+  "compiler_built_matching_source_bytes_added": 0,
+  "assembly_coverage_bytes_added": 0,
+  "whole_executable_compared": false
+}

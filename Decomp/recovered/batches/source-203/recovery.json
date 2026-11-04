@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Normal-mapped shader constructor",
+  "summary": "Recovered VA 0x5789c0..0x578c1a (602 bytes) as a readable genuine thiscall C++ constructor and services adapter. Calls accepted base constructor, selects four manager DWORDs with wrapping 16-byte index arithmetic, installs vtable 0xa01808, stores borrowed name and raw third argument, initializes identity matrix, performs sixteen ordered parameter lookups with fresh table reads, sets byte flags for indices 0x53/0x5b, then calls accepted common-parameter setup. All other fields remain untouched apart from base/common helper writes. Caller 0x531d80 allocates 0x114 bytes and calls with index 0x51. No new helper scope or matching-byte claim.",
+  "targets": [
+    "shader-normalmapped-ctor"
+  ],
+  "references": [
+    "shader-normalmapped-ctor",
+    "shader-base-ctor",
+    "shader-parameter-lookup",
+    "shader-common-parameters"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Local fixed-flag GCC i386 O0 freestanding build passed 20736 scenarios comparing original_shader_normalmapped_ctor directly with the services member and genuine constructor. Tests call actual accepted base/common/lookup routines. Crosses 12 indices (including 0x51, neighboring flag boundaries and wrapping aliases), four null-table combinations, null/non-null borrowed name, arguments 0/1/0x80000000/0xffffffff, table HRESULT 0/1/-1, counts 0/7/16/31, three missing-handle patterns, and callbacks replacing subsequent constant tables with another table or null. Asserts object return identity, complete guarded object equality, exact lookup order and callback-time snapshots, COM parent/count arguments, independently expected handles on nonmutating cases, identity matrix, flag values, untouched unknown fields and padding, and restored FS registration. Local build.py places data at 0x9fe000/0xbaabc0/0xbac000/0xbfcd04 and reference code at original VAs. run_oracle.py configures i386 FS via ptrace before entry without injected instructions. All 602 target bytes and 114/261/149 helper bytes plus every fixed string fixture equal immutable Game.exe. Plain minimal link separately passed 16 explicitly labeled null-table adapter cases; it cannot execute the target without data/FS fixtures. Implementation also compiles GCC C++11 O2 with warnings-as-errors. Optional local MSVC helper is absent.",
+  "known_limits": [
+    "Original Windows SEH handler 0x905468, unwind metadata 0xb7d1e0, and exception cleanup are unresolved; only ordinary returning executions are recovered and tested.",
+    "Full direct-original tests require fixed-address manager/name/cookie data and initialized FS. Supplied local build.py/run_oracle.py provide them. Minimal trusted linking without those fixtures runs explicitly labeled adapter checks only, not direct target comparisons.",
+    "Manager must address valid records after modulo-32-bit indexing; original has no bounds or null checks. Invalid object/manager pointers and throwing or nonreturning dependencies are outside tested inputs.",
+    "Original 32-bit pointers, opaque GPU handles, fixed vtable identity and external services remain platform dependencies. Porting to 64-bit requires layout and service adaptation. No graphics API or shader execution is recovered here.",
+    "Sampled behavioral agreement is not all-input equivalence or matching-byte credit."
+  ]
+}

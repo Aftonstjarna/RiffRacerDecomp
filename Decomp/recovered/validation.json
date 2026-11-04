@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "kind": "manual_source_recovery_observation",
+  "date": "2026-11-02",
+  "reference_commit": "aa891786c756557d416b9354bf8b63a16c9095ac",
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "independently_certified": false,
+  "isolated_build_certified": false,
+  "original_compiler_pilot_completed": false,
+  "build": {
+    "compiler": "GCC 16.2.1 20260819 (Red Hat 16.2.1-2)",
+    "binutils": "2.46.1-1.fc44",
+    "target": "freestanding Linux i386 SSE2",
+    "flags_source": "Makefile:FLAGS",
+    "full_toolchain_pinned": false,
+    "observed_driver_sha256": "579d25c2d1e45abeed0c63a517b5c52f6d09ea811a787bf7a7c677a7fd0726f6",
+    "assembler_sha256": "388a25358e48c00dd0efab716ffc12e1dfac27c2501b85f18d5b36057a43bd2d",
+    "linker_sha256": "eccfdb2b11bcae1ca6e2915a40db609299f46d7def305dab744c0da0aaf54370",
+    "existing_checker_sha256": "9815c88297ab99f1a5860855cc49fb2ce2d93742f18cfe45a50eae1d20518f22"
+  },
+  "recovered_source_sha256": {
+    "render_helpers.cpp": "ad145b6b7547f6aea63ae3464f4955291279254839940ba8b7045ccf7b5e04ca",
+    "render_helpers.hpp": "08952ea529ba46ff54251bf153ea90f6daed9f5e2d0d76bdc6ecf2334247e48c"
+  },
+  "functions": [
+    {
+      "name": "ui-matrix-scale",
+      "method_token": "0x06001651",
+      "original_va": "0x458810",
+      "original_end_exclusive": "0x4588a2",
+      "reference_size": 146,
+      "reference_source": "../native/ui_matrix_scale.S",
+      "reference_source_sha256": "192050b27aec5471b436cc98f1380638abd7bd06ab059ebafb3ff426386ef90c",
+      "reference_binary_sha256": "08634d9df20df96dd105332e4256ac7b2885b1b55be0c6e46499ce6e4a57f927",
+      "reference_byte_equal": true,
+      "reference_unapplied_relocations": 0,
+      "cpp_size": 148,
+      "cpp_binary_sha256": "51a5870214fb381eed6d24685b22a15c143de6c1645a5c081c77f9905df1c250",
+      "cpp_byte_equal": false,
+      "native_check_exit": 2,
+      "native_check_reason": "recovered native block has wrong size",
+      "passing_sampled_cases": 5896
+    },
+    {
+      "name": "shader-base-ctor",
+      "original_va": "0x5421b0",
+      "original_end_exclusive": "0x542222",
+      "reference_size": 114,
+      "reference_source": "../native/shader_base_ctor.S",
+      "reference_source_sha256": "bdb6c5603124a6a43ae094d4285bc6914caabb201d0f947078eec015d5cde9f4",
+      "reference_binary_sha256": "6f7cd7c01d2df8b221389eadfcb6776ce170b641a0893e31bcd206d445953d54",
+      "reference_byte_equal": true,
+      "reference_unapplied_relocations": 0,
+      "cpp_size": 103,
+      "cpp_binary_sha256": "82e1702df06842b21dbcb8c87c87daab6f16c5ae1fe6389c0362a4d201d3717d",
+      "cpp_byte_equal": false,
+      "native_check_exit": 2,
+      "native_check_reason": "recovered native block has wrong size",
+      "passing_sampled_cases": 1024
+    },
+    {
+      "name": "shader-binding-cleanup",
+      "original_va": "0x52f5b0",
+      "original_end_exclusive": "0x52f5f3",
+      "reference_size": 67,
+      "reference_source": "../native/shader_binding_cleanup.S",
+      "reference_source_sha256": "f0cae7e57469a80a25508ee810e990c2d18c4352cba3b919811bf8e232711f50",
+      "reference_binary_sha256": "18c1496f730c968d61f550d68c6fc59c3ea6f74d8a5c706e39ad0e71674b5786",
+      "reference_byte_equal": true,
+      "reference_unapplied_relocations": 0,
+      "cpp_size": 102,
+      "cpp_binary_sha256": "273f49477b1b100b890ac4bdf82f85f1f11e2b314f56bfd3913da3b5c74af433",
+      "cpp_byte_equal": false,
+      "native_check_exit": 2,
+      "native_check_reason": "recovered native block has wrong size",
+      "passing_sampled_cases": 5
+    }
+  ],
+  "known_differences": [
+    "C exports differ from the original method calling convention.",
+    "GCC -O2 changes dual-NaN payload selection; only the recorded -O0 configuration passes the strict sample.",
+    "Original vtable address is inert reference data in the harness, not a Linux runtime vtable."
+  ],
+  "limits_document": "README.md"
+}

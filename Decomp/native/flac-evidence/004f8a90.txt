@@ -1,0 +1,104 @@
+Research output only; not verified reconstructed source.
+Program: Game.exe
+SHA256: 2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2
+Language: x86:LE:32:default
+Function: FUN_004f8a90 004f8a90
+Body: [[004f8a90, 004f8da7]]
+Callers:
+Callees:
+008f87c8 new[]
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void __fastcall
+FUN_004f8a90(undefined4 param_1,undefined4 param_2,int param_3,uint *param_4,int *param_5)
+
+{
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  double dVar5;
+  undefined4 extraout_var;
+  undefined4 uVar6;
+  undefined *puVar7;
+  undefined *puVar8;
+  undefined8 uVar9;
+  int iStack_2fc;
+  undefined4 uStack_2f8;
+  int iStack_2f4;
+  uint uStack_2f0;
+  uint *puStack_2ec;
+  int *piStack_2e8;
+  int iStack_2e4;
+  int iStack_2dc;
+  int iStack_298;
+  int iStack_288;
+  int iStack_280;
+  uint uStack_c;
+  undefined1 auStack_8 [4];
+  
+  uStack_c = _DAT_00baabc0 ^ (uint)(auStack_8 + 4);
+  puStack_2ec = param_4;
+  piStack_2e8 = param_5;
+  puVar7 = &UNK_004f8ff0;
+  puVar8 = &UNK_004f9030;
+  uVar9 = 0x4f907000000000;
+  uVar6 = 0;
+  iVar2 = func_0x00564210();
+  if (iVar2 < 0) {
+    func_0x008f8958(extraout_var,param_2,uVar6,puVar7,puVar8,uVar9);
+    return;
+  }
+  if ((iStack_2dc == 0) || (iStack_288 < 3)) {
+    iVar2 = iStack_298;
+  }
+  else {
+    iVar2 = iStack_280 * 0x20 + iStack_298;
+  }
+  func_0x00564290();
+  dVar5 = (double)((float)((double)param_3 + *(double *)(&UNK_00a071b0 + (param_3 >> 0x1f) * -8)) /
+                  (float)*(int *)(iVar2 + 8));
+  uStack_2f8 = func_0x005623e0();
+  func_0x008f92ef();
+  iVar2 = func_0x008f9131();
+  *piStack_2e8 = iVar2;
+  uVar3 = new__();
+  *puStack_2ec = uVar3;
+  uVar4 = new__();
+  uVar3 = 0;
+  iStack_2e4 = 0;
+  iVar2 = 0;
+  uStack_2f0 = uVar4;
+  iStack_2f4 = func_0x00565430();
+  iVar1 = iStack_2e4;
+  while (iStack_2e4 = iVar1, 0 < iStack_2f4) {
+    iVar2 = func_0x00562630(iStack_2f4 + iVar2,0,&iStack_2fc,*puStack_2ec + iVar1 * 4,
+                            *piStack_2e8 - iVar1,dVar5);
+    iStack_2e4 = iStack_2e4 + iVar2;
+    if (iStack_2fc < iStack_2f4) {
+      iVar2 = iStack_2f4 - iStack_2fc;
+      uVar3 = uVar3 ^ 1;
+      func_0x008f8d66(uVar3 * 0x20000 + uStack_2f0,uVar4 + iStack_2fc * 4,iVar2 * 4);
+    }
+    else {
+      iVar2 = 0;
+    }
+    uVar4 = uVar3 * 0x20000 + uStack_2f0;
+    iStack_2f4 = func_0x00565430();
+    iVar1 = iStack_2e4;
+  }
+  iVar2 = func_0x00562630(iVar2,1,&iStack_2fc,*puStack_2ec + iVar1 * 4,*piStack_2e8 - iVar1,dVar5);
+  *piStack_2e8 = iVar2 + iVar1;
+  ___V_YAXPAX_Z();
+  free();
+  free();
+  free();
+  free();
+  free();
+  func_0x005640c0();
+  func_0x008f8958();
+  return;
+}
+
+

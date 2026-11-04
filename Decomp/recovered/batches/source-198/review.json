@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Reviewed all submitted sources, reference control flow, ABI/layout, side effects, tests, limitations, and native Windows compilation records for the actual implementation. Independently verified both oracle fragments against Game.exe and passed an optimized differential rebuild with 100,000 randomized cases plus boundary checks. Aspect-fit helper execution and invalid vector storage remain documented limitations; sampled validation does not establish all-input equivalence."
+}

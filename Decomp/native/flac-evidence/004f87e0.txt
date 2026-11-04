@@ -1,0 +1,124 @@
+Research output only; not verified reconstructed source.
+Program: Game.exe
+SHA256: 2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2
+Language: x86:LE:32:default
+Function: FUN_004f87e0 004f87e0
+Body: [[004f87e0, 004f8a88]]
+Callers:
+Callees:
+008f87c8 new[]
+
+/* WARNING: Removing unreachable block (ram,0x004f8a2a) */
+/* WARNING: Removing unreachable block (ram,0x004f8a31) */
+/* WARNING: Removing unreachable block (ram,0x004f8a48) */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined4 __fastcall
+FUN_004f87e0(int param_1,int param_2,int param_3,uint *param_4,uint *param_5,undefined4 param_6,
+            undefined4 param_7,undefined4 param_8)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int extraout_ECX;
+  uint uVar5;
+  uint uStack_20;
+  uint uStack_1c;
+  uint uStack_18;
+  uint uStack_14;
+  undefined4 uStack_10;
+  uint uStack_c;
+  
+  iVar2 = param_1;
+  if (_DAT_00bfcd24 == 0) {
+    func_0x00596220();
+    func_0x00590fc0();
+    func_0x00590ad0();
+    _DAT_00bfcd24 = 1;
+    iVar2 = extraout_ECX;
+  }
+  iVar2 = func_0x0055be40(iVar2);
+  if (iVar2 != 0) {
+    func_0x0055c990();
+    *(undefined **)(iVar2 + 0x6d3c) = &DAT_00baf500;
+    *(undefined4 *)(iVar2 + 0x6d50) = 0;
+    (*_DAT_00baf500)(iVar2);
+  }
+  func_0x0055cff0();
+  if (iVar2 == 0) {
+    return 0;
+  }
+  iVar3 = func_0x0055d0e0();
+  if (iVar3 != 0) {
+    *(int *)(iVar2 + 0x6ed8) = iVar3;
+    goto LAB_004f8871;
+  }
+  if (param_2 != 0) {
+    if (param_1 == 0) {
+      *(undefined4 *)(iVar2 + 0x6ed8) = 0x1f;
+      goto LAB_004f8871;
+    }
+    iVar3 = func_0x0058e250(param_2);
+    if (iVar3 != 0) goto LAB_004f8871;
+    if (*(int *)(iVar2 + 0x6ed8) == 0x12) {
+      *(undefined4 *)(iVar2 + 0x6ed8) = 0;
+    }
+  }
+  uStack_1c = func_0x0055c720();
+  if (-1 < (int)uStack_1c) {
+    if (uStack_1c == 0) {
+      uStack_1c = param_3 * 0x3c0;
+    }
+    uStack_20 = new__();
+    uVar5 = 0;
+    uStack_18 = 0;
+    do {
+      while( true ) {
+        iVar3 = func_0x0055c360(&uStack_10,&uStack_14);
+        uVar1 = uStack_14;
+        if (iVar3 != -0xb) break;
+        uStack_14 = 1;
+      }
+      if (iVar3 == 0) {
+        uStack_c = (uStack_14 >> 2) + uVar5;
+        if (uStack_1c < uStack_c) {
+          uStack_1c = uStack_1c + (int)uStack_1c / 10;
+          uVar5 = -(uint)((int)((ulonglong)uStack_1c * 4 >> 0x20) != 0) |
+                  (uint)((ulonglong)uStack_1c * 4);
+          uVar4 = new__();
+          func_0x008f8d66(uVar4,uStack_20,uStack_18 << 2,uVar5);
+          ___V_YAXPAX_Z(uStack_20);
+          uVar5 = uStack_18;
+          uStack_20 = uVar4;
+        }
+        func_0x008f8d66(uStack_20 + uVar5 * 4,uStack_10,uVar1);
+        uStack_18 = uStack_c;
+        uVar5 = uStack_c;
+      }
+    } while (uVar1 != 0);
+    uStack_14 = uVar1;
+    func_0x0055c910(&uStack_14);
+    uVar1 = uStack_14;
+    if ((uStack_14 != 0) && (*(undefined4 **)(uStack_14 + 4) != (undefined4 *)0x0)) {
+      strncpy(param_6,**(undefined4 **)(uStack_14 + 4),0x100);
+      if (*(undefined4 **)(uVar1 + 8) != (undefined4 *)0x0) {
+        strncpy(param_8,**(undefined4 **)(uVar1 + 8),0x100);
+      }
+    }
+    *param_4 = uStack_20;
+    *param_5 = uVar5;
+    func_0x0055c990();
+    func_0x0058a800();
+    free(iVar2);
+    return 1;
+  }
+LAB_004f8871:
+  func_0x0055c990();
+  func_0x0058a800();
+  free(iVar2);
+  return 0;
+}
+
+

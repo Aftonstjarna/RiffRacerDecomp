@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string reset to empty SSO",
+  "summary": "Recovered Game.exe VA 0x48d630 (RVA 0x8d630), 166 bytes, as a genuine no-argument thiscall member on a 24-byte string: storage at +0, length at +16, unsigned capacity at +20. Resets length to zero, capacity to 15 and inline byte zero to NUL before releasing old heap storage through an explicit port integration hook. Capacity >=16 selects heap, including null allocation pointers. Direct original disassembly and embedded-string callers at 0x44f0e9, 0x48d89c and 0x56cc78 were inspected. Accepted reset, storage-swap, inline-swap, cookie-check and memcpy-import oracle bytes were independently compared to the immutable PE image and matched. This is readable semantic recovery, not a matching source build.",
+  "targets": ["narrow-string-reset"],
+  "references": ["narrow-string-reset", "narrow-storage-swap", "narrow-inline-swap", "cookie-check", "memcpy-import"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding differential suite passed 108 cases and 216 original calls. Capacities 0,1,14,15,16,17,31,255,0x7fffffff,0x80000000,0xffffffff crossed with lengths 0,1,7,15,16,0xffffffff; heap cases additionally use null pointers. Checks empty result, exact delete count and argument, reset-before-delete ordering, unchanged neighboring fields and allocation contents, retained heap-storage bytes 1..15, one-byte memcpy import, and no double delete on repeated reset. Initializes test-owned FS storage, requires successful test_install_fs, and checks the constant original FS head after every original call. Controlled callbacks use exact four-byte .oracle_delete, .oracle_cookie and .test_iat fixtures. Oracle code is assembled only from accepted references and linked at original addresses; no original instructions are embedded in submitted C++.",
+  "known_limits": [
+    "For originally inline strings, original swaps all 16 temporary storage bytes but initializes only byte zero. Bytes 1..15 receive unspecified stack residue; recovered C++ preserves these inactive bytes and tests intentionally do not compare them. Exact physical stack-residue reproduction is neither defined C++ nor claimed.",
+    "Normal return only: Windows SEH dispatch, exception unwinding, security-cookie failure and CRT internals are not recovered or validated. Original FS registration/restoration is exercised by the test runtime; portable implementation omits compiler runtime bookkeeping.",
+    "The delete integration hook must be supplied by the port with the corresponding allocation policy. Controlled callbacks establish import arguments and ordering, not actual allocator behavior.",
+    "Tests use writable disjoint objects and readable 16-byte inline storage; invalid addresses and aliasing the callee's private temporary are outside the recovered contract. Deliberately inconsistent metadata demonstrates branch behavior, not validity as a general string.",
+    "Original ABI and differential testing are i386. The readable implementation uses C++11-compatible syntax for MSVC2013, but the optional pinned MSVC tool was unavailable in this sandbox. No source-byte matching credit is claimed."
+  ]
+}

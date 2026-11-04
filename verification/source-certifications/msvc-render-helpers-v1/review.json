@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Codex controller outside candidate/build sandboxes",
+  "build_report_sha256": "61a1c6934d6b6b412a4c77fb71307336336b0cf815ec5e82a12a033d6c384a56",
+  "behavior_sha256": "498d86e667c1de13e9367fe2b219ca28948587357119cca0c2a7d39da39496dd",
+  "functions": [
+    {
+      "scope": "ui-matrix-scale",
+      "source_sha256": "82489d75a2c2170bc89b42bf94dfe358f84743605477ad61b5b0aa9065237089",
+      "approved": true,
+      "reason": "Reviewed loops against original offsets and scalar multiply ordering. Actual MSVC fragment matches instructions; edge tests compare float bits, MXCSR and untouched translation. Earlier portable GCC NaN differences receive no credit."
+    },
+    {
+      "scope": "shader-binding-cleanup",
+      "source_sha256": "e088e8616d454041702d20042064f55b0966d0c4ca910bb49a01bac0d91b5501",
+      "approved": true,
+      "reason": "Reviewed prefix 0xe1c, six tables of 280 pointers, column-first visits, vtable slot 4, null skips and unchanged entries. Native-fragment callbacks test aliasing and mutation of future entries. Callback semantics beyond the call and unwind behavior remain unknown."
+    },
+    {
+      "scope": "resource-reference-release",
+      "source_sha256": "063e3f4f5a79ebe2cfa5592cbface0371bf89bea6ab9756bc81619126a9c20c9",
+      "approved": true,
+      "reason": "Reviewed null guard, unsigned wrapping decrement at object+4, zero-only virtual slot-0 call with flag 1 and unchanged slot. Native-fragment tests cover zero, one, wraparound, normal counts, callback identity and guards."
+    },
+    {
+      "scope": "shader-base-ctor",
+      "source_sha256": "8f8c8af98739e411008a18dadc380c77b9f98cc1f770f731c74733059c2d436e",
+      "approved": true,
+      "reason": "Reviewed each constructor store and untouched gap. Fixed 0x9fe7e0 is genuine vtable data, not encoded instructions. Actual native fragment preserves gaps and returns the object in sampled tests."
+    }
+  ],
+  "integrity_review": [
+    "Readable self-contained source; no directives, instruction arrays, assembly, post-build edits, masked relocations or trimmed padding",
+    "Fresh native Windows MSVC and original-free sandbox MSVC builds produce identical complete code sections",
+    "Pinned independent checker compares both source-built sections and test-reference sections with the immutable original",
+    "Behavior tests execute actual Windows-compiled fragments, not earlier portable substitutes"
+  ],
+  "remaining_limits": [
+    "Function-span certification only; no full linked game or complete portable renderer",
+    "Original x86 ABI and data address retained",
+    "Unmasked FP traps, invalid objects, concurrency and callback exceptions remain untested"
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, reference assembly and documentation, ABI/layout, control flow, stores and stated limitations. Independently verified the 1,194-byte oracle against immutable Game.exe and passed an optimized implementation rebuild against that oracle at its original address. Tests call the original and compare all object and guard bytes across varied initial states, repeated resets and MXCSR modes. Native Windows compilation records cover the actual implementation. Incidental return/flags and partial-layout limitations are disclosed; sampled validation does not establish all-input equivalence."
+}

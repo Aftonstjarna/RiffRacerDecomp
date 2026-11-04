@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Worker thread start",
+  "summary": "Recovered worker-start at VA 0x48dbc0 (130 bytes) as a genuine thiscall Worker::start(bool), with original three-slot virtual interface and x86 fields priority mode +4, handle +8, thread ID +12. Calls cdecl _beginthreadex with null security, zero stack size, existing worker-dispatch entry, this, flags 0 or CREATE_SUSPENDED (4), and address of thread ID. Stores the returned handle before checking only 0xffffffff for failure. Otherwise maps priority modes 0 to -1, 2 to +1, all others to zero, ignores SetThreadPriority's result, and returns true. Existing handles are overwritten without closing. Service bindings explicitly expose the dependencies for port integration. Direct original disassembly and vtables 0x9fbe20 and 0x9fbdf0 corroborate layout and virtual start slot +4; the decode-worker constructor separately inlines similar creation logic.",
+  "targets": ["worker-start"],
+  "references": ["worker-start", "worker-dispatch"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding harness passed 560 original-versus-recovered comparisons: seven modes (0,1,2,3,INT_MAX,0x80000000,UINT_MAX), five creation returns (UINT_MAX,0,1,0x80000000,0x13572468), both suspension flags, and eight combinations of ID writes, callback priority-mode mutation, and priority API results 0/-7. Audited cdecl begin and stdcall priority callbacks are installed in the specified original IAT sections. Checks exact creation arguments, entry address, this and ID pointer identity, old handle and ID during creation, call counts/order, new handle visibility during priority call, priority mapping after callback mutation, returned boolean, every object byte including vptr and untouched guard fields, and skipping priority only for UINT_MAX. Oracle section was checked byte-for-byte against the immutable executable (130 bytes); this is evidence validation, not implementation matching credit. Linked original worker-start/dispatch at their original addresses and executed successfully.",
+  "known_limits": [
+    "OS/CRT internals and real scheduling are not tested; controlled callbacks model the audited import contracts. Port integration must bind worker_services before use, including the existing worker-dispatch entry. No dispatcher implementation is recovered in this scope.",
+    "No Windows FS/SEH or exception-unwind coverage. The assigned routine itself has no SEH registration.",
+    "The bool argument is tested for canonical C++ false/true. The original tests the low argument byte for any nonzero value; invalid C++ bool object representations are not manufactured.",
+    "Only the low-byte boolean return is contractual; incidental upper EAX bits are not reproduced.",
+    "The observed layout and original thiscall/stdcall contracts are x86. Wider-pointer Linux ports require ABI adaptation while retaining field behavior.",
+    "Readable behavior-validated source, with no byte-matching claim. Local pinned MSVC helper is unavailable; source uses C++11-compatible constructs and compiler-guarded calling conventions for coordinator Windows compilation."
+  ]
+}

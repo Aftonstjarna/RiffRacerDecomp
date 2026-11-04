@@ -98,3 +98,114 @@ layout evidence. Recheck original IL/native bytes, recover a source-built span,
 and pass the strict comparator before adding coverage. Keep observed mod
 behavior, inferred prototypes and independently verified original semantics
 distinct. None of this ledger claims a complete matching executable.
+
+
+## November 1 UI research: verified facts and remaining gaps
+
+- Native UI dimensions come from `elUI.getResolution`, VA 0x0041FA50, including
+  ratio floats at RVAs 0x7AACAC/0x7AACB0. These are distinct from the public
+  graphics device resolution. ReRiff Auto mode retains the original behavior.
+- Original `gaMenu.setupStandardBackground` (IL RVA 0x2DD3C0) centers its visual
+  during creation. `gaMenu.applyBackgroundEffect` (token 0x0600112F, IL RVA
+  0x2E1FF8) recomputes cover scale and animated zoom; it does not recenter the
+  existing visual. These distinct responsibilities matter when a mod changes
+  logical UI dimensions. The mod itself is not matching reconstruction.
+- Native Settings uses menu transition state 0 when ready for input; state 1
+  must not be substituted as an idle guard. The original Audio tick remains
+  the authority for its repeat masks, mouse drag and slider artwork.
+- `elUIScreen.getRenderGroup` (token 0x060010FA) reads screen +8. That group is
+  optional: the native add routine at VA 0x0048E8D0 checks for null before
+  assigning it to an item through vtable slot 18. A mod may not assume all PC
+  menu screens already have a group. Rendering semantics and a correct manual
+  UI-scaling integration remain unresolved; failed experiments receive no credit.
+- `elMatrix.scaleBy` is now an exact separately source-built 146-byte fragment;
+  see `native/UI-MATRIX.md`. This does not validate a ReRiff manual UI transform.
+
+## Graphics selector and scrolling visibility
+
+Checked against the original supported executable's CLI MethodDef table and IL:
+
+- `gaGraphicsOptions.showResolutionText`: token 0x06001177, IL RVA 0x2EC76C,
+  code size 186 bytes. Selection lives at menu +300; text-vector begin/end at
+  +280/+284. It wraps indices using the display-mode vector at +268/+272,
+  returns without changing visibility when the selected index is unchanged,
+  otherwise hides all text entries and shows the selected entry. Therefore a
+  scrolling mod must restore the selected label after hiding it; an unchanged
+  call to this function will not restore visibility.
+- `elUI.createButtonSprite`: token 0x060016E5, native RVA 0x222C0. Original
+  `gaGraphicsOptions.initScreens` creates resolution buttons with sprites 59/60,
+  IDs 1/2, shortcut mask 0, and origins 3/5. ReRiff's fullscreen selector extends
+  this original factory/artwork/input instead of creating another repeat system.
+
+These are verified original semantics and mod-integration evidence, not new
+source-built reconstruction. Verified coverage remains 67,275 / 8,635,392 bytes
+(0.77906133%); this documentation adds no matching-byte credit.
+
+## Native Apply selection and reusable save-prompt evidence
+
+Checked against supported original Game.exe metadata, IL and native instructions:
+
+- `gaGraphicsOptions.initScreens` (IL RVA 0x2EDD4C), IL offsets
+  0x0ABD..0x0AD4, clears bit 1 at Apply item +372 using AND 253. Apply is
+  the existing sprite-35 button with ID 3; disabling directional selection
+  is deliberate original behavior, not evidence of a missing sprite.
+- `elUIItem.setAsMenuItem`, token 0x060016AA, native VA 0x44B530, sets
+  both flag bits 1 and 2 at item +372 from its boolean argument. The original
+  instructions at 0x44B56F..0x44B592 establish these writes. The routine also
+  assigns the native menu material; it is not merely a raw bit-1 setter.
+  Input masks at +76 remain a separate concern. ReRiff's test doubles were
+  extended to check focus/highlight and screen-mask integration; actual
+  controller/hover behavior remains a live mod-validation question.
+- `gaQuitConfirmMenu` is overlay state 9, established by its original ctor
+  (IL RVA 0x3607F8). Its original input handler (IL RVA 0x360B14) uses selection
+  2 for quit and otherwise pops the overlay except for -1. Its original Back
+  handling (IL RVA 0x360B6C) pops the overlay directly. A save/discard adaptation
+  must intercept the quit action and distinguish Back from an explicit choice.
+- `gaStateManager.setOverlayState` / `popOverlayState` are tokens
+  0x0600129B/0x0600129C, IL RVAs 0x2FE0A0/0x2FDFC4. The manager singleton is
+  RVA 0x7EEFE0; its current overlay pointer is +44. ReRiff reuses these methods
+  and the original dialog art/lifecycle, deferring callbacks until removal.
+
+These are original-function findings and intentional mod integration, not
+additional reconstructed spans. This ledger claims no new matching-byte credit.
+
+## Original Graphics toggle and Audio slider input (2026-11-01)
+
+Reference: DepotDownloader depot 351991, build 1687655, manifest
+8951408038967536554; Game.exe SHA-256
+`2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2`.
+
+- `gaGraphicsOptions.setTogglebarVars`, token `0x0600117D`, chooses thumb
+  sprite 75/74 and origin 3/5 from the fullscreen byte at menu +305. It copies
+  the bar position, subtracts bar width times menu +60 scale only when Off, and
+  adds +25 or -25 times that scale for Off or On. ReRiff's alignment regression
+  came from subsequently restoring an old thumb position in its added scrolling
+  layout; that is an intentional mod integration error, not original behaviour.
+- `gaOptionsMenu.tick`, token `0x0600119A`, polls native Left/Right masks
+  256/512 through pressed and held-repeat methods. The UI Scale adaptation must
+  retain one input owner rather than also activating button shortcuts.
+- Native direction handler VA `0x44AA60` uses +0x98 navigation mode; mode 1
+  selects +0x9C/+0xA0 for Up/Down and +0xA4/+0xA8 for Left/Right. At VA
+  `0x44AAF3`, bytes `83 F8 FF 74 66` compare the target to -1 and branch to
+  VA `0x44AB5E` without changing focus. Verified from original objdump output.
+
+This is original metadata/instruction evidence and mod integration guidance.
+No reconstructed source span or additional matching-byte credit is claimed.
+
+## Original FLAC PCM conversion and analysis-rate research
+
+The [FLAC research note](native/FLAC-ANALYSIS-RATE.md) preserves the original
+worker/decoder/resampler findings behind ReRiff's sample-rate patch, with the
+pre-patch Git revision, exact source hashes and original disassembly. Ghidra
+exports remain research leads with unresolved inferred prototypes. Earlier
+full-DSP test results are attributed to ReRiff and were not rerun here.
+
+The original wrapper selects every second signed 16-bit word and scales it by
+1/32768; it does not average stereo channels. The extracted
+[C++ PCM conversion](recovered/flac-pcm/impl.cpp) passes differential checks for
+all signed 16-bit values and block lengths 0 through 4096 against a byte-checked
+original loop. Native Windows MSVC builds all three tested profiles. This is a
+partial, behavior-validated source recovery; the decoder ABI, metadata/error
+paths and resampling DSP remain unrecovered. The intentional CALL redirection
+and added resampling stay in ReRiff. No matching-source or assembly-ledger
+coverage is added.
