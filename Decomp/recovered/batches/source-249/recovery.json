@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "ShadowDraw shader constructor",
+  "summary": "Recovered VA 0x576c20..0x576ce0 as a genuine i386 thiscall C++ constructor with one uint32_t index (original RET 4 and EAX=this). Direct Game.exe disassembly, accepted helper instructions and caller 0x532e48..0x532f92 establish 0x70-byte objects and production indices 119..125. Calls accepted base constructor, installs vtable 0xa013d8, clears +0x64/+0x68, stores index at +0x6c, selects four borrowed shader/table pointers from manager 0xbfcd04 using wrapping index*16 addressing, resolves matWorldViewProj and vertex/pixel texelOffset in order, then calls accepted common-parameter helper. Table fields are reloaded across external calls. Original string bytes were inspected. External helper behavior was not invented or expanded. Readable unmatched source; no matching-byte claim.",
+  "targets": [
+    "shader-shadowdraw-ctor"
+  ],
+  "references": [
+    "shader-shadowdraw-ctor",
+    "shader-base-ctor",
+    "shader-common-parameters",
+    "shader-parameter-lookup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Local fixed-flag freestanding GCC i386 build passed 5184 direct original/constructor comparisons. Accepted references linked at original addresses; all target 192 and helper 114/261/149 bytes verified against immutable Game.exe. Exact 0x200000-byte .oracle_data fixture mapped at 0x9fe000, original name strings initialized, manager and cookie initialized. Explicit test_install_fs must succeed; head initialized to 0xfedcba98 and verified restored after every original target call. Tests sweep indices 0,1,119..125 and wrapping aliases 0x10000000,0x80000077,0xf000007d; all four null table combinations; HRESULT 0,1,-1; constant counts 0,1,2,17; three missing-handle patterns and three callback mutation modes. Audited synthetic constant-table ABI callbacks check enumeration arguments, count initialization and ignored descriptor failure return; record complete intermediate object snapshots and ordered calls. Compare returned original object pointer, all object bytes, callback logs, initialized guard bytes and unchanged manager storage. Independently assert selected shaders, zero fields, index and all 19 handles for nonmutating cases. Callback mutations replace vertex/pixel table fields (including null) and change +0x0c/+0x64 to exercise reloads and retained side effects. No skipped-oracle fallback. C++11 O2 GCC implementation compilation also passes. MSVC helper absent locally; native Windows compilation is left to trusted stage.",
+  "known_limits": [
+    "Normal-return semantics only. Original Windows FS:[0] registration is exercised and restored in the oracle; portable C++ does not reproduce SEH handler 0x905468, exception dispatch or base-construction unwind cleanup. Throwing and invalid-memory paths are untested.",
+    "Base construction, parameter enumeration and common binding remain accepted external dependencies at original addresses. Test callbacks model only constant-table boundaries; real D3D rendering, reference ownership and GPU effects are outside scope.",
+    "Object layout and absolute manager/vtable identities model original 32-bit ABI. A 64-bit Linux port must adapt pointers, services and graphics objects; this is not a complete original class declaration.",
+    "Unknown fields +0x64/+0x68 are identified only by zero initialization. No inferred ownership or additional behavior is supplied.",
+    "Index arithmetic wraps without validation. Only mapped entries and wrapping aliases were exercised; arbitrary invalid manager/index accesses retain the original invalid-memory precondition.",
+    "MSVC2013 compilation was not available locally. Source uses C++11-compatible syntax and compiler-guarded ABI declarations; no assembly/code blobs or byte matching credit."
+  ]
+}
