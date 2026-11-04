@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Synchronous worker request handoff",
+  "summary": "Recovered VA 0x4A1870 (135 bytes) as a genuine thiscall Worker member. Rejects nonzero shutdown byte, waits for both completion events, publishes the request pointer, clears result and sets activity, resets completion, signals work, waits for selected completion, returns the raw result byte and clears activity. Preserves three separate selection reads and ignores all import return values. Caller 0x52859c supplies a stack request beginning with ID 6; payload dispatch and counterpart processing remain outside scope.",
+  "targets": [
+    "worker-request"
+  ],
+  "references": [
+    "worker-request"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "6400 GCC i386 differential cases against original_worker_request at its original address, with exact 4096-byte .oracle_iat at 0x92D000. Tests shutdown bytes 0/1/128/255, initial indices 0/1, independent callback selection changes, null/non-null payloads, counterpart pointer consumption, result bytes 0/1/2/128/255, and import returns 0/1/128/258/UINT32_MAX. Callbacks assert ordering, arguments and intermediate fields. Every final object byte is compared with original and independently constructed expectations. FS setup must succeed and head is checked after each call. All 135 oracle bytes verified against immutable Game.exe.",
+  "known_limits": [
+    "Controlled synchronous callbacks validate request-side behavior, not real OS event semantics, concurrent scheduling, dispatcher behavior or Windows exception handling.",
+    "Event selection is assumed to be 0 or 1, as implied by the paired event fields. Original performs no bounds checking; corrupt indices and invalid object or payload storage are not tested.",
+    "Unknown object fields retain offsets and bytes; names for activity and shutdown reflect observed use, not recovered original identifiers.",
+    "Pointer and handle storage follows the original 32-bit ABI; faithful binary layout requires a 32-bit build.",
+    "No matching-code claim. Pinned MSVC helper is absent in this sandbox; GCC behavioral validation was executed."
+  ]
+}
