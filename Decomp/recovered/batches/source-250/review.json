@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, partial layout, ABI, initialization, import arguments, failure handling and priority mapping agree with the original reference. Independently rebuilt tests passed 288 paired cases at O0 and O2, checking callback arguments, complete memory images and untouched bytes. The assembled oracle independently matched all 234 original PE bytes. Native Windows validation compiled the actual implementation. Fixed-address dependencies, concurrency and exception-path limitations are documented; sampled validation does not establish all-input equivalence."
+}

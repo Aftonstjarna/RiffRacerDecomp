@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Decode worker construction",
+  "summary": "Recover 0x48d6e0 as a genuine thiscall member initializer with explicit partial layout, original import bindings, event creation, thread launch and priority mapping. Preserve unchecked event failures and the thread-handle comparison against -1. Original caller 0x44e680 constructs a +0x130 member; entry token 0x48dc50 invokes vtable slot +8. Accepted reference independently matches all 234 bytes of Game.exe.",
+  "targets": ["decode-worker-ctor"],
+  "references": ["decode-worker-ctor"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding differential harness passed 288 paired cases: three initial byte patterns, four thread handles including zero and -1, six callback-written priority modes, successful/failed event returns, and written/untouched thread ID. Both routines are checked against identical expected complete byte images at every import and after return, including guards and untouched fields. Verify exact event and begin-thread arguments, callback order, thread-entry token, return-this identity, ignored priority-call failure, priority bypass only for -1, and normal-path FS head restoration after every call. Exactly 4096 bytes of oracle_iat linked at 0x92d000; oracle text linked at 0x48d6e0. Locally assembled reference compared directly against original PE bytes.",
+  "known_limits": [
+    "High-level unmatched recovery; no matching-source credit claimed.",
+    "Fixed original IAT, vtable and thread-entry address tokens require platform integration for a Linux port. Controlled callbacks do not implement Windows events, CRT thread creation or scheduling.",
+    "Only the constructor is recovered. Thread entry and decoding are not executed. Concurrent thread behavior, exceptional callbacks and Windows exception unwinding are untested.",
+    "The layout is partial through offset 0x14c; complete object size and meaning of request/output words remain unresolved. Trailing C++ alignment padding has no recovered semantics.",
+    "Pinned native Windows compilation is left to trusted validation; optional local MSVC helper is unavailable."
+  ]
+}
