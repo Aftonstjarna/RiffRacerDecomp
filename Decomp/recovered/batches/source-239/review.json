@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, original assembly and callers. Layout, unsigned capacity branch, cdecl delete binding, callback-before-reset ordering and preserved bytes agree. Independently verified all 39 reference bytes against immutable Game.exe, rebuilt and passed 396 differential cases, then passed 396 additional optimized cases with new capacities and callback mutations. Native Windows compilation records cover the actual implementation. Tests meaningfully call the original and check guards, complete object state and callback effects. Documented allocator, exception/SEH and 32-bit limitations remain; sampled validation does not establish all-input equivalence."
+}
