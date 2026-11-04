@@ -35,3 +35,13 @@ check-reference: $(REF_BINS)
 	"$(MATCHER)" native-check "$(GAME)" ui-matrix-scale "$(OUT)/reference_ui_matrix_scale.bin" "$(OUT)/reference-ui-matrix-scale.json"
 	"$(MATCHER)" native-check "$(GAME)" shader-base-ctor "$(OUT)/reference_shader_base_ctor.bin" "$(OUT)/reference-shader-base-ctor.json"
 	"$(MATCHER)" native-check "$(GAME)" shader-binding-cleanup "$(OUT)/reference_shader_binding_cleanup.bin" "$(OUT)/reference-shader-binding-cleanup.json"
+
+$(OUT)/test_fs_runtime.o: test_fs_runtime.cpp Makefile | $(OUT)
+	$(CXX) $(FLAGS) -c $< -o $@
+$(OUT)/test_fs_frame.o: test_fs_frame.S | $(OUT)
+	as --32 $< -o $@
+$(OUT)/test-fs.elf: $(OUT)/test_runtime.o $(OUT)/test_fs_runtime.o $(OUT)/test_fs_frame.o
+	ld -m elf_i386 -z noexecstack -e _start -o $@ $^
+test-fs: $(OUT)/test-fs.elf
+	$(OUT)/test-fs.elf
+.PHONY: test-fs

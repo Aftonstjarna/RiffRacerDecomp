@@ -136,3 +136,19 @@ unchanged between GCC and MSVC after bounded type, layout and cdecl corrections.
 Their refreshed validation records retain original behavioral tests and native
 compiler results. The close and range tests now exercise their nonnull/nonempty
 original paths through audited test-only import-slot bindings.
+
+## Normal-path FS test support
+
+The Linux i386 test runtime provides `test_install_fs(void *storage)` and
+`test_get_fs_head()`. Initialize the first word of valid test-owned writable
+storage, require a zero installation result, and check that original routines
+restore the word after returning. Installation reuses one TLS descriptor;
+null backing is rejected without changing FS. These helpers are single-threaded
+test infrastructure and earn no recovery-byte credit.
+
+This supports normal-path FS:[0] exception-frame registration only. It does not
+implement Windows exception dispatch/unwinding or other TEB services, and it does
+not validate throwing callbacks. `make -C Decomp/recovered test-fs` checks repeated
+rebinding, normal frame restoration, untouched backing words and null rejection.
+The existing runtime entry point does not initialize FS implicitly; tests must
+request the fixture and fail if installation is unavailable.
