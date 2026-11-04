@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Worker member shutdown and string cleanup",
+  "summary": "Recover 0x48d800 thiscall cleanup as a genuine member method with explicit 32-bit layout and original IAT bindings. Preserve wait/stop/reset/signal/join order, unsigned SSO capacity threshold, string reset, vtable transitions and thread close. Constructor and enclosing destructor corroborate fields.",
+  "targets": [
+    "member-cleanup"
+  ],
+  "references": [
+    "member-cleanup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "360 direct original-versus-C++ cases: nine capacities including 15/16 and unsigned extremes, five handle/API result patterns, eight initial byte patterns. Compare ordered callback arguments and full object snapshots at each call plus final 96-byte storage, check untouched fields/tail, infinite wait arguments, final invariants and FS head restoration. Exact 4096-byte oracle IAT fixture binds only the five used imports.",
+  "known_limits": [
+    "Class identity and fields beyond the partial layout remain unresolved.",
+    "Controlled callbacks validate call ordering and memory effects, not Windows synchronization, heap freeing, OS failure internals or concurrent worker behavior.",
+    "Normal return paths only; exception propagation/unwinding is not exercised.",
+    "Readable source is behavior recovery; no byte matching claim.",
+    "Optional local MSVC helper is unavailable; GCC C++11 O2 and required C++17 O0 builds both pass the differential suite. Native Windows compilation is delegated to trusted validation."
+  ]
+}
