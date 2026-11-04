@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, metadata, reference routines and documentation. Control flow, x86 ABI/layout, sentinel handling and side effects agree. Native Windows compilation records cover the actual implementation. Independently extracted immutable original bytes and passed the submitted tests plus 78,384 expanded differential cases at GCC -O2. Service-binding and platform limitations are explicit; sampled validation does not establish all-input equivalence."
+}
