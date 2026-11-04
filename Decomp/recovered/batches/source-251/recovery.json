@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Car lights shader construction",
+  "summary": "Recovered 0x576f00..0x577039 as a genuine thiscall member returning this. Initializes a 0xa4-byte shader object through the accepted base helper, copies the unchecked variant and four manager resources, installs the original vtable identity, creates a 4x4 identity transform, performs ordered matWorldViewProj and lightColour lookups, and invokes accepted common-parameter initialization. Original callers select variants 0 through 3. Dependencies are explicit port bindings; no shader helper internals are reconstructed here.",
+  "targets": [
+    "shader-carlights-ctor"
+  ],
+  "references": [
+    "shader-carlights-ctor",
+    "shader-base-ctor",
+    "shader-common-parameters",
+    "shader-parameter-lookup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "96 direct original-versus-source cases: variants 0,1,2,3,0x7fffffff,0x80000000,0xffffffff,0xdeadbeef; two initial object fills; distinct and aliased parameter resources; zero-count, descriptor-failure, and three-null-index common-lookup outcomes. Compares returned this, complete object and surrounding canaries, ordered resource callback arguments/results, identity transform, unchanged manager/resources/cookies, and explicit initialized test-owned FS head restoration after every invocation. Uses exact-size .manager/.cookie/.cookie_guard fixtures and correct thiscall/stdcall declarations. Local GCC i386 differential executable passes; all four accepted reference sections independently compared byte-for-byte with immutable Game.exe.",
+  "known_limits": [
+    "Normal completion only: Windows exception dispatch, base cleanup during unwind, and compiler SEH cookie infrastructure are not implemented by portable source.",
+    "Common/base/parameter helpers remain accepted original dependencies supplied by test-only member bindings; a Linux port must provide their recovered implementations separately.",
+    "Controlled resource callbacks validate constructor interactions, not D3DX or rendering internals. Common lookup tests cover failure, empty descriptors and null indexed handles; successful common name matching is outside this fixture.",
+    "Requires valid manager and both parameter objects, as does original. Invalid pointers and aliasing the object with manager storage are not supported port contracts or tested cases.",
+    "Original vtable identity is retained as a 32-bit field; this is an x86 layout reconstruction, not a complete host virtual-dispatch implementation. No byte-matching source claim.",
+    "Pinned MSVC helper is absent in this sandbox. GCC C++11 compatibility compile passes; native MSVC2013 compilation remains for the trusted coordinator."
+  ]
+}
