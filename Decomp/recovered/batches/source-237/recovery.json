@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Worker thread virtual dispatch entry",
+  "summary": "Recover VA 0x48dc50 as a stdcall thread entry that forwards its argument as this to vtable slot +8 and returns the full 32-bit result. Original worker-start and decode-worker constructor register this address with _beginthreadex. No direct object writes, checks, or cleanup occur in the entry. Explicit virtual wrapper/start/run slots preserve the original three-slot interface without assuming GCC virtual destructor layout.",
+  "targets": ["worker-dispatch"],
+  "references": ["worker-dispatch"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct original_worker_dispatch versus recovered entry using two distinct derived virtual implementations, six return bit patterns including zero and UINT32_MAX, unsigned mutation overflow, and 65 calls per object. Assert callback this identity, exact call counts, no calls to other virtual slots, return parity, cumulative writes, and equality of every byte of paired objects including untouched fields and vtable pointers.",
+  "known_limits": ["Only worker-dispatch is recovered; virtual method bodies and OS/CRT thread behavior are outside scope.", "Null arguments, invalid vtables, and invalid slot pointers are unchecked in the original and remain outside the valid C++ object contract; fault paths are not executed.", "Windows FS/SEH and exception-unwind behavior are not tested.", "The original virtual method name and precise declared return type are unknown; uint32_t preserves observed EAX forwarding and the thread-entry ABI.", "No byte matching is claimed; GCC virtual slot layout is tested on i386 and native MSVC compilation is delegated to the trusted coordinator."]
+}
