@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow, i386 layouts, raw flag bytes, ordered callbacks, resource reloads and writes agree with the reference routines. Independently rebuilt at GCC O2, verified all four oracle fragments against immutable Game.exe, and passed 720 differential cases comparing object bytes, guards and callback snapshots. Tests cover meaningful flag, aliasing, mutation and lookup-failure cases. Native Windows validation records successful compilation of the actual implementation. Exception/unwinding behavior and external dependency bindings remain explicitly unresolved; sampled validation does not establish all-input equivalence."
+}

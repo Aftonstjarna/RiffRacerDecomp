@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Car glass shader constructor",
+  "summary": "Recovered shader-carglass-ctor at VA 0x578350..0x5784e7 (407 bytes) as readable C++ with a genuine thiscall constructor and member adapter. Direct immutable-original disassembly and accepted instructions establish RET 8, EAX=this, two raw byte arguments, vtable 0xa016d8, fixed manager entry +0x8d8/+0x8dc/+0x8e0/+0x8e4, identity matrix at +0x74, empty members at +0x5c/+0xb4, and untouched padding +0x5a/+0x5b. Five ordered stdcall virtual calls at slot +0x24 request matWorldViewProj, matInvView, vCameraPos, diffuse and reflectiveness, reloading resource fields across callbacks; accepted common-parameter setup follows. Callers 0x534610/0x53464c/0x534688 allocate 0xb8 and pass (0,0), (1,0), (1,1). Original name data was read directly from Game.exe. No new helper recovery or matching-byte credit is claimed.",
+  "targets": [
+    "shader-carglass-ctor"
+  ],
+  "references": [
+    "shader-carglass-ctor",
+    "shader-base-ctor",
+    "shader-common-parameters",
+    "shader-parameter-lookup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Local fixed-flag GCC i386 freestanding build with Wall/Wextra/Werror passed. 720 direct original/member/genuine-constructor cases passed with exact-size 0x201000 .fixture at 0x9fe000 initialized with evidence strings, cookie and manager pointer. Explicit initialized test-owned FS storage is installed with required zero return; restoration is checked after target and helper calls. Sweeps flags 0,1,2,0x7f,0x80,0xff,0x100,0xffffff01,0xffffffff and paired second arguments; two fills; aliased/distinct resources; zero/nonzero named handles; empty/failed/fully enumerated common tables; null indexed handles; callback mutation of later resource fields. Compares all object bytes and guard bytes, ordered callback events with full intermediate object snapshots, returned this for original/member, placement-construction address, matrix bits, raw flags, independently computed named handles, preserved padding, unchanged manager/resources and entire fixture. All 407/114/261/149 linked oracle bytes were separately compared with immutable Game.exe. C++11 O2 GCC implementation compilation passed. Optional local MSVC installation is absent.",
+  "known_limits": [
+    "Only normal return behavior is recovered. Original FS registration, cookie validation, handler 0x9080c6 with metadata 0xb7f788, exception dispatch, construction-state unwinding and cleanup remain Windows runtime dependencies. Faults and throwing callbacks are not tested.",
+    "Base/common initialization and enumerating parameter lookup remain accepted external reference dependencies. Test.cpp binds the member helper declarations to those original routines; a Linux port must supply equivalent dependency bindings and shader_manager. Synthetic stdcall callbacks validate the resource ABI, not Direct3D or real rendering.",
+    "Object and manager layouts use original 32-bit pointers/handles. A 64-bit port requires deliberate layout adaptation. Flag semantics, member +0x5c type/ownership and original class hierarchy remain unresolved; vtable is represented by its original identity.",
+    "Manager and both initial resource objects must be valid. No invented null checks or error recovery are added. Invalid addresses, manager/object aliasing and asynchronous mutation are not tested.",
+    "Implementation uses C++11-compatible syntax and MSVC2013 ABI guards; pinned native Windows compilation is delegated to trusted validation because no local MSVC helper is present. This is behavior-validated unmatched source, with zero matching-byte credit."
+  ]
+}
