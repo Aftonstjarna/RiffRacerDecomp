@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Save-device stream size query",
+  "summary": "Recovered the ECX-this member at VA 0x535c50 (RVA 0x135c50), 99 bytes. It reads the FILE handle at this+0x10, returns zero for null, saves ftell, seeks to end, obtains ftell, then seeks back to the saved signed 32-bit position. Either nonzero seek result returns zero; ftell errors are not checked. No object fields are written. Original vtable 0x9ffe2c contains this method at +0x10; direct-call search found none. Implementation uses an explicit two-entry CRT adapter table, caching tell and reloading seek and the handle like the original. Accepted assembly independently matched all 99 immutable original bytes; source remains unmatched.",
+  "targets": ["save-device-size"],
+  "references": ["save-device-size"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding test_main passed 2304 direct differential cases using the accepted routine at 0x535c50 and writable .test_imports at 0x92d3c0 (cdecl fseek then ftell). Cartesian tests cover null/non-null handles; initial/end values 0, 1, -1, 4096, INT32_MAX, INT32_MIN; both seek results 0, 1, -1, INT32_MIN; and optional callback changes to the object handle. Compares result, exact ordered callback trace and arguments, call counts, cursor side effects, and every object byte. Independent assertions verify short circuiting, unchecked ftell results, restoration arguments, handle reloads, and untouched fields. Local reference assembled from accepted snapshot, compared with original EXE, and linked with trusted test runtime. Import identity confirmed in original PE import directory.",
+  "known_limits": [
+    "Controlled callbacks validate method behavior, not actual CRT FILE internals, file-system behavior, or error/EOF flags. A Linux port must supply adapters preserving signed 32-bit Win32 ftell/fseek semantics.",
+    "Only the file member is semantically recovered; prefix/tail fields are opaque, with the observed i386 object extent 0x44. No claim of recovered class names or full inheritance layout.",
+    "The vtable slot is identified, but individual indirect caller identities and full-game integration remain unresolved and outside this bounded recovery.",
+    "No Windows FS/SEH or exception-unwind coverage is claimed; this routine has no SEH setup in its observed instructions.",
+    "Optional pinned MSVC helper was absent. Implementation uses C++11-compatible syntax and guarded compiler ABI declarations; local execution used the required GCC i386 flags. No compiler-byte matching claim."
+  ]
+}
