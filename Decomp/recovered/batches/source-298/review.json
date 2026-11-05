@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source matches original control flow, x86 layout, calling conventions, callback-visible ordering and final stores. Independently verified oracle bytes against Game.exe, reran all 48 differential cases, and passed an optimized countercheck covering second-callback mutation. Tests call the original and compare intermediate snapshots, call counts, guards and final state. Native validation records compilation of actual impl.cpp under three MSVC profiles. Platform and untested-path limitations are documented; sampled validation does not establish all-input equivalence."
+}

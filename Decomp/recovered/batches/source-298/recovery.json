@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Buffer interface release and reset",
+  "summary": "Recovered thiscall cleanup at 0x542a40: release non-null interface fields +8, +4, +0 through stdcall vtable slot +8, clearing each after its callback, then zero four trailing words. Direct Game.exe disassembly agrees with accepted reference; callers use enclosing-object offsets +0x214 and +0x28. Callback return values are ignored.",
+  "targets": [
+    "buffer-release"
+  ],
+  "references": [
+    "buffer-release"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "48 direct differential cases: all eight null/non-null masks, distinct or aliased interfaces, and ordinary or callback-mutated fields. Compare callback order, all seven fields at every callback, call counts, final zero state, surrounding guards and untouched interface fields. Repeat cleanup to check idempotence. Explicit FS setup and head restoration checks after every original call. Controlled stdcall Release callbacks return a nonzero ignored value. GCC fixed-flags executable passed all 48 cases. The linked 91-byte accepted oracle was compared directly with the original executable span and matched.",
+  "known_limits": [
+    "Interface types and meanings of four trailing words remain unresolved; slot +8 has COM Release calling shape but real graphics-driver behavior is outside scope.",
+    "Valid writable this and live interface/vtable pointers are required; invalid pointers, exceptions, concurrent mutation and recursive cleanup are not tested.",
+    "No byte matching claim; portable pointer layout matches original offsets only on 32-bit builds. Original return register is unspecified and exposed as void.",
+    "Optional local MSVC2013 /O2 compilation succeeded; subsequent /O1 and /O2 /Oy- attempts were blocked by helper temporary-file error D8037. Native coordinator validation remains separate."
+  ]
+}
