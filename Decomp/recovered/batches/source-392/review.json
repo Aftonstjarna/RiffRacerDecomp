@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source preserves the original forward field-copy order, 44-byte layout, untouched bytes 25–27, overlap behavior and returned destination end. The test adapter correctly models the original register ABI and caller cleanup. Submitted tests call the original and compare all backing bytes. Independently verified the reference against Game.exe and passed 122,507 differential cases at each of O0, O2 and O3. Native Windows records compile the actual implementation and claim no matching credit. Documented input and alignment limitations are appropriate; sampled validation does not establish all-input equivalence."
+}
