@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 70972,
-  "remaining_bytes": 8564420,
-  "verified_percent": 0.8218735177279735,
-  "registered_blocks": 144,
-  "exact_blocks": 144,
+  "verified_bytes": 71061,
+  "remaining_bytes": 8564331,
+  "verified_percent": 0.8229041599964425,
+  "registered_blocks": 145,
+  "exact_blocks": 145,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -695,6 +695,15 @@
       "byte_equal": true,
       "reference_sha256": "3a02576e0ffa9b6092d149ca9c5616984e95b59d62b24c7def91c4484cc57503",
       "candidate_sha256": "3a02576e0ffa9b6092d149ca9c5616984e95b59d62b24c7def91c4484cc57503"
+    },
+    {
+      "name": "graphics-table-dispose-438",
+      "file_offset": 728992,
+      "size": 89,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "ce831f4ecbfe4de584abc4fa9926fe62f678b7961f726597868086f05f81b1ee",
+      "candidate_sha256": "ce831f4ecbfe4de584abc4fa9926fe62f678b7961f726597868086f05f81b1ee"
     },
     {
       "name": "application-worker",
