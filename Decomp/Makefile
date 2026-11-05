@@ -1256,3 +1256,16 @@ test-narrow-growth: $(OUT)/reriff-match $(OUT)/narrow_erase.bin $(OUT)/narrow_gr
 
 test-recovered: test-narrow-growth
 .PHONY: test-narrow-growth
+
+# Reviewed cycle reference: narrow-assign-terminated (assembly evidence only).
+$(OUT)/narrow_assign_terminated.bin: native/narrow_assign_terminated.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_assign_terminated.o
+	ld -m elf_i386 -Ttext=0x415b90 -e original_narrow_assign_terminated $(OUT)/narrow_assign_terminated.o -o $(OUT)/narrow_assign_terminated.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_assign_terminated.elf $@
+
+test-cycle-narrow-assign-terminated: $(OUT)/reriff-match $(OUT)/narrow_assign_terminated.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-assign-terminated $(OUT)/narrow_assign_terminated.bin $(OUT)/narrow-assign-terminated-comparison.json
+
+test-recovered: test-cycle-narrow-assign-terminated
+.PHONY: test-cycle-narrow-assign-terminated
