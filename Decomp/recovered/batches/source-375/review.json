@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Readable source preserves the original equality-controlled loop, ordered 16-byte then 8-byte snapshots, null-destination skip, and advanced return pointer. Independently verified all 50 reference bytes against Game.exe and caller ABI evidence. Expanded differential tests passed at GCC O0/O2/O3, covering overlap displacements through 127, whole-buffer side effects, and null/empty cases. Native validation records successful compilation of the actual implementation under all three VS2013 profiles. Portable ABI, fault/concurrency exclusions, and sampled-validation limits are explicitly documented; all-input equivalence is not established."
+}

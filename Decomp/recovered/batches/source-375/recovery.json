@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "24-byte forward range copy",
+  "summary": "Recovered VA 0x4b3e40 (RVA 0xb3e40), 50 bytes. ECX is first, EDX is end, stack argument is destination with caller cleanup. EAX returns the advanced destination. Copies each record as a 16-byte snapshot/store followed by an 8-byte snapshot/store, advances both addresses by 24, and stops only at source equality. A zero current destination skips that record but still advances. Direct original disassembly and callers at 0x4b2881 and 0x543437 through 0x5434b6 establish vector-like begin/end use; record field meanings remain unknown. Implementation uses a portable signature; test-only GCC regparm(3) supplies unused EAX, end EDX, first ECX and stack destination with correct caller cleanup. Reference's complete 50 bytes compared equal to immutable Game.exe. GCC i386 differential harness passed; VS2013 implementation compiled at O2. Subsequent O1 and O2 /Oy- attempts failed with compiler temporary-file error D8037 before compiling source.",
+  "targets": [
+    "record24-range-copy"
+  ],
+  "references": [
+    "record24-range-copy"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct oracle comparison at original VA 0x4b3e40: lengths zero through eight records, disjoint copies in both address orders, unaligned addresses, identical source/destination, and overlapping copies in both directions for byte displacements 1 through 31 over six records. Compare advanced destination returns and all 512 bytes of both initialized arenas, including source and untouched canaries. Test empty null destination with an inaccessible source and one-record null destination with an inaccessible source, requiring return 24 without reads/writes. Reference has no calls, imports, FS access or external state.",
+  "known_limits": [
+    "Record contents are opaque; no field ownership or semantic names are inferred.",
+    "Nonempty input requires an end reachable by repeated 24-byte increments and readable/writable memory for every performed transfer. Malformed ranges, address-space wraparound and faulting memory accesses are not executed by tests.",
+    "A null destination for multiple records skips only the first transfer and then attempts writes starting at address 24; fault behavior is not emulated or tested.",
+    "Portable API does not reproduce volatile ECX/EDX/XMM register state or the compiler-internal register ABI; EAX result is preserved as a normal pointer return. No byte-matching claim is made.",
+    "Only ordinary single-threaded memory is modeled; atomicity, concurrent access and memory-mapped IO behavior of SIMD operations are outside scope.",
+    "Local VS2013 O1 and O2 /Oy- validation was blocked by D8037 temporary IL file creation failure; native coordinator validation remains authoritative."
+  ]
+}
