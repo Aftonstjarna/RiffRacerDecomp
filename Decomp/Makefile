@@ -1815,3 +1815,16 @@ test-cycle-narrow-append-range: $(OUT)/reriff-match $(OUT)/narrow_append_range.b
 
 test-recovered: test-cycle-narrow-append-range
 .PHONY: test-cycle-narrow-append-range
+
+# Reviewed cycle reference: narrow-prepare-capacity (assembly evidence only).
+$(OUT)/narrow_prepare_capacity.bin: native/narrow_prepare_capacity.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_prepare_capacity.o
+	ld -m elf_i386 -Ttext=0x416730 -e original_narrow_prepare_capacity $(OUT)/narrow_prepare_capacity.o -o $(OUT)/narrow_prepare_capacity.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_prepare_capacity.elf $@
+
+test-cycle-narrow-prepare-capacity: $(OUT)/reriff-match $(OUT)/narrow_prepare_capacity.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-prepare-capacity $(OUT)/narrow_prepare_capacity.bin $(OUT)/narrow-prepare-capacity-comparison.json
+
+test-recovered: test-cycle-narrow-prepare-capacity
+.PHONY: test-cycle-narrow-prepare-capacity
