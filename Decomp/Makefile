@@ -1412,3 +1412,16 @@ test-cycle-resource-manager-construct: $(OUT)/reriff-match $(OUT)/resource_manag
 
 test-recovered: test-cycle-resource-manager-construct
 .PHONY: test-cycle-resource-manager-construct
+
+# Reviewed cycle reference: pool-slot-release (assembly evidence only).
+$(OUT)/pool_slot_release.bin: native/pool_slot_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pool_slot_release.o
+	ld -m elf_i386 -Ttext=0x426be0 -e original_pool_slot_release $(OUT)/pool_slot_release.o -o $(OUT)/pool_slot_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/pool_slot_release.elf $@
+
+test-cycle-pool-slot-release: $(OUT)/reriff-match $(OUT)/pool_slot_release.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pool-slot-release $(OUT)/pool_slot_release.bin $(OUT)/pool-slot-release-comparison.json
+
+test-recovered: test-cycle-pool-slot-release
+.PHONY: test-cycle-pool-slot-release
