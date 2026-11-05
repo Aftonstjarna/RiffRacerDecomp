@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string length and terminator update",
+  "summary": "Recovered Game.exe 0x416700..0x416721: thiscall setter writes the 32-bit length at +16 and NUL at the new index, using inline storage for unsigned capacity at +20 below 16, otherwise the pointer at +0. No validation, allocation or return-value contract. Direct original disassembly and five direct callers support the layout and use.",
+  "targets": ["narrow-set-length"],
+  "references": ["narrow-set-length"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "112 differential cases against original_narrow_set_length: capacities 0,1,14,15 with every inline index 0..15; capacities 16,17,31,0x7fffffff,0x80000000,0xffffffff with lengths 0,1,15,16,17,31,63,79. Checks full object and surrounding guards, all heap bytes, pointer preservation, old length replacement, capacity and untouched bytes. Some lengths exceed stated capacity but remain in writable test backing, demonstrating absent bounds enforcement.",
+  "known_limits": ["No byte-matching claim; original compiler output is not required for behavioral recovery.", "Invalid pointers, inaccessible terminator locations and 32-bit address wraparound are not executed; portable C++ requires valid writable storage.", "Only this setter is recovered; allocation, ownership, exceptions and other string operations are outside scope.", "The routine has no FS registration or imports; no TLS fixture is needed."]
+}

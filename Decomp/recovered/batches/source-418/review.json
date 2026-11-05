@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source implements the original unsigned storage selection, length update, terminator write, and 32-bit thiscall layout. Independently verified reference bytes against Game.exe and rebuilt/reran all 112 differential cases at O2 successfully. Tests call original code and check guards, backing storage, and preserved fields across meaningful boundary cases. Native Windows compilation records cover the actual implementation without claiming matching credit. Invalid storage and address wraparound remain explicitly excluded; sampled validation does not establish all-input equivalence."
+}
