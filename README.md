@@ -94,10 +94,10 @@ completion. They describe the accepted recovery on the
 | Evidence | Whole executable | `.text` section |
 |---|---:|---:|
 | Compiler-built matching high-level source | 382 / 8,635,392 bytes (0.00442%) | 382 / 5,421,056 bytes (0.00705%) |
-| Existing assembly-level byte matches | 73,571 / 8,635,392 bytes (0.85197%) | 73,543 / 5,421,056 bytes (1.35662%) |
+| Existing assembly-level byte matches | 73,683 / 8,635,392 bytes (0.85327%) | 73,655 / 5,421,056 bytes (1.35868%) |
 
 The [legacy assembly byte-comparison ledger](verification/coverage.json)
-contains 162 matching spans. Their provenance is assembly
+contains 163 matching spans. Their provenance is assembly
 sources, including mechanical transcription. Assembly alone earns no high-level
 source credit. The separate source ledger admits only reviewed, independently
 rebuilt C++ function spans. Its five ranges overlap existing assembly evidence;

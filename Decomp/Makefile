@@ -1568,3 +1568,16 @@ test-cycle-u16-vector-append-one: $(OUT)/reriff-match $(OUT)/u16_vector_append_o
 
 test-recovered: test-cycle-u16-vector-append-one
 .PHONY: test-cycle-u16-vector-append-one
+
+# Reviewed cycle reference: u16-vector-ensure-spare (assembly evidence only).
+$(OUT)/u16_vector_ensure_spare.bin: native/u16_vector_ensure_spare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u16_vector_ensure_spare.o
+	ld -m elf_i386 -Ttext=0x41c470 -e original_u16_vector_ensure_spare $(OUT)/u16_vector_ensure_spare.o -o $(OUT)/u16_vector_ensure_spare.elf
+	objcopy -O binary --only-section=.text $(OUT)/u16_vector_ensure_spare.elf $@
+
+test-cycle-u16-vector-ensure-spare: $(OUT)/reriff-match $(OUT)/u16_vector_ensure_spare.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u16-vector-ensure-spare $(OUT)/u16_vector_ensure_spare.bin $(OUT)/u16-vector-ensure-spare-comparison.json
+
+test-recovered: test-cycle-u16-vector-ensure-spare
+.PHONY: test-cycle-u16-vector-ensure-spare
