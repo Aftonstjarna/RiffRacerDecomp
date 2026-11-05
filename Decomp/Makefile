@@ -1841,3 +1841,16 @@ test-cycle-unsigned64-to-double: $(OUT)/reriff-match $(OUT)/unsigned64_to_double
 
 test-recovered: test-cycle-unsigned64-to-double
 .PHONY: test-cycle-unsigned64-to-double
+
+# Reviewed cycle reference: worker-state-construct (assembly evidence only).
+$(OUT)/worker_state_construct.bin: native/worker_state_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_state_construct.o
+	ld -m elf_i386 -Ttext=0x4242e0 -e original_worker_state_construct $(OUT)/worker_state_construct.o -o $(OUT)/worker_state_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_state_construct.elf $@
+
+test-cycle-worker-state-construct: $(OUT)/reriff-match $(OUT)/worker_state_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-state-construct $(OUT)/worker_state_construct.bin $(OUT)/worker-state-construct-comparison.json
+
+test-recovered: test-cycle-worker-state-construct
+.PHONY: test-cycle-worker-state-construct
