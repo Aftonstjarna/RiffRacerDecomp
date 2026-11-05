@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Graphics entry table forced release",
+  "summary": "Recovered 0x4b2400 as a thiscall member with one unused callee-popped argument. Snapshots signed byte-distance/12 count, rechecks current unsigned count each iteration, rereads begin and calls accepted entry release with force=true. Does not erase entries or free table storage. Callers 0x4a09c0 and 0x4a0a00 ignore the incidental EAX result. Both accepted oracle bodies were compared to immutable Game.exe bytes.",
+  "targets": ["graphics-entry-release-all"],
+  "references": ["graphics-entry-release-all", "graphics-entry-release"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding differential harness returned zero: 96 full-fixture comparisons over counts 0..8, three resource patterns, and normal/grow/relocate/shrink callback modes (shrinks limited to valid remaining bounds), plus 12 sub-entry byte distances that truncate to zero. Accepted release dependency runs in both implementations, with virtual destruction callbacks, varied ownership and reference counts 1..5. Full byte snapshots cover table bounds/capacity, both entry arrays, all resource counts, untouched markers, callback order and flags. Explicit initialized FS setup is required and its head is checked after every original call. Implementation compiled with VS2013 /O2 via supplied helper.",
+  "known_limits": [
+    "Out-of-range path is preserved as a nonreturning port binding; original std::_Xout_of_range exception dispatch and trailing int3 cannot be exercised by this normal-path harness.",
+    "GraphicsEntry::release and graphicsEntryRangeError are dependency bindings; the test supplies the accepted original release, not a new recovery of that dependency.",
+    "Only 32-bit original object layouts are represented. Real rendering, allocation/deallocation and OS internals are not validated; controlled virtual callbacks do not free storage.",
+    "Malformed negative/wrapped ranges and invalid pointers can cause enormous traversal or faults and are not executed. Arithmetic retains original 32-bit signed distance division and unsigned comparison.",
+    "No matching-code claim. Local VS2013 /O1 and /O2 /Oy- attempts failed in the helper with D8037 temporary-file errors; /O2 compilation succeeded. Native trusted validation remains authoritative."
+  ]
+}
