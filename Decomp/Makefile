@@ -1373,3 +1373,16 @@ test-cycle-graphics-table-dispose-430: $(OUT)/reriff-match $(OUT)/graphics_table
 
 test-recovered: test-cycle-graphics-table-dispose-430
 .PHONY: test-cycle-graphics-table-dispose-430
+
+# Reviewed cycle reference: graphics-range-destroy-430 (assembly evidence only).
+$(OUT)/graphics_range_destroy_430.bin: native/graphics_range_destroy_430.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_range_destroy_430.o
+	ld -m elf_i386 -Ttext=0x49d820 -e original_graphics_range_destroy_430 $(OUT)/graphics_range_destroy_430.o -o $(OUT)/graphics_range_destroy_430.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_range_destroy_430.elf $@
+
+test-cycle-graphics-range-destroy-430: $(OUT)/reriff-match $(OUT)/graphics_range_destroy_430.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-range-destroy-430 $(OUT)/graphics_range_destroy_430.bin $(OUT)/graphics-range-destroy-430-comparison.json
+
+test-recovered: test-cycle-graphics-range-destroy-430
+.PHONY: test-cycle-graphics-range-destroy-430
