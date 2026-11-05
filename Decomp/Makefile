@@ -1919,3 +1919,16 @@ test-cycle-narrow-set-length: $(OUT)/reriff-match $(OUT)/narrow_set_length.bin
 
 test-recovered: test-cycle-narrow-set-length
 .PHONY: test-cycle-narrow-set-length
+
+# Reviewed cycle reference: ceil-import (assembly evidence only).
+$(OUT)/ceil_import.bin: native/ceil_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ceil_import.o
+	ld -m elf_i386 -Ttext=0x8f8f3a -e original_ceil_import $(OUT)/ceil_import.o -o $(OUT)/ceil_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/ceil_import.elf $@
+
+test-cycle-ceil-import: $(OUT)/reriff-match $(OUT)/ceil_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ceil-import $(OUT)/ceil_import.bin $(OUT)/ceil-import-comparison.json
+
+test-recovered: test-cycle-ceil-import
+.PHONY: test-cycle-ceil-import
