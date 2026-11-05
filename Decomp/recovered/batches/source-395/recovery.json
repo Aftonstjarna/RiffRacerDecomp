@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string terminated append wrapper",
+  "summary": "Recovered 0x441f70 as a genuine thiscall member: scan to first NUL, then forward the unchanged pointer and 32-bit length to the existing range append member at 0x442170, returning its result. No object writes occur in this wrapper. Direct Game.exe disassembly agrees with accepted assembly; callers pass ECX objects and one text argument. Range dependency remains explicitly external rather than inventing allocation or alias behavior.",
+  "targets": ["narrow-append-terminated"],
+  "references": ["narrow-append-terminated", "narrow-append-range"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "160 direct recovered-versus-original empty-input comparisons through the accepted range helper: inline lengths 0..15, heap lengths 0..63, external empty input and self terminator. Verify returned this pointer, all 24 object bytes, surrounding guard words, heap backing and installed FS head. Another 1041 independent dependency-capture checks exercise lengths 0..1024, high-bit bytes, embedded terminators with nonzero tails and 16 inline self aliases; assert exact this/text/count, one delegation, arbitrary return-pointer propagation and no pre-delegation writes. These capture checks do not claim nonempty original parity.",
+  "known_limits": [
+    "Full nonempty oracle execution is blocked: accepted narrow-append-range calls unregistered original helpers at 0x416730 (growth) or 0x4420b0 (self-subrange append). Their behavior was not substituted or expanded into this recovery.",
+    "The port must provide NarrowString::append_range; test.cpp defines only a test dependency adapter. Allocation, overlap mutation and length-error behavior belong to that dependency and are not validated here.",
+    "Null and unterminated text are invalid in the original; no artificial null handling or bounded scan was added. Address-space-wrapping scans and fault behavior are not tested.",
+    "Original ABI and storage layout are i386. Windows compiler code generation parity is not claimed. FS test fixture covers normal-path head preservation only."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as bounded, unmatched high-level source recovery with zero matching-source byte credit.",
+  "reason": "Readable C++ agrees with original wrapper control flow, i386 thiscall ABI, layout and delegation behavior. Independently inspected Game.exe disassembly, verified source hashes, and rebuilt and passed 160 empty-input original comparisons plus 1041 forwarding checks. Native Windows compilation records cover the actual implementation. Nonempty original execution, external range-helper behavior and fault handling remain explicitly unvalidated; sampled checks do not establish all-input equivalence."
+}
