@@ -1867,3 +1867,16 @@ test-cycle-memmove-import: $(OUT)/reriff-match $(OUT)/memmove_import.bin
 
 test-recovered: test-cycle-memmove-import
 .PHONY: test-cycle-memmove-import
+
+# Reviewed cycle reference: narrow-move-assign (assembly evidence only).
+$(OUT)/narrow_move_assign.bin: native/narrow_move_assign.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_move_assign.o
+	ld -m elf_i386 -Ttext=0x440a20 -e original_narrow_move_assign $(OUT)/narrow_move_assign.o -o $(OUT)/narrow_move_assign.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_move_assign.elf $@
+
+test-cycle-narrow-move-assign: $(OUT)/reriff-match $(OUT)/narrow_move_assign.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-move-assign $(OUT)/narrow_move_assign.bin $(OUT)/narrow-move-assign-comparison.json
+
+test-recovered: test-cycle-narrow-move-assign
+.PHONY: test-cycle-narrow-move-assign
