@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Worker state construction",
+  "summary": "Recovered Game.exe RVA 0x242e0 / VA 0x4242e0 as a genuine C++ constructor for a 0x234-byte object. Twelve pairwise iterations initialize every byte, with no dependencies, allocations, FS operations or floating arithmetic. Original caller at 0x528475 allocates 0x234 bytes, null-checks, passes ECX, and stores returned EAX at 0xbfbaac. Accepted oracle was checked against all 150 original executable bytes. GCC differential tests passed; pinned MSVC2013 /O2 compilation succeeded. No compiler-byte matching is claimed.",
+  "targets": ["worker-state-construct"],
+  "references": ["worker-state-construct"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 test_main directly invokes the accepted original with thiscall. Tests 256 byte poison patterns at three four-byte-aligned placements, repeats each construction, checks all 564 initialized bytes against both recovered source and independently specified expected bytes, checks surrounding guards, original EAX=this, placement result, unchanged MXCSR across four rounding modes, successful test_install_fs and restored FS head after every original call. 768 initial and 768 repeated original calls pass. Oracle assembled at original VA and independently byte-compared to Game.exe; no OS callbacks are needed.",
+  "known_limits": [
+    "Gameplay meanings of fields are unresolved. Names are descriptive placeholders; zeroed and integer-two storage types beyond their observed widths are not established.",
+    "The first 24 words are modeled as floats from the exact 0x3f19999a constant; construction reproduces those bytes, but later uses are outside this scope.",
+    "Only valid writable aligned object storage is supported. The original does not check null or insufficient storage; invalid-memory faults and concurrent observation of construction are not tested.",
+    "No exception, unwind, OS-thread, rendering or full-game behavior is inferred. This routine itself has no such dependencies.",
+    "MSVC2013 compilation was checked locally under /O2; no matching-byte credit or native Windows execution claim is made."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow and asserted layout reproduce the reference constructor’s complete initialization and documented ABI. Tests call the original and check every object byte, guards, return pointer, repeated construction, FS and MXCSR across poison patterns and aligned placements. Independent rebuild/tests passed; all 150 reference bytes independently matched Game.exe. Native compilation evidence covers actual implementation; my optional rerun was blocked by Wine temporary-file setup. Limitations are explicit; sampled validation does not establish all-input equivalence."
+}
