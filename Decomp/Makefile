@@ -1516,3 +1516,16 @@ test-cycle-window-handles-cleanup: $(OUT)/reriff-match $(OUT)/window_handles_cle
 
 test-recovered: test-cycle-window-handles-cleanup
 .PHONY: test-cycle-window-handles-cleanup
+
+# Reviewed cycle reference: floor-import (assembly evidence only).
+$(OUT)/floor_import.bin: native/floor_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/floor_import.o
+	ld -m elf_i386 -Ttext=0x8f8f40 -e original_floor_import $(OUT)/floor_import.o -o $(OUT)/floor_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/floor_import.elf $@
+
+test-cycle-floor-import: $(OUT)/reriff-match $(OUT)/floor_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" floor-import $(OUT)/floor_import.bin $(OUT)/floor-import-comparison.json
+
+test-recovered: test-cycle-floor-import
+.PHONY: test-cycle-floor-import
