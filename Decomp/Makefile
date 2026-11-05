@@ -1633,3 +1633,16 @@ test-cycle-graphics-range-destroy-434: $(OUT)/reriff-match $(OUT)/graphics_range
 
 test-recovered: test-cycle-graphics-range-destroy-434
 .PHONY: test-cycle-graphics-range-destroy-434
+
+# Reviewed cycle reference: record24-growth-capacity (assembly evidence only).
+$(OUT)/record24_growth_capacity.bin: native/record24_growth_capacity.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record24_growth_capacity.o
+	ld -m elf_i386 -Ttext=0x543310 -e original_record24_growth_capacity $(OUT)/record24_growth_capacity.o -o $(OUT)/record24_growth_capacity.elf
+	objcopy -O binary --only-section=.text $(OUT)/record24_growth_capacity.elf $@
+
+test-cycle-record24-growth-capacity: $(OUT)/reriff-match $(OUT)/record24_growth_capacity.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record24-growth-capacity $(OUT)/record24_growth_capacity.bin $(OUT)/record24-growth-capacity-comparison.json
+
+test-recovered: test-cycle-record24-growth-capacity
+.PHONY: test-cycle-record24-growth-capacity
