@@ -1737,3 +1737,16 @@ test-cycle-shader-grid-notify-slot12: $(OUT)/reriff-match $(OUT)/shader_grid_not
 
 test-recovered: test-cycle-shader-grid-notify-slot12
 .PHONY: test-cycle-shader-grid-notify-slot12
+
+# Reviewed cycle reference: vector3-construct-refs (assembly evidence only).
+$(OUT)/vector3_construct_refs.bin: native/vector3_construct_refs.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/vector3_construct_refs.o
+	ld -m elf_i386 -Ttext=0x426f00 -e original_vector3_construct_refs $(OUT)/vector3_construct_refs.o -o $(OUT)/vector3_construct_refs.elf
+	objcopy -O binary --only-section=.text $(OUT)/vector3_construct_refs.elf $@
+
+test-cycle-vector3-construct-refs: $(OUT)/reriff-match $(OUT)/vector3_construct_refs.bin
+	$(OUT)/reriff-match native-check "$(GAME)" vector3-construct-refs $(OUT)/vector3_construct_refs.bin $(OUT)/vector3-construct-refs-comparison.json
+
+test-recovered: test-cycle-vector3-construct-refs
+.PHONY: test-cycle-vector3-construct-refs
