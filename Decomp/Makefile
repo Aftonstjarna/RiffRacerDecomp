@@ -1542,3 +1542,16 @@ test-cycle-narrow-storage-pointer: $(OUT)/reriff-match $(OUT)/narrow_storage_poi
 
 test-recovered: test-cycle-narrow-storage-pointer
 .PHONY: test-cycle-narrow-storage-pointer
+
+# Reviewed cycle reference: resource-handle-remove (assembly evidence only).
+$(OUT)/resource_handle_remove.bin: native/resource_handle_remove.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_handle_remove.o
+	ld -m elf_i386 -Ttext=0x41c090 -e original_resource_handle_remove $(OUT)/resource_handle_remove.o -o $(OUT)/resource_handle_remove.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_handle_remove.elf $@
+
+test-cycle-resource-handle-remove: $(OUT)/reriff-match $(OUT)/resource_handle_remove.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-handle-remove $(OUT)/resource_handle_remove.bin $(OUT)/resource-handle-remove-comparison.json
+
+test-recovered: test-cycle-resource-handle-remove
+.PHONY: test-cycle-resource-handle-remove
