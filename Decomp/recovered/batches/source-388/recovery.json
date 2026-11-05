@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string end pointer",
+  "summary": "Recover VA 0x440a60 as a thiscall member: choose inline storage for unsigned capacity below 16, otherwise heap; add length, store endpoint, return result slot. Direct callers at 0x5c1fab and 0x5c2008 use the stored pointer as a range endpoint. No imports, allocations, validation, or pointee accesses occur.",
+  "targets": ["narrow-end-pointer"],
+  "references": ["narrow-end-pointer"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare original and recovered members on the same restored object across 448 cases: eight unsigned capacities including 15/16 and high-bit values, seven lengths including wrap cases, four heap address values, external and overlapping storage output slots. Assert returned slot identity, endpoint value, full object equivalence, unchanged non-output bytes, output guards, untouched heap backing, and FS head preservation after every original call. Explicit FS installation must succeed.",
+  "known_limits": ["Layout and original ABI are 32-bit; Linux ports with wider pointers need a deliberate layout adaptation.", "Invalid output slots or unreadable this pointers fault in the original and are not tested.", "Synthetic heap addresses are used only to test arithmetic; this routine never dereferences them.", "Original source-level type and symbol names are unknown; readable names describe observed behavior. No byte-matching claim."]
+}
