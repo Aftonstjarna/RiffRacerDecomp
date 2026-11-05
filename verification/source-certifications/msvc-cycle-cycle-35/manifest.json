@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-35",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "record24-growth-capacity",
+      "stem": "cycle_record24_growth_capacity",
+      "source": "Decomp/recovered/msvc/cycle_record24_growth_capacity.cpp",
+      "sha256": "1ddd51d1820fa62730f98434d3ae82418b6cf43569ff4e3e23256d723ec97df3"
+    }
+  ]
+}

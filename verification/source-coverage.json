@@ -4,10 +4,10 @@
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
   "text_size": 5421056,
-  "certified_bytes": 382,
-  "certified_percent": 0.004423655579271908,
-  "certified_text_bytes": 382,
-  "certified_text_percent": 0.007046597563279184,
+  "certified_bytes": 455,
+  "certified_percent": 0.005269013844420728,
+  "certified_text_bytes": 455,
+  "certified_text_percent": 0.00839319866830374,
   "whole_executable_compared": false,
   "note": "Exact compiler-built function spans only. Assembly reference overlaps are not added. This is not a complete rebuilt EXE or port-completion percentage.",
   "entries": [
@@ -84,6 +84,21 @@
       "isolated_object_sha256": "3cbdc9b2aca6f115b48de1076f9a33e9d76c4456ba7710352f6af8fc762d058c",
       "classification": "compiler_built_matching_source",
       "evidence": "verification/source-certifications/msvc-render-helpers-v1",
+      "source_rebuild_verified": true
+    },
+    {
+      "scope": "record24-growth-capacity",
+      "source": "Decomp/recovered/msvc/cycle_record24_growth_capacity.cpp",
+      "source_sha256": "1ddd51d1820fa62730f98434d3ae82418b6cf43569ff4e3e23256d723ec97df3",
+      "rva": 1323792,
+      "file_offset": 1320720,
+      "size": 73,
+      "section": ".text",
+      "code_sha256": "ae57f757fb6b610855db8da31e9f48be69c8b4dc5903d78930acdc47c910938c",
+      "native_object_sha256": "f089155ad12a59185f7d144673c50cd00563104101167958ecbc0c4f4c1f32c6",
+      "isolated_object_sha256": "bd06174b35299872676413958c0c06ae10c011e9ea79f7079482c9d8756b6b55",
+      "classification": "compiler_built_matching_source",
+      "evidence": "verification/source-certifications/msvc-cycle-cycle-35",
       "source_rebuild_verified": true
     }
   ]

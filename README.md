@@ -64,7 +64,7 @@ the actual native fragments pass differential behavior tests and controller
 source review. The [source ledger](verification/source-coverage.json) and
 [certification evidence](verification/source-certifications/msvc-render-helpers-v1/) record that scope.
 The [UTF-16 length setter](Decomp/recovered/msvc/wide_length.cpp) adds another
-37 certified source bytes, bringing the total to 382. Its separate
+37 certified source bytes, bringing the total to 455. Its separate
 [certification](verification/source-certifications/msvc-wide-length-v1/) includes
 native Windows and isolated MSVC rebuilds plus 1,256 comparisons of the actual
 compiled function with the original, covering inline/heap storage and guards.
@@ -93,14 +93,14 @@ completion. They describe the accepted recovery on the
 
 | Evidence | Whole executable | `.text` section |
 |---|---:|---:|
-| Compiler-built matching high-level source | 382 / 8,635,392 bytes (0.00442%) | 382 / 5,421,056 bytes (0.00705%) |
+| Compiler-built matching high-level source | 455 / 8,635,392 bytes (0.00527%) | 455 / 5,421,056 bytes (0.00839%) |
 | Existing assembly-level byte matches | 74,341 / 8,635,392 bytes (0.86089%) | 74,313 / 5,421,056 bytes (1.37082%) |
 
 The [legacy assembly byte-comparison ledger](verification/coverage.json)
 contains 168 matching spans. Their provenance is assembly
 sources, including mechanical transcription. Assembly alone earns no high-level
 source credit. The separate source ledger admits only reviewed, independently
-rebuilt C++ function spans. Its five ranges overlap existing assembly evidence;
+rebuilt C++ function spans. Its certified ranges overlap existing assembly evidence;
 the two rows must not be added together. Stricter assembly qualification remains
 pending, so the assembly row is reference evidence, not certified semantic recovery.
 

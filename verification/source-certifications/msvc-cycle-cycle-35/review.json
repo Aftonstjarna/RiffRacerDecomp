@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "c792b47264b87945dba1f261a1f90385bd5a8b55565fd63a0afdf269751a1f00",
+  "behavior_sha256": "cceed068765f4446f60bf9abb48052cd55dffd7a200e03cab621743e6573d7ca",
+  "functions": [
+    {
+      "scope": "record24-growth-capacity",
+      "source_sha256": "1ddd51d1820fa62730f98434d3ae82418b6cf43569ff4e3e23256d723ec97df3",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified code section exactly at Game.exe 0x543310–0x543359. Original hash, boundaries, both return paths and x86 ABI were verified. All 23,494 differential cases passed using actual compiled and original code, covering growth branches, arithmetic limits and unchanged object/buffer state. Approval is limited to this routine and compiler configuration."
+    }
+  ],
+  "review_receipt_sha256": "2d663758c18b98647cfbb7b7d14b44a966bb3c9e4796d7eb2df0241e5a38aebc",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
