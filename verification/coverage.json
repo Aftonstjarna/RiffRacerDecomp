@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 74589,
-  "remaining_bytes": 8560803,
-  "verified_percent": 0.8637592827285664,
-  "registered_blocks": 172,
-  "exact_blocks": 172,
+  "verified_bytes": 74674,
+  "remaining_bytes": 8560718,
+  "verified_percent": 0.8647436039962054,
+  "registered_blocks": 173,
+  "exact_blocks": 173,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -74,6 +74,15 @@
       "byte_equal": true,
       "reference_sha256": "b559287c865252dcb8d12fbb1fb309eba80dffb68b381de9bd2b29106e9879d2",
       "candidate_sha256": "b559287c865252dcb8d12fbb1fb309eba80dffb68b381de9bd2b29106e9879d2"
+    },
+    {
+      "name": "narrow-move-storage",
+      "file_offset": 91040,
+      "size": 85,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "0f6b0ec472d40393974540dd08bea95716b3eb66d43f6f484374326ebfa7cf28",
+      "candidate_sha256": "0f6b0ec472d40393974540dd08bea95716b3eb66d43f6f484374326ebfa7cf28"
     },
     {
       "name": "resource-manager-construct",

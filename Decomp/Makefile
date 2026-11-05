@@ -1698,3 +1698,16 @@ test-cycle-record24-allocate: $(OUT)/reriff-match $(OUT)/record24_allocate.bin
 
 test-recovered: test-cycle-record24-allocate
 .PHONY: test-cycle-record24-allocate
+
+# Reviewed cycle reference: narrow-move-storage (assembly evidence only).
+$(OUT)/narrow_move_storage.bin: native/narrow_move_storage.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_move_storage.o
+	ld -m elf_i386 -Ttext=0x416fa0 -e original_narrow_move_storage $(OUT)/narrow_move_storage.o -o $(OUT)/narrow_move_storage.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_move_storage.elf $@
+
+test-cycle-narrow-move-storage: $(OUT)/reriff-match $(OUT)/narrow_move_storage.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-move-storage $(OUT)/narrow_move_storage.bin $(OUT)/narrow-move-storage-comparison.json
+
+test-recovered: test-cycle-narrow-move-storage
+.PHONY: test-cycle-narrow-move-storage
