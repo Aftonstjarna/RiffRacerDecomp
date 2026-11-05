@@ -1425,3 +1425,16 @@ test-cycle-pool-slot-release: $(OUT)/reriff-match $(OUT)/pool_slot_release.bin
 
 test-recovered: test-cycle-pool-slot-release
 .PHONY: test-cycle-pool-slot-release
+
+# Reviewed cycle reference: pool-block-commit (assembly evidence only).
+$(OUT)/pool_block_commit.bin: native/pool_block_commit.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pool_block_commit.o
+	ld -m elf_i386 -Ttext=0x426af0 -e original_pool_block_commit $(OUT)/pool_block_commit.o -o $(OUT)/pool_block_commit.elf
+	objcopy -O binary --only-section=.text $(OUT)/pool_block_commit.elf $@
+
+test-cycle-pool-block-commit: $(OUT)/reriff-match $(OUT)/pool_block_commit.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pool-block-commit $(OUT)/pool_block_commit.bin $(OUT)/pool-block-commit-comparison.json
+
+test-recovered: test-cycle-pool-block-commit
+.PHONY: test-cycle-pool-block-commit

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 72405,
-  "remaining_bytes": 8562987,
-  "verified_percent": 0.8384680162753468,
-  "registered_blocks": 151,
-  "exact_blocks": 151,
+  "verified_bytes": 72634,
+  "remaining_bytes": 8562758,
+  "verified_percent": 0.8411198935728685,
+  "registered_blocks": 152,
+  "exact_blocks": 152,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -92,6 +92,15 @@
       "byte_equal": true,
       "reference_sha256": "9eff101c1b398fb7c94aeff99f296a6b01527955d1ae13aaf528c8cd275076eb",
       "candidate_sha256": "9eff101c1b398fb7c94aeff99f296a6b01527955d1ae13aaf528c8cd275076eb"
+    },
+    {
+      "name": "pool-block-commit",
+      "file_offset": 155376,
+      "size": 229,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "6d42545e3caeac52556a523ef776a01596e8cf65f57374d23f037e25d0ea4744",
+      "candidate_sha256": "6d42545e3caeac52556a523ef776a01596e8cf65f57374d23f037e25d0ea4744"
     },
     {
       "name": "pool-slot-release",
