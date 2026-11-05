@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Readable C++ preserves ordered alias-sensitive copies, 16-byte layout, thiscall ABI, returned destination and zero fourth word. Original disassembly and callers support the recovery. Independent optimized testing against bytes extracted from Game.exe passed all 6,000 cases, checking full storage, guards and MXCSR. Source hashes match validation records. Native compilation evidence covers the actual implementation; an independent MSVC rerun encountered a temporary-file environment error. Documented limitations are reasonable; sampled validation does not establish all-input equivalence."
+}
