@@ -5,7 +5,8 @@
 # ECX=destination; stack source pointer; EAX=destination; ret 4.
 # Self-assignment bypasses release/reset/copy. Otherwise capacity >=8 frees
 # old buffer through IAT 0x92d4b0, resets inline capacity=7 and length=0,
-# stores UTF-16 NUL, then calls unresolved copy helper 0x44f890.
+# stores UTF-16 NUL, then calls wide_move_storage at 0x44f890. That helper
+# transfers ownership/inline contents and empties the source; this is a move.
 # ESI/EBP preserved. No cookie or SEH frame; callee exceptions propagate.
 .intel_syntax noprefix
 .code32
@@ -47,7 +48,7 @@ original_wide_assign:
 .L536061:
  mov    WORD PTR [esi],ax
 .L536064:
- call target_44f890
+ call wide_move_storage
 .L536069:
  {load} mov    eax,esi
 .L53606b:
@@ -56,4 +57,4 @@ original_wide_assign:
  pop    ebp
 .L53606d:
  ret    0x4
-.equ target_44f890,0x44f890
+.equ wide_move_storage,0x44f890

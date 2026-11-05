@@ -348,6 +348,27 @@ coverage: test-recovered
 
 .PHONY: coverage
 
+# UTF-16 storage dependencies, mechanically transcribed reference assembly.
+# Keep complete function extents and compare at their original addresses.
+define wide_reference
+$(OUT)/$(1).bin: native/$(1).S
+	mkdir -p $(OUT)
+	as --32 $$< -o $(OUT)/$(1).o
+	ld -m elf_i386 -Ttext=$(2) -e original_$(1) $(OUT)/$(1).o -o $(OUT)/$(1).elf
+	objcopy -O binary --only-section=.text $(OUT)/$(1).elf $$@
+
+test-$(subst _,-,$(1)): $(OUT)/reriff-match $(OUT)/$(1).bin
+	$(OUT)/reriff-match native-check "$(GAME)" $(subst _,-,$(1)) $(OUT)/$(1).bin $(OUT)/$(subst _,-,$(1))-comparison.json
+
+test-recovered: test-$(subst _,-,$(1))
+.PHONY: test-$(subst _,-,$(1))
+endef
+$(eval $(call wide_reference,wide_move_construct,0x0044f6f0))
+$(eval $(call wide_reference,wide_destroy,0x0044f760))
+$(eval $(call wide_reference,wide_assign_pointer,0x0044f790))
+$(eval $(call wide_reference,wide_move_storage,0x0044f890))
+$(eval $(call wide_reference,wide_set_length,0x0044fab0))
+
 $(OUT)/save_device_exists.bin: native/save_device_exists.S
 	mkdir -p $(OUT)
 	as --32 $< -o $(OUT)/save_device_exists.o

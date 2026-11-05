@@ -4,6 +4,7 @@
 # Save-device exists/create/open/delete callers supply ECX=result, EDX=prefix,
 # [entry ESP+4]=mutable suffix. Prepend prefix into suffix, then move-construct
 # result via 0044f6f0 (heap ownership transfer or inline WCHAR copy).
+# The dependency is now registered as wide-move-construct (106 exact bytes).
 # Ghidra misses the stack argument: preserve two unused argument slots passed
 # to prepend and its ret 16; this wrapper returns result in EAX with plain ret.
 # ESI is preserved. No local SEH registration, embedded data or cleanup handler;

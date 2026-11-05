@@ -89,15 +89,24 @@ completion. They describe the accepted recovery on the
 | Evidence | Whole executable | `.text` section |
 |---|---:|---:|
 | Compiler-built matching high-level source | 345 / 8,635,392 bytes (0.00400%) | 345 / 5,421,056 bytes (0.00636%) |
-| Existing assembly-level byte matches | 69,983 / 8,635,392 bytes (0.81042%) | 69,955 / 5,421,056 bytes (1.29043%) |
+| Existing assembly-level byte matches | 70,321 / 8,635,392 bytes (0.81433%) | 70,293 / 5,421,056 bytes (1.29667%) |
 
 The [legacy assembly byte-comparison ledger](verification/coverage.json)
-contains 133 accepted spans. The provenance audit maps all of them to assembly
+contains 138 matching spans. Their provenance is assembly
 sources, including mechanical transcription. Assembly alone earns no high-level
 source credit. The separate source ledger admits only reviewed, independently
 rebuilt C++ function spans. Its four ranges overlap existing assembly evidence;
 the two rows must not be added together. Stricter assembly qualification remains
 pending, so the assembly row is reference evidence, not certified semantic recovery.
+
+Five UTF-16 string helpers add 338 bytes of mechanically transcribed reference
+assembly: move construction, storage transfer, destruction, terminated-pointer
+assignment and length/terminator updates. Original instructions and targeted
+Ghidra exports establish their boundaries and dependencies; complete rebuilt
+spans are compared without masking. In particular, the storage helper at
+`0x44F890` empties its source after transferring ownership, correcting an earlier
+copy-helper description. These references support further path and save-device
+recovery; they add no certified high-level-source credit or behavioral claim.
 
 The 28 bytes outside `.text` are exception metadata in `.rdata`. The `.text`
 denominator includes padding and is not a proven instruction-only total.
