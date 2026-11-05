@@ -1490,3 +1490,16 @@ test-cycle-array-new-forward: $(OUT)/reriff-match $(OUT)/array_new_forward.bin
 
 test-recovered: test-cycle-array-new-forward
 .PHONY: test-cycle-array-new-forward
+
+# Reviewed cycle reference: abs-float (assembly evidence only).
+$(OUT)/abs_float.bin: native/abs_float.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/abs_float.o
+	ld -m elf_i386 -Ttext=0x426cf0 -e original_abs_float $(OUT)/abs_float.o -o $(OUT)/abs_float.elf
+	objcopy -O binary --only-section=.text $(OUT)/abs_float.elf $@
+
+test-cycle-abs-float: $(OUT)/reriff-match $(OUT)/abs_float.bin
+	$(OUT)/reriff-match native-check "$(GAME)" abs-float $(OUT)/abs_float.bin $(OUT)/abs-float-comparison.json
+
+test-recovered: test-cycle-abs-float
+.PHONY: test-cycle-abs-float

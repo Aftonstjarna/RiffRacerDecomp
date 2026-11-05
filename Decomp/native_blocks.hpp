@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"array-new-forward",0x4f87c8,9},
+  return {NativeBlock{"abs-float",0x26cf0,43},
+                     NativeBlock{"array-new-forward",0x4f87c8,9},
                      NativeBlock{"operator-new-import",0x4f8c42,6},
                      NativeBlock{"memset-import",0x4f8d7e,6},
                      NativeBlock{"pool-string-allocate",0x26a30,180},
