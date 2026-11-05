@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "28-byte record range erase",
+  "summary": "Recovered thiscall vector range erasure at VA 0x4b2480: clear fast path, forward assignment compaction, logical-end update and explicit iterator output. Original instructions and application-frame caller at 0x4a1090 establish a three-pointer container and 28-byte stride; record field meanings remain opaque.",
+  "targets": [
+    "record28-erase-range"
+  ],
+  "references": [
+    "record28-erase-range"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct GCC i386 thiscall comparisons with the original for every valid subrange of lengths 0 through 12, including empty, whole, prefix, suffix, middle and overlapping compaction. Checks return-slot identity, output iterator, all container fields, every allocation word including unchanged tail, and surrounding sentinels. Also compares output-slot aliases to each container field and a null empty triple. Installs test FS and checks head restoration after each original call. Local validation passed with the 116-byte oracle verified against Game.exe and linked at VA 0x4b2480. Implementation also compiled using pinned MSVC2013 at O2.",
+  "known_limits": [
+    "Record field types and ownership semantics are unresolved; only opaque 28-byte assignment is established.",
+    "Only valid ordered record-boundary ranges and writable iterator outputs are supported; invalid ranges retain original unchecked preconditions.",
+    "No byte-match claim; portable struct assignment need not reproduce original SSE instruction selection.",
+    "No exceptions or OS behavior is involved in this routine.",
+    "Local MSVC O1 and O2 /Oy- attempts were blocked by compiler D8037 (cannot create temporary il file); those configurations require trusted coordinator validation."
+  ]
+}
