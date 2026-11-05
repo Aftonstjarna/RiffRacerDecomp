@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "UTF-16 pointer assignment wrapper",
+  "summary": "Recovered VA 0x44f790 as a genuine thiscall member: scan to the first zero 16-bit code unit and forward source and length to the existing range assignment method, returning its result. Direct immutable original disassembly and caller 0x44ef1a confirm the ABI. Destination storage at +0, length +16 and capacity +20 are used only by the dependency, not this wrapper.",
+  "targets": [
+    "wide-assign-pointer"
+  ],
+  "references": [
+    "wide-assign-pointer",
+    "wide-assign-range",
+    "wide-assign-substring",
+    "wide-truncate",
+    "wide-erase",
+    "memcpy-import"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Compare wrapper with original thiscall method using accepted range/substr/truncate/erase dependencies and a controlled memcpy import. Exercise capacities 0,1,7,8,15,31,1024, every length through capacity, external UTF-16 with nonzero data beyond its terminator, self base, interior zero and terminator pointers. Check return identity, exactly one delegate call with unchanged source and scanned count, complete destination and heap equality, unchanged external source, capacity, guard words and unused storage. Independent expected values checked for external copies. All 4,372 differential cases passed locally under the prescribed GCC flags with warnings as errors. Linked bytes for all six accepted references were checked against Game.exe. Implementation compiled with pinned VS2013 at O2. Subsequent O1 and O2 /Oy- attempts failed with compiler environment error D8037 (cannot create temporary il file), before source compilation.",
+  "known_limits": [
+    "Range assignment, growth, substring handling and CRT internals remain integration dependencies; only the pointer wrapper is recovered.",
+    "Allocation/growth and throwing paths are not exercised; all tests use sufficient capacity.",
+    "Null, unterminated or unreadable pointers are invalid in the original and are not invoked. Extreme address-space-sized scans and pointer wraparound are not tested.",
+    "No matching-byte claim; native Windows source compilation does not establish original code generation.",
+    "Nonempty interior alias assignment requires the dependency memmove import and is not exercised; empty interior alias and full self assignment are covered.",
+    "Local optional MSVC O1 and O2 /Oy- checks were blocked by D8037 temporary-file environment failure; trusted native Windows compilation remains authoritative."
+  ]
+}
