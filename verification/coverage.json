@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 74680,
-  "remaining_bytes": 8560712,
-  "verified_percent": 0.8648130854974505,
-  "registered_blocks": 174,
-  "exact_blocks": 174,
+  "verified_bytes": 74747,
+  "remaining_bytes": 8560645,
+  "verified_percent": 0.8655889622613542,
+  "registered_blocks": 175,
+  "exact_blocks": 175,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -947,6 +947,15 @@
       "byte_equal": true,
       "reference_sha256": "8521b73c6708ed2b9f079cdda2e7cfdd84ed16b00d335046b771a47ea48b199e",
       "candidate_sha256": "8521b73c6708ed2b9f079cdda2e7cfdd84ed16b00d335046b771a47ea48b199e"
+    },
+    {
+      "name": "shader-grid-notify-slot12",
+      "file_offset": 1239392,
+      "size": 67,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "933d2925849e6ade3a9ca5e53491da8c9846b14990c2882aeeffc9a3d503faaf",
+      "candidate_sha256": "933d2925849e6ade3a9ca5e53491da8c9846b14990c2882aeeffc9a3d503faaf"
     },
     {
       "name": "shader-binding-cleanup",

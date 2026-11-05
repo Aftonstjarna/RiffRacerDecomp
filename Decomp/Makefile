@@ -1724,3 +1724,16 @@ test-cycle-array-delete-import: $(OUT)/reriff-match $(OUT)/array_delete_import.b
 
 test-recovered: test-cycle-array-delete-import
 .PHONY: test-cycle-array-delete-import
+
+# Reviewed cycle reference: shader-grid-notify-slot12 (assembly evidence only).
+$(OUT)/shader_grid_notify_slot12.bin: native/shader_grid_notify_slot12.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_grid_notify_slot12.o
+	ld -m elf_i386 -Ttext=0x52f560 -e original_shader_grid_notify_slot12 $(OUT)/shader_grid_notify_slot12.o -o $(OUT)/shader_grid_notify_slot12.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_grid_notify_slot12.elf $@
+
+test-cycle-shader-grid-notify-slot12: $(OUT)/reriff-match $(OUT)/shader_grid_notify_slot12.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-grid-notify-slot12 $(OUT)/shader_grid_notify_slot12.bin $(OUT)/shader-grid-notify-slot12-comparison.json
+
+test-recovered: test-cycle-shader-grid-notify-slot12
+.PHONY: test-cycle-shader-grid-notify-slot12
