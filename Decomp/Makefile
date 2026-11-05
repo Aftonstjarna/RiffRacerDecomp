@@ -1659,3 +1659,16 @@ test-cycle-record24-range-copy: $(OUT)/reriff-match $(OUT)/record24_range_copy.b
 
 test-recovered: test-cycle-record24-range-copy
 .PHONY: test-cycle-record24-range-copy
+
+# Reviewed cycle reference: wide-copy-elements (assembly evidence only).
+$(OUT)/wide_copy_elements.bin: native/wide_copy_elements.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_copy_elements.o
+	ld -m elf_i386 -Ttext=0x44e120 -e original_wide_copy_elements $(OUT)/wide_copy_elements.o -o $(OUT)/wide_copy_elements.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_copy_elements.elf $@
+
+test-cycle-wide-copy-elements: $(OUT)/reriff-match $(OUT)/wide_copy_elements.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-copy-elements $(OUT)/wide_copy_elements.bin $(OUT)/wide-copy-elements-comparison.json
+
+test-recovered: test-cycle-wide-copy-elements
+.PHONY: test-cycle-wide-copy-elements
