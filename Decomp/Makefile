@@ -1399,3 +1399,16 @@ test-cycle-graphics-range-destroy-438: $(OUT)/reriff-match $(OUT)/graphics_range
 
 test-recovered: test-cycle-graphics-range-destroy-438
 .PHONY: test-cycle-graphics-range-destroy-438
+
+# Reviewed cycle reference: resource-manager-construct (assembly evidence only).
+$(OUT)/resource_manager_construct.bin: native/resource_manager_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_manager_construct.o
+	ld -m elf_i386 -Ttext=0x417810 -e original_resource_manager_construct $(OUT)/resource_manager_construct.o -o $(OUT)/resource_manager_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_manager_construct.elf $@
+
+test-cycle-resource-manager-construct: $(OUT)/reriff-match $(OUT)/resource_manager_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-manager-construct $(OUT)/resource_manager_construct.bin $(OUT)/resource-manager-construct-comparison.json
+
+test-recovered: test-cycle-resource-manager-construct
+.PHONY: test-cycle-resource-manager-construct

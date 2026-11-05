@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 71977,
-  "remaining_bytes": 8563415,
-  "verified_percent": 0.8335116691865291,
-  "registered_blocks": 149,
-  "exact_blocks": 149,
+  "verified_bytes": 72194,
+  "remaining_bytes": 8563198,
+  "verified_percent": 0.8360245834815605,
+  "registered_blocks": 150,
+  "exact_blocks": 150,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -65,6 +65,15 @@
       "byte_equal": true,
       "reference_sha256": "b559287c865252dcb8d12fbb1fb309eba80dffb68b381de9bd2b29106e9879d2",
       "candidate_sha256": "b559287c865252dcb8d12fbb1fb309eba80dffb68b381de9bd2b29106e9879d2"
+    },
+    {
+      "name": "resource-manager-construct",
+      "file_offset": 93200,
+      "size": 217,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "da6d92dfca2291736720d844d7f7aae31aa78732a0391b535d3a9b9a7b94666c",
+      "candidate_sha256": "da6d92dfca2291736720d844d7f7aae31aa78732a0391b535d3a9b9a7b94666c"
     },
     {
       "name": "resource-reference-release",
