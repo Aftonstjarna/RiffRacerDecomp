@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 73900,
-  "remaining_bytes": 8561492,
-  "verified_percent": 0.8557804903355863,
-  "registered_blocks": 166,
-  "exact_blocks": 166,
+  "verified_bytes": 74268,
+  "remaining_bytes": 8561124,
+  "verified_percent": 0.860042022411953,
+  "registered_blocks": 167,
+  "exact_blocks": 167,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -533,6 +533,15 @@
       "byte_equal": true,
       "reference_sha256": "110dea05c0d7215c282d524fc785e2f7a80af161a4d6a929154a313708b498fb",
       "candidate_sha256": "110dea05c0d7215c282d524fc785e2f7a80af161a4d6a929154a313708b498fb"
+    },
+    {
+      "name": "graphics-range-destroy-434",
+      "file_offset": 642448,
+      "size": 368,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "3d1a86d54573363451d2863c7fc9129a2c9710df3b6a69cf00889c2ee183c0d3",
+      "candidate_sha256": "3d1a86d54573363451d2863c7fc9129a2c9710df3b6a69cf00889c2ee183c0d3"
     },
     {
       "name": "graphics-startup",
