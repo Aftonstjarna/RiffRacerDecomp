@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "UTF-16 string move construction",
+  "summary": "Recover 0x44f6f0 as a genuine thiscall member over the 24-byte small-string layout. Initialize destination, copy inline UTF-16 including terminator or transfer heap pointer, transfer metadata, then reset source. Preserve write ordering, unused bytes, unsigned wrapping, lack of cleanup and self-move guard. Original caller 0x53623e constructs a result from a prepended temporary.",
+  "targets": [
+    "wide-move-construct"
+  ],
+  "references": [
+    "wide-move-construct"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct thiscall oracle comparison for heap capacities 8,9,31,UINT_MAX and lengths 0,1,7,8,19,UINT_MAX, plus inline capacities 0..7 with UINT_MAX length (copy skipped). Compare complete source/destination objects including canaries and unused storage, return identity and unchanged heap. Independent expected-state checks for inline lengths 0..7 with embedded NUL/non-ASCII units, zero-byte count overflow, and inline/heap self-move. No oracle calls that require an unbound import. Local GCC harness passed with the supplied flags; accepted reference placed at 0x44f6f0 and its full 106 bytes verified against Game.exe. Pinned MSVC2013 implementation compilation passed at O2. Subsequent O1 and O2 /Oy- local attempts failed with compiler D8037 (cannot create temporary IL file); those configurations remain for trusted validation.",
+  "known_limits": [
+    "Original inline copy and self-move paths require cdecl memmove at IAT 0x92d4a4. No trusted binding for that slot is supplied; these paths have expected-state tests only, not direct oracle validation.",
+    "Portable byte movement models memmove; OS/CRT internals, invalid pointers, arbitrary partially overlapping objects and oversized copies outside valid storage are not validated.",
+    "32-bit pointer layout required. No matching-byte claim. No exception handling or allocation occurs locally."
+  ]
+}
