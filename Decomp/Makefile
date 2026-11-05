@@ -1503,3 +1503,16 @@ test-cycle-abs-float: $(OUT)/reriff-match $(OUT)/abs_float.bin
 
 test-recovered: test-cycle-abs-float
 .PHONY: test-cycle-abs-float
+
+# Reviewed cycle reference: window-handles-cleanup (assembly evidence only).
+$(OUT)/window_handles_cleanup.bin: native/window_handles_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/window_handles_cleanup.o
+	ld -m elf_i386 -Ttext=0x48c690 -e original_window_handles_cleanup $(OUT)/window_handles_cleanup.o -o $(OUT)/window_handles_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/window_handles_cleanup.elf $@
+
+test-cycle-window-handles-cleanup: $(OUT)/reriff-match $(OUT)/window_handles_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" window-handles-cleanup $(OUT)/window_handles_cleanup.bin $(OUT)/window-handles-cleanup-comparison.json
+
+test-recovered: test-cycle-window-handles-cleanup
+.PHONY: test-cycle-window-handles-cleanup
