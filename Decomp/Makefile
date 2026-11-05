@@ -1854,3 +1854,16 @@ test-cycle-worker-state-construct: $(OUT)/reriff-match $(OUT)/worker_state_const
 
 test-recovered: test-cycle-worker-state-construct
 .PHONY: test-cycle-worker-state-construct
+
+# Reviewed cycle reference: memmove-import (assembly evidence only).
+$(OUT)/memmove_import.bin: native/memmove_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/memmove_import.o
+	ld -m elf_i386 -Ttext=0x8f8d4e -e original_memmove_import $(OUT)/memmove_import.o -o $(OUT)/memmove_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/memmove_import.elf $@
+
+test-cycle-memmove-import: $(OUT)/reriff-match $(OUT)/memmove_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" memmove-import $(OUT)/memmove_import.bin $(OUT)/memmove-import-comparison.json
+
+test-recovered: test-cycle-memmove-import
+.PHONY: test-cycle-memmove-import

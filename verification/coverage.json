@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 75782,
-  "remaining_bytes": 8559610,
-  "verified_percent": 0.8775745212261354,
-  "registered_blocks": 184,
-  "exact_blocks": 184,
+  "verified_bytes": 75788,
+  "remaining_bytes": 8559604,
+  "verified_percent": 0.8776440027273805,
+  "registered_blocks": 185,
+  "exact_blocks": 185,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1478,6 +1478,15 @@
       "byte_equal": true,
       "reference_sha256": "4786b7cc6a5ea4edb189706e1bed7c06ba4b0275951ba6b54f366a45d2ec9606",
       "candidate_sha256": "4786b7cc6a5ea4edb189706e1bed7c06ba4b0275951ba6b54f366a45d2ec9606"
+    },
+    {
+      "name": "memmove-import",
+      "file_offset": 5210446,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "510916c1f037aee8d98fe71ac80ffc79f5f01b5f01adc9863e6c187e8042b049",
+      "candidate_sha256": "510916c1f037aee8d98fe71ac80ffc79f5f01b5f01adc9863e6c187e8042b049"
     },
     {
       "name": "array-delete-import",
