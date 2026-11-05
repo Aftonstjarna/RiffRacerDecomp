@@ -1880,3 +1880,16 @@ test-cycle-narrow-move-assign: $(OUT)/reriff-match $(OUT)/narrow_move_assign.bin
 
 test-recovered: test-cycle-narrow-move-assign
 .PHONY: test-cycle-narrow-move-assign
+
+# Reviewed cycle reference: signed64-to-double (assembly evidence only).
+$(OUT)/signed64_to_double.bin: native/signed64_to_double.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/signed64_to_double.o
+	ld -m elf_i386 -Ttext=0x8f92ef -e original_signed64_to_double $(OUT)/signed64_to_double.o -o $(OUT)/signed64_to_double.elf
+	objcopy -O binary --only-section=.text $(OUT)/signed64_to_double.elf $@
+
+test-cycle-signed64-to-double: $(OUT)/reriff-match $(OUT)/signed64_to_double.bin
+	$(OUT)/reriff-match native-check "$(GAME)" signed64-to-double $(OUT)/signed64_to_double.bin $(OUT)/signed64-to-double-comparison.json
+
+test-recovered: test-cycle-signed64-to-double
+.PHONY: test-cycle-signed64-to-double
