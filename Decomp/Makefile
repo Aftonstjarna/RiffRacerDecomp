@@ -1607,3 +1607,16 @@ test-cycle-operator-delete-import: $(OUT)/reriff-match $(OUT)/operator_delete_im
 
 test-recovered: test-cycle-operator-delete-import
 .PHONY: test-cycle-operator-delete-import
+
+# Reviewed cycle reference: graphics-table-dispose-434 (assembly evidence only).
+$(OUT)/graphics_table_dispose_434.bin: native/graphics_table_dispose_434.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_table_dispose_434.o
+	ld -m elf_i386 -Ttext=0x4b2c60 -e original_graphics_table_dispose_434 $(OUT)/graphics_table_dispose_434.o -o $(OUT)/graphics_table_dispose_434.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_table_dispose_434.elf $@
+
+test-cycle-graphics-table-dispose-434: $(OUT)/reriff-match $(OUT)/graphics_table_dispose_434.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-table-dispose-434 $(OUT)/graphics_table_dispose_434.bin $(OUT)/graphics-table-dispose-434-comparison.json
+
+test-recovered: test-cycle-graphics-table-dispose-434
+.PHONY: test-cycle-graphics-table-dispose-434
