@@ -1438,3 +1438,16 @@ test-cycle-pool-block-commit: $(OUT)/reriff-match $(OUT)/pool_block_commit.bin
 
 test-recovered: test-cycle-pool-block-commit
 .PHONY: test-cycle-pool-block-commit
+
+# Reviewed cycle reference: pool-string-allocate (assembly evidence only).
+$(OUT)/pool_string_allocate.bin: native/pool_string_allocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pool_string_allocate.o
+	ld -m elf_i386 -Ttext=0x426a30 -e original_pool_string_allocate $(OUT)/pool_string_allocate.o -o $(OUT)/pool_string_allocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/pool_string_allocate.elf $@
+
+test-cycle-pool-string-allocate: $(OUT)/reriff-match $(OUT)/pool_string_allocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pool-string-allocate $(OUT)/pool_string_allocate.bin $(OUT)/pool-string-allocate-comparison.json
+
+test-recovered: test-cycle-pool-string-allocate
+.PHONY: test-cycle-pool-string-allocate
