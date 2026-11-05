@@ -1529,3 +1529,16 @@ test-cycle-floor-import: $(OUT)/reriff-match $(OUT)/floor_import.bin
 
 test-recovered: test-cycle-floor-import
 .PHONY: test-cycle-floor-import
+
+# Reviewed cycle reference: narrow-storage-pointer (assembly evidence only).
+$(OUT)/narrow_storage_pointer.bin: native/narrow_storage_pointer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_storage_pointer.o
+	ld -m elf_i386 -Ttext=0x416160 -e original_narrow_storage_pointer $(OUT)/narrow_storage_pointer.o -o $(OUT)/narrow_storage_pointer.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_storage_pointer.elf $@
+
+test-cycle-narrow-storage-pointer: $(OUT)/reriff-match $(OUT)/narrow_storage_pointer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-storage-pointer $(OUT)/narrow_storage_pointer.bin $(OUT)/narrow-storage-pointer-comparison.json
+
+test-recovered: test-cycle-narrow-storage-pointer
+.PHONY: test-cycle-narrow-storage-pointer
