@@ -1763,3 +1763,16 @@ test-cycle-shutdown-buffer-records-destroy: $(OUT)/reriff-match $(OUT)/shutdown_
 
 test-recovered: test-cycle-shutdown-buffer-records-destroy
 .PHONY: test-cycle-shutdown-buffer-records-destroy
+
+# Reviewed cycle reference: narrow-end-pointer (assembly evidence only).
+$(OUT)/narrow_end_pointer.bin: native/narrow_end_pointer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_end_pointer.o
+	ld -m elf_i386 -Ttext=0x440a60 -e original_narrow_end_pointer $(OUT)/narrow_end_pointer.o -o $(OUT)/narrow_end_pointer.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_end_pointer.elf $@
+
+test-cycle-narrow-end-pointer: $(OUT)/reriff-match $(OUT)/narrow_end_pointer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-end-pointer $(OUT)/narrow_end_pointer.bin $(OUT)/narrow-end-pointer-comparison.json
+
+test-recovered: test-cycle-narrow-end-pointer
+.PHONY: test-cycle-narrow-end-pointer
