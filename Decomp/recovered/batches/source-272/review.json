@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow and x86 ABI agree with the reference scan and range-helper delegation. Submitted tests call the original and check meaningful boundaries, aliases, return values, object/storage changes, guards, and source preservation. An independent compiled countercheck passed lengths 0–8192 and interior offsets, verifying delegation arguments and sentinel return propagation against the original routine. Native Windows compilation records cover the actual implementation. External-helper dependencies and untested paths are disclosed; sampled validation does not establish all-input equivalence."
+}

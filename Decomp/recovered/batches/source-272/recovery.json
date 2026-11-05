@@ -1,0 +1,11 @@
+{
+ "schema":1,
+ "classification":"high_level_unmatched",
+ "title":"Terminated narrow-string assignment",
+ "summary":"Recover 0x415b90 thiscall method: scan through first NUL, pass source and 32-bit byte length to external range assignment at 0x416520, and return its result. No direct destination field accesses. Original callers confirm ECX destination and one pointer stack argument.",
+ "targets":["narrow-assign-terminated"],
+ "references":["narrow-assign-terminated","narrow-assign-range","narrow-assign-substring","narrow-erase","memcpy-import"],
+ "sources":["impl.cpp","impl.hpp","test.cpp"],
+ "test_description":"1539 direct original comparisons across capacities 15,16,31,63,127,255 and all lengths through capacity: external sources with high-bit bytes and trailing nonzero data, base self-alias, and terminator alias. Check exact delegation count/pointer/length, return pointer, full object and backing storage including untouched bytes and guards, source preservation, and FS head restoration. Test-only member dependency binds to accepted original range routine; memcpy import is controlled byte copy.",
+ "known_limits":["Range assignment remains an external dependency; tests reuse accepted original helper rather than recovering its allocation or aliasing behavior.","Allocation/growth, interior aliases other than base, exceptions, invalid pointers, missing terminators and near-4GiB lengths are untested. Null source is not accepted by the original scan.","Layout and original thiscall are for 32-bit x86; no byte-matching claim."]
+}
