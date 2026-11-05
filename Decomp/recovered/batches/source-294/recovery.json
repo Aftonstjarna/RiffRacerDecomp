@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Graphics entry reference release",
+  "summary": "Recover VA 0x49ca20 thiscall release(bool): honor ownership unless forced, locate reference base through vbtable[1], drain unsigned counts when forced, call scalar deleting destructor slot zero with flag 1 at zero, clear resource and return whether empty. Original instructions and three direct call sites inspected.",
+  "targets": ["graphics-entry-release"],
+  "references": ["graphics-entry-release"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Differential original-address oracle tests with initialized FS and restoration checks: null/present resources, four ownership values, both force settings, positive/negative virtual-base displacements, counts 0/1/2/3/17/257 and high unsigned counts for ordinary release. Verify return, counter underflow/drain, destructor this/flag/count/entry visibility, destructor mutations, cleared pointer, untouched fields and complete fixture byte equality.",
+  "known_limits": [
+    "Class identities, full vtables and ownership field meaning beyond its zero/nonzero test remain unknown; layouts model only observed fields of the original 32-bit ABI.",
+    "Controlled callbacks validate invocation semantics, not real rendering resource destruction, allocation or exception behavior.",
+    "Forced release with huge positive counts is not executed due to its linear iteration cost; ordinary release covers high-bit counts and zero underflow.",
+    "Invalid pointers, malformed vbtables, concurrent counter mutation and destructor exceptions are outside the valid normal-path test domain. No thread-safety is implied.",
+    "Readable behavior recovery only; no compiler-built matching-byte credit is claimed."
+  ]
+}
