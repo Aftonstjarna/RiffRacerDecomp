@@ -1321,3 +1321,16 @@ test-cycle-graphics-entry-release-all: $(OUT)/reriff-match $(OUT)/graphics_entry
 
 test-recovered: test-cycle-graphics-entry-release-all
 .PHONY: test-cycle-graphics-entry-release-all
+
+# Reviewed cycle reference: graphics-entry-release (assembly evidence only).
+$(OUT)/graphics_entry_release.bin: native/graphics_entry_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_entry_release.o
+	ld -m elf_i386 -Ttext=0x49ca20 -e original_graphics_entry_release $(OUT)/graphics_entry_release.o -o $(OUT)/graphics_entry_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_entry_release.elf $@
+
+test-cycle-graphics-entry-release: $(OUT)/reriff-match $(OUT)/graphics_entry_release.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-entry-release $(OUT)/graphics_entry_release.bin $(OUT)/graphics-entry-release-comparison.json
+
+test-recovered: test-cycle-graphics-entry-release
+.PHONY: test-cycle-graphics-entry-release

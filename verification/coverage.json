@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 70837,
-  "remaining_bytes": 8564555,
-  "verified_percent": 0.8203101839499585,
-  "registered_blocks": 143,
-  "exact_blocks": 143,
+  "verified_bytes": 70972,
+  "remaining_bytes": 8564420,
+  "verified_percent": 0.8218735177279735,
+  "registered_blocks": 144,
+  "exact_blocks": 144,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -407,6 +407,15 @@
       "byte_equal": true,
       "reference_sha256": "34d0c9a6284b8aa59012f9657e8586309ac7caba2d5352234d272ff005bf9d80",
       "candidate_sha256": "34d0c9a6284b8aa59012f9657e8586309ac7caba2d5352234d272ff005bf9d80"
+    },
+    {
+      "name": "graphics-entry-release",
+      "file_offset": 638496,
+      "size": 135,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "a44b44bb89594debb60ebf21361b69a35304942073d9c13388ac51e0f47f38a6",
+      "candidate_sha256": "a44b44bb89594debb60ebf21361b69a35304942073d9c13388ac51e0f47f38a6"
     },
     {
       "name": "graphics-startup",
