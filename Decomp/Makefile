@@ -1555,3 +1555,16 @@ test-cycle-resource-handle-remove: $(OUT)/reriff-match $(OUT)/resource_handle_re
 
 test-recovered: test-cycle-resource-handle-remove
 .PHONY: test-cycle-resource-handle-remove
+
+# Reviewed cycle reference: u16-vector-append-one (assembly evidence only).
+$(OUT)/u16_vector_append_one.bin: native/u16_vector_append_one.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u16_vector_append_one.o
+	ld -m elf_i386 -Ttext=0x41c290 -e original_u16_vector_append_one $(OUT)/u16_vector_append_one.o -o $(OUT)/u16_vector_append_one.elf
+	objcopy -O binary --only-section=.text $(OUT)/u16_vector_append_one.elf $@
+
+test-cycle-u16-vector-append-one: $(OUT)/reriff-match $(OUT)/u16_vector_append_one.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u16-vector-append-one $(OUT)/u16_vector_append_one.bin $(OUT)/u16-vector-append-one-comparison.json
+
+test-recovered: test-cycle-u16-vector-append-one
+.PHONY: test-cycle-u16-vector-append-one
