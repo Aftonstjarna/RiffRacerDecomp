@@ -1594,3 +1594,16 @@ test-cycle-u16-vector-reallocate: $(OUT)/reriff-match $(OUT)/u16_vector_realloca
 
 test-recovered: test-cycle-u16-vector-reallocate
 .PHONY: test-cycle-u16-vector-reallocate
+
+# Reviewed cycle reference: operator-delete-import (assembly evidence only).
+$(OUT)/operator_delete_import.bin: native/operator_delete_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/operator_delete_import.o
+	ld -m elf_i386 -Ttext=0x8f8c48 -e original_operator_delete_import $(OUT)/operator_delete_import.o -o $(OUT)/operator_delete_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/operator_delete_import.elf $@
+
+test-cycle-operator-delete-import: $(OUT)/reriff-match $(OUT)/operator_delete_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" operator-delete-import $(OUT)/operator_delete_import.bin $(OUT)/operator-delete-import-comparison.json
+
+test-recovered: test-cycle-operator-delete-import
+.PHONY: test-cycle-operator-delete-import
