@@ -1750,3 +1750,16 @@ test-cycle-vector3-construct-refs: $(OUT)/reriff-match $(OUT)/vector3_construct_
 
 test-recovered: test-cycle-vector3-construct-refs
 .PHONY: test-cycle-vector3-construct-refs
+
+# Reviewed cycle reference: shutdown-buffer-records-destroy (assembly evidence only).
+$(OUT)/shutdown_buffer_records_destroy.bin: native/shutdown_buffer_records_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shutdown_buffer_records_destroy.o
+	ld -m elf_i386 -Ttext=0x49fbd0 -e original_shutdown_buffer_records_destroy $(OUT)/shutdown_buffer_records_destroy.o -o $(OUT)/shutdown_buffer_records_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/shutdown_buffer_records_destroy.elf $@
+
+test-cycle-shutdown-buffer-records-destroy: $(OUT)/reriff-match $(OUT)/shutdown_buffer_records_destroy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shutdown-buffer-records-destroy $(OUT)/shutdown_buffer_records_destroy.bin $(OUT)/shutdown-buffer-records-destroy-comparison.json
+
+test-recovered: test-cycle-shutdown-buffer-records-destroy
+.PHONY: test-cycle-shutdown-buffer-records-destroy
