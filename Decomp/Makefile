@@ -1464,3 +1464,16 @@ test-cycle-memset-import: $(OUT)/reriff-match $(OUT)/memset_import.bin
 
 test-recovered: test-cycle-memset-import
 .PHONY: test-cycle-memset-import
+
+# Reviewed cycle reference: operator-new-import (assembly evidence only).
+$(OUT)/operator_new_import.bin: native/operator_new_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/operator_new_import.o
+	ld -m elf_i386 -Ttext=0x8f8c42 -e original_operator_new_import $(OUT)/operator_new_import.o -o $(OUT)/operator_new_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/operator_new_import.elf $@
+
+test-cycle-operator-new-import: $(OUT)/reriff-match $(OUT)/operator_new_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" operator-new-import $(OUT)/operator_new_import.bin $(OUT)/operator-new-import-comparison.json
+
+test-recovered: test-cycle-operator-new-import
+.PHONY: test-cycle-operator-new-import
