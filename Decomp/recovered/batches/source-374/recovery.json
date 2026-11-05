@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "24-byte record vector growth capacity",
+  "summary": "Recovered the side-effect-free thiscall capacity selector at VA 0x543310. It divides the signed wrapped allocation-end minus begin byte distance by 24, proposes capacity plus floor(capacity/2) only when the unsigned max-size subtraction permits it, and returns the unsigned maximum of that proposal and the requested count. Insertion caller at 0x54341b passes current size plus inserted count; the following allocator uses 24-byte records. The implementation uses a genuine member method and explicit 32-bit address words. The accepted reference was linked at its original address and verified byte-for-byte against the immutable executable (73 bytes). GCC differential tests and optional VS2013 O2 compilation passed; no source byte matching is claimed.",
+  "targets": [
+    "record24-growth-capacity"
+  ],
+  "references": [
+    "record24-growth-capacity"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "23,312 differential cases compare the recovered member directly with the original thiscall reference at 0x543310: empty/small/odd capacities, unaligned distances, signed-distance extremes, wrapping address arithmetic, four begin addresses, arbitrary ignored end fields, twelve requests including max-size neighbors and UINT32_MAX, all 24 remainders around nine capacities at the growth cutoff, and 20,000 deterministic generated triples. Both objects and surrounding guard words are checked for absence of writes after each call. Independent landmarks check odd rounding, requested-count dominance and overflow-growth fallback. Freestanding GCC i386 test_main returned zero. The routine has no calls, imports or FS registration, so no callback or FS fixture is required.",
+  "known_limits": [
+    "Original container and record type names are unresolved; field names describe layout inferred from adjacent insertion code.",
+    "Storage retains original 32-bit address words; integration with a native 64-bit pointer container requires a separate porting decision.",
+    "Allocation, record copying, caller length errors and exception behavior are outside the assigned helper scope.",
+    "Differential testing samples the input space and does not establish exhaustive equivalence or matching code generation.",
+    "Optional local VS2013 O2 compilation passed; subsequent O1 and O2 /Oy- attempts failed with compiler D8037 (cannot create temporary il file), so those local configurations were not verified. Trusted native Windows validation remains separate."
+  ]
+}
