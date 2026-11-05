@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 74536,
-  "remaining_bytes": 8560856,
-  "verified_percent": 0.8631455294675678,
-  "registered_blocks": 171,
-  "exact_blocks": 171,
+  "verified_bytes": 74589,
+  "remaining_bytes": 8560803,
+  "verified_percent": 0.8637592827285664,
+  "registered_blocks": 172,
+  "exact_blocks": 172,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1181,6 +1181,15 @@
       "byte_equal": true,
       "reference_sha256": "ae57f757fb6b610855db8da31e9f48be69c8b4dc5903d78930acdc47c910938c",
       "candidate_sha256": "ae57f757fb6b610855db8da31e9f48be69c8b4dc5903d78930acdc47c910938c"
+    },
+    {
+      "name": "record24-allocate",
+      "file_offset": 1320800,
+      "size": 53,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "ce6da188d2cd0f780127cef8a333cd4128f307c0545157e6bcdef10932a0d4b4",
+      "candidate_sha256": "ce6da188d2cd0f780127cef8a333cd4128f307c0545157e6bcdef10932a0d4b4"
     },
     {
       "name": "shader-drawprim-ctor",

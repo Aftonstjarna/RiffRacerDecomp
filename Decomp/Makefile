@@ -1685,3 +1685,16 @@ test-cycle-record28-erase-range: $(OUT)/reriff-match $(OUT)/record28_erase_range
 
 test-recovered: test-cycle-record28-erase-range
 .PHONY: test-cycle-record28-erase-range
+
+# Reviewed cycle reference: record24-allocate (assembly evidence only).
+$(OUT)/record24_allocate.bin: native/record24_allocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record24_allocate.o
+	ld -m elf_i386 -Ttext=0x543360 -e original_record24_allocate $(OUT)/record24_allocate.o -o $(OUT)/record24_allocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/record24_allocate.elf $@
+
+test-cycle-record24-allocate: $(OUT)/reriff-match $(OUT)/record24_allocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record24-allocate $(OUT)/record24_allocate.bin $(OUT)/record24-allocate-comparison.json
+
+test-recovered: test-cycle-record24-allocate
+.PHONY: test-cycle-record24-allocate
