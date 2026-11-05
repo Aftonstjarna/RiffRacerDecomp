@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string range assignment",
+  "summary": "Recovered VA 0x416520..0x416617 (RVA 0x16520), genuine thiscall member returning this with two callee-cleaned stack arguments. Capacity >=16 selects heap storage; length/capacity occupy +16/+20. Non-null source in [data,data+length) delegates to self substring assignment before the length check, permitting clamped UINT_MAX counts. Other sources reject UINT_MAX, grow when needed preserving old length, copy exactly count bytes, then publish length and NUL. Zero count preserves capacity and all bytes except length and first character. Terminator pointers are outside the alias interval. Original disassembly and callers inspected; accepted target, substring and erase spans independently verified equal to immutable original. No matching-source claim.",
+  "targets": [
+    "narrow-assign-range"
+  ],
+  "references": [
+    "narrow-assign-range",
+    "narrow-assign-substring",
+    "narrow-erase",
+    "memcpy-import"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Freestanding GCC i386 differential execution against accepted originals at original addresses passes. Capacities 15,16,31,63,127,255; every external count through capacity with embedded NUL data; every base-alias count through old length plus UINT_MAX; every strict interior offset with zero count; terminator and null sources with zero count. Checks return identity, helper dispatch/count/offset, full object including untouched union bytes, capacity and guard words, entire heap backing with guards, source immutability, exact intermediate terminator side effects and FS head restoration after every original call. Uses exactly 4-byte .test_iat memcpy callback fixture. Explicit FS installation failure aborts. Supplied VS2013 implementation compilation passes O2. Further O1 and O2 /Oy- attempts were blocked by compiler D8037 (cannot create temporary il file), before source diagnostics.",
+  "known_limits": [
+    "Growth remains external at 0x416890; allocator policy, relocation, allocation failure, exception handling and out-of-memory behavior are not recovered or executed. Test growth stub traps if accidentally reached.",
+    "Nonalias UINT_MAX dispatch to nonreturning length error is recovered from instructions and original message, but throwing behavior is not executed; test error stub traps.",
+    "Positive-offset nonempty self assignments delegate to the accepted substring helper but are not executed because erase requires unavailable memmove IAT 0x92d4a4. Base aliases and empty interior aliases execute the actual substring and erase routines.",
+    "Invalid nonzero null input, malformed layouts, address wraparound, and overlapping external ranges outside the current logical string are not validated. Integer alias comparisons model original unsigned addresses on i386; object layout is intended for a 32-bit port.",
+    "Test-owned memcpy callback validates controlled copy semantics, not CRT internals. No Windows exception dispatch, unwind or TEB services are supplied. No matching-byte credit claimed.",
+    "Local optional MSVC O1 and O2 /Oy- validation is blocked by helper temporary-file error D8037; native Windows validation remains authoritative."
+  ]
+}
