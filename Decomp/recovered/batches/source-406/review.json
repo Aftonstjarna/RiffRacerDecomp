@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Independent source and original-disassembly review confirmed control flow, unsigned thresholds, thiscall ABI, layouts, warning-store ordering, diagnostic strings and helper selection. Independently rebuilt and ran the tests successfully and verified original strings and source hashes. Native compilation records cover the actual implementation. Failure-path differential execution, string allocation and exception behavior remain explicitly unvalidated; sampled success comparisons do not establish all-input equivalence."
+}

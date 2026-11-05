@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Minimum graphics capabilities",
+  "summary": "Recovered VA 0x4a59e0 (281 bytes) as a genuine thiscall GraphicsDevice member. Writes unsigned vertex-version warning before other reads, then rejects pixel versions below 0xffff0300, POW2 without NONPOW2CONDITIONAL, SQUAREONLY, dimensions below 4096, and render-target counts below three, in that priority. Failure binds existing narrow-string assignment/append members; success retains the old diagnostic. Exact original messages include the typo \"targers\" and dimension message without a period. Caller 0x4a3126 supplies a byte local and tests AL. Direct original disassembly agrees with the linked accepted reference, independently checked against all 281 original bytes. No matching C++ claim.",
+  "targets": [
+    "minimum-caps"
+  ],
+  "references": [
+    "minimum-caps"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC i386 freestanding O0 with specified flags and -Wall -Wextra -Werror passes. 4632 direct original comparisons: unsigned vertex threshold neighbors, unsigned pixel threshold and upper range, allowed texture flag combinations, dimension threshold and high-bit values, render-target threshold and high-bit values, plus warning pointer aliases into each vertex-version byte. Verify boolean, warning and surrounding bytes, complete guarded object equality including untouched diagnostic, and FS head restoration after every original call following mandatory successful FS installation. Fifteen source-only failure cases check threshold failures, rejection priority, exact prefix/reason text and counts, range versus terminated member selection, member receiver, warning, guards, and lack of direct object mutations using test-only capturing dependency adapters. Original failures are not executed. Local pinned MSVC2013 O2 compilation passed; later O1 and O2 /Oy- attempts failed with environmental temporary-file diagnostic D8037.",
+  "known_limits": [
+    "Full failure-path differential testing is blocked by unregistered original narrow-string helpers, notably 0x416730 append preparation (called for every nonempty append), 0x416890 assignment growth and 0x8f8d66 copy thunk. Failure diagnostics in test.cpp use explicit capture adapters only; no original allocation behavior is fabricated.",
+    "NarrowString methods are external engine/port bindings, not recovered implementations in this bounded slice. Their allocation, failure, exception and string-storage effects remain outside this recovery.",
+    "Only the original 32-bit object prefix through +0x173 is modeled; unknown bytes retain opaque names. Shader encodings and D3D capability names are interpreted from original field offsets and messages.",
+    "Null/invalid pointers, exception dispatch and real rendering are outside tested valid normal-path inputs. Success alias tests cover vertex-version bytes only; source preserves the initial warning-store ordering for other valid aliases.",
+    "No C++ byte match or complete Linux port is claimed. MSVC O1 and O2 /Oy- could not be locally confirmed because the optional Wine helper reported D8037 after initial successful O2 compilation."
+  ]
+}
