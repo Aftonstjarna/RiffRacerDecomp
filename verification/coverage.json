@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 72814,
-  "remaining_bytes": 8562578,
-  "verified_percent": 0.8432043386102217,
-  "registered_blocks": 153,
-  "exact_blocks": 153,
+  "verified_bytes": 72820,
+  "remaining_bytes": 8562572,
+  "verified_percent": 0.8432738201114669,
+  "registered_blocks": 154,
+  "exact_blocks": 154,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1253,6 +1253,15 @@
       "byte_equal": true,
       "reference_sha256": "d05fd5d905112eeb13e48d0fec230e6b1638868a7830f8a5fd8df989e05361c8",
       "candidate_sha256": "d05fd5d905112eeb13e48d0fec230e6b1638868a7830f8a5fd8df989e05361c8"
+    },
+    {
+      "name": "memset-import",
+      "file_offset": 5210494,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "3c4b7ebb5539f08b09a0b0fb637d04b0b0cf5d1261a9a43da1ea7528b2262ef4",
+      "candidate_sha256": "3c4b7ebb5539f08b09a0b0fb637d04b0b0cf5d1261a9a43da1ea7528b2262ef4"
     },
     {
       "name": "runtime-fp-convert",

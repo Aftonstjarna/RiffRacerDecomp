@@ -1451,3 +1451,16 @@ test-cycle-pool-string-allocate: $(OUT)/reriff-match $(OUT)/pool_string_allocate
 
 test-recovered: test-cycle-pool-string-allocate
 .PHONY: test-cycle-pool-string-allocate
+
+# Reviewed cycle reference: memset-import (assembly evidence only).
+$(OUT)/memset_import.bin: native/memset_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/memset_import.o
+	ld -m elf_i386 -Ttext=0x8f8d7e -e original_memset_import $(OUT)/memset_import.o -o $(OUT)/memset_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/memset_import.elf $@
+
+test-cycle-memset-import: $(OUT)/reriff-match $(OUT)/memset_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" memset-import $(OUT)/memset_import.bin $(OUT)/memset-import-comparison.json
+
+test-recovered: test-cycle-memset-import
+.PHONY: test-cycle-memset-import
