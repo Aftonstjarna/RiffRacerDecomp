@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "UTF-16 string length and terminator setter",
+  "summary": "Recovered 0x44fab0 as a thiscall WideString member: publish the 32-bit length and write a 16-bit zero using unsigned capacity >= 8 to select heap storage. No allocation or capacity checks. Direct original disassembly and accepted append-substring caller show a void-style helper; incidental EAX is not modeled as a return value.",
+  "targets": [
+    "wide-set-length"
+  ],
+  "references": [
+    "wide-set-length"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct differential GCC i386 tests against the accepted original at 0x44fab0. Enumerates capacities 0,1,6,7,8,9,31,INT_MAX,0x80000000,UINT_MAX; six previous lengths including UINT_MAX; every new inline index 0..7 and heap index 0..55; three nonzero byte patterns. Checks full fixture against independent expected bytes and oracle, including length, capacity, storage pointer, unused union bytes, complete backing storage and guards. Includes new lengths above reported capacity with physically valid storage to verify absence of capacity enforcement. Local test executable returned zero for all 6,624 cases; oracle span verified byte-for-byte against Game.exe. Implementation also compiled as GCC C++11 and pinned MSVC2013 under O2.",
+  "known_limits": [
+    "Requires valid writable storage for the requested terminator; invalid pointers, out-of-storage writes and 32-bit address-wrap indices are not tested or made safe.",
+    "Layout models the original 32-bit ABI; native 64-bit pointer layout is not an original ABI guarantee.",
+    "Incidental EAX and volatile register values are not exposed as C++ return semantics. No evidence of callers using those values.",
+    "Behavior validation does not establish matching compiler-generated machine code.",
+    "Additional local MSVC O1 and O2 /Oy- invocations failed with D8037 (cannot create temporary il file); no compile result is claimed for those configurations."
+  ]
+}
