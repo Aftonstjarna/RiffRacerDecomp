@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-40",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "record28-erase-range",
+      "stem": "cycle_record28_erase_range",
+      "source": "Decomp/recovered/msvc/cycle_record28_erase_range.cpp",
+      "sha256": "e63a993df68f975e1ea3a4512b9200b49b6247875bc8d645a079f973086eb744"
+    }
+  ]
+}

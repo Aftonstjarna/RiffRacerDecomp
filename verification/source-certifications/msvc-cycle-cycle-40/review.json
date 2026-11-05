@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "dd2ec0d94a49e51ddbd2a35dbebcaf6af09806ba6a4ef4ca11d8bd98ca82dc75",
+  "behavior_sha256": "ccd3dc78f6b46b6d8d25c4c3063c79810c11a8ec4988b1a0e0e4d352c5fd58c4",
+  "functions": [
+    {
+      "scope": "record28-erase-range",
+      "source_sha256": "e63a993df68f975e1ea3a4512b9200b49b6247875bc8d645a079f973086eb744",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified compiler code section at original VA 0x4b2480–0x4b24f4, with no relocations. Source, original instructions and ABI agree. Executing the actual compiled and original fragments passed 14,625 cases covering all erase branches, return values, guards and untouched state. Approval is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "7f135e6a8bf9dddb14f6c63d41af37d3237b89926e25d21a01521036349e8d8b",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
