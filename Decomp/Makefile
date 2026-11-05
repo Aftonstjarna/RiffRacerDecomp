@@ -1477,3 +1477,16 @@ test-cycle-operator-new-import: $(OUT)/reriff-match $(OUT)/operator_new_import.b
 
 test-recovered: test-cycle-operator-new-import
 .PHONY: test-cycle-operator-new-import
+
+# Reviewed cycle reference: array-new-forward (assembly evidence only).
+$(OUT)/array_new_forward.bin: native/array_new_forward.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/array_new_forward.o
+	ld -m elf_i386 -Ttext=0x8f87c8 -e original_array_new_forward $(OUT)/array_new_forward.o -o $(OUT)/array_new_forward.elf
+	objcopy -O binary --only-section=.text $(OUT)/array_new_forward.elf $@
+
+test-cycle-array-new-forward: $(OUT)/reriff-match $(OUT)/array_new_forward.bin
+	$(OUT)/reriff-match native-check "$(GAME)" array-new-forward $(OUT)/array_new_forward.bin $(OUT)/array-new-forward-comparison.json
+
+test-recovered: test-cycle-array-new-forward
+.PHONY: test-cycle-array-new-forward
