@@ -1828,3 +1828,16 @@ test-cycle-narrow-prepare-capacity: $(OUT)/reriff-match $(OUT)/narrow_prepare_ca
 
 test-recovered: test-cycle-narrow-prepare-capacity
 .PHONY: test-cycle-narrow-prepare-capacity
+
+# Reviewed cycle reference: unsigned64-to-double (assembly evidence only).
+$(OUT)/unsigned64_to_double.bin: native/unsigned64_to_double.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/unsigned64_to_double.o
+	ld -m elf_i386 -Ttext=0x8f925e -e original_unsigned64_to_double $(OUT)/unsigned64_to_double.o -o $(OUT)/unsigned64_to_double.elf
+	objcopy -O binary --only-section=.text $(OUT)/unsigned64_to_double.elf $@
+
+test-cycle-unsigned64-to-double: $(OUT)/reriff-match $(OUT)/unsigned64_to_double.bin
+	$(OUT)/reriff-match native-check "$(GAME)" unsigned64-to-double $(OUT)/unsigned64_to_double.bin $(OUT)/unsigned64-to-double-comparison.json
+
+test-recovered: test-cycle-unsigned64-to-double
+.PHONY: test-cycle-unsigned64-to-double
