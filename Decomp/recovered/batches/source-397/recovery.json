@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string range append",
+  "summary": "Recovered VA 0x442170, size 228, as a readable thiscall member of the 24-byte narrow string. Unsigned capacity >=16 selects heap storage. Non-null interior sources delegate to append_substring(this, offset, count) before overflow checks; the logical end is excluded. External sources reject count >= UINT_MAX-old_length, skip preparation for zero count, otherwise call preparation(total,false). Success copies at the post-helper length, stores the pre-helper total and terminates the selected storage. Returns the delegated result for aliases and this otherwise. Direct Game.exe disassembly agrees with accepted assembly; callers 0x441f80 and 0x441f9c supply the empty and scanned counts from the terminated wrapper. No matching-byte credit claimed.",
+  "targets": ["narrow-append-range"],
+  "references": ["narrow-append-range"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "320 direct original-versus-source zero-count cases across inline lengths 0..15 and heap lengths 0..63, using null, external, logical-end and spare-capacity pointers. Checks result identity, complete guarded objects and 128-byte backing stores unchanged, and FS head restoration after every original call following mandatory successful FS installation. Additional source-only checks cover 6408 alias offset/count combinations (zero, one, UINT_MAX), delegated return identity and unchanged objects; 336 external append cases test preparation false/true, storage relocation, argument forwarding, full object and buffer contents, length and terminator writes, preserved bytes and guards. GCC freestanding O0 harness linked to accepted original at 0x442170 and passed. Actual implementation also compiled locally with pinned VS2013 O2.",
+  "known_limits": [
+    "Full nonempty original execution is unavailable: accepted narrow-append-range calls unregistered helpers 0x416730 (preparation/growth) and 0x4420b0 (substring append). These are explicit external member bindings, not invented implementations; dependency adapters in test.cpp check recovered control flow only. Allocation, substring clamping and their internal side effects remain outside this recovery.",
+    "Length-error import 0x92d168 and exception dispatch/unwinding are not executed. Its rejection threshold is recovered from unsigned instructions; the test adapter traps if unexpectedly called. Null nonzero ranges and invalid storage are not tested.",
+    "Object layout and address comparisons target 32-bit pointers. A 64-bit port must adapt layout explicitly. Malformed lengths, address wraparound, concurrently mutated storage and external overlapping copy ranges are unvalidated.",
+    "Copy dependency models the original memcpy thunk with valid disjoint test ranges; CRT internals are not validated. No real Windows TEB or exception services are implemented.",
+    "Local pinned VS2013 O2 compilation passed; subsequent optional O1 and O2 /Oy- attempts failed with compiler D8037 temporary-file creation errors. Trusted coordinator native compilation remains authoritative. No matching-source byte claim."
+  ]
+}

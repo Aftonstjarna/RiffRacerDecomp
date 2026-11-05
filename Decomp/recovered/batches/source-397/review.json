@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, accepted assembly, and original executable disassembly. The 32-bit layout, thiscall ABI, alias delegation, overflow threshold, helper calls, copy destination, length update and termination agree with the reference. Independent compiled counterchecks passed for alias-before-overflow behavior, preparation changing storage and length, and rejection at UINT_MAX total length. Native Windows evidence records compilation of the actual implementation in all three profiles. Original differential tests cover zero-count cases only; nonempty dependency checks and unexecuted original error/helper paths are explicitly limited. Approval does not establish all-input equivalence or exact matching."
+}
