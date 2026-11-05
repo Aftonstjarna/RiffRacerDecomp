@@ -1906,3 +1906,16 @@ test-cycle-record20-range-copy: $(OUT)/reriff-match $(OUT)/record20_range_copy.b
 
 test-recovered: test-cycle-record20-range-copy
 .PHONY: test-cycle-record20-range-copy
+
+# Reviewed cycle reference: narrow-set-length (assembly evidence only).
+$(OUT)/narrow_set_length.bin: native/narrow_set_length.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_set_length.o
+	ld -m elf_i386 -Ttext=0x416700 -e original_narrow_set_length $(OUT)/narrow_set_length.o -o $(OUT)/narrow_set_length.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_set_length.elf $@
+
+test-cycle-narrow-set-length: $(OUT)/reriff-match $(OUT)/narrow_set_length.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-set-length $(OUT)/narrow_set_length.bin $(OUT)/narrow-set-length-comparison.json
+
+test-recovered: test-cycle-narrow-set-length
+.PHONY: test-cycle-narrow-set-length
