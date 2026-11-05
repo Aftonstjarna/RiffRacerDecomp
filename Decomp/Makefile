@@ -1282,3 +1282,16 @@ test-cycle-narrow-assign-range: $(OUT)/reriff-match $(OUT)/narrow_assign_range.b
 
 test-recovered: test-cycle-narrow-assign-range
 .PHONY: test-cycle-narrow-assign-range
+
+# Reviewed cycle reference: narrow-append-terminated (assembly evidence only).
+$(OUT)/narrow_append_terminated.bin: native/narrow_append_terminated.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_append_terminated.o
+	ld -m elf_i386 -Ttext=0x441f70 -e original_narrow_append_terminated $(OUT)/narrow_append_terminated.o -o $(OUT)/narrow_append_terminated.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_append_terminated.elf $@
+
+test-cycle-narrow-append-terminated: $(OUT)/reriff-match $(OUT)/narrow_append_terminated.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-append-terminated $(OUT)/narrow_append_terminated.bin $(OUT)/narrow-append-terminated-comparison.json
+
+test-recovered: test-cycle-narrow-append-terminated
+.PHONY: test-cycle-narrow-append-terminated
