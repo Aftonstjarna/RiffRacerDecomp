@@ -1893,3 +1893,16 @@ test-cycle-signed64-to-double: $(OUT)/reriff-match $(OUT)/signed64_to_double.bin
 
 test-recovered: test-cycle-signed64-to-double
 .PHONY: test-cycle-signed64-to-double
+
+# Reviewed cycle reference: record20-range-copy (assembly evidence only).
+$(OUT)/record20_range_copy.bin: native/record20_range_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record20_range_copy.o
+	ld -m elf_i386 -Ttext=0x4b3e80 -e original_record20_range_copy $(OUT)/record20_range_copy.o -o $(OUT)/record20_range_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/record20_range_copy.elf $@
+
+test-cycle-record20-range-copy: $(OUT)/reriff-match $(OUT)/record20_range_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record20-range-copy $(OUT)/record20_range_copy.bin $(OUT)/record20-range-copy-comparison.json
+
+test-recovered: test-cycle-record20-range-copy
+.PHONY: test-cycle-record20-range-copy
