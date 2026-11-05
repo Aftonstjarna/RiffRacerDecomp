@@ -1672,3 +1672,16 @@ test-cycle-wide-copy-elements: $(OUT)/reriff-match $(OUT)/wide_copy_elements.bin
 
 test-recovered: test-cycle-wide-copy-elements
 .PHONY: test-cycle-wide-copy-elements
+
+# Reviewed cycle reference: record28-erase-range (assembly evidence only).
+$(OUT)/record28_erase_range.bin: native/record28_erase_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record28_erase_range.o
+	ld -m elf_i386 -Ttext=0x4b2480 -e original_record28_erase_range $(OUT)/record28_erase_range.o -o $(OUT)/record28_erase_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/record28_erase_range.elf $@
+
+test-cycle-record28-erase-range: $(OUT)/reriff-match $(OUT)/record28_erase_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record28-erase-range $(OUT)/record28_erase_range.bin $(OUT)/record28-erase-range-comparison.json
+
+test-recovered: test-cycle-record28-erase-range
+.PHONY: test-cycle-record28-erase-range
