@@ -1347,3 +1347,16 @@ test-cycle-graphics-table-dispose-438: $(OUT)/reriff-match $(OUT)/graphics_table
 
 test-recovered: test-cycle-graphics-table-dispose-438
 .PHONY: test-cycle-graphics-table-dispose-438
+
+# Reviewed cycle reference: buffer-release (assembly evidence only).
+$(OUT)/buffer_release.bin: native/buffer_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/buffer_release.o
+	ld -m elf_i386 -Ttext=0x542a40 -e original_buffer_release $(OUT)/buffer_release.o -o $(OUT)/buffer_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/buffer_release.elf $@
+
+test-cycle-buffer-release: $(OUT)/reriff-match $(OUT)/buffer_release.bin
+	$(OUT)/reriff-match native-check "$(GAME)" buffer-release $(OUT)/buffer_release.bin $(OUT)/buffer-release-comparison.json
+
+test-recovered: test-cycle-buffer-release
+.PHONY: test-cycle-buffer-release
