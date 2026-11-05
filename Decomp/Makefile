@@ -1932,3 +1932,16 @@ test-cycle-ceil-import: $(OUT)/reriff-match $(OUT)/ceil_import.bin
 
 test-recovered: test-cycle-ceil-import
 .PHONY: test-cycle-ceil-import
+
+# Reviewed cycle reference: record16-range-copy (assembly evidence only).
+$(OUT)/record16_range_copy.bin: native/record16_range_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record16_range_copy.o
+	ld -m elf_i386 -Ttext=0x4b3df0 -e original_record16_range_copy $(OUT)/record16_range_copy.o -o $(OUT)/record16_range_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/record16_range_copy.elf $@
+
+test-cycle-record16-range-copy: $(OUT)/reriff-match $(OUT)/record16_range_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record16-range-copy $(OUT)/record16_range_copy.bin $(OUT)/record16-range-copy-comparison.json
+
+test-recovered: test-cycle-record16-range-copy
+.PHONY: test-cycle-record16-range-copy
