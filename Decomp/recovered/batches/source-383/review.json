@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source preserves the original x86 thiscall ABI, grid offset and stride, column-first traversal, live entry reads, null handling, and vtable slot +0x0c calls. Tests invoke the original and compare ordered callbacks, object state, complete fixture bytes, and canaries across empty, boundary, full, aliased, and callback-mutated grids. Independent optimized rebuild/tests passed; the reference's 67 bytes were independently verified against Game.exe. Native Windows records compile the actual implementation and claim no matching credit. Documented ABI, invalid-pointer, exception, and integration limitations remain; sampled validation does not establish all-input equivalence."
+}
