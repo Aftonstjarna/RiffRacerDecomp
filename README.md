@@ -63,6 +63,11 @@ an independent source-only sandbox rebuild reproduce their complete fragments;
 the actual native fragments pass differential behavior tests and controller
 source review. The [source ledger](verification/source-coverage.json) and
 [certification evidence](verification/source-certifications/msvc-render-helpers-v1/) record that scope.
+The [UTF-16 length setter](Decomp/recovered/msvc/wide_length.cpp) adds another
+37 certified source bytes, bringing the total to 382. Its separate
+[certification](verification/source-certifications/msvc-wide-length-v1/) includes
+native Windows and isolated MSVC rebuilds plus 1,256 comparisons of the actual
+compiled function with the original, covering inline/heap storage and guards.
 Three existing portable routines also pass native compiler compatibility checks;
 their original-behavior tests have been rerun with audited callback bindings.
 
@@ -88,14 +93,14 @@ completion. They describe the accepted recovery on the
 
 | Evidence | Whole executable | `.text` section |
 |---|---:|---:|
-| Compiler-built matching high-level source | 345 / 8,635,392 bytes (0.00400%) | 345 / 5,421,056 bytes (0.00636%) |
+| Compiler-built matching high-level source | 382 / 8,635,392 bytes (0.00442%) | 382 / 5,421,056 bytes (0.00705%) |
 | Existing assembly-level byte matches | 70,321 / 8,635,392 bytes (0.81433%) | 70,293 / 5,421,056 bytes (1.29667%) |
 
 The [legacy assembly byte-comparison ledger](verification/coverage.json)
 contains 138 matching spans. Their provenance is assembly
 sources, including mechanical transcription. Assembly alone earns no high-level
 source credit. The separate source ledger admits only reviewed, independently
-rebuilt C++ function spans. Its four ranges overlap existing assembly evidence;
+rebuilt C++ function spans. Its five ranges overlap existing assembly evidence;
 the two rows must not be added together. Stricter assembly qualification remains
 pending, so the assembly row is reference evidence, not certified semantic recovery.
 
@@ -106,7 +111,9 @@ Ghidra exports establish their boundaries and dependencies; complete rebuilt
 spans are compared without masking. In particular, the storage helper at
 `0x44F890` empties its source after transferring ownership, correcting an earlier
 copy-helper description. These references support further path and save-device
-recovery; they add no certified high-level-source credit or behavioral claim.
+recovery; assembly evidence itself adds no certified high-level-source credit
+or behavioral claim. The length setter now also has the separate C++
+certification described above; the other four helpers remain reference-only.
 
 The 28 bytes outside `.text` are exception metadata in `.rdata`. The `.text`
 denominator includes padding and is not a proven instruction-only total.

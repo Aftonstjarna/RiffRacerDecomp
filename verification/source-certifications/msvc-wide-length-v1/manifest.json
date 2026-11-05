@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "id": "msvc-wide-length-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "wide-set-length",
+      "source": "Decomp/recovered/msvc/wide_length.cpp",
+      "sha256": "9b22821ac50d64d4365963289677a835828fcda92fa3b262996457dd157f7c45",
+      "stem": "wide_length"
+    }
+  ]
+}

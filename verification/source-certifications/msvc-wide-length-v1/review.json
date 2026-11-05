@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Codex controller outside candidate/build sandboxes",
+  "build_report_sha256": "7cf5b1e4c074d2eef68ccc1d7ac564527f6f7e5b8cc774d536016615d52dd055",
+  "behavior_sha256": "2009b89a21a2c7f60c62eade60ec625da4f7c58887d7c6fbde54ced3bdf35819",
+  "functions": [
+    {
+      "scope": "wide-set-length",
+      "source_sha256": "9b22821ac50d64d4365963289677a835828fcda92fa3b262996457dd157f7c45",
+      "approved": true,
+      "reason": "Reviewed readable C++ against the entire original 37-byte function: length at +0x10, capacity at +0x14, unsigned threshold 8, UTF-16 zero store at buffer[length], thiscall RET 4, and no capacity/allocation checks. Complete native and original-free isolated MSVC code sections agree with original bytes. Actual native fragment and separately byte-checked reference pass 1256 valid-storage cases with whole-object/backing-array and guard comparisons. No imported code, assembly, instruction data or source directives are present."
+    }
+  ],
+  "integrity_review": [
+    "Committed source SHA-256 identifies the C++ input to both independently pinned compiler environments",
+    "Whole COFF code section checked, with no trimming, relocation masking or post-build patching",
+    "Test-only binary wrapping executes the actual native compiler result; it is not reconstructed source and earns no credit",
+    "Reviewed typed storage layout and source semantics; native branch order matches original without changing behavior",
+    "Prior source entries and assembly-reference metrics remain distinct; overlapping tiers are not summed"
+  ],
+  "remaining_limits": [
+    "Only wide-set-length is certified by this job; the other four new references remain assembly evidence",
+    "Valid allocated inline/heap storage only; invalid pointers, out-of-capacity writes and concurrency are untested",
+    "Function-span certification, not a complete linked executable or portable string implementation"
+  ]
+}
