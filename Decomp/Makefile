@@ -1386,3 +1386,16 @@ test-cycle-graphics-range-destroy-430: $(OUT)/reriff-match $(OUT)/graphics_range
 
 test-recovered: test-cycle-graphics-range-destroy-430
 .PHONY: test-cycle-graphics-range-destroy-430
+
+# Reviewed cycle reference: graphics-range-destroy-438 (assembly evidence only).
+$(OUT)/graphics_range_destroy_438.bin: native/graphics_range_destroy_438.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_range_destroy_438.o
+	ld -m elf_i386 -Ttext=0x49d6b0 -e original_graphics_range_destroy_438 $(OUT)/graphics_range_destroy_438.o -o $(OUT)/graphics_range_destroy_438.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_range_destroy_438.elf $@
+
+test-cycle-graphics-range-destroy-438: $(OUT)/reriff-match $(OUT)/graphics_range_destroy_438.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-range-destroy-438 $(OUT)/graphics_range_destroy_438.bin $(OUT)/graphics-range-destroy-438-comparison.json
+
+test-recovered: test-cycle-graphics-range-destroy-438
+.PHONY: test-cycle-graphics-range-destroy-438
