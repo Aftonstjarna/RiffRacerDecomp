@@ -1802,3 +1802,16 @@ test-cycle-record44-copy-range: $(OUT)/reriff-match $(OUT)/record44_copy_range.b
 
 test-recovered: test-cycle-record44-copy-range
 .PHONY: test-cycle-record44-copy-range
+
+# Reviewed cycle reference: narrow-append-range (assembly evidence only).
+$(OUT)/narrow_append_range.bin: native/narrow_append_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_append_range.o
+	ld -m elf_i386 -Ttext=0x442170 -e original_narrow_append_range $(OUT)/narrow_append_range.o -o $(OUT)/narrow_append_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_append_range.elf $@
+
+test-cycle-narrow-append-range: $(OUT)/reriff-match $(OUT)/narrow_append_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-append-range $(OUT)/narrow_append_range.bin $(OUT)/narrow-append-range-comparison.json
+
+test-recovered: test-cycle-narrow-append-range
+.PHONY: test-cycle-narrow-append-range
