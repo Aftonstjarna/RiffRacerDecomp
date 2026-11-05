@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 70719,
-  "remaining_bytes": 8564673,
-  "verified_percent": 0.8189437144254713,
-  "registered_blocks": 142,
-  "exact_blocks": 142,
+  "verified_bytes": 70837,
+  "remaining_bytes": 8564555,
+  "verified_percent": 0.8203101839499585,
+  "registered_blocks": 143,
+  "exact_blocks": 143,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -677,6 +677,15 @@
       "byte_equal": true,
       "reference_sha256": "2c687fb757f0041a51a7b7c63fae652d2e3081c58a3c7dec44aba5163e898ab0",
       "candidate_sha256": "2c687fb757f0041a51a7b7c63fae652d2e3081c58a3c7dec44aba5163e898ab0"
+    },
+    {
+      "name": "graphics-entry-release-all",
+      "file_offset": 727040,
+      "size": 118,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "3a02576e0ffa9b6092d149ca9c5616984e95b59d62b24c7def91c4484cc57503",
+      "candidate_sha256": "3a02576e0ffa9b6092d149ca9c5616984e95b59d62b24c7def91c4484cc57503"
     },
     {
       "name": "application-worker",

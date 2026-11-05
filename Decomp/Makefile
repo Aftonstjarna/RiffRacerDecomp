@@ -1308,3 +1308,16 @@ test-cycle-stack-probe: $(OUT)/reriff-match $(OUT)/stack_probe.bin
 
 test-recovered: test-cycle-stack-probe
 .PHONY: test-cycle-stack-probe
+
+# Reviewed cycle reference: graphics-entry-release-all (assembly evidence only).
+$(OUT)/graphics_entry_release_all.bin: native/graphics_entry_release_all.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_entry_release_all.o
+	ld -m elf_i386 -Ttext=0x4b2400 -e original_graphics_entry_release_all $(OUT)/graphics_entry_release_all.o -o $(OUT)/graphics_entry_release_all.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_entry_release_all.elf $@
+
+test-cycle-graphics-entry-release-all: $(OUT)/reriff-match $(OUT)/graphics_entry_release_all.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-entry-release-all $(OUT)/graphics_entry_release_all.bin $(OUT)/graphics-entry-release-all-comparison.json
+
+test-recovered: test-cycle-graphics-entry-release-all
+.PHONY: test-cycle-graphics-entry-release-all
