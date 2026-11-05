@@ -1776,3 +1776,16 @@ test-cycle-narrow-end-pointer: $(OUT)/reriff-match $(OUT)/narrow_end_pointer.bin
 
 test-recovered: test-cycle-narrow-end-pointer
 .PHONY: test-cycle-narrow-end-pointer
+
+# Reviewed cycle reference: wide-move-elements (assembly evidence only).
+$(OUT)/wide_move_elements.bin: native/wide_move_elements.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_move_elements.o
+	ld -m elf_i386 -Ttext=0x44e140 -e original_wide_move_elements $(OUT)/wide_move_elements.o -o $(OUT)/wide_move_elements.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_move_elements.elf $@
+
+test-cycle-wide-move-elements: $(OUT)/reriff-match $(OUT)/wide_move_elements.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-move-elements $(OUT)/wide_move_elements.bin $(OUT)/wide-move-elements-comparison.json
+
+test-recovered: test-cycle-wide-move-elements
+.PHONY: test-cycle-wide-move-elements
