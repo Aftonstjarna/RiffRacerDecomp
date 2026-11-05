@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Forward copy of opaque 20-byte records",
+  "summary": "Recovered VA 0x4b3e80 (47 bytes). Copies 16 bytes then four bytes per record, forwards until source equals end. Null destination suppresses only the current copy; both addresses still advance by 20 modulo pointer width. Returns advanced destination. No allocation, object-field updates, or helper calls. Callers use begin/end at container offsets +0/+4. Original custom ABI uses ECX/EDX and one caller-cleaned stack argument; the portable implementation exposes a normal C++ function.",
+  "targets": [
+    "record20-range-copy"
+  ],
+  "references": [
+    "record20-range-copy"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC freestanding i386 harness directly compares the original routine at 0x4b3e80 using a regparm(3) custom-ABI adapter. Tests 0..8 records, all 16 alignments, destination deltas -45..45, complete 512-byte buffers including guards, and returned offsets. Also checks empty null/synthetic ranges and one-record null destination with unreadable source. Accepted assembly checked against all 47 original executable bytes. Local GCC O0 behavioral test passes; pinned MSVC2013 implementation compilation checked.",
+  "known_limits": [
+    "Record field types and owning container identity remain unresolved; all 20 bytes are treated as opaque.",
+    "Malformed ranges whose end is not reachable by 20-byte increments, unmapped accesses and fault behavior are not executed. Multi-record null destinations would next access address 20 and are not executed.",
+    "Overlap ordering is preserved, but original code generation and byte matching are not claimed.",
+    "Pointer wrap follows uintptr_t width: original uses 32 bits; Linux 64-bit ports use native pointer width. No live storage wrapping the address space is tested."
+  ]
+}
