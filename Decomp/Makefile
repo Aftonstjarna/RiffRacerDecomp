@@ -1646,3 +1646,16 @@ test-cycle-record24-growth-capacity: $(OUT)/reriff-match $(OUT)/record24_growth_
 
 test-recovered: test-cycle-record24-growth-capacity
 .PHONY: test-cycle-record24-growth-capacity
+
+# Reviewed cycle reference: record24-range-copy (assembly evidence only).
+$(OUT)/record24_range_copy.bin: native/record24_range_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record24_range_copy.o
+	ld -m elf_i386 -Ttext=0x4b3e40 -e original_record24_range_copy $(OUT)/record24_range_copy.o -o $(OUT)/record24_range_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/record24_range_copy.elf $@
+
+test-cycle-record24-range-copy: $(OUT)/reriff-match $(OUT)/record24_range_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record24-range-copy $(OUT)/record24_range_copy.bin $(OUT)/record24-range-copy-comparison.json
+
+test-recovered: test-cycle-record24-range-copy
+.PHONY: test-cycle-record24-range-copy

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 74341,
-  "remaining_bytes": 8561051,
-  "verified_percent": 0.8608873806771019,
-  "registered_blocks": 168,
-  "exact_blocks": 168,
+  "verified_bytes": 74391,
+  "remaining_bytes": 8561001,
+  "verified_percent": 0.8614663931874778,
+  "registered_blocks": 169,
+  "exact_blocks": 169,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -848,6 +848,15 @@
       "byte_equal": true,
       "reference_sha256": "404cbbf74dd549283caf29915f42d4cb5e9195705356d3ba41be2f5f40242849",
       "candidate_sha256": "404cbbf74dd549283caf29915f42d4cb5e9195705356d3ba41be2f5f40242849"
+    },
+    {
+      "name": "record24-range-copy",
+      "file_offset": 733760,
+      "size": 50,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "5cf4ee44fd6ca3be353826451a29e9e0ba72a6a2fb3f526d4ad28f2a2d00db31",
+      "candidate_sha256": "5cf4ee44fd6ca3be353826451a29e9e0ba72a6a2fb3f526d4ad28f2a2d00db31"
     },
     {
       "name": "application-worker",
