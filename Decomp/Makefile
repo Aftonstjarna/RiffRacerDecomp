@@ -1295,3 +1295,16 @@ test-cycle-narrow-append-terminated: $(OUT)/reriff-match $(OUT)/narrow_append_te
 
 test-recovered: test-cycle-narrow-append-terminated
 .PHONY: test-cycle-narrow-append-terminated
+
+# Reviewed cycle reference: stack-probe (assembly evidence only).
+$(OUT)/stack_probe.bin: native/stack_probe.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/stack_probe.o
+	ld -m elf_i386 -Ttext=0x8f9800 -e original_stack_probe $(OUT)/stack_probe.o -o $(OUT)/stack_probe.elf
+	objcopy -O binary --only-section=.text $(OUT)/stack_probe.elf $@
+
+test-cycle-stack-probe: $(OUT)/reriff-match $(OUT)/stack_probe.bin
+	$(OUT)/reriff-match native-check "$(GAME)" stack-probe $(OUT)/stack_probe.bin $(OUT)/stack-probe-comparison.json
+
+test-recovered: test-cycle-stack-probe
+.PHONY: test-cycle-stack-probe
