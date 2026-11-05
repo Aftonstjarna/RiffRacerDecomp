@@ -1711,3 +1711,16 @@ test-cycle-narrow-move-storage: $(OUT)/reriff-match $(OUT)/narrow_move_storage.b
 
 test-recovered: test-cycle-narrow-move-storage
 .PHONY: test-cycle-narrow-move-storage
+
+# Reviewed cycle reference: array-delete-import (assembly evidence only).
+$(OUT)/array_delete_import.bin: native/array_delete_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/array_delete_import.o
+	ld -m elf_i386 -Ttext=0x8f8d54 -e original_array_delete_import $(OUT)/array_delete_import.o -o $(OUT)/array_delete_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/array_delete_import.elf $@
+
+test-cycle-array-delete-import: $(OUT)/reriff-match $(OUT)/array_delete_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" array-delete-import $(OUT)/array_delete_import.bin $(OUT)/array-delete-import-comparison.json
+
+test-recovered: test-cycle-array-delete-import
+.PHONY: test-cycle-array-delete-import
