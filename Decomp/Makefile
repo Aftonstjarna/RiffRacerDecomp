@@ -2777,3 +2777,16 @@ test-cycle-unsigned64-divide: $(OUT)/reriff-match $(OUT)/unsigned64_divide.bin
 
 test-recovered: test-cycle-unsigned64-divide
 .PHONY: test-cycle-unsigned64-divide
+
+# Reviewed cycle reference: unsigned64-logical-shift-right (assembly evidence only).
+$(OUT)/unsigned64_logical_shift_right.bin: native/unsigned64_logical_shift_right.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/unsigned64_logical_shift_right.o
+	ld -m elf_i386 -Ttext=0x8fc380 -e original_unsigned64_logical_shift_right $(OUT)/unsigned64_logical_shift_right.o -o $(OUT)/unsigned64_logical_shift_right.elf
+	objcopy -O binary --only-section=.text $(OUT)/unsigned64_logical_shift_right.elf $@
+
+test-cycle-unsigned64-logical-shift-right: $(OUT)/reriff-match $(OUT)/unsigned64_logical_shift_right.bin
+	$(OUT)/reriff-match native-check "$(GAME)" unsigned64-logical-shift-right $(OUT)/unsigned64_logical_shift_right.bin $(OUT)/unsigned64-logical-shift-right-comparison.json
+
+test-recovered: test-cycle-unsigned64-logical-shift-right
+.PHONY: test-cycle-unsigned64-logical-shift-right
