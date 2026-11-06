@@ -2712,3 +2712,16 @@ test-cycle-byte-range-transform-callback: $(OUT)/reriff-match $(OUT)/byte_range_
 
 test-recovered: test-cycle-byte-range-transform-callback
 .PHONY: test-cycle-byte-range-transform-callback
+
+# Reviewed cycle reference: tree-subtree-destroy-narrow (assembly evidence only).
+$(OUT)/tree_subtree_destroy_narrow.bin: native/tree_subtree_destroy_narrow.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_subtree_destroy_narrow.o
+	ld -m elf_i386 -Ttext=0x423110 -e original_tree_subtree_destroy_narrow $(OUT)/tree_subtree_destroy_narrow.o -o $(OUT)/tree_subtree_destroy_narrow.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_subtree_destroy_narrow.elf $@
+
+test-cycle-tree-subtree-destroy-narrow: $(OUT)/reriff-match $(OUT)/tree_subtree_destroy_narrow.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-subtree-destroy-narrow $(OUT)/tree_subtree_destroy_narrow.bin $(OUT)/tree-subtree-destroy-narrow-comparison.json
+
+test-recovered: test-cycle-tree-subtree-destroy-narrow
+.PHONY: test-cycle-tree-subtree-destroy-narrow
