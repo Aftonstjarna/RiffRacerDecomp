@@ -2517,3 +2517,16 @@ test-cycle-signed64-arithmetic-shift-right: $(OUT)/reriff-match $(OUT)/signed64_
 
 test-recovered: test-cycle-signed64-arithmetic-shift-right
 .PHONY: test-cycle-signed64-arithmetic-shift-right
+
+# Reviewed cycle reference: tree-sentinel-allocate (assembly evidence only).
+$(OUT)/tree_sentinel_allocate.bin: native/tree_sentinel_allocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_sentinel_allocate.o
+	ld -m elf_i386 -Ttext=0x423260 -e original_tree_sentinel_allocate $(OUT)/tree_sentinel_allocate.o -o $(OUT)/tree_sentinel_allocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_sentinel_allocate.elf $@
+
+test-cycle-tree-sentinel-allocate: $(OUT)/reriff-match $(OUT)/tree_sentinel_allocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-sentinel-allocate $(OUT)/tree_sentinel_allocate.bin $(OUT)/tree-sentinel-allocate-comparison.json
+
+test-recovered: test-cycle-tree-sentinel-allocate
+.PHONY: test-cycle-tree-sentinel-allocate
