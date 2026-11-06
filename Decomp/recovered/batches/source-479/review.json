@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-supported unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, x86 thiscall ABI, 24-byte layout, ownership transfer and source reset agree with the reference. Independently verified the reference’s 100 bytes against Game.exe and rebuilt/reran the tests at O2 successfully. Tests exercise meaningful metadata boundaries and check complete object state, guards, return identity and heap preservation. Native compilation records cover the actual implementation. Inline-copy and self-move checks remain instruction-derived rather than original-execution comparisons; these and pointer/overlap limitations are disclosed. Sampled validation does not establish all-input equivalence."
+}

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string move construction",
+  "summary": "Recover VA 0x416af0..0x416b54 as a genuine thiscall member over the 24-byte small-string layout. Initialize destination capacity/length/first byte, copy inline length+1 bytes with unsigned wrap and memmove semantics or transfer the heap pointer, publish metadata, then empty the source. Preserve unused bytes and initialization ordering, including self-move emptying. No allocation or destination cleanup occurs. Original callers include 24-byte vector insertion at 0x49aad8 and prefix-result construction at 0x4b2d59. Direct Game.exe disassembly agrees with accepted reference instructions.",
+  "targets": [
+    "narrow-move-construct"
+  ],
+  "references": [
+    "narrow-move-construct"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC i386 freestanding harness passes with all supplied flags and -Wall -Wextra -Werror. 76 direct original comparisons: capacities 16,17,31,0x80000000,UINT_MAX crossed with lengths 0,1,15,16,63,UINT_MAX and null/non-null heap pointers; inline capacities 0..15 with UINT_MAX length exercise INC/JE skipping the import. 258 independent expected-state checks cover all inline capacities 0..15 and lengths 0..15 (embedded zero and high-bit data), plus inline and heap self-move. All checks include full source/destination bytes, guard words, unused union bytes, returned destination identity and untouched heap backing. The accepted oracle is linked at original VA and all 100 bytes were independently compared to immutable Game.exe. Implementation compiles with pinned MSVC2013 at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "No trusted memmove IAT binding at 0x92d4a4 is supplied. Original inline-copy and self-move paths therefore have instruction-derived expected-state checks, not direct original execution. No unbound import is called.",
+    "Portable byte movement models memmove but does not validate the original CRT implementation. Invalid pointers, copies beyond valid storage and arbitrary partially overlapping objects are outside tested scope. Original metadata is not validated by this routine.",
+    "Oracle and original ABI require 32-bit pointers; portable implementation retains a typed heap pointer and a 24-byte layout. No exception, allocation, deletion or OS behavior is introduced. No matching-byte credit claimed."
+  ]
+}
