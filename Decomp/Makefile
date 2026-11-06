@@ -2764,3 +2764,16 @@ test-cycle-owner-slot214-assign: $(OUT)/reriff-match $(OUT)/owner_slot214_assign
 
 test-recovered: test-cycle-owner-slot214-assign
 .PHONY: test-cycle-owner-slot214-assign
+
+# Reviewed cycle reference: unsigned64-divide (assembly evidence only).
+$(OUT)/unsigned64_divide.bin: native/unsigned64_divide.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/unsigned64_divide.o
+	ld -m elf_i386 -Ttext=0x8fc290 -e original_unsigned64_divide $(OUT)/unsigned64_divide.o -o $(OUT)/unsigned64_divide.elf
+	objcopy -O binary --only-section=.text $(OUT)/unsigned64_divide.elf $@
+
+test-cycle-unsigned64-divide: $(OUT)/reriff-match $(OUT)/unsigned64_divide.bin
+	$(OUT)/reriff-match native-check "$(GAME)" unsigned64-divide $(OUT)/unsigned64_divide.bin $(OUT)/unsigned64-divide-comparison.json
+
+test-recovered: test-cycle-unsigned64-divide
+.PHONY: test-cycle-unsigned64-divide
