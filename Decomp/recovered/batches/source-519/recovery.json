@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Unsigned 64-bit remainder",
+  "summary": "Recovered the stateless unsigned remainder helper at VA 0x8fc300 (RVA 0x4fc300), using its narrow-divisor and normalized quotient estimate/correction paths. Portable word division replaces hardware DIV without a 64-bit runtime dependency. The x86 stdcall interface consumes two uint64_t arguments and returns EDX:EAX. Direct caller 0x5a27fb guards a zero divisor.",
+  "targets": [
+    "unsigned64-remainder"
+  ],
+  "references": [
+    "unsigned64-remainder"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Compare original and recovered routines against an independent bitwise mathematical remainder for a boundary cross-product, every power-of-two divisor and neighbors, and 50000 deterministic random wide plus 50000 random narrow divisor cases. Assert remainder bounds, unchanged input storage and surrounding sentinels, unchanged MXCSR after calls, and restored FS head after every original call following mandatory successful test_install_fs setup. Original has no object fields, global writes, imports, or FS registration. Reference assembly is linked at its original VA and checked against immutable Game.exe.",
+  "known_limits": [
+    "Divisor zero faults in original x86 DIV; portable C++ treats zero as outside the function precondition and fault delivery is not tested.",
+    "Sampled behavioral validation does not establish byte matching or exhaustive equivalence.",
+    "Portable software word division differs from the original hardware DIV instruction selection; no matching credit claimed.",
+    "Caller context is recorded only; no enclosing game or timing subsystem was recovered."
+  ]
+}

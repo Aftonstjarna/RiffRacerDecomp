@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Reviewed all submitted source, reference assembly, metadata and native compilation evidence. Control flow, unsigned arithmetic and x86 ABI agree for nonzero divisors. Independently verified reference bytes against immutable Game.exe, passed 300,000 original/recovered/oracle comparisons, and compiled the actual implementation with pinned MSVC. Tests meaningfully cover boundaries and observable side effects. Zero-divisor fault delivery remains explicitly outside scope; sampled validation does not establish all-input equivalence or exact matching."
+}
