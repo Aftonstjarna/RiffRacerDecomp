@@ -2595,3 +2595,16 @@ test-cycle-tree-node-construct-narrow-move: $(OUT)/reriff-match $(OUT)/tree_node
 
 test-recovered: test-cycle-tree-node-construct-narrow-move
 .PHONY: test-cycle-tree-node-construct-narrow-move
+
+# Reviewed cycle reference: resource-table-acquire (assembly evidence only).
+$(OUT)/resource_table_acquire.bin: native/resource_table_acquire.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_table_acquire.o
+	ld -m elf_i386 -Ttext=0x421dc0 -e original_resource_table_acquire $(OUT)/resource_table_acquire.o -o $(OUT)/resource_table_acquire.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_table_acquire.elf $@
+
+test-cycle-resource-table-acquire: $(OUT)/reriff-match $(OUT)/resource_table_acquire.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-table-acquire $(OUT)/resource_table_acquire.bin $(OUT)/resource-table-acquire-comparison.json
+
+test-recovered: test-cycle-resource-table-acquire
+.PHONY: test-cycle-resource-table-acquire
