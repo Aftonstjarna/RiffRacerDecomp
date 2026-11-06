@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Readable source preserves the original thiscall ABI, pointer offset, null return, ordered 8+4-byte transfers, and nested-pointer reload. Tests call byte-verified original assembly and compare returns and every arena byte across overlap, aliasing, and pointer replacement cases. Independent optimized testing passed 28,825 expanded cases. Native Windows compilation records cover the actual implementation. Documented layout, fault, and concurrency limitations are appropriate; sampled validation does not establish all-input equivalence."
+}
