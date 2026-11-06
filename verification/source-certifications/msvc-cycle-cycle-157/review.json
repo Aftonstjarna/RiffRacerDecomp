@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "31efef869b18e3d690cfcae7f6319da30788c6cbf8d6a04053a038e78285ee77",
+  "behavior_sha256": "e0ea41ba6e7d8b0e6b6067f0ccdb9758e6c79625545563abf9a15590b792a8e8",
+  "functions": [
+    {
+      "scope": "nested-primary-record-count",
+      "source_sha256": "2519d8ddc8aec52e58b0d46a638a86d2d44b597e717178a8fbdef5a6366c2db5",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the complete, unmodified code section byte-for-byte against Game.exe. Original disassembly confirms both returns and function boundaries. Executing the actual compiled bytes and original bytes passed 72 cases covering both branches, unsigned edge values, varied object locations, and unchanged surrounding state. The source preserves the original 32-bit thiscall ABI and field offsets."
+    }
+  ],
+  "review_receipt_sha256": "b7f207660a52fade43fb8b551e6e563e0b8316b18fa15a130e21a030b7c7752b",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
