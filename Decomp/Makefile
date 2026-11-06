@@ -1997,3 +1997,16 @@ test-cycle-record24-rotate: $(OUT)/reriff-match $(OUT)/record24_rotate.bin
 
 test-recovered: test-cycle-record24-rotate
 .PHONY: test-cycle-record24-rotate
+
+# Reviewed cycle reference: wide-construct-terminated-register (assembly evidence only).
+$(OUT)/wide_construct_terminated_register.bin: native/wide_construct_terminated_register.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_construct_terminated_register.o
+	ld -m elf_i386 -Ttext=0x44f490 -e original_wide_construct_terminated_register $(OUT)/wide_construct_terminated_register.o -o $(OUT)/wide_construct_terminated_register.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_construct_terminated_register.elf $@
+
+test-cycle-wide-construct-terminated-register: $(OUT)/reriff-match $(OUT)/wide_construct_terminated_register.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-construct-terminated-register $(OUT)/wide_construct_terminated_register.bin $(OUT)/wide-construct-terminated-register-comparison.json
+
+test-recovered: test-cycle-wide-construct-terminated-register
+.PHONY: test-cycle-wide-construct-terminated-register
