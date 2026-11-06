@@ -2556,3 +2556,16 @@ test-cycle-tree-node-allocate-links: $(OUT)/reriff-match $(OUT)/tree_node_alloca
 
 test-recovered: test-cycle-tree-node-allocate-links
 .PHONY: test-cycle-tree-node-allocate-links
+
+# Reviewed cycle reference: tree-iterator-increment (assembly evidence only).
+$(OUT)/tree_iterator_increment.bin: native/tree_iterator_increment.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_iterator_increment.o
+	ld -m elf_i386 -Ttext=0x422e20 -e original_tree_iterator_increment $(OUT)/tree_iterator_increment.o -o $(OUT)/tree_iterator_increment.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_iterator_increment.elf $@
+
+test-cycle-tree-iterator-increment: $(OUT)/reriff-match $(OUT)/tree_iterator_increment.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-iterator-increment $(OUT)/tree_iterator_increment.bin $(OUT)/tree-iterator-increment-comparison.json
+
+test-recovered: test-cycle-tree-iterator-increment
+.PHONY: test-cycle-tree-iterator-increment
