@@ -2491,3 +2491,16 @@ test-cycle-error-code-narrow-construct: $(OUT)/reriff-match $(OUT)/error_code_na
 
 test-recovered: test-cycle-error-code-narrow-construct
 .PHONY: test-cycle-error-code-narrow-construct
+
+# Reviewed cycle reference: type-info-destructor-import (assembly evidence only).
+$(OUT)/type_info_destructor_import.bin: native/type_info_destructor_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/type_info_destructor_import.o
+	ld -m elf_i386 -Ttext=0x8f99c0 -e original_type_info_destructor_import $(OUT)/type_info_destructor_import.o -o $(OUT)/type_info_destructor_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/type_info_destructor_import.elf $@
+
+test-cycle-type-info-destructor-import: $(OUT)/reriff-match $(OUT)/type_info_destructor_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" type-info-destructor-import $(OUT)/type_info_destructor_import.bin $(OUT)/type-info-destructor-import-comparison.json
+
+test-recovered: test-cycle-type-info-destructor-import
+.PHONY: test-cycle-type-info-destructor-import
