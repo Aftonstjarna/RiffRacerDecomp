@@ -2348,3 +2348,16 @@ test-cycle-narrow-move-construct: $(OUT)/reriff-match $(OUT)/narrow_move_constru
 
 test-recovered: test-cycle-narrow-move-construct
 .PHONY: test-cycle-narrow-move-construct
+
+# Reviewed cycle reference: tree-rotate-right (assembly evidence only).
+$(OUT)/tree_rotate_right.bin: native/tree_rotate_right.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_rotate_right.o
+	ld -m elf_i386 -Ttext=0x4231e0 -e original_tree_rotate_right $(OUT)/tree_rotate_right.o -o $(OUT)/tree_rotate_right.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_rotate_right.elf $@
+
+test-cycle-tree-rotate-right: $(OUT)/reriff-match $(OUT)/tree_rotate_right.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-rotate-right $(OUT)/tree_rotate_right.bin $(OUT)/tree-rotate-right-comparison.json
+
+test-recovered: test-cycle-tree-rotate-right
+.PHONY: test-cycle-tree-rotate-right
