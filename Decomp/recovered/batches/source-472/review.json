@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit thiscall ABI, field offsets, return value and absence of writes agree with the original disassembly. Submitted tests call the original reference and check meaningful sentinel values, depths, pointer identity and unchanged memory. Independent builds passed both those tests and an optimized countercheck covering 256 noncontiguous chains with null links beyond the sentinel. Native Windows compilation evidence covers the actual implementation. Layout and invalid-input limitations are stated; sampled validation does not establish all-input equivalence."
+}
