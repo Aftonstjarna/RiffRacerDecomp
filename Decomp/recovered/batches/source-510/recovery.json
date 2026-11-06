@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Signed byte range callback transform",
+  "summary": "Recovered VA 0x005c2740 (RVA 0x001c2740), 91 bytes, from accepted assembly and direct Game.exe disassembly. ECX holds a result-pointer slot, EDX the input begin; input end, destination and cdecl int(int) callback are caller-cleaned stack arguments. The function clamps unsigned reversed ranges to zero, invokes the callback on sign-extended bytes in forward order, stores each low return byte, then writes the final destination pointer and returns the result-slot address. Only one pointer-sized result field is accessed. The sole direct call found at 0x005cfd96 performs in-place startup command lowercase transformation using IAT 0x0092d4d4. A portable explicit-argument adapter represents the custom register ABI. GCC regparm(3) in test.cpp supplies the original registers with unused EAX and correct caller stack cleanup. Accepted oracle bytes were independently compared against the original PE and matched all 91 bytes; this is evidence validation, not implementation matching. GCC behavioral execution passed and pinned MSVC2013 O2 source compilation passed.",
+  "targets": ["byte-range-transform-callback"],
+  "references": ["byte-range-transform-callback"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Freestanding Linux i386 test_main directly compares original and recovered return-slot addresses, destination advance, every buffer byte including untouched regions, callback argument logs and call counts, and result-slot sentinel fields. All 256 byte values independently verify signed extension; stateful large and negative callback results exercise low-byte truncation. Cases cover zero, reversed and single-byte ranges, disjoint buffers, exact in-place operation, overlap in both directions, lowercase callback behavior, and callbacks that mutate subsequent source bytes. Each callback verifies that the result slot remains unwritten until processing finishes. Empty ranges permit null callbacks; an all-null empty range is also tested. Oracle assembled from accepted reference and linked at original VA 0x005c2740 with trusted runtime; executable returned zero.",
+  "known_limits": [
+    "No byte-identical compiled implementation claim. The portable adapter does not itself expose the original custom ECX/EDX caller-pop ABI; test-only GCC regparm(3) invokes that ABI directly.",
+    "The routine establishes only a single output pointer slot, not a broader iterator or class layout. Original template names and types remain unresolved.",
+    "Nonempty ranges require valid readable source, writable destination and a valid cdecl callback. Invalid-memory faults, throwing callbacks, stack-argument tampering, exceptional control flow and full-address-space wraparound are outside the tests.",
+    "Original behavior is a 32-bit address-space operation. The portable adapter uses host uintptr_t for unsigned address ordering and valid-buffer iteration; wider-host fabricated address behavior is not claimed.",
+    "The startup caller and CRT lowercase internals remain external evidence, not recovered dependencies. Tests use controlled callbacks and do not claim locale or CRT recovery."
+  ]
+}

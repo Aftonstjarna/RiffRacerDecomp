@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source control flow agrees with the reference’s signed-byte callback loop, unsigned reversed-range clamp, forward writes, and deferred result-slot update. Tests call the original and compare callback logs, buffers, return values, and sentinels across meaningful edge cases. Independently confirmed all 91 oracle bytes against Game.exe, reran differential tests at GCC O2 successfully, and compiled the unchanged implementation with pinned MSVC2013 O2. The explicit ABI adapter and documented limitations are appropriate; sampled validation does not establish all-input equivalence."
+}
