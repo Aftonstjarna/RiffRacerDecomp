@@ -2270,3 +2270,16 @@ test-cycle-narrow-record40-range-destroy: $(OUT)/reriff-match $(OUT)/narrow_reco
 
 test-recovered: test-cycle-narrow-record40-range-destroy
 .PHONY: test-cycle-narrow-record40-range-destroy
+
+# Reviewed cycle reference: pool32-table-initialize (assembly evidence only).
+$(OUT)/pool32_table_initialize.bin: native/pool32_table_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pool32_table_initialize.o
+	ld -m elf_i386 -Ttext=0x41cd30 -e original_pool32_table_initialize $(OUT)/pool32_table_initialize.o -o $(OUT)/pool32_table_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/pool32_table_initialize.elf $@
+
+test-cycle-pool32-table-initialize: $(OUT)/reriff-match $(OUT)/pool32_table_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pool32-table-initialize $(OUT)/pool32_table_initialize.bin $(OUT)/pool32-table-initialize-comparison.json
+
+test-recovered: test-cycle-pool32-table-initialize
+.PHONY: test-cycle-pool32-table-initialize
