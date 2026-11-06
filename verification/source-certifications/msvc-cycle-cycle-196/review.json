@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "2103f869614f6f7e5144c677a19e794cf78d0bbcbe77164f2181904d5031f5eb",
+  "behavior_sha256": "c82d2624d483d591a1cc38dbd4a11486fbd9acd62c3de714ed54bfc710e2e83b",
+  "functions": [
+    {
+      "scope": "utf16-terminated-length",
+      "source_sha256": "58ae27c4be279155e61010077f75561a916c717d822b8d7e98203c4995ce2e7f",
+      "approved": true,
+      "reason": "Independently rebuilt with pinned MSVC and verified the entire unmodified code section exactly matches the hash-verified original, with no relocations. Confirmed function boundaries and cdecl ABI. Executed compiled code and original reference across 32,800 differential cases covering empty strings, loop branches, varied UTF-16 values, offsets, and unchanged buffers. Approval is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "089984697c565719d2f4ec11f0c93b273e652035e7713d9789b5f50a5fba2ca4",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

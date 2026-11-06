@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-196",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "utf16-terminated-length",
+      "stem": "cycle_utf16_terminated_length",
+      "source": "Decomp/recovered/msvc/cycle_utf16_terminated_length.cpp",
+      "sha256": "58ae27c4be279155e61010077f75561a916c717d822b8d7e98203c4995ce2e7f"
+    }
+  ]
+}
