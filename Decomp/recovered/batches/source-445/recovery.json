@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Alias-aware 24-byte record append",
+  "summary": "Recovered thiscall member at VA 0x4b2500 (RVA 0xb2500). Three pointer fields describe begin, end and capacity end. Internal sources are converted to a signed byte-offset/24 index before optional growth and rebased afterward. The append copies 16 bytes then 8 bytes, skips reads/writes for a null destination, and advances end by 24. Callers ignore return registers. Growth at 0x4b28d0 remains an explicit external member dependency, not a recovered implementation.",
+  "targets": [
+    "record24-append-one"
+  ],
+  "references": [
+    "record24-append-one"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "12997 direct differential cases against accepted original thiscall reference: four buffer alignments, live counts 0 through 8, all 361 source byte offsets, plus null end/source. Compare all 512 bytes including untouched guards, begin/end/capacity fields, and FS head restoration after every call. Internal unaligned sources exercise index rounding; external overlapping sources exercise two-stage copy behavior. All cases have spare capacity; a link-only growth sentinel must remain uncalled. Local GCC freestanding i386 execution passed all 12997 cases; linked oracle bytes equal Game.exe for all 146 bytes. Pinned MSVC2013 compilation succeeded under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Growth is not behavior-validated: the helper at 0x4b28d0 and its allocator/reallocation dependencies are not accepted callable references for this task. A port must supply Record24Storage::grow; test.cpp supplies only an uncalled failure sentinel.",
+    "Allocation failures, throwing paths, capacity exhaustion and alias rebasing across real allocation remain untested.",
+    "Record field meanings and containing resource types remain unresolved.",
+    "Valid readable source and writable destination ranges are required except the explicitly tested null destination. Huge signed offsets and malformed pointer triples are not validated.",
+    "No matching-byte or full-game equivalence claim."
+  ]
+}
