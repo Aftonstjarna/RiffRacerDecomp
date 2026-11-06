@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 76604,
-  "remaining_bytes": 8558788,
-  "verified_percent": 0.8870934868967153,
-  "registered_blocks": 197,
-  "exact_blocks": 197,
+  "verified_bytes": 76937,
+  "remaining_bytes": 8558455,
+  "verified_percent": 0.8909497102158188,
+  "registered_blocks": 198,
+  "exact_blocks": 198,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1343,6 +1343,15 @@
       "byte_equal": true,
       "reference_sha256": "ce6da188d2cd0f780127cef8a333cd4128f307c0545157e6bcdef10932a0d4b4",
       "candidate_sha256": "ce6da188d2cd0f780127cef8a333cd4128f307c0545157e6bcdef10932a0d4b4"
+    },
+    {
+      "name": "record24-insert-range",
+      "file_offset": 1320864,
+      "size": 333,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "c0fa54efb4a2d07c5d309ad59e5a19f4c06b915141c39be9735f5d7c7f45785d",
+      "candidate_sha256": "c0fa54efb4a2d07c5d309ad59e5a19f4c06b915141c39be9735f5d7c7f45785d"
     },
     {
       "name": "record24-rotate",

@@ -2023,3 +2023,16 @@ test-cycle-ci-fmod-import: $(OUT)/reriff-match $(OUT)/ci_fmod_import.bin
 
 test-recovered: test-cycle-ci-fmod-import
 .PHONY: test-cycle-ci-fmod-import
+
+# Reviewed cycle reference: record24-insert-range (assembly evidence only).
+$(OUT)/record24_insert_range.bin: native/record24_insert_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record24_insert_range.o
+	ld -m elf_i386 -Ttext=0x5433a0 -e original_record24_insert_range $(OUT)/record24_insert_range.o -o $(OUT)/record24_insert_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/record24_insert_range.elf $@
+
+test-cycle-record24-insert-range: $(OUT)/reriff-match $(OUT)/record24_insert_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record24-insert-range $(OUT)/record24_insert_range.bin $(OUT)/record24-insert-range-comparison.json
+
+test-recovered: test-cycle-record24-insert-range
+.PHONY: test-cycle-record24-insert-range
