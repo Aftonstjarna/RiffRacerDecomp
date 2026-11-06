@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source preserves the original six stores, 24-byte layout, thiscall ABI and returned pointer. Original executable evidence confirms control flow and caller provenance. Submitted tests and 4,096 independent mixed-field cases passed against extracted original instructions, checking all fields and surrounding guards. Native compilation records cover the actual implementation. Limitations are explicit; sampled validation does not establish all-input equivalence or exact matching."
+}
