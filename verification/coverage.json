@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 77513,
-  "remaining_bytes": 8557879,
-  "verified_percent": 0.8976199343353493,
-  "registered_blocks": 203,
-  "exact_blocks": 203,
+  "verified_bytes": 77519,
+  "remaining_bytes": 8557873,
+  "verified_percent": 0.8976894158365943,
+  "registered_blocks": 204,
+  "exact_blocks": 204,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1730,6 +1730,15 @@
       "byte_equal": true,
       "reference_sha256": "4bb77003e3717d214c81d57e39a61b270bd9784b93a101efb9353a7ac5c108f3",
       "candidate_sha256": "4bb77003e3717d214c81d57e39a61b270bd9784b93a101efb9353a7ac5c108f3"
+    },
+    {
+      "name": "except1-import",
+      "file_offset": 5214494,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "96d104fe2bb4945350525cace5690d9809ca28f50a72f378e566c683f49b5287",
+      "candidate_sha256": "96d104fe2bb4945350525cace5690d9809ca28f50a72f378e566c683f49b5287"
     },
     {
       "name": "ci-fmod-import",

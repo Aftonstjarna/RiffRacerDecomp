@@ -2101,3 +2101,16 @@ test-cycle-sse-float-to-integer: $(OUT)/reriff-match $(OUT)/sse_float_to_integer
 
 test-recovered: test-cycle-sse-float-to-integer
 .PHONY: test-cycle-sse-float-to-integer
+
+# Reviewed cycle reference: except1-import (assembly evidence only).
+$(OUT)/except1_import.bin: native/except1_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/except1_import.o
+	ld -m elf_i386 -Ttext=0x8f9d1e -e original_except1_import $(OUT)/except1_import.o -o $(OUT)/except1_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/except1_import.elf $@
+
+test-cycle-except1-import: $(OUT)/reriff-match $(OUT)/except1_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" except1-import $(OUT)/except1_import.bin $(OUT)/except1-import-comparison.json
+
+test-recovered: test-cycle-except1-import
+.PHONY: test-cycle-except1-import
