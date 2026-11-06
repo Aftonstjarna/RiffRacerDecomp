@@ -2387,3 +2387,16 @@ test-cycle-crt-exception-filter-thunk: $(OUT)/reriff-match $(OUT)/crt_exception_
 
 test-recovered: test-cycle-crt-exception-filter-thunk
 .PHONY: test-cycle-crt-exception-filter-thunk
+
+# Reviewed cycle reference: crt-runtime-error-import (assembly evidence only).
+$(OUT)/crt_runtime_error_import.bin: native/crt_runtime_error_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/crt_runtime_error_import.o
+	ld -m elf_i386 -Ttext=0x8f9a1c -e original_crt_runtime_error_import $(OUT)/crt_runtime_error_import.o -o $(OUT)/crt_runtime_error_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/crt_runtime_error_import.elf $@
+
+test-cycle-crt-runtime-error-import: $(OUT)/reriff-match $(OUT)/crt_runtime_error_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" crt-runtime-error-import $(OUT)/crt_runtime_error_import.bin $(OUT)/crt-runtime-error-import-comparison.json
+
+test-recovered: test-cycle-crt-runtime-error-import
+.PHONY: test-cycle-crt-runtime-error-import

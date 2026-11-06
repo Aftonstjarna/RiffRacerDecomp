@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 79452,
-  "remaining_bytes": 8555940,
-  "verified_percent": 0.9200740394877268,
-  "registered_blocks": 225,
-  "exact_blocks": 225,
+  "verified_bytes": 79458,
+  "remaining_bytes": 8555934,
+  "verified_percent": 0.9201435209889719,
+  "registered_blocks": 226,
+  "exact_blocks": 226,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1883,6 +1883,15 @@
       "byte_equal": true,
       "reference_sha256": "202da1d10c4309b8ec4ce26ba5006e0d7db714f2c4e95de0c76ee9d33f49127c",
       "candidate_sha256": "202da1d10c4309b8ec4ce26ba5006e0d7db714f2c4e95de0c76ee9d33f49127c"
+    },
+    {
+      "name": "crt-runtime-error-import",
+      "file_offset": 5213724,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "4b93ce2ae18ffee833e0ff94bf32e6a4a6814a8ddc388db81a92c2c5b27daa80",
+      "candidate_sha256": "4b93ce2ae18ffee833e0ff94bf32e6a4a6814a8ddc388db81a92c2c5b27daa80"
     },
     {
       "name": "security-cookie",
