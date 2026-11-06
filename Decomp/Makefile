@@ -1984,3 +1984,16 @@ test-cycle-sse2-sqrt-precise-import: $(OUT)/reriff-match $(OUT)/sse2_sqrt_precis
 
 test-recovered: test-cycle-sse2-sqrt-precise-import
 .PHONY: test-cycle-sse2-sqrt-precise-import
+
+# Reviewed cycle reference: record24-rotate (assembly evidence only).
+$(OUT)/record24_rotate.bin: native/record24_rotate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record24_rotate.o
+	ld -m elf_i386 -Ttext=0x5434f0 -e original_record24_rotate $(OUT)/record24_rotate.o -o $(OUT)/record24_rotate.elf
+	objcopy -O binary --only-section=.text $(OUT)/record24_rotate.elf $@
+
+test-cycle-record24-rotate: $(OUT)/reriff-match $(OUT)/record24_rotate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record24-rotate $(OUT)/record24_rotate.bin $(OUT)/record24-rotate-comparison.json
+
+test-recovered: test-cycle-record24-rotate
+.PHONY: test-cycle-record24-rotate
