@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "UTF-16 terminated code-unit length",
+  "summary": "Recovered the read-only cdecl scan at 0x425bc0 from accepted assembly and direct Game.exe disassembly. Counts 16-bit units through the first zero, excludes the terminator, and preserves the original 32-bit subtraction/arithmetic-shift result. The direct caller at 0x425ece supplies a string pointer and uses signed length comparisons.",
+  "targets": ["utf16-terminated-length"],
+  "references": ["utf16-terminated-length"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Differential original-reference comparisons for all lengths 0 through 4096 at a two-byte-offset address, plus embedded byte zeros, surrogate pairs, lone surrogates, noncharacters, immediate terminators and trailing nonzero data. Assert expected code-unit lengths and compare all 4100 input/guard units after both calls for absence of writes.",
+  "known_limits": ["Requires readable storage through the first zero; null, inaccessible and unterminated inputs are not executed in tests and have no recovery error policy.", "Address-wrapping scans are outside portable C++ object semantics. Huge sign-bit byte distances are preserved algebraically but not allocated or exercised.", "Behavioral validation does not establish matching machine code or recover the surrounding caller."]
+}
