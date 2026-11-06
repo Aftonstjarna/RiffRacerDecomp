@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-77",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "resource-record24-construct",
+      "stem": "cycle_resource_record24_construct",
+      "source": "Decomp/recovered/msvc/cycle_resource_record24_construct.cpp",
+      "sha256": "06e021f3c4daa4bf11eaa173629820ed4649cd336e3661b95f5c852d68cbd589"
+    }
+  ]
+}

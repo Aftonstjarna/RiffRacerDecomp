@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "bdfa473d3e2ccc741f69f85bc119b98d2c2cfa8231542235a8212234fba1e594",
+  "behavior_sha256": "3eff7dcb8549b6a4e748f76b59ee9e9b82992f1340d1c54d45a0bfeddb28e0b0",
+  "functions": [
+    {
+      "scope": "resource-record24-construct",
+      "source_sha256": "06e021f3c4daa4bf11eaa173629820ed4649cd336e3661b95f5c852d68cbd589",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified code section exactly, with no relocations. Original executable hash, function boundaries, thiscall ABI, and six field writes were verified. Independently linked actual compiler output and original bytes passed all 4,160 differential cases, including return pointers, repeated construction, and untouched surrounding memory. The routine has no branches."
+    }
+  ],
+  "review_receipt_sha256": "6e08cc28744824563c41578685b751e7aba8840a62e561bc538ad1ef11ba36f5",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
