@@ -2465,3 +2465,16 @@ test-cycle-pe32-image-validate: $(OUT)/reriff-match $(OUT)/pe32_image_validate.b
 
 test-recovered: test-cycle-pe32-image-validate
 .PHONY: test-cycle-pe32-image-validate
+
+# Reviewed cycle reference: u64-shift-left (assembly evidence only).
+$(OUT)/u64_shift_left.bin: native/u64_shift_left.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u64_shift_left.o
+	ld -m elf_i386 -Ttext=0x8f99a0 -e original_u64_shift_left $(OUT)/u64_shift_left.o -o $(OUT)/u64_shift_left.elf
+	objcopy -O binary --only-section=.text $(OUT)/u64_shift_left.elf $@
+
+test-cycle-u64-shift-left: $(OUT)/reriff-match $(OUT)/u64_shift_left.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u64-shift-left $(OUT)/u64_shift_left.bin $(OUT)/u64-shift-left-comparison.json
+
+test-recovered: test-cycle-u64-shift-left
+.PHONY: test-cycle-u64-shift-left
