@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Unsigned 64-bit division helper",
+  "summary": "Recovered 0x8fc290-0x8fc2f8: stdcall unsigned 64-bit numerator/divisor, EDX:EAX quotient, no memory or global effects. Preserves narrow-divisor and normalized wide-divisor estimate/correction structure. A portable limb division loop replaces hardware DIV with a 64-bit dividend. Original direct calls at 0x5c0df2 and 0x5c0e5a push divisor 3 and a doubled 64-bit difference; caller uses the low quotient plus 16. No inferred caller field semantics are needed.",
+  "targets": [
+    "unsigned64-divide"
+  ],
+  "references": [
+    "unsigned64-divide"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original reference comparison and independent restoring-division result: edge-value Cartesian grid, all 64 power-of-two boundaries with nearby divisors and numerators, explicit estimate corrections including product carry, and 30000 deterministic random full-width/narrow-divisor cases. Checks input storage, canaries, MXCSR, FS head after every original call, and remaining TLS backing words. FS setup failure is fatal. No object fields or imports exist. Local GCC i386 freestanding run passed; linked oracle verified against all 104 original executable bytes. Implementation also compiled successfully using pinned VS2013 at /O1, /O2, and /O2 /Oy-.",
+  "known_limits": [
+    "Divisor zero raises x86 divide error in the original. The portable API requires a nonzero divisor; C++ division by zero is undefined and no portable exception or signal equivalence is claimed or tested.",
+    "No matching-byte claim. Portable limb division replaces x86 64-by-32 DIV and has different timing and instruction selection.",
+    "Caller field meanings are unresolved and outside the assigned arithmetic helper scope. Flags and volatile registers are not API outputs."
+  ]
+}
