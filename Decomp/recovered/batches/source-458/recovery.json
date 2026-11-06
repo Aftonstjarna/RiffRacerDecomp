@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Device texture-cache clearing",
+  "summary": "Recovered 0x4add20..0x4add59 as a genuine Device member method: inspect 16 DWORD cache entries at +0x9ec, call the current device at +0x78 through stdcall virtual slot +0x104 with stage and null texture for each nonzero entry, then clear that entry. The one stack DWORD is unused and the original callee pops it. Return-register contents are unspecified. Direct Game.exe disassembly and accepted device-release caller at 0x4a6363 support the ABI and field interpretation. The accepted 57-byte oracle was independently compared with Game.exe and linked at its original address for differential testing. GCC behavioral checks passed; pinned MSVC compilation passed under O1, O2 and O2 /Oy-. No source byte-match claim.",
+  "targets": ["device-clear-texture-cache"],
+  "references": ["device-clear-texture-cache"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding test_main compares the recovered method with original_device_clear_texture_cache declared thiscall. Cases cover all-zero cache with null device, all entries set, alternating masks, every single stage, high-bit and all-one cached values, unused arguments including 0xffffffff, and a repeated clear. A stdcall test device callback records stage, device identity, null texture and all cache values at each call, and returns both success and failure. Mutation case swaps the device, cancels a future entry, enables stage 15, changes the current entry and repopulates an already visited entry; compares call order, observations and full final object bytes. Sentinels before/after cache and trailing guard words verify untouched storage. No OS or rendering implementation is simulated beyond this controlled callback boundary.",
+  "known_limits": [
+    "Actual external device virtual method behavior, rendering, exceptions and invalid-pointer fault behavior are outside the controlled callback tests.",
+    "Virtual slot +0x104 is consistent with IDirect3DDevice9 SetTexture; the routine itself only establishes its ABI and arguments. Cache DWORD meanings and unused argument semantics beyond this routine remain unresolved.",
+    "Exact object offsets and original thiscall ABI describe 32-bit builds; pointer fields naturally change layout on 64-bit ports. Unknown object fields are opaque padding.",
+    "Only normal returning callbacks are tested. The original has no SEH registration or FS access; no FS fixture is needed for this target.",
+    "The original unspecified return-register value is not modeled as an API result. This is readable behavior recovery, not a matching-byte reconstruction."
+  ]
+}

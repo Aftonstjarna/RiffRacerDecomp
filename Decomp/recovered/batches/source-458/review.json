@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit layouts, callback ABI, mutation ordering and ignored errors agree with the original disassembly. Tests call the original and compare callback observations, final object bytes and guards. Independently verified the 57-byte oracle against Game.exe and passed rebuilt differential tests expanded to all 65,536 cache-presence masks. Native Windows compilation records cover the actual implementation. Stated external-device, platform and exceptional-path limitations are reasonable; testing does not establish all-input equivalence."
+}
