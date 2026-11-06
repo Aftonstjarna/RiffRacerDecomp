@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-124",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "narrow-storage-pointer",
+      "stem": "cycle_narrow_storage_pointer",
+      "source": "Decomp/recovered/msvc/cycle_narrow_storage_pointer.cpp",
+      "sha256": "10097ab21f172851dcf58f4d39b7f6fb0f6acf7f586a3cae5d5295f33346e2fc"
+    }
+  ]
+}

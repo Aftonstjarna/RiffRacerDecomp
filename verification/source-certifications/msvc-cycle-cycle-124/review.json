@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "e51ac92f859f0824cd5c881f9f105818893cb3958458bc8166d532753222b246",
+  "behavior_sha256": "da082673624013c6e696e41d94a8d25d5daecb7b8f8d2ace03a7185e9abcaeb4",
+  "functions": [
+    {
+      "scope": "narrow-storage-pointer",
+      "source_sha256": "10097ab21f172851dcf58f4d39b7f6fb0f6acf7f586a3cae5d5295f33346e2fc",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation produced a complete, relocation-free 12-byte section identical to original Game.exe at 0x416160. Original boundaries, unsigned branching and 32-bit thiscall ABI were verified. All 448 tests passed while executing actual compiler output and directly extracted original code, covering both branches, boundary capacities and unchanged fixture state."
+    }
+  ],
+  "review_receipt_sha256": "1a42199a76e2ade6a4f4da4b898405be77ec520c41740e6466c5ceda1570ec38",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
