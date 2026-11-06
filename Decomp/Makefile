@@ -2257,3 +2257,16 @@ test-cycle-device-sampler-bias-update: $(OUT)/reriff-match $(OUT)/device_sampler
 
 test-recovered: test-cycle-device-sampler-bias-update
 .PHONY: test-cycle-device-sampler-bias-update
+
+# Reviewed cycle reference: narrow-record40-range-destroy (assembly evidence only).
+$(OUT)/narrow_record40_range_destroy.bin: native/narrow_record40_range_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_record40_range_destroy.o
+	ld -m elf_i386 -Ttext=0x507f60 -e original_narrow_record40_range_destroy $(OUT)/narrow_record40_range_destroy.o -o $(OUT)/narrow_record40_range_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_record40_range_destroy.elf $@
+
+test-cycle-narrow-record40-range-destroy: $(OUT)/reriff-match $(OUT)/narrow_record40_range_destroy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-record40-range-destroy $(OUT)/narrow_record40_range_destroy.bin $(OUT)/narrow-record40-range-destroy-comparison.json
+
+test-recovered: test-cycle-narrow-record40-range-destroy
+.PHONY: test-cycle-narrow-record40-range-destroy
