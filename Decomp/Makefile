@@ -1945,3 +1945,16 @@ test-cycle-record16-range-copy: $(OUT)/reriff-match $(OUT)/record16_range_copy.b
 
 test-recovered: test-cycle-record16-range-copy
 .PHONY: test-cycle-record16-range-copy
+
+# Reviewed cycle reference: record48-copy-retain (assembly evidence only).
+$(OUT)/record48_copy_retain.bin: native/record48_copy_retain.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record48_copy_retain.o
+	ld -m elf_i386 -Ttext=0x4b4310 -e original_record48_copy_retain $(OUT)/record48_copy_retain.o -o $(OUT)/record48_copy_retain.elf
+	objcopy -O binary --only-section=.text $(OUT)/record48_copy_retain.elf $@
+
+test-cycle-record48-copy-retain: $(OUT)/reriff-match $(OUT)/record48_copy_retain.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record48-copy-retain $(OUT)/record48_copy_retain.bin $(OUT)/record48-copy-retain-comparison.json
+
+test-recovered: test-cycle-record48-copy-retain
+.PHONY: test-cycle-record48-copy-retain
