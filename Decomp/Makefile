@@ -2478,3 +2478,16 @@ test-cycle-u64-shift-left: $(OUT)/reriff-match $(OUT)/u64_shift_left.bin
 
 test-recovered: test-cycle-u64-shift-left
 .PHONY: test-cycle-u64-shift-left
+
+# Reviewed cycle reference: error-code-narrow-construct (assembly evidence only).
+$(OUT)/error_code_narrow_construct.bin: native/error_code_narrow_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/error_code_narrow_construct.o
+	ld -m elf_i386 -Ttext=0x44f380 -e original_error_code_narrow_construct $(OUT)/error_code_narrow_construct.o -o $(OUT)/error_code_narrow_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/error_code_narrow_construct.elf $@
+
+test-cycle-error-code-narrow-construct: $(OUT)/reriff-match $(OUT)/error_code_narrow_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" error-code-narrow-construct $(OUT)/error_code_narrow_construct.bin $(OUT)/error-code-narrow-construct-comparison.json
+
+test-recovered: test-cycle-error-code-narrow-construct
+.PHONY: test-cycle-error-code-narrow-construct

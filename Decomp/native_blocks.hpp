@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"u64-shift-left",0x4f99a0,31},
+  return {NativeBlock{"error-code-narrow-construct",0x4f380,94},
+                     NativeBlock{"u64-shift-left",0x4f99a0,31},
                      NativeBlock{"pe32-image-validate",0x4f9b40,49},
                      NativeBlock{"sse2-log10-precise-import",0x4f8f46,6},
                      NativeBlock{"tree-rotate-left",0x23180,84},
