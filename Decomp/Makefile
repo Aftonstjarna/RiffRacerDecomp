@@ -2075,3 +2075,16 @@ test-cycle-narrow-allocate: $(OUT)/reriff-match $(OUT)/narrow_allocate.bin
 
 test-recovered: test-cycle-narrow-allocate
 .PHONY: test-cycle-narrow-allocate
+
+# Reviewed cycle reference: sse-conversion-exception (assembly evidence only).
+$(OUT)/sse_conversion_exception.bin: native/sse_conversion_exception.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sse_conversion_exception.o
+	ld -m elf_i386 -Ttext=0x8f90ed -e original_sse_conversion_exception $(OUT)/sse_conversion_exception.o -o $(OUT)/sse_conversion_exception.elf
+	objcopy -O binary --only-section=.text $(OUT)/sse_conversion_exception.elf $@
+
+test-cycle-sse-conversion-exception: $(OUT)/reriff-match $(OUT)/sse_conversion_exception.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sse-conversion-exception $(OUT)/sse_conversion_exception.bin $(OUT)/sse-conversion-exception-comparison.json
+
+test-recovered: test-cycle-sse-conversion-exception
+.PHONY: test-cycle-sse-conversion-exception

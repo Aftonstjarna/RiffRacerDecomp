@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 77032,
-  "remaining_bytes": 8558360,
-  "verified_percent": 0.8920498339855331,
-  "registered_blocks": 201,
-  "exact_blocks": 201,
+  "verified_bytes": 77100,
+  "remaining_bytes": 8558292,
+  "verified_percent": 0.8928372909996443,
+  "registered_blocks": 202,
+  "exact_blocks": 202,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1649,6 +1649,15 @@
       "byte_equal": true,
       "reference_sha256": "23152900cf0778a165cf54ba095893a063ad1fb82a22c819f6695b562405f793",
       "candidate_sha256": "23152900cf0778a165cf54ba095893a063ad1fb82a22c819f6695b562405f793"
+    },
+    {
+      "name": "sse-conversion-exception",
+      "file_offset": 5211373,
+      "size": 68,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "2908dca9ef6831f2f708472615ecc4ac0e0a7f4ad97ae19ed8df6b3cb49f8cc9",
+      "candidate_sha256": "2908dca9ef6831f2f708472615ecc4ac0e0a7f4ad97ae19ed8df6b3cb49f8cc9"
     },
     {
       "name": "unsigned64-to-double",
