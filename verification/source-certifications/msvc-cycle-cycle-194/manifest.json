@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-194",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "matrix-column3-extract",
+      "stem": "cycle_matrix_column3_extract",
+      "source": "Decomp/recovered/msvc/cycle_matrix_column3_extract.cpp",
+      "sha256": "20ed2e9047a1ebe5bf5ad5c1ae7bcafb7ac67442ecd0c29578e6c835d4cfe57b"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "540433b9270ae37d24a87d42fdfbe39ff92d7e3dc5cd50dca8739a673cbfcfce",
+  "behavior_sha256": "2fa3333dc97c148a58ac28e8a16d49acdb809d15cb84e3f9b7c54e1bdffd931d",
+  "functions": [
+    {
+      "scope": "matrix-column3-extract",
+      "source_sha256": "20ed2e9047a1ebe5bf5ad5c1ae7bcafb7ac67442ecd0c29578e6c835d4cfe57b",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild matched the complete original function without modification or relocations. Verified original hash, boundaries and thiscall return ABI. Executed compiled and original code: all 3,584 submitted cases and 34,816 expanded counterchecks passed, covering bit patterns, overlapping outputs, return pointers and untouched memory. The routine has no conditional branches. Approval is limited to this function, not the full executable."
+    }
+  ],
+  "review_receipt_sha256": "a7d174c796090fab8a2bf1af1839a3ed0cff22bf50c9bd1f629b5ac46cfd3cb4",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
