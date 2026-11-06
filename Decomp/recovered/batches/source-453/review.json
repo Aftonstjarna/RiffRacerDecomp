@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Source preserves the original initialization, thiscall ABI, layout, helper arguments and destination return. Independently verified all 55 reference bytes against Game.exe and passed an optimized i386 helper-contract countercheck, including self-aliasing and retained storage. Submitted tests call the original and check meaningful boundaries and side effects across 18,256 cases. Native compilation records cover the actual implementation. Allocation, errors and exception paths remain explicitly untested dependencies; sampled validation does not establish all-input equivalence."
+}

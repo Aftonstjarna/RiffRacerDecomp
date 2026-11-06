@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow substring construction",
+  "summary": "Recover VA 0x440a90 as a source member method: initialize destination capacity 15, length zero and first byte NUL; delegate source/offset/count to existing substring assignment at 0x415fe0; return destination. Original thiscall uses ECX=source and ret 12. No prior storage is freed. Graphics-options callers at 0x4a28f5 and 0x4a290b construct substrings while splitting a string.",
+  "targets": [
+    "narrow-substring-construct"
+  ],
+  "references": [
+    "narrow-substring-construct",
+    "narrow-assign-substring",
+    "narrow-erase",
+    "memcpy-import"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "18256 GCC i386 differential cases compare the member implementation directly with original_narrow_substring_construct using accepted original assignment and erase helpers. All source lengths 0..15 inline and 0..63 heap, all valid offsets, and counts 0,1,2,7,14,15,16,31,INT_MAX,UINT_MAX are tested when the selected substring fits inline. Self-alias tests use offset zero and every count/length/storage combination. Independent expected results and full guarded-object comparisons check exact bytes, retained union storage, capacity/length, terminator, return identity, source immutability and full backing preservation, including embedded zeros/high bytes. Test-owned four-byte .test_iat binds memcpy only. Explicit successful FS setup and head restoration checks surround original calls. Accepted linked spans (55/279/155/6 bytes) were compared exactly with Game.exe. GCC fixed-flags build and local original execution pass; supplied MSVC2013 /O2 compilation passes.",
+  "known_limits": [
+    "Assignment, erase, allocation, CRT copying and error dispatch remain integration dependencies; the test member adapter delegates to the accepted assignment oracle rather than reimplementing it.",
+    "Selected lengths greater than fifteen require helper allocation and are not executed. Invalid offsets, self-alias offsets greater than zero, length errors, exceptions and allocation failures are not executed because their Windows runtime dependencies are outside this bounded wrapper recovery.",
+    "Source/destination equality is tested: destination initialization makes the source empty before assignment. Partial overlapping distinct objects, invalid pointers and malformed source metadata are not assigned invented behavior.",
+    "Original transient stack-local zero store is not represented as an observable C++ field; no local exception registration is present. Readable source is unmatched; neither full-game equivalence nor matching-byte credit is claimed.",
+    "Layout and original ABI are 32-bit; a native 64-bit port needs a deliberate layout/ABI adaptation. FS support only checks normal paths, not Windows exception dispatch."
+  ]
+}
