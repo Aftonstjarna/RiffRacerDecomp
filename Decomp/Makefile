@@ -2049,3 +2049,16 @@ test-cycle-resource-record24-construct: $(OUT)/reriff-match $(OUT)/resource_reco
 
 test-recovered: test-cycle-resource-record24-construct
 .PHONY: test-cycle-resource-record24-construct
+
+# Reviewed cycle reference: initterm-e-import (assembly evidence only).
+$(OUT)/initterm_e_import.bin: native/initterm_e_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/initterm_e_import.o
+	ld -m elf_i386 -Ttext=0x8f9c7c -e original_initterm_e_import $(OUT)/initterm_e_import.o -o $(OUT)/initterm_e_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/initterm_e_import.elf $@
+
+test-cycle-initterm-e-import: $(OUT)/reriff-match $(OUT)/initterm_e_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" initterm-e-import $(OUT)/initterm_e_import.bin $(OUT)/initterm-e-import-comparison.json
+
+test-recovered: test-cycle-initterm-e-import
+.PHONY: test-cycle-initterm-e-import
