@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source control flow, thiscall ABI, 32-bit link offsets, sentinel handling and writes agree with the original routine. Tests call the original and compare complete fixtures across all three replacement branches while checking preserved metadata and payload. Independently verified reference bytes against Game.exe, reran the submitted tests, and passed 49,152 expanded comparisons covering every nil-byte value at O2. Native Windows records compile the actual implementation. Documented layout and valid-tree limitations are appropriate; sampled validation does not establish all-input equivalence or matching-source certification."
+}
