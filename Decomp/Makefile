@@ -2660,3 +2660,16 @@ test-cycle-stack-allocate-align16: $(OUT)/reriff-match $(OUT)/stack_allocate_ali
 
 test-recovered: test-cycle-stack-allocate-align16
 .PHONY: test-cycle-stack-allocate-align16
+
+# Reviewed cycle reference: narrow-tree-key-less (assembly evidence only).
+$(OUT)/narrow_tree_key_less.bin: native/narrow_tree_key_less.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_tree_key_less.o
+	ld -m elf_i386 -Ttext=0x422c50 -e original_narrow_tree_key_less $(OUT)/narrow_tree_key_less.o -o $(OUT)/narrow_tree_key_less.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_tree_key_less.elf $@
+
+test-cycle-narrow-tree-key-less: $(OUT)/reriff-match $(OUT)/narrow_tree_key_less.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-tree-key-less $(OUT)/narrow_tree_key_less.bin $(OUT)/narrow-tree-key-less-comparison.json
+
+test-recovered: test-cycle-narrow-tree-key-less
+.PHONY: test-cycle-narrow-tree-key-less
