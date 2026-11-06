@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Unsigned byte range comparison",
+  "summary": "Recovered cdecl three-argument comparison at VA 0x4225c0. Four-byte equality scanning with unsigned lexicographic mismatch resolution and exact -1/0/+1 results; zero length reads neither pointer. No writes or object state.",
+  "targets": [
+    "byte-range-compare"
+  ],
+  "references": [
+    "byte-range-compare"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original oracle comparison: all 65536 single-byte pairs; lengths 0 through 80 at all pairs of offsets 0 through 3; equality, every mismatch position in both directions, opposite later mismatches, embedded zeros, aliasing and overlapping ranges, null zero-length arguments. Snapshot both entire buffers around every call to check no writes and unchanged surrounding bytes. Passed required GCC O0 harness and optimized GCC C++11 harness. Linked oracle bytes compared equal to immutable Game.exe. Implementation compiled using pinned MSVC2013 under O1, O2, and O2 /Oy-.",
+  "known_limits": [
+    "Valid readable memory only; fault timing, volatile memory and concurrent mutation are not modeled.",
+    "Counts above 80 are not exercised; the unsigned 32-bit count contract follows disassembly.",
+    "Portable byte-based word assembly may compile differently from original unaligned word loads. No byte-matching credit claimed."
+  ]
+}

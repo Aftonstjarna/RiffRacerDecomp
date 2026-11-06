@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source independently agrees with the reference control flow, cdecl ABI, unsigned ordering, exact -1/0/+1 results, zero-length handling, and absence of writes. The submitted test calls the original and exercises meaningful edge cases. Independently verified the 112-byte oracle against Game.exe; submitted tests and 30,000 additional comparisons through length 8192 passed with buffer snapshots. Native compilation records cover actual impl.cpp. Valid-memory limitations are documented; sampled validation does not establish all-input equivalence or exact matching."
+}
