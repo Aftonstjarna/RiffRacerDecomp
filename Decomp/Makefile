@@ -2738,3 +2738,16 @@ test-cycle-matrix64-copy: $(OUT)/reriff-match $(OUT)/matrix64_copy.bin
 
 test-recovered: test-cycle-matrix64-copy
 .PHONY: test-cycle-matrix64-copy
+
+# Reviewed cycle reference: u64-multiply-low (assembly evidence only).
+$(OUT)/u64_multiply_low.bin: native/u64_multiply_low.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u64_multiply_low.o
+	ld -m elf_i386 -Ttext=0x8fc1f0 -e original_u64_multiply_low $(OUT)/u64_multiply_low.o -o $(OUT)/u64_multiply_low.elf
+	objcopy -O binary --only-section=.text $(OUT)/u64_multiply_low.elf $@
+
+test-cycle-u64-multiply-low: $(OUT)/reriff-match $(OUT)/u64_multiply_low.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u64-multiply-low $(OUT)/u64_multiply_low.bin $(OUT)/u64-multiply-low-comparison.json
+
+test-recovered: test-cycle-u64-multiply-low
+.PHONY: test-cycle-u64-multiply-low
