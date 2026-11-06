@@ -2868,3 +2868,16 @@ test-cycle-record56-float44-less: $(OUT)/reriff-match $(OUT)/record56_float44_le
 
 test-recovered: test-cycle-record56-float44-less
 .PHONY: test-cycle-record56-float44-less
+
+# Reviewed cycle reference: matrix-column3-extract (assembly evidence only).
+$(OUT)/matrix_column3_extract.bin: native/matrix_column3_extract.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix_column3_extract.o
+	ld -m elf_i386 -Ttext=0x426fa0 -e original_matrix_column3_extract $(OUT)/matrix_column3_extract.o -o $(OUT)/matrix_column3_extract.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix_column3_extract.elf $@
+
+test-cycle-matrix-column3-extract: $(OUT)/reriff-match $(OUT)/matrix_column3_extract.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix-column3-extract $(OUT)/matrix_column3_extract.bin $(OUT)/matrix-column3-extract-comparison.json
+
+test-recovered: test-cycle-matrix-column3-extract
+.PHONY: test-cycle-matrix-column3-extract
