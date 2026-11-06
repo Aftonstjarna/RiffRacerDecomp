@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "58c59a40099b80a7a34de5dd6bdb4a2f8d7b11a092f0f85010983b24e7f51bda",
+  "behavior_sha256": "a94c08aa7121006c2452454133a073c3dfa6e86823a18a64678cad6741c80f7a",
+  "functions": [
+    {
+      "scope": "resource-table-acquire",
+      "source_sha256": "662fa7fb7ec7c408c24e63bc620b1057fdf8e78a99fd7fa2ca61d8cfc1db9dbd",
+      "approved": true,
+      "reason": "Pinned MSVC rebuild matches the original bytes without masking, truncation or relocations. Original disassembly confirms boundaries and ABI. All 432 differential tests passed using actual compiled code and directly extracted original code, covering null/non-null branches, counter wraparound, output aliasing, repeated calls and untouched state."
+    }
+  ],
+  "review_receipt_sha256": "9e2ea356e0762f77713134f0ba4cbb78de843bca92aeccc6acfe5bbe2472e195",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

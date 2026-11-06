@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-148",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "resource-table-acquire",
+      "stem": "cycle_resource_table_acquire",
+      "source": "Decomp/recovered/msvc/cycle_resource_table_acquire.cpp",
+      "sha256": "662fa7fb7ec7c408c24e63bc620b1057fdf8e78a99fd7fa2ca61d8cfc1db9dbd"
+    }
+  ]
+}
