@@ -2244,3 +2244,16 @@ test-cycle-narrow-construct-terminated: $(OUT)/reriff-match $(OUT)/narrow_constr
 
 test-recovered: test-cycle-narrow-construct-terminated
 .PHONY: test-cycle-narrow-construct-terminated
+
+# Reviewed cycle reference: device-sampler-bias-update (assembly evidence only).
+$(OUT)/device_sampler_bias_update.bin: native/device_sampler_bias_update.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/device_sampler_bias_update.o
+	ld -m elf_i386 -Ttext=0x4adb10 -e original_device_sampler_bias_update $(OUT)/device_sampler_bias_update.o -o $(OUT)/device_sampler_bias_update.elf
+	objcopy -O binary --only-section=.text $(OUT)/device_sampler_bias_update.elf $@
+
+test-cycle-device-sampler-bias-update: $(OUT)/reriff-match $(OUT)/device_sampler_bias_update.bin
+	$(OUT)/reriff-match native-check "$(GAME)" device-sampler-bias-update $(OUT)/device_sampler_bias_update.bin $(OUT)/device-sampler-bias-update-comparison.json
+
+test-recovered: test-cycle-device-sampler-bias-update
+.PHONY: test-cycle-device-sampler-bias-update

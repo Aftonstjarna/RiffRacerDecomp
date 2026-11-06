@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 78833,
-  "remaining_bytes": 8556559,
-  "verified_percent": 0.9129058646092731,
-  "registered_blocks": 214,
-  "exact_blocks": 214,
+  "verified_bytes": 78931,
+  "remaining_bytes": 8556461,
+  "verified_percent": 0.9140407291296099,
+  "registered_blocks": 215,
+  "exact_blocks": 215,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -974,6 +974,15 @@
       "byte_equal": true,
       "reference_sha256": "2c687fb757f0041a51a7b7c63fae652d2e3081c58a3c7dec44aba5163e898ab0",
       "candidate_sha256": "2c687fb757f0041a51a7b7c63fae652d2e3081c58a3c7dec44aba5163e898ab0"
+    },
+    {
+      "name": "device-sampler-bias-update",
+      "file_offset": 708368,
+      "size": 98,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "9d36658227beb0bb12d98544870d45514191a97fc41b1ad16633722555fdac4f",
+      "candidate_sha256": "9d36658227beb0bb12d98544870d45514191a97fc41b1ad16633722555fdac4f"
     },
     {
       "name": "device-clear-texture-cache",
