@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, reference assembly, and original caller evidence. Control flow correctly handles low-byte counts, sign extension, and shift boundaries without undefined shifts. No memory side effects or layouts are involved; the replacement ABI and omitted scratch-register/flag effects are documented. Independently extracted the original routine, verified reference bytes, and ran differential tests at O0 and O2 successfully. Tests call the original and cover meaningful boundary, bit-pattern, and random inputs. Native Windows records compile the actual implementation and claim no matching credit. Sampled validation does not establish all-input equivalence."
+}

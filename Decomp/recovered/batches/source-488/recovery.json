@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Signed 64-bit arithmetic right shift",
+  "summary": "Recovered the 33-byte compiler helper at VA 0x8fc260 from accepted assembly and direct Game.exe disassembly. Input/output uses EDX:EAX and count uses CL. Caller evidence at 0x59b22d and 0x5cbf01 confirms the ABI. Portable unsigned arithmetic preserves sign extension without undefined full-width shifts. Only the low count byte is used; values 64 through 255 saturate to the sign. No fields, memory accesses, imports, FS use, or external dependencies occur.",
+  "targets": ["signed64-arithmetic-shift-right"],
+  "references": ["signed64-arithmetic-shift-right"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct original reference calls through GCC i386 regparm(3), returning EDX:EAX. Compares 12 boundary/pattern inputs across counts 0..1023 and high ECX bits, all 64 one-bit and complemented one-bit inputs across all 256 CL values, and 10000 deterministic pseudorandom values/counts. No object fields or memory side effects exist to preserve, as verified by instruction inspection.",
+  "known_limits": ["Portable C++ API replaces the compiler-private register ABI; original scratch ECX and condition flags are not exposed.", "Behavioral recovery only; no matching-byte claim."]
+}
