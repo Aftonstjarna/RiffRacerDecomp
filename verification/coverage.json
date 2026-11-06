@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 79615,
-  "remaining_bytes": 8555777,
-  "verified_percent": 0.9219616202715523,
-  "registered_blocks": 229,
-  "exact_blocks": 229,
+  "verified_bytes": 79621,
+  "remaining_bytes": 8555771,
+  "verified_percent": 0.9220311017727973,
+  "registered_blocks": 230,
+  "exact_blocks": 230,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1838,6 +1838,15 @@
       "byte_equal": true,
       "reference_sha256": "23152900cf0778a165cf54ba095893a063ad1fb82a22c819f6695b562405f793",
       "candidate_sha256": "23152900cf0778a165cf54ba095893a063ad1fb82a22c819f6695b562405f793"
+    },
+    {
+      "name": "sse2-log10-precise-import",
+      "file_offset": 5210950,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "19bacfeb23abca065b46fc1437e93ad029950ca766440746c7ac062a2beb8e99",
+      "candidate_sha256": "19bacfeb23abca065b46fc1437e93ad029950ca766440746c7ac062a2beb8e99"
     },
     {
       "name": "sse-float-to-integer",
