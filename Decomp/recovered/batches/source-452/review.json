@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Readable source preserves the 48-byte layout, ordered zero stores, overlap-sensitive block copying and native thiscall ABI. Independently verified all 123 oracle bytes against Game.exe; 48,488 expanded differential cases passed with whole-arena checks. Unmodified implementation also compiled with VS2013, whose output preserves the required ordering and ABI. Documented platform and invalid-memory limitations are reasonable; sampled validation does not establish all-input equivalence."
+}

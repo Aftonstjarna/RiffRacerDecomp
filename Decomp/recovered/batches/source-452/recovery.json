@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Ordered zero-and-copy record constructor",
+  "summary": "Recovered 0x427010..0x42708b as a genuine 48-byte member constructor. Twelve ordered zero stores precede three sequential unaligned 16-byte snapshots and stores. Original thiscall takes ECX destination, one stack source pointer, returns destination in EAX and pops four bytes. Direct Game.exe disassembly and callers confirm raw copying, stack temporaries and embedded +0x24 records; no dependencies or external side effects occur.",
+  "targets": [
+    "record48-zero-copy-construct"
+  ],
+  "references": [
+    "record48-zero-copy-construct"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "5664 differential cases compare placement construction directly with the accepted original at its original VA and an independent byte model: eight patterns, four valid destination alignments modulo 16, every byte source position 16..192 in a 256-byte arena. Includes self-copy, both overlap directions, block-boundary overlap, disjoint and adjacent regions, unaligned sources, zeros and all-one bit patterns. Checks original return identity and every arena byte, including untouched guards and source side effects. Passed GCC O0 with the required flags and an additional O2 implementation build. The linked oracle at 0x427010 was checked against all 123 bytes extracted directly from Game.exe. Implementation compiled with supplied VS2013 under O1, O2 and O2 /Oy-. Compiler barriers on MSVC and volatile block accesses on GCC preserve initialization/copy ordering under optimization.",
+  "known_limits": [
+    "Original semantic type and field names are unresolved; fields are retained as twelve raw 32-bit words. Opaque source parameter has the same pointer ABI but is not a claim about the original source-level signature.",
+    "Implementation uses SSE2 intrinsics, supported on the target x86 Linux and original Windows platforms; other architectures need equivalent ordered 16-byte snapshots.",
+    "Only valid accessible ordinary memory is modeled. Null pointers, protection faults, MMIO, concurrent races and partial effects during faults are not tested.",
+    "Destination alignment below the C++ object's four-byte alignment is outside the portable adapter tests, though the original instructions permit it on x86.",
+    "Behavioral validation is bounded and does not claim byte matching or whole-game recovery."
+  ]
+}
