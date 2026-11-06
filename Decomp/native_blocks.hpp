@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"initterm-import",0x4f9c82,6},
+  return {NativeBlock{"memchr-import",0x4f8d8a,6},
+                     NativeBlock{"initterm-import",0x4f9c82,6},
                      NativeBlock{"narrow-find-substring",0x40b90,158},
                      NativeBlock{"byte-range-compare",0x225c0,112},
                      NativeBlock{"narrow-substring-construct",0x40a90,55},

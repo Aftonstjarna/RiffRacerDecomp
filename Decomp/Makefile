@@ -2205,3 +2205,16 @@ test-cycle-initterm-import: $(OUT)/reriff-match $(OUT)/initterm_import.bin
 
 test-recovered: test-cycle-initterm-import
 .PHONY: test-cycle-initterm-import
+
+# Reviewed cycle reference: memchr-import (assembly evidence only).
+$(OUT)/memchr_import.bin: native/memchr_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/memchr_import.o
+	ld -m elf_i386 -Ttext=0x8f8d8a -e original_memchr_import $(OUT)/memchr_import.o -o $(OUT)/memchr_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/memchr_import.elf $@
+
+test-cycle-memchr-import: $(OUT)/reriff-match $(OUT)/memchr_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" memchr-import $(OUT)/memchr_import.bin $(OUT)/memchr-import-comparison.json
+
+test-recovered: test-cycle-memchr-import
+.PHONY: test-cycle-memchr-import

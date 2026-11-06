@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 78689,
-  "remaining_bytes": 8556703,
-  "verified_percent": 0.9112383085793905,
-  "registered_blocks": 211,
-  "exact_blocks": 211,
+  "verified_bytes": 78695,
+  "remaining_bytes": 8556697,
+  "verified_percent": 0.9113077900806356,
+  "registered_blocks": 212,
+  "exact_blocks": 212,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1685,6 +1685,15 @@
       "byte_equal": true,
       "reference_sha256": "3c4b7ebb5539f08b09a0b0fb637d04b0b0cf5d1261a9a43da1ea7528b2262ef4",
       "candidate_sha256": "3c4b7ebb5539f08b09a0b0fb637d04b0b0cf5d1261a9a43da1ea7528b2262ef4"
+    },
+    {
+      "name": "memchr-import",
+      "file_offset": 5210506,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f6075f7b8bc2cac0958a6f09564ed43ff3562003deb206cbf69058425f8ba08e",
+      "candidate_sha256": "f6075f7b8bc2cac0958a6f09564ed43ff3562003deb206cbf69058425f8ba08e"
     },
     {
       "name": "ceil-import",
