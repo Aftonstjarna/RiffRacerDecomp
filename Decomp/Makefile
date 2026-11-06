@@ -2192,3 +2192,16 @@ test-cycle-narrow-find-substring: $(OUT)/reriff-match $(OUT)/narrow_find_substri
 
 test-recovered: test-cycle-narrow-find-substring
 .PHONY: test-cycle-narrow-find-substring
+
+# Reviewed cycle reference: initterm-import (assembly evidence only).
+$(OUT)/initterm_import.bin: native/initterm_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/initterm_import.o
+	ld -m elf_i386 -Ttext=0x8f9c82 -e original_initterm_import $(OUT)/initterm_import.o -o $(OUT)/initterm_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/initterm_import.elf $@
+
+test-cycle-initterm-import: $(OUT)/reriff-match $(OUT)/initterm_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" initterm-import $(OUT)/initterm_import.bin $(OUT)/initterm-import-comparison.json
+
+test-recovered: test-cycle-initterm-import
+.PHONY: test-cycle-initterm-import

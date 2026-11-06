@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 78683,
-  "remaining_bytes": 8556709,
-  "verified_percent": 0.9111688270781454,
-  "registered_blocks": 210,
-  "exact_blocks": 210,
+  "verified_bytes": 78689,
+  "remaining_bytes": 8556703,
+  "verified_percent": 0.9112383085793905,
+  "registered_blocks": 211,
+  "exact_blocks": 211,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1775,6 +1775,15 @@
       "byte_equal": true,
       "reference_sha256": "80232dd188707ef3a42efca7b3c9370993c31f5ce537069688512f02559b6234",
       "candidate_sha256": "80232dd188707ef3a42efca7b3c9370993c31f5ce537069688512f02559b6234"
+    },
+    {
+      "name": "initterm-import",
+      "file_offset": 5214338,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "80af2c669bc1583bb96b5ecc1ec51ee73b0b4a340411cd99facd1a87f92a2a78",
+      "candidate_sha256": "80af2c669bc1583bb96b5ecc1ec51ee73b0b4a340411cd99facd1a87f92a2a78"
     },
     {
       "name": "crt-seh",
