@@ -2543,3 +2543,16 @@ test-cycle-tree-iterator-decrement: $(OUT)/reriff-match $(OUT)/tree_iterator_dec
 
 test-recovered: test-cycle-tree-iterator-decrement
 .PHONY: test-cycle-tree-iterator-decrement
+
+# Reviewed cycle reference: tree-node-allocate-links (assembly evidence only).
+$(OUT)/tree_node_allocate_links.bin: native/tree_node_allocate_links.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_node_allocate_links.o
+	ld -m elf_i386 -Ttext=0x423560 -e original_tree_node_allocate_links $(OUT)/tree_node_allocate_links.o -o $(OUT)/tree_node_allocate_links.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_node_allocate_links.elf $@
+
+test-cycle-tree-node-allocate-links: $(OUT)/reriff-match $(OUT)/tree_node_allocate_links.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-node-allocate-links $(OUT)/tree_node_allocate_links.bin $(OUT)/tree-node-allocate-links-comparison.json
+
+test-recovered: test-cycle-tree-node-allocate-links
+.PHONY: test-cycle-tree-node-allocate-links
