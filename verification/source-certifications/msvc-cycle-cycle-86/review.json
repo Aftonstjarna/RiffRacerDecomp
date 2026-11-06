@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "44d9b22278eb4f134aa06dd83a570effde1b608c87bdce291815abab20322f86",
+  "behavior_sha256": "47d3c1fbe958df94940732c7b463a17028c74bae32dfd4dc6d48488deb47b3be",
+  "functions": [
+    {
+      "scope": "record48-zero-copy-construct",
+      "source_sha256": "e2d793820287e8fe6fc90c2faeb91e2c9bfaa072dd8a25948cd319070aaf72e0",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild matched the entire unmodified section to Game.exe at 0x427010–0x42708B, with valid boundaries and no relocations. Source and test hashes match the receipt. Actual compiled code and independently extracted original code passed 18,560 differential cases covering overlap, self-aliasing, return identity and untouched surrounding memory. Approval is limited to this routine and pinned build."
+    }
+  ],
+  "review_receipt_sha256": "13bbe06b1f44eefa3ed11248111c0b6ecaed9bf3f3e0198e72fd0dde4ba01ab4",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
