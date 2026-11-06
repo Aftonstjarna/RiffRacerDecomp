@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "48-byte record copy with four retains",
+  "summary": "Recovered VA 0x004b4310 as a thiscall member returning its destination. Four sequential nullable pointer copies increment unsigned counters at +4, then eight raw DWORDs are copied. No destination release, allocation, synchronization or calls occur. Direct original disassembly agrees with accepted evidence; caller 0x004b3eb0 copies a range with 0x30 stride, consistent with construction rather than assignment.",
+  "targets": [
+    "record48-copy-retain"
+  ],
+  "references": [
+    "record48-copy-retain"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "640 direct original-versus-C++ cases: all 16 null masks, distinct/shared resources, self/separate destination and counters 0, 1, 0x7fffffff, 0xfffffffe, 0xffffffff. Assert return pointer, pointer/payload copies, exact modular increments, and whole-arena equality including source, guards, resource opaque words/tails and overwritten destination's unreleased resource. Local GCC differential run passed with the accepted 110-byte oracle verified against Game.exe and linked at 0x004b4310. Supplied VS2013 implementation compilation passed at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Resource identities, first header word, payload meanings and destruction protocol are unresolved.",
+    "Requires valid readable source, writable destination and writable non-null counters; invalid pointers, arbitrary partial overlap and concurrent access are not tested. Reference increments are non-atomic.",
+    "Portable layout uses native pointers; the original 48-byte layout applies to 32-bit targets. No matching-byte claim."
+  ]
+}
