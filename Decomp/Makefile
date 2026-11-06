@@ -2725,3 +2725,16 @@ test-cycle-tree-subtree-destroy-narrow: $(OUT)/reriff-match $(OUT)/tree_subtree_
 
 test-recovered: test-cycle-tree-subtree-destroy-narrow
 .PHONY: test-cycle-tree-subtree-destroy-narrow
+
+# Reviewed cycle reference: matrix64-copy (assembly evidence only).
+$(OUT)/matrix64_copy.bin: native/matrix64_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix64_copy.o
+	ld -m elf_i386 -Ttext=0x426fd0 -e original_matrix64_copy $(OUT)/matrix64_copy.o -o $(OUT)/matrix64_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix64_copy.elf $@
+
+test-cycle-matrix64-copy: $(OUT)/reriff-match $(OUT)/matrix64_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix64-copy $(OUT)/matrix64_copy.bin $(OUT)/matrix64-copy-comparison.json
+
+test-recovered: test-cycle-matrix64-copy
+.PHONY: test-cycle-matrix64-copy
