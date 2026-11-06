@@ -2140,3 +2140,16 @@ test-cycle-resource-manager-flush: $(OUT)/reriff-match $(OUT)/resource_manager_f
 
 test-recovered: test-cycle-resource-manager-flush
 .PHONY: test-cycle-resource-manager-flush
+
+# Reviewed cycle reference: record48-zero-copy-construct (assembly evidence only).
+$(OUT)/record48_zero_copy_construct.bin: native/record48_zero_copy_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record48_zero_copy_construct.o
+	ld -m elf_i386 -Ttext=0x427010 -e original_record48_zero_copy_construct $(OUT)/record48_zero_copy_construct.o -o $(OUT)/record48_zero_copy_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/record48_zero_copy_construct.elf $@
+
+test-cycle-record48-zero-copy-construct: $(OUT)/reriff-match $(OUT)/record48_zero_copy_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record48-zero-copy-construct $(OUT)/record48_zero_copy_construct.bin $(OUT)/record48-zero-copy-construct-comparison.json
+
+test-recovered: test-cycle-record48-zero-copy-construct
+.PHONY: test-cycle-record48-zero-copy-construct
