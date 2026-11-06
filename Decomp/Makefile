@@ -2582,3 +2582,16 @@ test-cycle-tree-node-dispose-narrow: $(OUT)/reriff-match $(OUT)/tree_node_dispos
 
 test-recovered: test-cycle-tree-node-dispose-narrow
 .PHONY: test-cycle-tree-node-dispose-narrow
+
+# Reviewed cycle reference: tree-node-construct-narrow-move (assembly evidence only).
+$(OUT)/tree_node_construct_narrow_move.bin: native/tree_node_construct_narrow_move.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_node_construct_narrow_move.o
+	ld -m elf_i386 -Ttext=0x423290 -e original_tree_node_construct_narrow_move $(OUT)/tree_node_construct_narrow_move.o -o $(OUT)/tree_node_construct_narrow_move.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_node_construct_narrow_move.elf $@
+
+test-cycle-tree-node-construct-narrow-move: $(OUT)/reriff-match $(OUT)/tree_node_construct_narrow_move.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-node-construct-narrow-move $(OUT)/tree_node_construct_narrow_move.bin $(OUT)/tree-node-construct-narrow-move-comparison.json
+
+test-recovered: test-cycle-tree-node-construct-narrow-move
+.PHONY: test-cycle-tree-node-construct-narrow-move
