@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Unsigned 64-bit logical right shift",
+  "summary": "Recovered the register helper at VA 0x8fc380 (RVA 0x4fc380): unsigned EDX:EAX shifted by CL, returning zero for byte counts at least 64. Portable C++ exposes a uint64_t value and uint8_t count. Direct caller at 0x597f80 uses count 32 to extract the high word. No memory accesses, fields, imports or dependencies occur in the helper.",
+  "targets": ["unsigned64-logical-shift-right"],
+  "references": ["unsigned64-logical-shift-right"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 regparm(3) adapter passes low/high/count in EAX/EDX/ECX and receives EDX:EAX. Compare original and recovered results with an independent repeated-one-bit-shift expectation for every byte count, ten boundary/pattern values, all 64 single-bit inputs, and 4096 deterministic mixed inputs. Pattern tests also set upper ECX bits to verify only CL matters. Check stack sentinel values and unchanged MXCSR after each original call. No object fields or memory side effects exist in the disassembly.",
+  "known_limits": ["Portable API does not reproduce volatile EFLAGS or ECX changes (original masks CL for counts 32 through 63).", "Original nonstandard register ABI is represented only by the GCC test adapter; production C++ uses the platform value ABI.", "No byte-matching claim; caller scope and broader compiler-runtime recovery are excluded."]
+}

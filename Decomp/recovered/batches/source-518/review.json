@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Readable, defined C++ correctly represents the original helper’s three shift paths. Independently verified reference bytes against immutable Game.exe and ran 25,600 differential cases at O0 and O2, covering all byte counts, boundary patterns, single bits, upper ECX bits, stack guards and MXCSR. Source hashes match validation; native Windows compilation records cover the actual implementation. Register ABI, ECX and flags differences are explicitly documented. Sampled validation does not establish all-input equivalence."
+}
