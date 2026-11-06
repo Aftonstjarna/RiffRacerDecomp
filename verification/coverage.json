@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 77665,
-  "remaining_bytes": 8557727,
-  "verified_percent": 0.899380132366892,
-  "registered_blocks": 205,
-  "exact_blocks": 205,
+  "verified_bytes": 78235,
+  "remaining_bytes": 8557157,
+  "verified_percent": 0.9059808749851773,
+  "registered_blocks": 206,
+  "exact_blocks": 206,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1343,6 +1343,15 @@
       "byte_equal": true,
       "reference_sha256": "124dad05854476da935c3a6dd518a5fd51ab68f676fd4d748bdb1fadad5b3de8",
       "candidate_sha256": "124dad05854476da935c3a6dd518a5fd51ab68f676fd4d748bdb1fadad5b3de8"
+    },
+    {
+      "name": "resource-manager-flush",
+      "file_offset": 1319808,
+      "size": 570,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "e7e4ac6f502ac0c83134f23b743d1e39dfa6640b6c34e8a3909d3558484a0ba7",
+      "candidate_sha256": "e7e4ac6f502ac0c83134f23b743d1e39dfa6640b6c34e8a3909d3558484a0ba7"
     },
     {
       "name": "record24-growth-capacity",

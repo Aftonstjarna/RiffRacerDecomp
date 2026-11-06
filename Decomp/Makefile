@@ -2127,3 +2127,16 @@ test-cycle-record24-append-one: $(OUT)/reriff-match $(OUT)/record24_append_one.b
 
 test-recovered: test-cycle-record24-append-one
 .PHONY: test-cycle-record24-append-one
+
+# Reviewed cycle reference: resource-manager-flush (assembly evidence only).
+$(OUT)/resource_manager_flush.bin: native/resource_manager_flush.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_manager_flush.o
+	ld -m elf_i386 -Ttext=0x542f80 -e original_resource_manager_flush $(OUT)/resource_manager_flush.o -o $(OUT)/resource_manager_flush.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_manager_flush.elf $@
+
+test-cycle-resource-manager-flush: $(OUT)/reriff-match $(OUT)/resource_manager_flush.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-manager-flush $(OUT)/resource_manager_flush.bin $(OUT)/resource-manager-flush-comparison.json
+
+test-recovered: test-cycle-resource-manager-flush
+.PHONY: test-cycle-resource-manager-flush
