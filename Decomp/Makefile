@@ -2751,3 +2751,16 @@ test-cycle-u64-multiply-low: $(OUT)/reriff-match $(OUT)/u64_multiply_low.bin
 
 test-recovered: test-cycle-u64-multiply-low
 .PHONY: test-cycle-u64-multiply-low
+
+# Reviewed cycle reference: owner-slot214-assign (assembly evidence only).
+$(OUT)/owner_slot214_assign.bin: native/owner_slot214_assign.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/owner_slot214_assign.o
+	ld -m elf_i386 -Ttext=0x490eb0 -e original_owner_slot214_assign $(OUT)/owner_slot214_assign.o -o $(OUT)/owner_slot214_assign.elf
+	objcopy -O binary --only-section=.text $(OUT)/owner_slot214_assign.elf $@
+
+test-cycle-owner-slot214-assign: $(OUT)/reriff-match $(OUT)/owner_slot214_assign.bin
+	$(OUT)/reriff-match native-check "$(GAME)" owner-slot214-assign $(OUT)/owner_slot214_assign.bin $(OUT)/owner-slot214-assign-comparison.json
+
+test-recovered: test-cycle-owner-slot214-assign
+.PHONY: test-cycle-owner-slot214-assign
