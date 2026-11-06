@@ -2413,3 +2413,16 @@ test-cycle-dynamic-cast-import: $(OUT)/reriff-match $(OUT)/dynamic_cast_import.b
 
 test-recovered: test-cycle-dynamic-cast-import
 .PHONY: test-cycle-dynamic-cast-import
+
+# Reviewed cycle reference: pe-section-lookup (assembly evidence only).
+$(OUT)/pe_section_lookup.bin: native/pe_section_lookup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pe_section_lookup.o
+	ld -m elf_i386 -Ttext=0x8f9a30 -e original_pe_section_lookup $(OUT)/pe_section_lookup.o -o $(OUT)/pe_section_lookup.elf
+	objcopy -O binary --only-section=.text $(OUT)/pe_section_lookup.elf $@
+
+test-cycle-pe-section-lookup: $(OUT)/reriff-match $(OUT)/pe_section_lookup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pe-section-lookup $(OUT)/pe_section_lookup.bin $(OUT)/pe-section-lookup-comparison.json
+
+test-recovered: test-cycle-pe-section-lookup
+.PHONY: test-cycle-pe-section-lookup

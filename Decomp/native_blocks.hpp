@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"dynamic-cast-import",0x4f8d84,6},
+  return {NativeBlock{"pe-section-lookup",0x4f9a30,67},
+                     NativeBlock{"dynamic-cast-import",0x4f8d84,6},
                      NativeBlock{"crt-runtime-error-import",0x4f9a1c,6},
                      NativeBlock{"crt-exception-filter-thunk",0x4f9a16,6},
                      NativeBlock{"runtime-accessor-thunk",0x2d86bb,6},
