@@ -2803,3 +2803,16 @@ test-cycle-unsigned64-remainder: $(OUT)/reriff-match $(OUT)/unsigned64_remainder
 
 test-recovered: test-cycle-unsigned64-remainder
 .PHONY: test-cycle-unsigned64-remainder
+
+# Reviewed cycle reference: double-integer-parity (assembly evidence only).
+$(OUT)/double_integer_parity.bin: native/double_integer_parity.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/double_integer_parity.o
+	ld -m elf_i386 -Ttext=0x8fc420 -e original_double_integer_parity $(OUT)/double_integer_parity.o -o $(OUT)/double_integer_parity.elf
+	objcopy -O binary --only-section=.text $(OUT)/double_integer_parity.elf $@
+
+test-cycle-double-integer-parity: $(OUT)/reriff-match $(OUT)/double_integer_parity.bin
+	$(OUT)/reriff-match native-check "$(GAME)" double-integer-parity $(OUT)/double_integer_parity.bin $(OUT)/double-integer-parity-comparison.json
+
+test-recovered: test-cycle-double-integer-parity
+.PHONY: test-cycle-double-integer-parity
