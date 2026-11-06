@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"resource-table-acquire",0x21dc0,27},
+  return {NativeBlock{"nested-record-count",0x90e60,14},
+                     NativeBlock{"resource-table-acquire",0x21dc0,27},
                      NativeBlock{"tree-node-construct-narrow-move",0x23290,52},
                      NativeBlock{"tree-node-dispose-narrow",0x23520,58},
                      NativeBlock{"tree-iterator-increment",0x22e20,79},

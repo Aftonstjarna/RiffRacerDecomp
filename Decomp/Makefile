@@ -2608,3 +2608,16 @@ test-cycle-resource-table-acquire: $(OUT)/reriff-match $(OUT)/resource_table_acq
 
 test-recovered: test-cycle-resource-table-acquire
 .PHONY: test-cycle-resource-table-acquire
+
+# Reviewed cycle reference: nested-record-count (assembly evidence only).
+$(OUT)/nested_record_count.bin: native/nested_record_count.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/nested_record_count.o
+	ld -m elf_i386 -Ttext=0x490e60 -e original_nested_record_count $(OUT)/nested_record_count.o -o $(OUT)/nested_record_count.elf
+	objcopy -O binary --only-section=.text $(OUT)/nested_record_count.elf $@
+
+test-cycle-nested-record-count: $(OUT)/reriff-match $(OUT)/nested_record_count.bin
+	$(OUT)/reriff-match native-check "$(GAME)" nested-record-count $(OUT)/nested_record_count.bin $(OUT)/nested-record-count-comparison.json
+
+test-recovered: test-cycle-nested-record-count
+.PHONY: test-cycle-nested-record-count
