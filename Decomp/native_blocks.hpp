@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"matrix-column3-extract",0x26fa0,43},
+  return {NativeBlock{"utf16-terminated-length",0x25bc0,33},
+                     NativeBlock{"matrix-column3-extract",0x26fa0,43},
                      NativeBlock{"record56-float44-less",0x26ee0,25},
                      NativeBlock{"shader-boolean-callback",0x110ec0,19},
                      NativeBlock{"arena-build-initial-block",0xb4380,136},

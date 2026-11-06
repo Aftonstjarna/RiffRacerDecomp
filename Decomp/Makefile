@@ -2881,3 +2881,16 @@ test-cycle-matrix-column3-extract: $(OUT)/reriff-match $(OUT)/matrix_column3_ext
 
 test-recovered: test-cycle-matrix-column3-extract
 .PHONY: test-cycle-matrix-column3-extract
+
+# Reviewed cycle reference: utf16-terminated-length (assembly evidence only).
+$(OUT)/utf16_terminated_length.bin: native/utf16_terminated_length.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/utf16_terminated_length.o
+	ld -m elf_i386 -Ttext=0x425bc0 -e original_utf16_terminated_length $(OUT)/utf16_terminated_length.o -o $(OUT)/utf16_terminated_length.elf
+	objcopy -O binary --only-section=.text $(OUT)/utf16_terminated_length.elf $@
+
+test-cycle-utf16-terminated-length: $(OUT)/reriff-match $(OUT)/utf16_terminated_length.bin
+	$(OUT)/reriff-match native-check "$(GAME)" utf16-terminated-length $(OUT)/utf16_terminated_length.bin $(OUT)/utf16-terminated-length-comparison.json
+
+test-recovered: test-cycle-utf16-terminated-length
+.PHONY: test-cycle-utf16-terminated-length
