@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-141",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "tree-iterator-decrement",
+      "stem": "cycle_tree_iterator_decrement",
+      "source": "Decomp/recovered/msvc/cycle_tree_iterator_decrement.cpp",
+      "sha256": "1e9500c232bb4c1d6d003b871610b2d96aabfcf4205d47ef32d166cb658722cb"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "0c3c5809c6d9928f73923961c418d785c0138cbe9eb2246dfa5b3942f2bc3104",
+  "behavior_sha256": "15378cacac575797019c6c1ff5c2d2ce99ac1aff8c9d53dee1e06b02cd93ed68",
+  "functions": [
+    {
+      "scope": "tree-iterator-decrement",
+      "source_sha256": "1e9500c232bb4c1d6d003b871610b2d96aabfcf4205d47ef32d166cb658722cb",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified code section exactly, with no code relocations. Original disassembly confirms function boundaries and 32-bit ABI. All 92,466 differential cases executed actual compiled and original code, covering traversal branches, sentinel values, return identity, iterator guards, and untouched arena state. Source is readable high-level C++; approval is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "1333fa828a4d8aa7457a228b9edb04d292f88035257c0e18a9177c9272104da9",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
