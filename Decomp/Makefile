@@ -2855,3 +2855,16 @@ test-cycle-shader-boolean-callback: $(OUT)/reriff-match $(OUT)/shader_boolean_ca
 
 test-recovered: test-cycle-shader-boolean-callback
 .PHONY: test-cycle-shader-boolean-callback
+
+# Reviewed cycle reference: record56-float44-less (assembly evidence only).
+$(OUT)/record56_float44_less.bin: native/record56_float44_less.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record56_float44_less.o
+	ld -m elf_i386 -Ttext=0x426ee0 -e original_record56_float44_less $(OUT)/record56_float44_less.o -o $(OUT)/record56_float44_less.elf
+	objcopy -O binary --only-section=.text $(OUT)/record56_float44_less.elf $@
+
+test-cycle-record56-float44-less: $(OUT)/reriff-match $(OUT)/record56_float44_less.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record56-float44-less $(OUT)/record56_float44_less.bin $(OUT)/record56-float44-less-comparison.json
+
+test-recovered: test-cycle-record56-float44-less
+.PHONY: test-cycle-record56-float44-less

@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"shader-boolean-callback",0x110ec0,19},
+  return {NativeBlock{"record56-float44-less",0x26ee0,25},
+                     NativeBlock{"shader-boolean-callback",0x110ec0,19},
                      NativeBlock{"arena-build-initial-block",0xb4380,136},
                      NativeBlock{"arena-initialize-once",0x52d30,75},
                      NativeBlock{"double-integer-parity",0x4fc420,133},
