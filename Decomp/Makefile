@@ -2153,3 +2153,16 @@ test-cycle-record48-zero-copy-construct: $(OUT)/reriff-match $(OUT)/record48_zer
 
 test-recovered: test-cycle-record48-zero-copy-construct
 .PHONY: test-cycle-record48-zero-copy-construct
+
+# Reviewed cycle reference: narrow-substring-construct (assembly evidence only).
+$(OUT)/narrow_substring_construct.bin: native/narrow_substring_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_substring_construct.o
+	ld -m elf_i386 -Ttext=0x440a90 -e original_narrow_substring_construct $(OUT)/narrow_substring_construct.o -o $(OUT)/narrow_substring_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_substring_construct.elf $@
+
+test-cycle-narrow-substring-construct: $(OUT)/reriff-match $(OUT)/narrow_substring_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-substring-construct $(OUT)/narrow_substring_construct.bin $(OUT)/narrow-substring-construct-comparison.json
+
+test-recovered: test-cycle-narrow-substring-construct
+.PHONY: test-cycle-narrow-substring-construct
