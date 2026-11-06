@@ -2647,3 +2647,16 @@ test-cycle-nested-primary-record-count: $(OUT)/reriff-match $(OUT)/nested_primar
 
 test-recovered: test-cycle-nested-primary-record-count
 .PHONY: test-cycle-nested-primary-record-count
+
+# Reviewed cycle reference: stack-allocate-align16 (assembly evidence only).
+$(OUT)/stack_allocate_align16.bin: native/stack_allocate_align16.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/stack_allocate_align16.o
+	ld -m elf_i386 -Ttext=0x8fc230 -e original_stack_allocate_align16 $(OUT)/stack_allocate_align16.o -o $(OUT)/stack_allocate_align16.elf
+	objcopy -O binary --only-section=.text $(OUT)/stack_allocate_align16.elf $@
+
+test-cycle-stack-allocate-align16: $(OUT)/reriff-match $(OUT)/stack_allocate_align16.bin
+	$(OUT)/reriff-match native-check "$(GAME)" stack-allocate-align16 $(OUT)/stack_allocate_align16.bin $(OUT)/stack-allocate-align16-comparison.json
+
+test-recovered: test-cycle-stack-allocate-align16
+.PHONY: test-cycle-stack-allocate-align16
