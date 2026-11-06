@@ -2400,3 +2400,16 @@ test-cycle-crt-runtime-error-import: $(OUT)/reriff-match $(OUT)/crt_runtime_erro
 
 test-recovered: test-cycle-crt-runtime-error-import
 .PHONY: test-cycle-crt-runtime-error-import
+
+# Reviewed cycle reference: dynamic-cast-import (assembly evidence only).
+$(OUT)/dynamic_cast_import.bin: native/dynamic_cast_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/dynamic_cast_import.o
+	ld -m elf_i386 -Ttext=0x8f8d84 -e original_dynamic_cast_import $(OUT)/dynamic_cast_import.o -o $(OUT)/dynamic_cast_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/dynamic_cast_import.elf $@
+
+test-cycle-dynamic-cast-import: $(OUT)/reriff-match $(OUT)/dynamic_cast_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" dynamic-cast-import $(OUT)/dynamic_cast_import.bin $(OUT)/dynamic-cast-import-comparison.json
+
+test-recovered: test-cycle-dynamic-cast-import
+.PHONY: test-cycle-dynamic-cast-import
