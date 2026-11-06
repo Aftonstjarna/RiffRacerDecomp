@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-144",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "tree-iterator-increment",
+      "stem": "cycle_tree_iterator_increment",
+      "source": "Decomp/recovered/msvc/cycle_tree_iterator_increment.cpp",
+      "sha256": "6835a0ef6f0173b842cb4403719c24192aa18448e4c9775a3fdc6f6debf4cf8a"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "90bfb4fa6f892df9e09d17d78569ddb4bee28b581cc227b44eaee74fb86d7d85",
+  "behavior_sha256": "aecb2fa65f24feac5e29ef69bd8ecf871f355fc89ad17cd471b6d19da39a9ec9",
+  "functions": [
+    {
+      "scope": "tree-iterator-increment",
+      "source_sha256": "6835a0ef6f0173b842cb4403719c24192aa18448e4c9775a3fdc6f6debf4cf8a",
+      "approved": true,
+      "reason": "Independently rebuilt readable C++ with pinned MSVC. The complete unmodified compiler code section matches the original exactly, with valid boundaries and no code relocations. Verified original instructions and 32-bit thiscall ABI. Executed both actual compiled code and original bytes: all 46,233 cases passed, covering traversal branches, return identity, node preservation and iterator guards. Approval covers this function only."
+    }
+  ],
+  "review_receipt_sha256": "405a2a7c24cc92346d94014150170d06a83a76df4ddd69cb04ed3366638ae5e4",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
