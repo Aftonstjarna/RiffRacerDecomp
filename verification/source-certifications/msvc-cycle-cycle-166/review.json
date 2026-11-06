@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "c79fd240e0834d7616947686060f887e3f9af27f0ca7d72b714bccafb41670e7",
+  "behavior_sha256": "fb7f2d7bcf1ffa22f9621981f41492b506af6fe39ba9894f836a884a2f088907",
+  "functions": [
+    {
+      "scope": "narrow-end-pointer",
+      "source_sha256": "44dc79a6aae43938bea68702254790fd286e884facf9231f09f7643586ca33e7",
+      "approved": true,
+      "reason": "Readable C++ preserves the original layout, branches and thiscall ABI. Independent pinned-MSVC compilation produced a complete, relocation-free section identical to Game.exe, including both returns. Independently executed compiled and original fragments passed 9,198 comparisons covering inline/heap boundaries, result aliasing, return values and untouched state. Approval covers this function only."
+    }
+  ],
+  "review_receipt_sha256": "70045795bc6c9b831dc77a526a8530312634b6dbde1ec5cd90451fdd09cfb4c3",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-166",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "narrow-end-pointer",
+      "stem": "cycle_narrow_end_pointer",
+      "source": "Decomp/recovered/msvc/cycle_narrow_end_pointer.cpp",
+      "sha256": "44dc79a6aae43938bea68702254790fd286e884facf9231f09f7643586ca33e7"
+    }
+  ]
+}
