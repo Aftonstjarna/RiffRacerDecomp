@@ -2231,3 +2231,16 @@ test-cycle-device-clear-texture-cache: $(OUT)/reriff-match $(OUT)/device_clear_t
 
 test-recovered: test-cycle-device-clear-texture-cache
 .PHONY: test-cycle-device-clear-texture-cache
+
+# Reviewed cycle reference: narrow-construct-terminated (assembly evidence only).
+$(OUT)/narrow_construct_terminated.bin: native/narrow_construct_terminated.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_construct_terminated.o
+	ld -m elf_i386 -Ttext=0x415b00 -e original_narrow_construct_terminated $(OUT)/narrow_construct_terminated.o -o $(OUT)/narrow_construct_terminated.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_construct_terminated.elf $@
+
+test-cycle-narrow-construct-terminated: $(OUT)/reriff-match $(OUT)/narrow_construct_terminated.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-construct-terminated $(OUT)/narrow_construct_terminated.bin $(OUT)/narrow-construct-terminated-comparison.json
+
+test-recovered: test-cycle-narrow-construct-terminated
+.PHONY: test-cycle-narrow-construct-terminated
