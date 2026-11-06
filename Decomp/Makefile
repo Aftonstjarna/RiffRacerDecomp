@@ -2426,3 +2426,16 @@ test-cycle-pe-section-lookup: $(OUT)/reriff-match $(OUT)/pe_section_lookup.bin
 
 test-recovered: test-cycle-pe-section-lookup
 .PHONY: test-cycle-pe-section-lookup
+
+# Reviewed cycle reference: tree-rotate-left (assembly evidence only).
+$(OUT)/tree_rotate_left.bin: native/tree_rotate_left.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_rotate_left.o
+	ld -m elf_i386 -Ttext=0x423180 -e original_tree_rotate_left $(OUT)/tree_rotate_left.o -o $(OUT)/tree_rotate_left.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_rotate_left.elf $@
+
+test-cycle-tree-rotate-left: $(OUT)/reriff-match $(OUT)/tree_rotate_left.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-rotate-left $(OUT)/tree_rotate_left.bin $(OUT)/tree-rotate-left-comparison.json
+
+test-recovered: test-cycle-tree-rotate-left
+.PHONY: test-cycle-tree-rotate-left
