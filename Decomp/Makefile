@@ -2309,3 +2309,16 @@ test-cycle-tree-rightmost: $(OUT)/reriff-match $(OUT)/tree_rightmost.bin
 
 test-recovered: test-cycle-tree-rightmost
 .PHONY: test-cycle-tree-rightmost
+
+# Reviewed cycle reference: narrow-prefix-move-construct (assembly evidence only).
+$(OUT)/narrow_prefix_move_construct.bin: native/narrow_prefix_move_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_prefix_move_construct.o
+	ld -m elf_i386 -Ttext=0x4b2d20 -e original_narrow_prefix_move_construct $(OUT)/narrow_prefix_move_construct.o -o $(OUT)/narrow_prefix_move_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_prefix_move_construct.elf $@
+
+test-cycle-narrow-prefix-move-construct: $(OUT)/reriff-match $(OUT)/narrow_prefix_move_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-prefix-move-construct $(OUT)/narrow_prefix_move_construct.bin $(OUT)/narrow-prefix-move-construct-comparison.json
+
+test-recovered: test-cycle-narrow-prefix-move-construct
+.PHONY: test-cycle-narrow-prefix-move-construct
