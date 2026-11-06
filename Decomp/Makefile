@@ -2088,3 +2088,16 @@ test-cycle-sse-conversion-exception: $(OUT)/reriff-match $(OUT)/sse_conversion_e
 
 test-recovered: test-cycle-sse-conversion-exception
 .PHONY: test-cycle-sse-conversion-exception
+
+# Reviewed cycle reference: sse-float-to-integer (assembly evidence only).
+$(OUT)/sse_float_to_integer.bin: native/sse_float_to_integer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sse_float_to_integer.o
+	ld -m elf_i386 -Ttext=0x8f8f50 -e original_sse_float_to_integer $(OUT)/sse_float_to_integer.o -o $(OUT)/sse_float_to_integer.elf
+	objcopy -O binary --only-section=.text $(OUT)/sse_float_to_integer.elf $@
+
+test-cycle-sse-float-to-integer: $(OUT)/reriff-match $(OUT)/sse_float_to_integer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sse-float-to-integer $(OUT)/sse_float_to_integer.bin $(OUT)/sse-float-to-integer-comparison.json
+
+test-recovered: test-cycle-sse-float-to-integer
+.PHONY: test-cycle-sse-float-to-integer
