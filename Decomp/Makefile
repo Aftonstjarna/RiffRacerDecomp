@@ -2179,3 +2179,16 @@ test-cycle-byte-range-compare: $(OUT)/reriff-match $(OUT)/byte_range_compare.bin
 
 test-recovered: test-cycle-byte-range-compare
 .PHONY: test-cycle-byte-range-compare
+
+# Reviewed cycle reference: narrow-find-substring (assembly evidence only).
+$(OUT)/narrow_find_substring.bin: native/narrow_find_substring.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_find_substring.o
+	ld -m elf_i386 -Ttext=0x440b90 -e original_narrow_find_substring $(OUT)/narrow_find_substring.o -o $(OUT)/narrow_find_substring.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_find_substring.elf $@
+
+test-cycle-narrow-find-substring: $(OUT)/reriff-match $(OUT)/narrow_find_substring.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-find-substring $(OUT)/narrow_find_substring.bin $(OUT)/narrow-find-substring-comparison.json
+
+test-recovered: test-cycle-narrow-find-substring
+.PHONY: test-cycle-narrow-find-substring
