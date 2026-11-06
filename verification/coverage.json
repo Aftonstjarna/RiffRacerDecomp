@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 81337,
-  "remaining_bytes": 8554055,
-  "verified_percent": 0.9419028111288984,
-  "registered_blocks": 259,
-  "exact_blocks": 259,
+  "verified_bytes": 81473,
+  "remaining_bytes": 8553919,
+  "verified_percent": 0.9434777251571208,
+  "registered_blocks": 260,
+  "exact_blocks": 260,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1325,6 +1325,15 @@
       "byte_equal": true,
       "reference_sha256": "065ddc621d9600369f5b8279b973cb1f81bbf51528dfa1ab91a6da660b2c8970",
       "candidate_sha256": "065ddc621d9600369f5b8279b973cb1f81bbf51528dfa1ab91a6da660b2c8970"
+    },
+    {
+      "name": "arena-build-initial-block",
+      "file_offset": 735104,
+      "size": 136,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "289494762dbe2fbca556293e5e17246f667ed5f73a20c42991481a6d0536d333",
+      "candidate_sha256": "289494762dbe2fbca556293e5e17246f667ed5f73a20c42991481a6d0536d333"
     },
     {
       "name": "narrow-record40-range-destroy",

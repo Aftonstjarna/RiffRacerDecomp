@@ -2829,3 +2829,16 @@ test-cycle-arena-initialize-once: $(OUT)/reriff-match $(OUT)/arena_initialize_on
 
 test-recovered: test-cycle-arena-initialize-once
 .PHONY: test-cycle-arena-initialize-once
+
+# Reviewed cycle reference: arena-build-initial-block (assembly evidence only).
+$(OUT)/arena_build_initial_block.bin: native/arena_build_initial_block.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/arena_build_initial_block.o
+	ld -m elf_i386 -Ttext=0x4b4380 -e original_arena_build_initial_block $(OUT)/arena_build_initial_block.o -o $(OUT)/arena_build_initial_block.elf
+	objcopy -O binary --only-section=.text $(OUT)/arena_build_initial_block.elf $@
+
+test-cycle-arena-build-initial-block: $(OUT)/reriff-match $(OUT)/arena_build_initial_block.bin
+	$(OUT)/reriff-match native-check "$(GAME)" arena-build-initial-block $(OUT)/arena_build_initial_block.bin $(OUT)/arena-build-initial-block-comparison.json
+
+test-recovered: test-cycle-arena-build-initial-block
+.PHONY: test-cycle-arena-build-initial-block
