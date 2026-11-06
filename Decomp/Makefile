@@ -2218,3 +2218,16 @@ test-cycle-memchr-import: $(OUT)/reriff-match $(OUT)/memchr_import.bin
 
 test-recovered: test-cycle-memchr-import
 .PHONY: test-cycle-memchr-import
+
+# Reviewed cycle reference: device-clear-texture-cache (assembly evidence only).
+$(OUT)/device_clear_texture_cache.bin: native/device_clear_texture_cache.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/device_clear_texture_cache.o
+	ld -m elf_i386 -Ttext=0x4add20 -e original_device_clear_texture_cache $(OUT)/device_clear_texture_cache.o -o $(OUT)/device_clear_texture_cache.elf
+	objcopy -O binary --only-section=.text $(OUT)/device_clear_texture_cache.elf $@
+
+test-cycle-device-clear-texture-cache: $(OUT)/reriff-match $(OUT)/device_clear_texture_cache.bin
+	$(OUT)/reriff-match native-check "$(GAME)" device-clear-texture-cache $(OUT)/device_clear_texture_cache.bin $(OUT)/device-clear-texture-cache-comparison.json
+
+test-recovered: test-cycle-device-clear-texture-cache
+.PHONY: test-cycle-device-clear-texture-cache
