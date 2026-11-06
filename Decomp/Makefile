@@ -1958,3 +1958,16 @@ test-cycle-record48-copy-retain: $(OUT)/reriff-match $(OUT)/record48_copy_retain
 
 test-recovered: test-cycle-record48-copy-retain
 .PHONY: test-cycle-record48-copy-retain
+
+# Reviewed cycle reference: graphics-table-dispose-42c (assembly evidence only).
+$(OUT)/graphics_table_dispose_42c.bin: native/graphics_table_dispose_42c.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_table_dispose_42c.o
+	ld -m elf_i386 -Ttext=0x4b2cc0 -e original_graphics_table_dispose_42c $(OUT)/graphics_table_dispose_42c.o -o $(OUT)/graphics_table_dispose_42c.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_table_dispose_42c.elf $@
+
+test-cycle-graphics-table-dispose-42c: $(OUT)/reriff-match $(OUT)/graphics_table_dispose_42c.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-table-dispose-42c $(OUT)/graphics_table_dispose_42c.bin $(OUT)/graphics-table-dispose-42c-comparison.json
+
+test-recovered: test-cycle-graphics-table-dispose-42c
+.PHONY: test-cycle-graphics-table-dispose-42c
