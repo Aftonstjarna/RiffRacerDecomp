@@ -2504,3 +2504,16 @@ test-cycle-type-info-destructor-import: $(OUT)/reriff-match $(OUT)/type_info_des
 
 test-recovered: test-cycle-type-info-destructor-import
 .PHONY: test-cycle-type-info-destructor-import
+
+# Reviewed cycle reference: signed64-arithmetic-shift-right (assembly evidence only).
+$(OUT)/signed64_arithmetic_shift_right.bin: native/signed64_arithmetic_shift_right.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/signed64_arithmetic_shift_right.o
+	ld -m elf_i386 -Ttext=0x8fc260 -e original_signed64_arithmetic_shift_right $(OUT)/signed64_arithmetic_shift_right.o -o $(OUT)/signed64_arithmetic_shift_right.elf
+	objcopy -O binary --only-section=.text $(OUT)/signed64_arithmetic_shift_right.elf $@
+
+test-cycle-signed64-arithmetic-shift-right: $(OUT)/reriff-match $(OUT)/signed64_arithmetic_shift_right.bin
+	$(OUT)/reriff-match native-check "$(GAME)" signed64-arithmetic-shift-right $(OUT)/signed64_arithmetic_shift_right.bin $(OUT)/signed64-arithmetic-shift-right-comparison.json
+
+test-recovered: test-cycle-signed64-arithmetic-shift-right
+.PHONY: test-cycle-signed64-arithmetic-shift-right
