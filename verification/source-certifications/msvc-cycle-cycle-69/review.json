@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "b8503b8517dbe9406da921f688eefdb220a132e4df3dd5353fb065b56bcd5e50",
+  "behavior_sha256": "821ebe9837e3a6bfcb4758846393f6721f855a3a1adf1e5136c8aecc4b57b196",
+  "functions": [
+    {
+      "scope": "record48-copy-retain",
+      "source_sha256": "e97cfb4d6cba18bbad96428bdf0bce41600a826a4a7c7584cd1a8a3e29b7c5a0",
+      "approved": true,
+      "reason": "Pinned MSVC rebuilt the complete, relocation-free compiler section, exactly matching original Game.exe at 0x004B4310–0x004B437E. Original disassembly and padding confirm boundaries and thiscall ABI. Independently executed all 800 differential cases using actual compiled and original bytes, covering null branches, repeated pointers, counter wraparound, overlap, return values, and untouched fixture state. Approval covers this routine only."
+    }
+  ],
+  "review_receipt_sha256": "52b05431428112de25b6213418146c2c6d9de530e800cd45d21bd87af8cc7058",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
