@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "PE32 image signature probe",
+  "summary": "Recovered 0x8f9b40 as a read-only cdecl signature probe: DOS MZ, NT PE signature via e_lfanew, then PE32 optional-header magic. Original caller at 0x8f9abf supplies 0x400000 and cleans the stack. Returns full integer 0 or 1 without imports or object state.",
+  "targets": ["pe32-image-validate"],
+  "references": ["pe32-image-validate"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding harness compares original and recovered return values for aligned and unaligned image/NT headers, forward and wrapped backward offsets, an NT header ending at fixture boundary, PE32 success, PE32+/ROM/other magic failures, every single-bit DOS and NT signature mutation, and rejected DOS with unusable e_lfanew. Checks every fixture byte remains unchanged and installed FS head is restored after every original call. Oracle assembly was compared with the original executable's complete 49 bytes. GCC harness executed successfully; implementation also compiled with pinned MSVC2013 /O2.",
+  "known_limits": [
+    "Original performs no null, extent, offset, machine, or optional-header-size checks. Faulting inputs and exception handling are not exercised.",
+    "Modulo address wrapping is preserved on 32-bit targets; a 64-bit port uses native-width addresses and does not emulate a 32-bit address space.",
+    "Behavioral validation does not establish matching compiler output or validate the surrounding caller."
+  ]
+}

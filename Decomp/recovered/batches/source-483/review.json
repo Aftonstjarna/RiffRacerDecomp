@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, cdecl ABI, reads and integer returns agree with the original routine. Independently verified all 49 reference bytes against Game.exe, reran submitted tests, passed 262,144 additional original/C++ comparisons, and compiled the actual implementation with pinned MSVC2013. Tests cover signature mutations, unaligned and backward offsets, and unchanged fixture memory. Fault handling and 64-bit address-space differences are explicitly limited; sampled validation does not establish all-input equivalence."
+}
