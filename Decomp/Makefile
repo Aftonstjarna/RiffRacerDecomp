@@ -2699,3 +2699,16 @@ test-cycle-sse2-cos-precise-import: $(OUT)/reriff-match $(OUT)/sse2_cos_precise_
 
 test-recovered: test-cycle-sse2-cos-precise-import
 .PHONY: test-cycle-sse2-cos-precise-import
+
+# Reviewed cycle reference: byte-range-transform-callback (assembly evidence only).
+$(OUT)/byte_range_transform_callback.bin: native/byte_range_transform_callback.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/byte_range_transform_callback.o
+	ld -m elf_i386 -Ttext=0x5c2740 -e original_byte_range_transform_callback $(OUT)/byte_range_transform_callback.o -o $(OUT)/byte_range_transform_callback.elf
+	objcopy -O binary --only-section=.text $(OUT)/byte_range_transform_callback.elf $@
+
+test-cycle-byte-range-transform-callback: $(OUT)/reriff-match $(OUT)/byte_range_transform_callback.bin
+	$(OUT)/reriff-match native-check "$(GAME)" byte-range-transform-callback $(OUT)/byte_range_transform_callback.bin $(OUT)/byte-range-transform-callback-comparison.json
+
+test-recovered: test-cycle-byte-range-transform-callback
+.PHONY: test-cycle-byte-range-transform-callback
