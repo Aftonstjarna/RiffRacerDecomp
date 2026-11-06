@@ -2062,3 +2062,16 @@ test-cycle-initterm-e-import: $(OUT)/reriff-match $(OUT)/initterm_e_import.bin
 
 test-recovered: test-cycle-initterm-e-import
 .PHONY: test-cycle-initterm-e-import
+
+# Reviewed cycle reference: narrow-allocate (assembly evidence only).
+$(OUT)/narrow_allocate.bin: native/narrow_allocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_allocate.o
+	ld -m elf_i386 -Ttext=0x4169f0 -e original_narrow_allocate $(OUT)/narrow_allocate.o -o $(OUT)/narrow_allocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_allocate.elf $@
+
+test-cycle-narrow-allocate: $(OUT)/reriff-match $(OUT)/narrow_allocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-allocate $(OUT)/narrow_allocate.bin $(OUT)/narrow-allocate-comparison.json
+
+test-recovered: test-cycle-narrow-allocate
+.PHONY: test-cycle-narrow-allocate
