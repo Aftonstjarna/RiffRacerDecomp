@@ -2621,3 +2621,16 @@ test-cycle-nested-record-count: $(OUT)/reriff-match $(OUT)/nested_record_count.b
 
 test-recovered: test-cycle-nested-record-count
 .PHONY: test-cycle-nested-record-count
+
+# Reviewed cycle reference: nested-record-pair-copy (assembly evidence only).
+$(OUT)/nested_record_pair_copy.bin: native/nested_record_pair_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/nested_record_pair_copy.o
+	ld -m elf_i386 -Ttext=0x490e70 -e original_nested_record_pair_copy $(OUT)/nested_record_pair_copy.o -o $(OUT)/nested_record_pair_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/nested_record_pair_copy.elf $@
+
+test-cycle-nested-record-pair-copy: $(OUT)/reriff-match $(OUT)/nested_record_pair_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" nested-record-pair-copy $(OUT)/nested_record_pair_copy.bin $(OUT)/nested-record-pair-copy-comparison.json
+
+test-recovered: test-cycle-nested-record-pair-copy
+.PHONY: test-cycle-nested-record-pair-copy
