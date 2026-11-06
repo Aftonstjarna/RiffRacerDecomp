@@ -2673,3 +2673,16 @@ test-cycle-narrow-tree-key-less: $(OUT)/reriff-match $(OUT)/narrow_tree_key_less
 
 test-recovered: test-cycle-narrow-tree-key-less
 .PHONY: test-cycle-narrow-tree-key-less
+
+# Reviewed cycle reference: narrow-compare-range (assembly evidence only).
+$(OUT)/narrow_compare_range.bin: native/narrow_compare_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_compare_range.o
+	ld -m elf_i386 -Ttext=0x422be0 -e original_narrow_compare_range $(OUT)/narrow_compare_range.o -o $(OUT)/narrow_compare_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_compare_range.elf $@
+
+test-cycle-narrow-compare-range: $(OUT)/reriff-match $(OUT)/narrow_compare_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-compare-range $(OUT)/narrow_compare_range.bin $(OUT)/narrow-compare-range-comparison.json
+
+test-recovered: test-cycle-narrow-compare-range
+.PHONY: test-cycle-narrow-compare-range
