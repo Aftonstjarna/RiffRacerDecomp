@@ -2374,3 +2374,16 @@ test-cycle-runtime-accessor-thunk: $(OUT)/reriff-match $(OUT)/runtime_accessor_t
 
 test-recovered: test-cycle-runtime-accessor-thunk
 .PHONY: test-cycle-runtime-accessor-thunk
+
+# Reviewed cycle reference: crt-exception-filter-thunk (assembly evidence only).
+$(OUT)/crt_exception_filter_thunk.bin: native/crt_exception_filter_thunk.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/crt_exception_filter_thunk.o
+	ld -m elf_i386 -Ttext=0x8f9a16 -e original_crt_exception_filter_thunk $(OUT)/crt_exception_filter_thunk.o -o $(OUT)/crt_exception_filter_thunk.elf
+	objcopy -O binary --only-section=.text $(OUT)/crt_exception_filter_thunk.elf $@
+
+test-cycle-crt-exception-filter-thunk: $(OUT)/reriff-match $(OUT)/crt_exception_filter_thunk.bin
+	$(OUT)/reriff-match native-check "$(GAME)" crt-exception-filter-thunk $(OUT)/crt_exception_filter_thunk.bin $(OUT)/crt-exception-filter-thunk-comparison.json
+
+test-recovered: test-cycle-crt-exception-filter-thunk
+.PHONY: test-cycle-crt-exception-filter-thunk
