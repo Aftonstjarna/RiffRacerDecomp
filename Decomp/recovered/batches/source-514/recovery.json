@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Ordered 64-byte matrix copy",
+  "summary": "Recovered VA 0x426fd0 (50 bytes) as a genuine thiscall member returning this. Copies four 16-byte snapshots in ascending order, preserving unaligned and overlap behavior. Callers use stack matrices and object fields at +0x41c/+0x45c. No helpers or global side effects.",
+  "targets": ["matrix64-copy"],
+  "references": ["matrix64-copy"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "16992 original-versus-C++ cases across 16 source alignments, 177 destination offsets, and six MXCSR settings. Includes exact alias, both overlap directions, offsets around 16-byte boundaries, adjacent and disjoint storage. Checks returned destination, every byte of 256-byte arenas including untouched guards/source, ordered-block model, and unchanged MXCSR.",
+  "known_limits": ["Matrix element meaning, row/column convention and original C++ method name are unresolved.", "Valid readable/writable 64-byte regions are required; invalid pointers, page faults, volatile memory and concurrent modification are outside this recovery's contract. Original block accesses are single MOVDQU operations; portable byte loops do not reproduce fault granularity or concurrent access behavior.", "Behavioral recovery only; no matching-byte claim or whole-game recovery claim."]
+}
