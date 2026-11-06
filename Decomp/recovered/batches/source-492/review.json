@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source control flow, node layout, iterator writes and native thiscall ABI agree with the original reference and callers. Independently verified reference bytes against Game.exe, rebuilt and passed 138,699 meaningful differential cases covering boundary paths, sentinel values, returns, canaries and unchanged node storage. Actual implementation also compiled with pinned MSVC2013. Documented malformed-tree and pointer-width limitations are reasonable; sampled validation does not establish all-input equivalence."
+}
