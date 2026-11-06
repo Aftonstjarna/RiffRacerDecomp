@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow agrees with the original’s ordered word copies, null handling and return advancement. ABI and pointer-width limitations are explicit. Independently verified the 66-byte oracle against Game.exe, passed 258,000 comparisons covering overlaps, alignments, varied data and full-buffer effects, and compiled the unchanged implementation with pinned MSVC. Submitted hashes match validation.json. Sampled checks do not establish all-input equivalence; fault and address-wrap behavior remain unvalidated."
+}

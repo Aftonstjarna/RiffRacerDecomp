@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Forward copy of opaque 16-byte records",
+  "summary": "Recover 0x4b3df0..0x4b3e32 as ordered four-word copying with destination advance and per-record null check. Direct original disassembly and caller 0x4b27c0 establish a container reallocation helper with custom ECX/EDX plus caller-cleaned stack ABI. Field meanings remain opaque. Portable byte accesses preserve unaligned and overlapping word-copy behavior.",
+  "targets": [
+    "record16-range-copy"
+  ],
+  "references": [
+    "record16-range-copy"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Compare original oracle and recovery across 0..6 records, eight source byte alignments, 129 destination offsets including identity, disjoint and both overlap directions. Check return advancement and all 256 buffer bytes including guards and untouched source. Empty invalid-pointer cases and one-record null destination with unreadable source verify skipped access. Install test FS and check restoration after every oracle call. Local GCC i386 test executable passed 7,224 buffer comparisons plus empty/null edge cases; accepted oracle matched all 66 original executable bytes. Implementation compiled with pinned MSVC2013 at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Opaque fields have no recovered semantic names or types.",
+    "Malformed unreachable end pointers, inaccessible non-skipped memory, and multi-record null-destination faults are not executed; original has no validation.",
+    "Address-wrap behavior is not tested. Native-width address arithmetic supports Linux pointers; original uses 32-bit addresses.",
+    "No byte-matching claim; custom original register ABI is represented only by a GCC test adapter, while the recovery exposes a portable C++ function."
+  ]
+}
