@@ -2114,3 +2114,16 @@ test-cycle-except1-import: $(OUT)/reriff-match $(OUT)/except1_import.bin
 
 test-recovered: test-cycle-except1-import
 .PHONY: test-cycle-except1-import
+
+# Reviewed cycle reference: record24-append-one (assembly evidence only).
+$(OUT)/record24_append_one.bin: native/record24_append_one.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record24_append_one.o
+	ld -m elf_i386 -Ttext=0x4b2500 -e original_record24_append_one $(OUT)/record24_append_one.o -o $(OUT)/record24_append_one.elf
+	objcopy -O binary --only-section=.text $(OUT)/record24_append_one.elf $@
+
+test-cycle-record24-append-one: $(OUT)/reriff-match $(OUT)/record24_append_one.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record24-append-one $(OUT)/record24_append_one.bin $(OUT)/record24-append-one-comparison.json
+
+test-recovered: test-cycle-record24-append-one
+.PHONY: test-cycle-record24-append-one
