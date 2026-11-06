@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "PE section lookup",
+  "summary": "Recovered the free cdecl lookup at VA 0x8f9a30 (67 bytes). Reads e_lfanew, NumberOfSections and SizeOfOptionalHeader, scans 40-byte section headers in order, and returns the first header with RVA >= VirtualAddress and RVA < wrapping uint32 VirtualAddress + VirtualSize; otherwise returns null. No writes, calls, signature checks or raw-size checks. Direct caller at 0x8f9ad9 supplies an RVA and inspects returned Characteristics. Accepted reference bytes were compared directly with Game.exe. GCC differential tests passed; pinned MSVC2013 compilation passed at O1, O2 and O2 /Oy-. No compiler-byte match claimed.",
+  "targets": ["pe-section-lookup"],
+  "references": ["pe-section-lookup"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Freestanding i386 differential harness calls original_pe_section_lookup at 0x8f9a30 using cdecl. Checks exact returned pointers and all fixture bytes after each original and recovered call. Tests empty table, inclusive starts/exclusive ends, gaps, unsorted and overlapping ranges with first-match precedence, zero size, wrapped upper bounds, high-bit RVAs, irrelevant raw sizes, invalid signatures, unaligned NT/section headers, 65535-byte optional header, 65535 sections and last-section success, plus 160 deterministic generated probes. Installs test-owned FS backing and verifies its head after every original call. The 67-byte linked oracle was checked against the immutable PE. Implementation also compiled with pinned MSVC2013 in all three optimization modes.",
+  "known_limits": [
+    "Caller must supply readable storage covering all accessed headers. Null, unmapped, truncated and address-space-wrapping header pointers are outside portable C++ preconditions; original would perform unchecked accesses. Fault and exception behavior is not tested.",
+    "Virtual range overflow is preserved as unsigned 32-bit addition, producing no match for a wrapped range rather than treating it as spanning zero.",
+    "Tests establish sampled behavioral parity, not matching generated code or whole-game recovery. No OS or PE loader behavior is implemented."
+  ]
+}

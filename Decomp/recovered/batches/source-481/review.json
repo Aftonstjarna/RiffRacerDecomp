@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery metadata, validation, original assembly and caller. Control flow, cdecl ABI, header layouts, unsigned overflow and first-match behavior agree within documented pointer-validity limits. Independently byte-checked the oracle against Game.exe, passed optimized differential edge-case tests, and compiled the actual implementation with pinned MSVC2013. Tests check returned pointers and fixture preservation. Fault behavior remains untested; sampled validation does not establish all-input equivalence."
+}
