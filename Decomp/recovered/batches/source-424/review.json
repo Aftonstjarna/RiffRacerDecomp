@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source control flow agrees with the original GCD-cycle rotation, opaque 24-byte layout, and documented ABI adaptation and side effects. Independently verified all 263 reference bytes against Game.exe, reran 20,604 differential cases, and passed 4,000 additional randomized cases covering larger ranges, all 16 alignments, payloads and guards. The unchanged implementation also compiled with pinned MSVC2013 /O2. Native compilation evidence and stated limitations are consistent; sampled validation does not establish all-input equivalence."
+}

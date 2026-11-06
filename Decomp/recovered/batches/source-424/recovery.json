@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Rotate opaque 24-byte records",
+  "summary": "Recovered 0x5434f0 GCD-cycle left rotation of adjacent record ranges. Preserves the original descending cycle representatives and swap order. Direct Game.exe disassembly agrees with accepted reference. The direct caller at 0x5434d9 passes insertion position, old end and appended end, skips empty blocks, then updates container end. The target has no calls, global accesses, FS registration or allocation. Its internal ABI is ECX first, EDX middle, stack last with caller cleanup; portable source exposes a normal C++ free function.",
+  "targets": [
+    "record24-rotate"
+  ],
+  "references": [
+    "record24-rotate"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "20604 direct differential cases: all lengths 0 through 100, every split, four byte alignments. Check every payload byte against original_record24_rotate and independent left-rotation expectation; check the complete surrounding buffers for untouched bytes. GCC regparm(3) with ignored EAX argument supplies the original custom ECX/EDX/caller-cleanup ABI. Local GCC freestanding i386 execution passed all cases; linked oracle bytes were compared directly with Game.exe (263/263). Pinned MSVC2013 compilation passed O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Record fields and owning container type remain unidentified; all 24 bytes are opaque payload.",
+    "Only valid adjacent whole-record ranges with nonnegative signed-32-bit byte distances are supported. Reversed, malformed, overflowing or inaccessible ranges are outside the recovered contract and are not tested.",
+    "No matching machine-code claim; the portable free-function ABI differs from the original internal register convention.",
+    "No concurrent observation or fault-partial-write behavior is modeled; original swaps use unaligned 16-byte and 8-byte SSE transfers."
+  ]
+}
