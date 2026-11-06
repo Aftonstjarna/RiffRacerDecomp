@@ -2842,3 +2842,16 @@ test-cycle-arena-build-initial-block: $(OUT)/reriff-match $(OUT)/arena_build_ini
 
 test-recovered: test-cycle-arena-build-initial-block
 .PHONY: test-cycle-arena-build-initial-block
+
+# Reviewed cycle reference: shader-boolean-callback (assembly evidence only).
+$(OUT)/shader_boolean_callback.bin: native/shader_boolean_callback.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_boolean_callback.o
+	ld -m elf_i386 -Ttext=0x510ec0 -e original_shader_boolean_callback $(OUT)/shader_boolean_callback.o -o $(OUT)/shader_boolean_callback.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_boolean_callback.elf $@
+
+test-cycle-shader-boolean-callback: $(OUT)/reriff-match $(OUT)/shader_boolean_callback.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-boolean-callback $(OUT)/shader_boolean_callback.bin $(OUT)/shader-boolean-callback-comparison.json
+
+test-recovered: test-cycle-shader-boolean-callback
+.PHONY: test-cycle-shader-boolean-callback
