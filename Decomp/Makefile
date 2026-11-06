@@ -2361,3 +2361,16 @@ test-cycle-tree-rotate-right: $(OUT)/reriff-match $(OUT)/tree_rotate_right.bin
 
 test-recovered: test-cycle-tree-rotate-right
 .PHONY: test-cycle-tree-rotate-right
+
+# Reviewed cycle reference: runtime-accessor-thunk (assembly evidence only).
+$(OUT)/runtime_accessor_thunk.bin: native/runtime_accessor_thunk.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/runtime_accessor_thunk.o
+	ld -m elf_i386 -Ttext=0x6d86bb -e original_runtime_accessor_thunk $(OUT)/runtime_accessor_thunk.o -o $(OUT)/runtime_accessor_thunk.elf
+	objcopy -O binary --only-section=.text $(OUT)/runtime_accessor_thunk.elf $@
+
+test-cycle-runtime-accessor-thunk: $(OUT)/reriff-match $(OUT)/runtime_accessor_thunk.bin
+	$(OUT)/reriff-match native-check "$(GAME)" runtime-accessor-thunk $(OUT)/runtime_accessor_thunk.bin $(OUT)/runtime-accessor-thunk-comparison.json
+
+test-recovered: test-cycle-runtime-accessor-thunk
+.PHONY: test-cycle-runtime-accessor-thunk
