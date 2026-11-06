@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, i386 thiscall ABI, node offsets and pointer side effects agree with the original routine. Tests meaningfully cover all reconnection branches, nil flags and full-fixture changes. Independent optimized rebuild passed all 192 comparisons; reference bytes and submitted source hashes were verified. Native Windows compilation records cover the actual implementation. Documented layout and invalid-pointer limitations are appropriate; sampled validation does not establish all-input equivalence."
+}
