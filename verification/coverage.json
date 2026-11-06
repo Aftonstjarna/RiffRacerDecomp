@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 76247,
-  "remaining_bytes": 8559145,
-  "verified_percent": 0.8829593375726313,
-  "registered_blocks": 193,
-  "exact_blocks": 193,
+  "verified_bytes": 76253,
+  "remaining_bytes": 8559139,
+  "verified_percent": 0.8830288190738764,
+  "registered_blocks": 194,
+  "exact_blocks": 194,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1559,6 +1559,15 @@
       "byte_equal": true,
       "reference_sha256": "c808d2678a24812882e1db5b8d6a148d22818015938c16a310e742f7d803c4c6",
       "candidate_sha256": "c808d2678a24812882e1db5b8d6a148d22818015938c16a310e742f7d803c4c6"
+    },
+    {
+      "name": "sse2-sqrt-precise-import",
+      "file_offset": 5210464,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "a88ae96ac2c541148479e5216b58febe330d46da27f58a9896af5b000667b560",
+      "candidate_sha256": "a88ae96ac2c541148479e5216b58febe330d46da27f58a9896af5b000667b560"
     },
     {
       "name": "memcpy-import",

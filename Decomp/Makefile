@@ -1971,3 +1971,16 @@ test-cycle-graphics-table-dispose-42c: $(OUT)/reriff-match $(OUT)/graphics_table
 
 test-recovered: test-cycle-graphics-table-dispose-42c
 .PHONY: test-cycle-graphics-table-dispose-42c
+
+# Reviewed cycle reference: sse2-sqrt-precise-import (assembly evidence only).
+$(OUT)/sse2_sqrt_precise_import.bin: native/sse2_sqrt_precise_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sse2_sqrt_precise_import.o
+	ld -m elf_i386 -Ttext=0x8f8d60 -e original_sse2_sqrt_precise_import $(OUT)/sse2_sqrt_precise_import.o -o $(OUT)/sse2_sqrt_precise_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/sse2_sqrt_precise_import.elf $@
+
+test-cycle-sse2-sqrt-precise-import: $(OUT)/reriff-match $(OUT)/sse2_sqrt_precise_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sse2-sqrt-precise-import $(OUT)/sse2_sqrt_precise_import.bin $(OUT)/sse2-sqrt-precise-import-comparison.json
+
+test-recovered: test-cycle-sse2-sqrt-precise-import
+.PHONY: test-cycle-sse2-sqrt-precise-import
