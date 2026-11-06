@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Unsigned 64-bit left shift helper",
+  "summary": "Recovered VA 0x8f99a0, RVA 0x4f99a0, 31 bytes. EDX:EAX is shifted by unsigned CL, counts 64 through 255 return zero, and upper ECX bits are ignored. Original has no memory accesses or stack arguments. Portable C++ exposes the value and count explicitly. Direct original disassembly agrees with accepted reference; observed direct caller 0x5ca441 supplies count 32.",
+  "targets": ["u64-shift-left"],
+  "references": ["u64-shift-left"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 regparm(3) oracle declaration supplies low word in EAX, high word in EDX and count in ECX, with EDX:EAX return. Compare 29,696 original/recovered calls: nine representative values at all 256 byte counts with four upper-ECX patterns, every single-bit input at all 256 counts, and 4096 deterministic mixed-word cases. Includes 0, 31, 32, 63, 64, 255, 256 and 32-bit maximum counts. Verify MXCSR remains untouched after each call. No fields or memory side effects exist in the original instructions.",
+  "known_limits": [
+    "Portable value/count API does not reproduce the original custom register calling convention; GCC regparm is used only in the oracle test adapter.",
+    "Original arithmetic flags and ECX clobbering on the 32..63 path are not exposed by the portable interface. No byte-matching claim is made.",
+    "Caller observation is limited to direct call sites found in original disassembly; indirect caller provenance is unresolved."
+  ]
+}

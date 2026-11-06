@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery metadata, validation, native Windows compilation records, and original assembly. The guarded unsigned shift correctly models all three reference paths without undefined shifts. Independently extracted and hash-checked the original fragment, then passed 29,696 differential cases at both O0 and O2, covering count boundaries, upper count bits, individual value bits, mixed words, and MXCSR preservation. The portable ABI and omitted flags/ECX effects are explicitly documented. Sampled validation does not establish all-input equivalence or exact matching."
+}
