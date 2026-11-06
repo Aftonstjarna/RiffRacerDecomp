@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Owner slot 0x214 reference assignment",
+  "summary": "Recovered thiscall assignment with vbtable-adjusted reference counts, release-before-store ordering, virtual deleting-destructor flag 1, null handling and identity no-op from original VA 0x490eb0 (72 bytes). Caller 0x494491 and constructor prefix 0x512f80 support the object layout interpretation.",
+  "targets": ["owner-slot214-assign"],
+  "references": ["owner-slot214-assign"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct i386 original comparison across 1620 combinations of null, identity, clear and replacement, signed virtual-base adjustments and six boundary reference counts per object; compares complete owner and both pointee buffers, callback flags, adjusted this, counts and incoming vbtable. Callback checks release-before-store and mutates incoming metadata in an additional case. Installs initialized FS backing and checks restoration after every call. No actual deletion or OS services.",
+  "known_limits": ["Models the original 32-bit pointer layout; a 64-bit port must adapt layouts explicitly.", "Class identities, unrelated fields and complete vtable signatures are unresolved. Destructor return is ignored; pointer return models the usual scalar deleting destructor ABI.", "Callback fixtures validate normal-path protocol only, not real destruction, exception unwinding, invalid pointers or concurrency.", "No claim of matching machine code."]
+}
