@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Tree iterator successor",
+  "summary": "Recovered Game.exe 0x422e20 (79 bytes) as a genuine thiscall member: descend to the right subtree minimum or climb right-child ancestry; nonzero sentinel markers leave end iterators unchanged. Returns the iterator address and writes only its node pointer. Direct disassembly and callers at 0x42347d and 0x42a81e confirm layout and calling convention.",
+  "targets": ["tree-iterator-increment"],
+  "references": ["tree-iterator-increment"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct i386 thiscall oracle comparison at original VA over every insertion permutation for sizes zero through seven and sentinel values 1, 2, 255. Independently expected sorted successors, repeated traversal, empty/singleton/end cases, immediate/deep right minima and parent climbs; byte snapshots verify all node prefixes, padding and payload remain unchanged, iterator guards and return address checked. Marked current node with null links verifies early return.",
+  "known_limits": ["Valid sentinel-terminated links required; null ordinary links and cyclic malformed trees are outside the original contract and are not tested.", "Node payload type, full allocation size, and tree owner identity are unresolved; only the observed 16-byte prefix is modeled, with uninterpreted trailing bytes.", "No full-game or all-input equivalence claim; no matching-byte credit claimed."]
+}
