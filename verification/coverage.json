@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 79621,
-  "remaining_bytes": 8555771,
-  "verified_percent": 0.9220311017727973,
-  "registered_blocks": 230,
-  "exact_blocks": 230,
+  "verified_bytes": 79670,
+  "remaining_bytes": 8555722,
+  "verified_percent": 0.9225985340329658,
+  "registered_blocks": 231,
+  "exact_blocks": 231,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1928,6 +1928,15 @@
       "byte_equal": true,
       "reference_sha256": "e2091fa15d6c96ccd134af2a889036e32422bcca28ff80076dc78453ad534f3b",
       "candidate_sha256": "e2091fa15d6c96ccd134af2a889036e32422bcca28ff80076dc78453ad534f3b"
+    },
+    {
+      "name": "pe32-image-validate",
+      "file_offset": 5214016,
+      "size": 49,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "722744bdeb5185942d2f7905fe9b7988f786d2e7c22cf081747858f79cafea03",
+      "candidate_sha256": "722744bdeb5185942d2f7905fe9b7988f786d2e7c22cf081747858f79cafea03"
     },
     {
       "name": "security-cookie",

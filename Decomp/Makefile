@@ -2452,3 +2452,16 @@ test-cycle-sse2-log10-precise-import: $(OUT)/reriff-match $(OUT)/sse2_log10_prec
 
 test-recovered: test-cycle-sse2-log10-precise-import
 .PHONY: test-cycle-sse2-log10-precise-import
+
+# Reviewed cycle reference: pe32-image-validate (assembly evidence only).
+$(OUT)/pe32_image_validate.bin: native/pe32_image_validate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pe32_image_validate.o
+	ld -m elf_i386 -Ttext=0x8f9b40 -e original_pe32_image_validate $(OUT)/pe32_image_validate.o -o $(OUT)/pe32_image_validate.elf
+	objcopy -O binary --only-section=.text $(OUT)/pe32_image_validate.elf $@
+
+test-cycle-pe32-image-validate: $(OUT)/reriff-match $(OUT)/pe32_image_validate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pe32-image-validate $(OUT)/pe32_image_validate.bin $(OUT)/pe32-image-validate-comparison.json
+
+test-recovered: test-cycle-pe32-image-validate
+.PHONY: test-cycle-pe32-image-validate
