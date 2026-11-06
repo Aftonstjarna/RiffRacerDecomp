@@ -2530,3 +2530,16 @@ test-cycle-tree-sentinel-allocate: $(OUT)/reriff-match $(OUT)/tree_sentinel_allo
 
 test-recovered: test-cycle-tree-sentinel-allocate
 .PHONY: test-cycle-tree-sentinel-allocate
+
+# Reviewed cycle reference: tree-iterator-decrement (assembly evidence only).
+$(OUT)/tree_iterator_decrement.bin: native/tree_iterator_decrement.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_iterator_decrement.o
+	ld -m elf_i386 -Ttext=0x4235a0 -e original_tree_iterator_decrement $(OUT)/tree_iterator_decrement.o -o $(OUT)/tree_iterator_decrement.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_iterator_decrement.elf $@
+
+test-cycle-tree-iterator-decrement: $(OUT)/reriff-match $(OUT)/tree_iterator_decrement.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-iterator-decrement $(OUT)/tree_iterator_decrement.bin $(OUT)/tree-iterator-decrement-comparison.json
+
+test-recovered: test-cycle-tree-iterator-decrement
+.PHONY: test-cycle-tree-iterator-decrement
