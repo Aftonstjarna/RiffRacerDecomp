@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Register-passed terminated UTF-16 construction",
+  "summary": "Recover VA 0x44f490: scan UTF-16 before mutation, set capacity 7, length 0 and first inline code unit 0, then assign nonempty range through the existing helper; always return this. Member fastcall models ECX destination / EDX source. Original callers confirmed at 0x5cfe43 and 0x535fa8. No prior-storage cleanup.",
+  "targets": [
+    "wide-construct-terminated-register"
+  ],
+  "references": [
+    "wide-construct-terminated-register",
+    "wide-assign-range",
+    "memcpy-import"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "120 GCC/i386 differential cases call the original constructor and accepted range-assignment helper with controlled memcpy import: lengths 0..7; ASCII, FFFF and surrogate units; four external source offsets and same-buffer construction. Assert every object byte, guard words, source preservation, return pointer, helper call count/source/count, copy call counts and FS head restoration after original calls. Require successful test_install_fs before any original call. Adapter deliberately returns null after assignment to check independent constructor return. Linked original reference bytes independently compared with immutable Game.exe. Local MSVC2013 compilation passed O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Range assignment and allocation are external dependencies, not recovered in this task. Heap growth for lengths >=8 and throwing paths were not executed; port integration must bind the assign_range member.",
+    "Null or unterminated source is invalid, as in original. Inputs exceeding valid readable object/pointer ranges are outside the portable model; original uses wrapping 32-bit address arithmetic.",
+    "Same-buffer tests use controlled memcpy and equal source/destination; arbitrary partial overlap and real CRT internals are not validated.",
+    "No matching-byte implementation claim. FS setup supports normal-path registration only, not exception dispatch or Windows TEB services."
+  ]
+}
