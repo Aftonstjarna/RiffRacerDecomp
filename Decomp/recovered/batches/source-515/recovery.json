@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Low 64-bit integer multiplication",
+  "summary": "Recovered VA 0x8fc1f0 (RVA 0x4fc1f0), 52 bytes, as unsigned word arithmetic. Two 64-bit stack operands return the product modulo 2^64 in EDX:EAX; ret 16 gives the i386 stdcall-compatible ABI. Both-zero high words take a single widening multiply; otherwise two truncated cross-products are added to the high result word. EBX is saved/restored on the general path. No object fields, globals, imports, or floating-point operations occur. Original callers at 0x4ae0fc, 0x4ae10c, 0x4ae144, 0x4ae14e and 0x56485f confirm stacked word operands and EDX:EAX consumption, including sign-extended inputs. Direct Game.exe disassembly agrees with the accepted reference, whose 52 bytes were compared exactly with the immutable executable. GCC behavioral validation passed; pinned MSVC2013 implementation compilation passed under O1, O2, and O2 /Oy-.",
+  "targets": ["u64-multiply-low"],
+  "references": ["u64-multiply-low"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Freestanding GCC i386 harness calls the original reference at VA 0x8fc1f0 and recovered C++ for 14352 pairs: 256 edge-value combinations, 4096 single-bit pairs and 10000 deterministic pseudorandom full-width pairs. Both results must equal an independent 64-step shift/add product. Covers zero-high fast path, either/both high words nonzero, cross-product carries, discarded high-high products, signed-looking patterns and modular overflow. Checks volatile operand storage and adjacent sentinels unchanged, MXCSR unchanged, and FS head restored after every original call; test_install_fs must succeed before testing. No object fields or external side effects exist in this target.",
+  "known_limits": [
+    "Behavioral validation samples the 128-bit input domain; the word-product decomposition supplies the general arithmetic argument.",
+    "Readable source is high_level_unmatched; native compiler success and exact reference-byte verification do not establish recovered-source byte matching.",
+    "No claim is made about undocumented arithmetic flags or scratch-register contents; the C++ interface preserves the observed result and callable ABI."
+  ]
+}

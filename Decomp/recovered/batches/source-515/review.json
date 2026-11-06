@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Unsigned word arithmetic faithfully reproduces both original paths, modulo-2^64 results, and the i386 callable ABI. Submitted tests call the original and cover meaningful boundaries, overflow, and state checks. Independently verified reference bytes against Game.exe, passed 1,000,000 differential cases using extracted original code, and compiled the actual implementation with pinned MSVC2013. Native compilation evidence and stated limitations are consistent; sampled validation does not establish all-input equivalence or exact matching."
+}
