@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow and cdecl interface agree with the reference, including signed zero, fractional values, parity boundaries and nonfinite inputs. Independent O0/O2 differential runs passed; the 133-byte oracle was independently verified against the immutable original. Tests exercise every exponent, individual fraction bits, random patterns and MXCSR preservation. Native Windows compilation records cover the actual implementation. Documented platform limits are appropriate; sampled validation does not establish all-input equivalence or exact matching."
+}

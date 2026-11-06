@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Binary64 integer parity classifier",
+  "summary": "Recovered cdecl classifier at VA 0x8fc420 (RVA 0x4fc420). Returns 0 for nonintegral or nonfinite values, 1 for odd finite integers, 2 for even finite integers including signed zero. Reads argument bits only. Direct calls at 0x8fcf9f and 0x8fd035 pass an eight-byte value and consume the integer result in numerical sign handling. No object fields, imports, or memory side effects.",
+  "targets": [
+    "double-integer-parity"
+  ],
+  "references": [
+    "double-integer-parity"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original comparison for signed zero, subnormals, signed finite values, odd/even integers, fractional values, infinities, signaling/quiet NaNs and payloads; all 2048 exponents with each fraction bit and endpoint mantissas under 16 MXCSR configurations; 100000 deterministic random bit patterns. Checks explicit expected classifications, unchanged argument and surrounding guards, and unchanged MXCSR after each call. Local GCC harness exited zero with oracle linked at 0x8fc420; all 133 oracle bytes compared equal to Game.exe. Supplied VS2013 compiler accepted implementation under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Implementation assumes little-endian IEEE-754 binary64 as used by original x86 and intended Linux/Windows targets.",
+    "Caller numerical algorithms are outside assigned scope; their full identities are not established.",
+    "No claim of matching original compiler output; no exception dispatch or OS behavior is involved."
+  ]
+}
