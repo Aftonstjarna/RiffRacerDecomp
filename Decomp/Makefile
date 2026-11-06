@@ -2010,3 +2010,16 @@ test-cycle-wide-construct-terminated-register: $(OUT)/reriff-match $(OUT)/wide_c
 
 test-recovered: test-cycle-wide-construct-terminated-register
 .PHONY: test-cycle-wide-construct-terminated-register
+
+# Reviewed cycle reference: ci-fmod-import (assembly evidence only).
+$(OUT)/ci_fmod_import.bin: native/ci_fmod_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ci_fmod_import.o
+	ld -m elf_i386 -Ttext=0x8fc1a2 -e original_ci_fmod_import $(OUT)/ci_fmod_import.o -o $(OUT)/ci_fmod_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/ci_fmod_import.elf $@
+
+test-cycle-ci-fmod-import: $(OUT)/reriff-match $(OUT)/ci_fmod_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ci-fmod-import $(OUT)/ci_fmod_import.bin $(OUT)/ci-fmod-import-comparison.json
+
+test-recovered: test-cycle-ci-fmod-import
+.PHONY: test-cycle-ci-fmod-import
