@@ -2283,3 +2283,16 @@ test-cycle-pool32-table-initialize: $(OUT)/reriff-match $(OUT)/pool32_table_init
 
 test-recovered: test-cycle-pool32-table-initialize
 .PHONY: test-cycle-pool32-table-initialize
+
+# Reviewed cycle reference: sqrt-float-bridge (assembly evidence only).
+$(OUT)/sqrt_float_bridge.bin: native/sqrt_float_bridge.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sqrt_float_bridge.o
+	ld -m elf_i386 -Ttext=0x426d60 -e original_sqrt_float_bridge $(OUT)/sqrt_float_bridge.o -o $(OUT)/sqrt_float_bridge.elf
+	objcopy -O binary --only-section=.text $(OUT)/sqrt_float_bridge.elf $@
+
+test-cycle-sqrt-float-bridge: $(OUT)/reriff-match $(OUT)/sqrt_float_bridge.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sqrt-float-bridge $(OUT)/sqrt_float_bridge.bin $(OUT)/sqrt-float-bridge-comparison.json
+
+test-recovered: test-cycle-sqrt-float-bridge
+.PHONY: test-cycle-sqrt-float-bridge

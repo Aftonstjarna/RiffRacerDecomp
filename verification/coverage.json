@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 79044,
-  "remaining_bytes": 8556348,
-  "verified_percent": 0.9153492974030594,
-  "registered_blocks": 217,
-  "exact_blocks": 217,
+  "verified_bytes": 79084,
+  "remaining_bytes": 8556308,
+  "verified_percent": 0.9158125074113601,
+  "registered_blocks": 218,
+  "exact_blocks": 218,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -254,6 +254,15 @@
       "byte_equal": true,
       "reference_sha256": "f90a7cbb32a5ccb797b26ae4f0c8a954ee0ded32d17396827d443a24fc7194df",
       "candidate_sha256": "f90a7cbb32a5ccb797b26ae4f0c8a954ee0ded32d17396827d443a24fc7194df"
+    },
+    {
+      "name": "sqrt-float-bridge",
+      "file_offset": 156000,
+      "size": 40,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "821bd3e46eb95f11971ffb5dbba701ec7882a4fdaa505c83dce29a4af3472fe9",
+      "candidate_sha256": "821bd3e46eb95f11971ffb5dbba701ec7882a4fdaa505c83dce29a4af3472fe9"
     },
     {
       "name": "vector3-construct-refs",
