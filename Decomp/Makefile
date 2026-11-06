@@ -2036,3 +2036,16 @@ test-cycle-record24-insert-range: $(OUT)/reriff-match $(OUT)/record24_insert_ran
 
 test-recovered: test-cycle-record24-insert-range
 .PHONY: test-cycle-record24-insert-range
+
+# Reviewed cycle reference: resource-record24-construct (assembly evidence only).
+$(OUT)/resource_record24_construct.bin: native/resource_record24_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_record24_construct.o
+	ld -m elf_i386 -Ttext=0x5436c0 -e original_resource_record24_construct $(OUT)/resource_record24_construct.o -o $(OUT)/resource_record24_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_record24_construct.elf $@
+
+test-cycle-resource-record24-construct: $(OUT)/reriff-match $(OUT)/resource_record24_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-record24-construct $(OUT)/resource_record24_construct.bin $(OUT)/resource-record24-construct-comparison.json
+
+test-recovered: test-cycle-resource-record24-construct
+.PHONY: test-cycle-resource-record24-construct
