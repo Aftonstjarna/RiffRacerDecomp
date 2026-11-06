@@ -2816,3 +2816,16 @@ test-cycle-double-integer-parity: $(OUT)/reriff-match $(OUT)/double_integer_pari
 
 test-recovered: test-cycle-double-integer-parity
 .PHONY: test-cycle-double-integer-parity
+
+# Reviewed cycle reference: arena-initialize-once (assembly evidence only).
+$(OUT)/arena_initialize_once.bin: native/arena_initialize_once.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/arena_initialize_once.o
+	ld -m elf_i386 -Ttext=0x452d30 -e original_arena_initialize_once $(OUT)/arena_initialize_once.o -o $(OUT)/arena_initialize_once.elf
+	objcopy -O binary --only-section=.text $(OUT)/arena_initialize_once.elf $@
+
+test-cycle-arena-initialize-once: $(OUT)/reriff-match $(OUT)/arena_initialize_once.bin
+	$(OUT)/reriff-match native-check "$(GAME)" arena-initialize-once $(OUT)/arena_initialize_once.bin $(OUT)/arena-initialize-once-comparison.json
+
+test-recovered: test-cycle-arena-initialize-once
+.PHONY: test-cycle-arena-initialize-once
