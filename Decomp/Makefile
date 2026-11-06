@@ -2296,3 +2296,16 @@ test-cycle-sqrt-float-bridge: $(OUT)/reriff-match $(OUT)/sqrt_float_bridge.bin
 
 test-recovered: test-cycle-sqrt-float-bridge
 .PHONY: test-cycle-sqrt-float-bridge
+
+# Reviewed cycle reference: tree-rightmost (assembly evidence only).
+$(OUT)/tree_rightmost.bin: native/tree_rightmost.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_rightmost.o
+	ld -m elf_i386 -Ttext=0x423240 -e original_tree_rightmost $(OUT)/tree_rightmost.o -o $(OUT)/tree_rightmost.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_rightmost.elf $@
+
+test-cycle-tree-rightmost: $(OUT)/reriff-match $(OUT)/tree_rightmost.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-rightmost $(OUT)/tree_rightmost.bin $(OUT)/tree-rightmost-comparison.json
+
+test-recovered: test-cycle-tree-rightmost
+.PHONY: test-cycle-tree-rightmost
