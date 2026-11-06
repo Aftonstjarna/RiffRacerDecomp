@@ -2322,3 +2322,16 @@ test-cycle-narrow-prefix-move-construct: $(OUT)/reriff-match $(OUT)/narrow_prefi
 
 test-recovered: test-cycle-narrow-prefix-move-construct
 .PHONY: test-cycle-narrow-prefix-move-construct
+
+# Reviewed cycle reference: narrow-fill-range (assembly evidence only).
+$(OUT)/narrow_fill_range.bin: native/narrow_fill_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_fill_range.o
+	ld -m elf_i386 -Ttext=0x44fae0 -e original_narrow_fill_range $(OUT)/narrow_fill_range.o -o $(OUT)/narrow_fill_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_fill_range.elf $@
+
+test-cycle-narrow-fill-range: $(OUT)/reriff-match $(OUT)/narrow_fill_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-fill-range $(OUT)/narrow_fill_range.bin $(OUT)/narrow-fill-range-comparison.json
+
+test-recovered: test-cycle-narrow-fill-range
+.PHONY: test-cycle-narrow-fill-range
