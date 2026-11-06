@@ -2686,3 +2686,16 @@ test-cycle-narrow-compare-range: $(OUT)/reriff-match $(OUT)/narrow_compare_range
 
 test-recovered: test-cycle-narrow-compare-range
 .PHONY: test-cycle-narrow-compare-range
+
+# Reviewed cycle reference: sse2-cos-precise-import (assembly evidence only).
+$(OUT)/sse2_cos_precise_import.bin: native/sse2_cos_precise_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sse2_cos_precise_import.o
+	ld -m elf_i386 -Ttext=0x8f8f22 -e original_sse2_cos_precise_import $(OUT)/sse2_cos_precise_import.o -o $(OUT)/sse2_cos_precise_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/sse2_cos_precise_import.elf $@
+
+test-cycle-sse2-cos-precise-import: $(OUT)/reriff-match $(OUT)/sse2_cos_precise_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sse2-cos-precise-import $(OUT)/sse2_cos_precise_import.bin $(OUT)/sse2-cos-precise-import-comparison.json
+
+test-recovered: test-cycle-sse2-cos-precise-import
+.PHONY: test-cycle-sse2-cos-precise-import
