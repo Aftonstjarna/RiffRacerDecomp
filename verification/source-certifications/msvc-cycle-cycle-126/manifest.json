@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-126",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "tree-rotate-left",
+      "stem": "cycle_tree_rotate_left",
+      "source": "Decomp/recovered/msvc/cycle_tree_rotate_left.cpp",
+      "sha256": "e498fe7bee60e2a028e9ee3fcb4dcaeda707437eb197871b374b0c372f8b74a3"
+    }
+  ]
+}
