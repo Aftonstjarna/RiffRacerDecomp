@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string substring comparison",
+  "summary": "Recover 0x422be0 as a const thiscall member: validate position, clamp count to remaining length, choose inline/heap storage by capacity, compare unsigned bytes and break equal-prefix ties by length. No writes on valid paths. Original invalid position imports std::_Xout_of_range with invalid string position; the port exposes this as a nonreturning integration dependency.",
+  "targets": ["narrow-compare-range"],
+  "references": ["narrow-compare-range", "byte-range-compare"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Differential original thiscall tests for capacities 0/15/16/31/UINT_MAX, inline lengths 0..15 and heap lengths 0..64, all valid positions, count boundaries including UINT_MAX, right lengths 0..65, equal prefixes and injected high-bit mismatches, unaligned buffers, embedded NUL, aliasing, null right with zero count, and all 65536 single-byte pairs. Check exact -1/0/+1 and unchanged full 24-byte object, backing buffer, and comparison buffer after each original and recovered call.",
+  "known_limits": ["Invalid-position exception dispatch/unwind cannot be exercised by this freestanding harness. The required nonreturning narrow_out_of_range port hook must implement the original CRT out-of-range semantics; the test-only definition is unreachable on tested paths.", "Valid readable buffers and coherent original 32-bit string objects required; races and invalid pointers are outside scope.", "Behavioral source recovery only; no matching-byte claim. ABI layout asserted for i386/MSVC2013; a 64-bit port must account for pointer layout changes."]
+}

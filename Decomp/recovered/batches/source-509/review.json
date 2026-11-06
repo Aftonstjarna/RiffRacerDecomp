@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow, i386 ABI/layout, unsigned comparison, clamping, and valid-path side effects agree with the original routines. Independently verified both reference fragments against immutable Game.exe and rebuilt and passed the differential harness at O2. Tests exercise meaningful boundaries and memory preservation. Native Windows compilation records cover the actual implementation. Invalid-position exception dispatch remains an explicitly documented, untested integration dependency; sampled validation does not establish all-input equivalence."
+}
