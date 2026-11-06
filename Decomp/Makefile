@@ -2790,3 +2790,16 @@ test-cycle-unsigned64-logical-shift-right: $(OUT)/reriff-match $(OUT)/unsigned64
 
 test-recovered: test-cycle-unsigned64-logical-shift-right
 .PHONY: test-cycle-unsigned64-logical-shift-right
+
+# Reviewed cycle reference: unsigned64-remainder (assembly evidence only).
+$(OUT)/unsigned64_remainder.bin: native/unsigned64_remainder.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/unsigned64_remainder.o
+	ld -m elf_i386 -Ttext=0x8fc300 -e original_unsigned64_remainder $(OUT)/unsigned64_remainder.o -o $(OUT)/unsigned64_remainder.elf
+	objcopy -O binary --only-section=.text $(OUT)/unsigned64_remainder.elf $@
+
+test-cycle-unsigned64-remainder: $(OUT)/reriff-match $(OUT)/unsigned64_remainder.bin
+	$(OUT)/reriff-match native-check "$(GAME)" unsigned64-remainder $(OUT)/unsigned64_remainder.bin $(OUT)/unsigned64-remainder-comparison.json
+
+test-recovered: test-cycle-unsigned64-remainder
+.PHONY: test-cycle-unsigned64-remainder

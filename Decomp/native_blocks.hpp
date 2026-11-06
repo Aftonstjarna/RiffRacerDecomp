@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"unsigned64-logical-shift-right",0x4fc380,31},
+  return {NativeBlock{"unsigned64-remainder",0x4fc300,117},
+                     NativeBlock{"unsigned64-logical-shift-right",0x4fc380,31},
                      NativeBlock{"unsigned64-divide",0x4fc290,104},
                      NativeBlock{"owner-slot214-assign",0x90eb0,72},
                      NativeBlock{"u64-multiply-low",0x4fc1f0,52},
