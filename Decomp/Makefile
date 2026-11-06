@@ -2569,3 +2569,16 @@ test-cycle-tree-iterator-increment: $(OUT)/reriff-match $(OUT)/tree_iterator_inc
 
 test-recovered: test-cycle-tree-iterator-increment
 .PHONY: test-cycle-tree-iterator-increment
+
+# Reviewed cycle reference: tree-node-dispose-narrow (assembly evidence only).
+$(OUT)/tree_node_dispose_narrow.bin: native/tree_node_dispose_narrow.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/tree_node_dispose_narrow.o
+	ld -m elf_i386 -Ttext=0x423520 -e original_tree_node_dispose_narrow $(OUT)/tree_node_dispose_narrow.o -o $(OUT)/tree_node_dispose_narrow.elf
+	objcopy -O binary --only-section=.text $(OUT)/tree_node_dispose_narrow.elf $@
+
+test-cycle-tree-node-dispose-narrow: $(OUT)/reriff-match $(OUT)/tree_node_dispose_narrow.bin
+	$(OUT)/reriff-match native-check "$(GAME)" tree-node-dispose-narrow $(OUT)/tree_node_dispose_narrow.bin $(OUT)/tree-node-dispose-narrow-comparison.json
+
+test-recovered: test-cycle-tree-node-dispose-narrow
+.PHONY: test-cycle-tree-node-dispose-narrow
