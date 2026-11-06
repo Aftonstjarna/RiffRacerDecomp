@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source preserves the original thiscall ABI, 64-byte layout, return pointer, and ordered overlapping accesses. Tests meaningfully cover bit patterns, unchecked in-object indices, overlap, guards, and MXCSR. Independent O0/O2 builds passed against bytes extracted directly from Game.exe. Native Windows compilation records the actual implementation. Valid-storage limitations are documented; sampled validation does not establish all-input equivalence."
+}
