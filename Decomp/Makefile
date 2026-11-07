@@ -3388,3 +3388,16 @@ test-cycle-box-vertex-without-margin: $(OUT)/reriff-match $(OUT)/box_vertex_with
 
 test-recovered: test-cycle-box-vertex-without-margin
 .PHONY: test-cycle-box-vertex-without-margin
+
+# Reviewed cycle reference: convex-internal-shape-serialize (assembly evidence only).
+$(OUT)/convex_internal_shape_serialize.bin: native/convex_internal_shape_serialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_internal_shape_serialize.o
+	ld -m elf_i386 -Ttext=0x438870 -e original_convex_internal_shape_serialize $(OUT)/convex_internal_shape_serialize.o -o $(OUT)/convex_internal_shape_serialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_internal_shape_serialize.elf $@
+
+test-cycle-convex-internal-shape-serialize: $(OUT)/reriff-match $(OUT)/convex_internal_shape_serialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-internal-shape-serialize $(OUT)/convex_internal_shape_serialize.bin $(OUT)/convex-internal-shape-serialize-comparison.json
+
+test-recovered: test-cycle-convex-internal-shape-serialize
+.PHONY: test-cycle-convex-internal-shape-serialize
