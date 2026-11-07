@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "cbfbc7013178db319d981186bf12871a496dde9dff4e3ecb7b79d2b172536643",
+  "behavior_sha256": "65a0dc0989be0147bbc8e7fd3c32dabee3c2a589d97c3237517b37bf894330d1",
+  "functions": [
+    {
+      "scope": "tree-rotate-right",
+      "source_sha256": "90a8a6dfc263c6f2ef796369f2bf787c24b6d538cd5a60d2f080281c4f210f2e",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the complete unmodified 88-byte compiler section exactly. Original instructions and surrounding padding confirm boundaries and 32-bit thiscall ABI. Executing compiled code against bytes extracted directly from Game.exe passed 3,072 cases covering all branches, every sentinel value, expected link changes, and untouched arena bytes. Approval is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "2f75d19010f56cb8f272362d7de1febc84d5f7bec080fa294addac3ea91c4901",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
