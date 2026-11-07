@@ -3089,3 +3089,16 @@ test-cycle-narrow-tree-lower-bound: $(OUT)/reriff-match $(OUT)/narrow_tree_lower
 
 test-recovered: test-cycle-narrow-tree-lower-bound
 .PHONY: test-cycle-narrow-tree-lower-bound
+
+# Reviewed cycle reference: byte-widen-terminated (assembly evidence only).
+$(OUT)/byte_widen_terminated.bin: native/byte_widen_terminated.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/byte_widen_terminated.o
+	ld -m elf_i386 -Ttext=0x425c40 -e original_byte_widen_terminated $(OUT)/byte_widen_terminated.o -o $(OUT)/byte_widen_terminated.elf
+	objcopy -O binary --only-section=.text $(OUT)/byte_widen_terminated.elf $@
+
+test-cycle-byte-widen-terminated: $(OUT)/reriff-match $(OUT)/byte_widen_terminated.bin
+	$(OUT)/reriff-match native-check "$(GAME)" byte-widen-terminated $(OUT)/byte_widen_terminated.bin $(OUT)/byte-widen-terminated-comparison.json
+
+test-recovered: test-cycle-byte-widen-terminated
+.PHONY: test-cycle-byte-widen-terminated
