@@ -3102,3 +3102,16 @@ test-cycle-byte-widen-terminated: $(OUT)/reriff-match $(OUT)/byte_widen_terminat
 
 test-recovered: test-cycle-byte-widen-terminated
 .PHONY: test-cycle-byte-widen-terminated
+
+# Reviewed cycle reference: record36-copy-range (assembly evidence only).
+$(OUT)/record36_copy_range.bin: native/record36_copy_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record36_copy_range.o
+	ld -m elf_i386 -Ttext=0x422580 -e original_record36_copy_range $(OUT)/record36_copy_range.o -o $(OUT)/record36_copy_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/record36_copy_range.elf $@
+
+test-cycle-record36-copy-range: $(OUT)/reriff-match $(OUT)/record36_copy_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record36-copy-range $(OUT)/record36_copy_range.bin $(OUT)/record36-copy-range-comparison.json
+
+test-recovered: test-cycle-record36-copy-range
+.PHONY: test-cycle-record36-copy-range
