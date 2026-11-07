@@ -3024,3 +3024,16 @@ test-cycle-narrow-range-move-construct: $(OUT)/reriff-match $(OUT)/narrow_range_
 
 test-recovered: test-cycle-narrow-range-move-construct
 .PHONY: test-cycle-narrow-range-move-construct
+
+# Reviewed cycle reference: cp1252-wide-construct (assembly evidence only).
+$(OUT)/cp1252_wide_construct.bin: native/cp1252_wide_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/cp1252_wide_construct.o
+	ld -m elf_i386 -Ttext=0x44f3e0 -e original_cp1252_wide_construct $(OUT)/cp1252_wide_construct.o -o $(OUT)/cp1252_wide_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/cp1252_wide_construct.elf $@
+
+test-cycle-cp1252-wide-construct: $(OUT)/reriff-match $(OUT)/cp1252_wide_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" cp1252-wide-construct $(OUT)/cp1252_wide_construct.bin $(OUT)/cp1252-wide-construct-comparison.json
+
+test-recovered: test-cycle-cp1252-wide-construct
+.PHONY: test-cycle-cp1252-wide-construct
