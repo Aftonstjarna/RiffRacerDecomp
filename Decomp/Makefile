@@ -2985,3 +2985,16 @@ test-cycle-narrow-record24-default-initialize: $(OUT)/reriff-match $(OUT)/narrow
 
 test-recovered: test-cycle-narrow-record24-default-initialize
 .PHONY: test-cycle-narrow-record24-default-initialize
+
+# Reviewed cycle reference: narrow-element-destroy-callback (assembly evidence only).
+$(OUT)/narrow_element_destroy_callback.bin: native/narrow_element_destroy_callback.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_element_destroy_callback.o
+	ld -m elf_i386 -Ttext=0x426930 -e original_narrow_element_destroy_callback $(OUT)/narrow_element_destroy_callback.o -o $(OUT)/narrow_element_destroy_callback.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_element_destroy_callback.elf $@
+
+test-cycle-narrow-element-destroy-callback: $(OUT)/reriff-match $(OUT)/narrow_element_destroy_callback.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-element-destroy-callback $(OUT)/narrow_element_destroy_callback.bin $(OUT)/narrow-element-destroy-callback-comparison.json
+
+test-recovered: test-cycle-narrow-element-destroy-callback
+.PHONY: test-cycle-narrow-element-destroy-callback
