@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Zero initialize 12-byte records",
+  "summary": "Recovered VA 0x437ed0 (35 bytes) as a fastcall range helper: ECX destination, EDX unsigned count, no stack arguments or return value. Each iteration skips a null current address, otherwise stores zero at offsets 0, 4 and 8, then advances by 12. Direct caller evidence at 0x4378ef, 0x50d18c and 0x5193d3 identifies initialization of newly added array records. No allocation, imports or global side effects. Field semantics remain unresolved.",
+  "targets": ["record12-zero-initialize"],
+  "references": ["record12-zero-initialize"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding test_main compares recovered C++ directly with original_record12_zero_initialize at its original VA for counts 0, 1, 2, 3, 16 and 64 across three initial patterns. Whole-buffer byte comparison and independent field assertions verify zeros, untouched prefix/suffix records and external guards. Null counts 0 and 1 and invalid non-null address with count 0 verify no-access cases. Initialized test-owned FS storage must install successfully; head restoration is checked after every original call. Accepted oracle bytes are checked against Game.exe before local execution.",
+  "known_limits": [
+    "Field meanings and original source-level record type are unresolved; only three 32-bit fields and 12-byte stride are established.",
+    "Null with count greater than one advances to address 12 and can fault; invalid writable ranges, huge counts, and address wraparound are not executed by the harness.",
+    "Portable implementation expects valid aligned Record12 storage for written iterations. Original x86 can also perform unaligned stores; no portable unaligned-object API is claimed.",
+    "On 64-bit ports address advancement uses native uintptr_t width; original i386 modulo-32-bit address wrap is preserved only on 32-bit builds.",
+    "Behavioral recovery only; no matching-byte claim or recovery of caller/container implementations."
+  ]
+}
