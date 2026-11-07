@@ -3375,3 +3375,16 @@ test-cycle-box-batched-support-without-margin: $(OUT)/reriff-match $(OUT)/box_ba
 
 test-recovered: test-cycle-box-batched-support-without-margin
 .PHONY: test-cycle-box-batched-support-without-margin
+
+# Reviewed cycle reference: box-vertex-without-margin (assembly evidence only).
+$(OUT)/box_vertex_without_margin.bin: native/box_vertex_without_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_vertex_without_margin.o
+	ld -m elf_i386 -Ttext=0x438d30 -e original_box_vertex_without_margin $(OUT)/box_vertex_without_margin.o -o $(OUT)/box_vertex_without_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_vertex_without_margin.elf $@
+
+test-cycle-box-vertex-without-margin: $(OUT)/reriff-match $(OUT)/box_vertex_without_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-vertex-without-margin $(OUT)/box_vertex_without_margin.bin $(OUT)/box-vertex-without-margin-comparison.json
+
+test-recovered: test-cycle-box-vertex-without-margin
+.PHONY: test-cycle-box-vertex-without-margin
