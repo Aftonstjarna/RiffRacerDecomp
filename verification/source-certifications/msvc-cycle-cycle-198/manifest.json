@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-198",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "owner-slot58-acquire",
+      "stem": "cycle_owner_slot58_acquire",
+      "source": "Decomp/recovered/msvc/cycle_owner_slot58_acquire.cpp",
+      "sha256": "24a0b200ef3df47ca3ad7daab854292696d8c8fe256eefe60c7407b164cf09aa"
+    }
+  ]
+}
