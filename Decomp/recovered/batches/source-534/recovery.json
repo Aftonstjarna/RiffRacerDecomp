@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "12-byte record default initialization",
+  "summary": "Recovered Game.exe VA 0x41db10 (RVA 0x1db10), 35 bytes, as readable C++: for each element, skip a null current address, otherwise store 0, 0xffffffff, 0 at offsets 0, 4, 8, then advance 12 bytes. ECX/EDX register arguments are modeled with fastcall; no stack arguments, allocation, imports, FS access or specified return value. Six direct vector-like growth callers pass an old end and added-element count. Original field meanings remain unresolved. The accepted reference was independently compared with all 35 Game.exe bytes. GCC i386 behavioral tests pass; pinned MSVC2013 compilation passes O1, O2 and O2 /Oy-. No compiler byte-match claim is made.",
+  "targets": ["record12-default-initialize"],
+  "references": ["record12-default-initialize"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Freestanding GCC i386 test_main directly compares recovered code and original_record12_default_initialize at VA 0x41db10 for counts 0, 1, 2, 3, 16 and 64 with three seed patterns. Bytewise comparison covers whole guarded buffers; independent expected-value checks cover every field and untouched prefix/suffix records plus both external guards. Null with counts 0 and 1 and invalid non-null address with count 0 complete without memory access. Test-owned FS backing is initialized and successfully installed, and FS head is checked after every original call. Original reference bytes verified against immutable Game.exe before execution.",
+  "known_limits": [
+    "Field names and signedness beyond their exact 32-bit stored patterns are unresolved; caller storage appears vector-like, without claiming a specific original C++ type.",
+    "Null with count greater than one does not safely return: the original advances to address 12 and attempts writes. Invalid-storage fault paths, enormous counts and address-space wrap are not executed in the harness.",
+    "Integer address advancement wraps at 32 bits on the original and i386 build; a 64-bit port uses native uintptr_t width and requires valid native storage for non-null writes.",
+    "Only normal valid-storage behavior and safe no-write boundaries are validated. No original compiler-byte equality or full game port completeness is claimed."
+  ]
+}
