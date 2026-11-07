@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string tree lower bound",
+  "summary": "Recovered Game.exe VA 0x422d40 (217 bytes) as a const thiscall member returning the first node whose key is not less than the query, or the tree head. Unsigned lexicographic comparison uses explicit lengths and the original capacity-16 inline/heap selection. Node links, sentinel and key offsets follow original instructions; caller evidence at 0x422aa1 and 0x422b3c distinguishes lower bound from exact lookup. The method has no externally visible writes or dependencies.",
+  "targets": ["narrow-tree-lower-bound"],
+  "references": ["narrow-tree-lower-bound"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "87,979 direct original-versus-C++ calls with independent expected results: empty tree with null query; single nodes across lengths 0..32, all valid inline/heap pairings, mismatches at byte positions 0..32, equal and unequal prefixes, unsigned high bytes and embedded zeroes; balanced and both skewed seven-node trees with duplicates and all 256 one-byte queries plus empty and beyond-maximum queries. Entire fixture snapshots verify unchanged tree fields, node metadata, keys, padding, query and backing buffers after each call. Test-owned FS backing is installed with checked success and head restoration checked after every original call. Accepted oracle assembly was independently compared to all 217 original executable bytes. GCC freestanding i386 harness passed; pinned MSVC2013 compiled the implementation at O2.",
+  "known_limits": [
+    "No byte-identical C++ code-generation claim; bytewise comparison replaces the original four-byte equality optimization.",
+    "Layout and original ABI are for 32-bit targets; a 64-bit native port requires explicit layout adaptation.",
+    "Requires readable valid string storage and terminating acyclic tree links; malformed pointers, inconsistent capacities, cycles and concurrent mutation are outside validated behavior.",
+    "Node color and padding names are descriptive; mapped-value type, ownership and balancing operations are outside the assigned scope."
+  ]
+}
