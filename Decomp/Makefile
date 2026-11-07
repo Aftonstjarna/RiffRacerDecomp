@@ -3115,3 +3115,16 @@ test-cycle-record36-copy-range: $(OUT)/reriff-match $(OUT)/record36_copy_range.b
 
 test-recovered: test-cycle-record36-copy-range
 .PHONY: test-cycle-record36-copy-range
+
+# Reviewed cycle reference: record68-range-copy (assembly evidence only).
+$(OUT)/record68_range_copy.bin: native/record68_range_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record68_range_copy.o
+	ld -m elf_i386 -Ttext=0x509e60 -e original_record68_range_copy $(OUT)/record68_range_copy.o -o $(OUT)/record68_range_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/record68_range_copy.elf $@
+
+test-cycle-record68-range-copy: $(OUT)/reriff-match $(OUT)/record68_range_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record68-range-copy $(OUT)/record68_range_copy.bin $(OUT)/record68-range-copy-comparison.json
+
+test-recovered: test-cycle-record68-range-copy
+.PHONY: test-cycle-record68-range-copy
