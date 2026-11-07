@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Initialize three-axis matrix basis",
+  "summary": "Recovered VA 0x438480 (RVA 0x38480), a no-argument thiscall method overwriting sixteen binary32 fields. Entries 0, 5 and 10 become 1.0f; every other entry, including 15, becomes positive zero. Direct original disassembly agrees with accepted assembly. Callers initialize stack temporaries and embedded matrices. No dependencies, allocation, global access or floating-point arithmetic occur.",
+  "targets": ["matrix64-initialize-basis"],
+  "references": ["matrix64-initialize-basis"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct GCC i386 thiscall comparison with original at 0x438480: seven prior byte patterns including NaNs, infinities, negative zero, subnormals and sentinels; four destination offsets modulo 16; all rounding/FTZ/DAZ combinations with preexisting exception flags. Check all 64 result bytes against oracle and explicit constants, surrounding guards, MXCSR preservation, repeat initialization and installed FS head preservation after every original call.",
+  "known_limits": ["Original type and method names and row/column convention are unresolved; Matrix64 is a descriptive layout name.", "Valid four-byte-aligned writable objects are tested. Null, inaccessible and misaligned destinations have no portable C++ contract; original performs unchecked stores.", "No matching-byte claim. No callers or broader matrix operations are recovered. Return registers and fault-time partial writes are outside the C++ method contract."]
+}
