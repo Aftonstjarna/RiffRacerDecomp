@@ -2907,3 +2907,16 @@ test-cycle-owner-slot58-acquire: $(OUT)/reriff-match $(OUT)/owner_slot58_acquire
 
 test-recovered: test-cycle-owner-slot58-acquire
 .PHONY: test-cycle-owner-slot58-acquire
+
+# Reviewed cycle reference: matrix3-construct-refs (assembly evidence only).
+$(OUT)/matrix3_construct_refs.bin: native/matrix3_construct_refs.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix3_construct_refs.o
+	ld -m elf_i386 -Ttext=0x426f30 -e original_matrix3_construct_refs $(OUT)/matrix3_construct_refs.o -o $(OUT)/matrix3_construct_refs.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix3_construct_refs.elf $@
+
+test-cycle-matrix3-construct-refs: $(OUT)/reriff-match $(OUT)/matrix3_construct_refs.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix3-construct-refs $(OUT)/matrix3_construct_refs.bin $(OUT)/matrix3-construct-refs-comparison.json
+
+test-recovered: test-cycle-matrix3-construct-refs
+.PHONY: test-cycle-matrix3-construct-refs

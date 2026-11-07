@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 81621,
-  "remaining_bytes": 8553771,
-  "verified_percent": 0.9451916021878335,
-  "registered_blocks": 265,
-  "exact_blocks": 265,
+  "verified_bytes": 81722,
+  "remaining_bytes": 8553670,
+  "verified_percent": 0.9463612074587928,
+  "registered_blocks": 266,
+  "exact_blocks": 266,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -416,6 +416,15 @@
       "byte_equal": true,
       "reference_sha256": "55611312047422474c3de335a2ef1809c306a990b6581c1fa9c1348a0c6b78d5",
       "candidate_sha256": "55611312047422474c3de335a2ef1809c306a990b6581c1fa9c1348a0c6b78d5"
+    },
+    {
+      "name": "matrix3-construct-refs",
+      "file_offset": 156464,
+      "size": 101,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "b9ce33c65b8fde877d55e32d5714d49e6a4eefc86cc383be37007227fe26c7fc",
+      "candidate_sha256": "b9ce33c65b8fde877d55e32d5714d49e6a4eefc86cc383be37007227fe26c7fc"
     },
     {
       "name": "matrix-column3-extract",
