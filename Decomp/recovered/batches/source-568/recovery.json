@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "68-byte record copy construction",
+  "summary": "Recovered VA 0x509ef0 as a thiscall member returning this: thirteen ordered 32-bit field copies and a 16-byte tail snapshot. Original callers at 0x56b62b and 0x56b64f append records with stride 68 and check destination before calling. No helpers, allocation, globals, or FS registration are used.",
+  "targets": [
+    "record68-copy-construct"
+  ],
+  "references": [
+    "record68-copy-construct"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "2048 direct original-versus-C++ calls: all source/destination combinations within four records, including self-copy, across zero, all-one, byte-ramp and 32 seeded random patterns. Check returned destination, all 68 copied bytes, independent expected bytes, unchanged source and surrounding guards. Records exercise all four possible 4-byte-aligned offsets modulo 16. Install initialized FS backing and check head after every oracle call. Original reference linked at VA 0x509ef0. Local GCC run passed; all 98 accepted oracle bytes were compared with Game.exe and matched. MSVC2013 compilation passed at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Field meanings and original C++ type name are unresolved; uint32_t preserves raw bits without inventing ownership or floating-point semantics.",
+    "Explicit-result member models constructor-shaped ABI and behavior; original language-level constructor identity is not proven.",
+    "Null or inaccessible pointers fault in the original and are outside the valid C++ API. Partial-record overlap and misaligned objects are outside the tested C++ object contract; self-copy is tested.",
+    "No matching-byte or whole-program recovery claim."
+  ]
+}
