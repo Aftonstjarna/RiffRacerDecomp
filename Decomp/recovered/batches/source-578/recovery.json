@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "32-byte record index reference",
+  "summary": "Recovered 0x41dfb0 as a genuine thiscall member with explicit output pointer and returned output address. Loads owner at this+8, metadata at this+4, adds metadata+8 to the index modulo 2^32, scales by 32, adds owner+12, then writes the original table identity, computed record address and owner to the 12-byte output. All input loads precede output stores. No allocation, record dereference or bounds check occurs. Direct Game.exe disassembly and nearby callers corroborate the accepted reference; callers read record+8. Implementation compiled with GCC and the supplied VS2013 compiler.",
+  "targets": ["record32-index-reference"],
+  "references": ["record32-index-reference"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "4000 original-versus-recovered comparisons: ten base indices by ten indices by four record-array address values by ten output placements. Includes zero, ordinary indices, sign-bit patterns, addition/shift/address wrapping, null-valued computed addresses, and output overlapping this, metadata or owner fields. Checks returned pointer, all three output words, and every untouched word in the 256-byte arena. Installs initialized test-owned FS backing and verifies its head after each original call. Oracle linked at 0x41dfb0; its 40 bytes independently compared with Game.exe.",
+  "known_limits": [
+    "Layouts and stored addresses model the original 32-bit address space; a 64-bit port must supply address translation or deliberately redesign layouts and dispatch.",
+    "The fixed table address is preserved as data identity; table methods, relocation and higher-level record semantics are outside the assigned scope.",
+    "Valid readable metadata/owner and writable output are required. Invalid-pointer faults and arbitrary unaligned inputs are not tested.",
+    "No bounds checks exist in the original. Computed record addresses are not dereferenced by this routine.",
+    "Behavioral validation and local MSVC compilation do not establish matching machine code."
+  ]
+}
