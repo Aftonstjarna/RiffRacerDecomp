@@ -2959,3 +2959,16 @@ test-cycle-shader-boolean-register: $(OUT)/reriff-match $(OUT)/shader_boolean_re
 
 test-recovered: test-cycle-shader-boolean-register
 .PHONY: test-cycle-shader-boolean-register
+
+# Reviewed cycle reference: u32-vector-reallocate (assembly evidence only).
+$(OUT)/u32_vector_reallocate.bin: native/u32_vector_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u32_vector_reallocate.o
+	ld -m elf_i386 -Ttext=0x426800 -e original_u32_vector_reallocate $(OUT)/u32_vector_reallocate.o -o $(OUT)/u32_vector_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/u32_vector_reallocate.elf $@
+
+test-cycle-u32-vector-reallocate: $(OUT)/reriff-match $(OUT)/u32_vector_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u32-vector-reallocate $(OUT)/u32_vector_reallocate.bin $(OUT)/u32-vector-reallocate-comparison.json
+
+test-recovered: test-cycle-u32-vector-reallocate
+.PHONY: test-cycle-u32-vector-reallocate
