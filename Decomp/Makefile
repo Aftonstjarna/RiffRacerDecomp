@@ -3141,3 +3141,16 @@ test-cycle-record68-copy-construct: $(OUT)/reriff-match $(OUT)/record68_copy_con
 
 test-recovered: test-cycle-record68-copy-construct
 .PHONY: test-cycle-record68-copy-construct
+
+# Reviewed cycle reference: vector3-dot-sse (assembly evidence only).
+$(OUT)/vector3_dot_sse.bin: native/vector3_dot_sse.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/vector3_dot_sse.o
+	ld -m elf_i386 -Ttext=0x4383e0 -e original_vector3_dot_sse $(OUT)/vector3_dot_sse.o -o $(OUT)/vector3_dot_sse.elf
+	objcopy -O binary --only-section=.text $(OUT)/vector3_dot_sse.elf $@
+
+test-cycle-vector3-dot-sse: $(OUT)/reriff-match $(OUT)/vector3_dot_sse.bin
+	$(OUT)/reriff-match native-check "$(GAME)" vector3-dot-sse $(OUT)/vector3_dot_sse.bin $(OUT)/vector3-dot-sse-comparison.json
+
+test-recovered: test-cycle-vector3-dot-sse
+.PHONY: test-cycle-vector3-dot-sse
