@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Forward copy of 68-byte records",
+  "summary": "Recovered VA 0x509e60 through 0x509eea from direct original disassembly and accepted assembly. Copies thirteen scalar words then a snapshot of four tail words for each 68-byte record, moving forward until first equals last and returning the advanced destination. A zero current destination suppresses that iteration's memory accesses. The sole direct caller at 0x509e05 uses container begin/end fields and newly allocated storage during reallocation. Original private register/caller-clean ABI is represented by a portable source adapter and a test-only GCC regparm adapter; no invented member receiver is imposed.",
+  "targets": ["record68-range-copy"],
+  "references": ["record68-range-copy"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding differential harness runs original_record68_range_copy at VA 0x509e60 and recovered code. For lengths zero through five compares disjoint, self, forward-overlapping and backward-overlapping ranges; compares returned end pointers and every byte of the twelve-record backing arrays to include source and guards. Also tests all-null empty range and single-record null destination with inaccessible source, confirming skipped reads and returned address 68. Installs initialized test FS backing and verifies its head after every original invocation. Local run passed; oracle's full 139-byte span was compared with Game.exe and matched. MSVC2013 O2 implementation compilation also passed.",
+  "known_limits": [
+    "Record field meanings and original source type names remain unresolved; storage is modeled as thirteen 32-bit words and a four-word tail, with no ownership semantics inferred.",
+    "Valid nonempty ranges must terminate at an address reachable by repeated 68-byte increments. Malformed ranges, address wraparound and access violations are not executed by tests.",
+    "The original tolerates unaligned x86 memory operands; the portable typed adapter requires properly aligned Record68 storage. Partial-record byte overlaps are outside the tested typed adapter contract.",
+    "Null destination is tested only for zero or one iteration. Longer null-destination ranges advance into low addresses and normally fault; no OS fault semantics are emulated.",
+    "Implementation uses a portable ordinary function ABI because the observed ECX/EDX plus caller-clean stack argument convention is not standard MS fastcall or thiscall. The test-only regparm(3) adapter supplies the exact registers and caller cleanup.",
+    "Behavioral samples and local compiler compatibility do not establish matching code generation or full-game equivalence. No matching-source credit is claimed."
+  ]
+}

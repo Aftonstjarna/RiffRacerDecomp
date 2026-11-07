@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, native compilation evidence, original routine and caller. Readable C++ preserves copy order, tail snapshot, null skip and return behavior within documented adapter limitations. Independent O0/O2 differential checks passed 10,648 range/overlap cases each, comparing returns and entire buffers. Independently verified the 139-byte oracle against Game.exe. ABI, alignment, malformed-range and fault limitations are disclosed; sampled validation does not establish all-input equivalence."
+}
