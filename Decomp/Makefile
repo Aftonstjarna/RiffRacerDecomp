@@ -2920,3 +2920,16 @@ test-cycle-matrix3-construct-refs: $(OUT)/reriff-match $(OUT)/matrix3_construct_
 
 test-recovered: test-cycle-matrix3-construct-refs
 .PHONY: test-cycle-matrix3-construct-refs
+
+# Reviewed cycle reference: resource-index-acquire (assembly evidence only).
+$(OUT)/resource_index_acquire.bin: native/resource_index_acquire.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_index_acquire.o
+	ld -m elf_i386 -Ttext=0x511e90 -e original_resource_index_acquire $(OUT)/resource_index_acquire.o -o $(OUT)/resource_index_acquire.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_index_acquire.elf $@
+
+test-cycle-resource-index-acquire: $(OUT)/reriff-match $(OUT)/resource_index_acquire.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-index-acquire $(OUT)/resource_index_acquire.bin $(OUT)/resource-index-acquire-comparison.json
+
+test-recovered: test-cycle-resource-index-acquire
+.PHONY: test-cycle-resource-index-acquire
