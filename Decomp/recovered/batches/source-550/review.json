@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Control flow, i386 ABI/layout, ordered writes, ownership transfer, reset behavior and edge cases agree with the original assembly. Independently verified all 138 reference bytes against Game.exe, passed 4,000 original-reference comparisons plus inline expected-state checks, and compiled the unchanged implementation with pinned VS2013. Validation meaningfully compares full affected storage and documents limitations. Original inline-copy execution, arbitrary overlap and exact 64-bit inactive bytes remain unvalidated; sampled checks do not establish all-input equivalence."
+}

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow string range move construction",
+  "summary": "Recover cdecl VA 0x426960 (138 bytes): iterate 24-byte strings from first to exclusive last; initialize raw destination, copy length+1 inline bytes with memmove semantics (skip on unsigned wrap) or transfer heap pointer, publish metadata and reset source. Advance and return destination. Null destination skips construction but advances by 24. No allocation or destruction. Direct original disassembly and caller at 0x426795 establish three used stack arguments; the caller supplies three additional unused template/tag arguments and cleans six slots.",
+  "targets": [
+    "narrow-range-move-construct"
+  ],
+  "references": [
+    "narrow-range-move-construct"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC freestanding i386 build with supplied flags and -Wall -Wextra -Werror passes. 210 direct original heap-range comparisons: lengths 0,1,15,16,63,UINT_MAX, capacities 16,17,31,0x80000000,UINT_MAX and range counts 0..6. Alternating null/non-null heap pointers. 96 direct original inline UINT_MAX overflow-skip range comparisons (capacities 0..15, counts 1..6). Also original all-null empty range and one-element null destination with entirely untouched source. Full guarded blocks, unused union bytes, neighboring elements, heap contents and returned endpoints compared. 3584 instruction-derived inline expected-state cases (capacities/lengths 0..15, counts 0..6, distinct/self destination), plus 30 heap self-move expected-state cases. FS backing explicitly initialized/installed; head checked after every original call. All 138 accepted reference bytes compared against immutable Game.exe. Implementation passes pinned VS2013 compilation at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "No authorized memmove IAT binding at 0x92d4a4 is supplied. Original inline-copy and self-move paths cannot be executed in the trusted harness; these paths have instruction-derived expected-state checks only. No substitute import or executable fixture is installed.",
+    "Arbitrary partial object overlap, invalid ranges, copies beyond accessible storage and nonempty multi-element null destinations are not executed. The original validates no lengths or capacities. The UINT_MAX length case is tested because it deliberately skips copying.",
+    "Original oracle ABI and exact pointer-write widths require i386. A 64-bit port retains typed ownership pointers and the 24-byte structure, but pointer writes naturally widen; exact inactive bytes on 64-bit hosts are not validated. No exceptions, CRT internals, allocation or deletion behavior is claimed. No matching-byte credit claimed."
+  ]
+}
