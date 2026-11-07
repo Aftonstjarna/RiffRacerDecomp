@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source preserves the 12-byte layout, forward payload/tail assignments, overlap effects, empty-range behavior, and returned destination end. The portable ABI difference and contract limitations are documented. Tests call the original oracle and compare the complete arena. Independently verified all 43 oracle bytes against Game.exe and passed extended lengths 0–24 at GCC O0/O2. Native Windows evidence compiles the actual implementation under three profiles. Sampled validation does not establish all-input equivalence or exact matching."
+}

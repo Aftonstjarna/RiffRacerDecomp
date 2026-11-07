@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Forward assignment of 12-byte records",
+  "summary": "Recovered the 0x43e7a0 range-copy helper from original disassembly and its two direct callers. Copies an opaque eight-byte payload followed by a four-byte tail in forward order, returning the destination end. The original internal ABI uses ECX/EDX and one caller-cleaned stack argument; the portable implementation exposes explicit range arguments.",
+  "targets": [
+    "record12-copy-assign-range"
+  ],
+  "references": [
+    "record12-copy-assign-range"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original oracle comparison for every source/destination position in a 24-record arena and lengths zero through twelve, including self-copy, forward and backward overlap, singleton and disjoint ranges. Compares returned ends and all payload/tail fields throughout the arena, checking untouched records and source effects. Also tests null empty ranges. Integer patterns include floating-point special-value bit patterns without floating-point interpretation. Local GCC i386 oracle execution passed. Accepted oracle bytes were compared directly with the 43-byte Game.exe routine. Pinned VS2013 compilation passed under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Record field meanings and enclosing container type remain unresolved; caller evidence is consistent with vector-like storage.",
+    "Requires valid readable and writable record ranges with an end reachable in 12-byte steps. Invalid, reversed, inaccessible and wrapping address ranges are outside the tested contract.",
+    "No claim of instruction-byte matching, concurrent access equivalence, or sub-record misaligned overlap equivalence."
+  ]
+}
