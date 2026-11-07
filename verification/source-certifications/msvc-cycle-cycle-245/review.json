@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "d4f78e43110c28fa5233a9f192129cf687371098b93746f93ef83097a3fc4cf7",
+  "behavior_sha256": "65ca345056ed4749f0e9c6815b966a6d3a5ce5474fd3cfd0dc4084d72886a7c6",
+  "functions": [
+    {
+      "scope": "u32-vector-growth-capacity",
+      "source_sha256": "5a1723e727b975e7d9c6abc9b17e7f25ce3fdb2f7bb5abab223d563868bbafb3",
+      "approved": true,
+      "reason": "Independently compiled with pinned MSVC and verified the entire unmodified 56-byte section equals Game.exe at 0x50dfe0–0x50e018. Confirmed boundaries, thiscall ABI, both branches and returns. Actual compiler output and original bytes passed 23,649 submitted differential cases and 103,649 additional cases varying the unused end field, with unchanged-storage checks. Source and test hashes match the receipt. Certification covers this routine, not a whole-executable rebuild or portable behavior for invalid pointers."
+    }
+  ],
+  "review_receipt_sha256": "3ec14e75595acbf51e48e6fc7215a295830e830437bd00d026823a4ef36d31f8",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

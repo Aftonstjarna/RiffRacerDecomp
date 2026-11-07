@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-245",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "u32-vector-growth-capacity",
+      "stem": "cycle_u32_vector_growth_capacity",
+      "source": "Decomp/recovered/msvc/cycle_u32_vector_growth_capacity.cpp",
+      "sha256": "5a1723e727b975e7d9c6abc9b17e7f25ce3fdb2f7bb5abab223d563868bbafb3"
+    }
+  ]
+}
