@@ -2894,3 +2894,16 @@ test-cycle-utf16-terminated-length: $(OUT)/reriff-match $(OUT)/utf16_terminated_
 
 test-recovered: test-cycle-utf16-terminated-length
 .PHONY: test-cycle-utf16-terminated-length
+
+# Reviewed cycle reference: owner-slot58-acquire (assembly evidence only).
+$(OUT)/owner_slot58_acquire.bin: native/owner_slot58_acquire.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/owner_slot58_acquire.o
+	ld -m elf_i386 -Ttext=0x48fc70 -e original_owner_slot58_acquire $(OUT)/owner_slot58_acquire.o -o $(OUT)/owner_slot58_acquire.elf
+	objcopy -O binary --only-section=.text $(OUT)/owner_slot58_acquire.elf $@
+
+test-cycle-owner-slot58-acquire: $(OUT)/reriff-match $(OUT)/owner_slot58_acquire.bin
+	$(OUT)/reriff-match native-check "$(GAME)" owner-slot58-acquire $(OUT)/owner_slot58_acquire.bin $(OUT)/owner-slot58-acquire-comparison.json
+
+test-recovered: test-cycle-owner-slot58-acquire
+.PHONY: test-cycle-owner-slot58-acquire

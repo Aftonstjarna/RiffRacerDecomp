@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 81593,
-  "remaining_bytes": 8553799,
-  "verified_percent": 0.944867355182023,
-  "registered_blocks": 264,
-  "exact_blocks": 264,
+  "verified_bytes": 81621,
+  "remaining_bytes": 8553771,
+  "verified_percent": 0.9451916021878335,
+  "registered_blocks": 265,
+  "exact_blocks": 265,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -866,6 +866,15 @@
       "byte_equal": true,
       "reference_sha256": "34d0c9a6284b8aa59012f9657e8586309ac7caba2d5352234d272ff005bf9d80",
       "candidate_sha256": "34d0c9a6284b8aa59012f9657e8586309ac7caba2d5352234d272ff005bf9d80"
+    },
+    {
+      "name": "owner-slot58-acquire",
+      "file_offset": 585840,
+      "size": 28,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "1f883d7fbf77b39ea8ea15c19394d9197d46a65a296a188553b216888df780fc",
+      "candidate_sha256": "1f883d7fbf77b39ea8ea15c19394d9197d46a65a296a188553b216888df780fc"
     },
     {
       "name": "nested-primary-record-count",
