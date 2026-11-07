@@ -3180,3 +3180,16 @@ test-cycle-vector3-normalize: $(OUT)/reriff-match $(OUT)/vector3_normalize.bin
 
 test-recovered: test-cycle-vector3-normalize
 .PHONY: test-cycle-vector3-normalize
+
+# Reviewed cycle reference: u32-vector-growth-capacity (assembly evidence only).
+$(OUT)/u32_vector_growth_capacity.bin: native/u32_vector_growth_capacity.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u32_vector_growth_capacity.o
+	ld -m elf_i386 -Ttext=0x50dfe0 -e original_u32_vector_growth_capacity $(OUT)/u32_vector_growth_capacity.o -o $(OUT)/u32_vector_growth_capacity.elf
+	objcopy -O binary --only-section=.text $(OUT)/u32_vector_growth_capacity.elf $@
+
+test-cycle-u32-vector-growth-capacity: $(OUT)/reriff-match $(OUT)/u32_vector_growth_capacity.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u32-vector-growth-capacity $(OUT)/u32_vector_growth_capacity.bin $(OUT)/u32-vector-growth-capacity-comparison.json
+
+test-recovered: test-cycle-u32-vector-growth-capacity
+.PHONY: test-cycle-u32-vector-growth-capacity
