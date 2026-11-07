@@ -3310,3 +3310,16 @@ test-cycle-device-pending-targets-prepare: $(OUT)/reriff-match $(OUT)/device_pen
 
 test-recovered: test-cycle-device-pending-targets-prepare
 .PHONY: test-cycle-device-pending-targets-prepare
+
+# Reviewed cycle reference: matrix-scaled-vector-accumulate (assembly evidence only).
+$(OUT)/matrix_scaled_vector_accumulate.bin: native/matrix_scaled_vector_accumulate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix_scaled_vector_accumulate.o
+	ld -m elf_i386 -Ttext=0x4385f0 -e original_matrix_scaled_vector_accumulate $(OUT)/matrix_scaled_vector_accumulate.o -o $(OUT)/matrix_scaled_vector_accumulate.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix_scaled_vector_accumulate.elf $@
+
+test-cycle-matrix-scaled-vector-accumulate: $(OUT)/reriff-match $(OUT)/matrix_scaled_vector_accumulate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix-scaled-vector-accumulate $(OUT)/matrix_scaled_vector_accumulate.bin $(OUT)/matrix-scaled-vector-accumulate-comparison.json
+
+test-recovered: test-cycle-matrix-scaled-vector-accumulate
+.PHONY: test-cycle-matrix-scaled-vector-accumulate
