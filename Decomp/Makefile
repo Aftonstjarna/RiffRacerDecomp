@@ -3011,3 +3011,16 @@ test-cycle-u32-allocate: $(OUT)/reriff-match $(OUT)/u32_allocate.bin
 
 test-recovered: test-cycle-u32-allocate
 .PHONY: test-cycle-u32-allocate
+
+# Reviewed cycle reference: narrow-range-move-construct (assembly evidence only).
+$(OUT)/narrow_range_move_construct.bin: native/narrow_range_move_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_range_move_construct.o
+	ld -m elf_i386 -Ttext=0x426960 -e original_narrow_range_move_construct $(OUT)/narrow_range_move_construct.o -o $(OUT)/narrow_range_move_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_range_move_construct.elf $@
+
+test-cycle-narrow-range-move-construct: $(OUT)/reriff-match $(OUT)/narrow_range_move_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-range-move-construct $(OUT)/narrow_range_move_construct.bin $(OUT)/narrow-range-move-construct-comparison.json
+
+test-recovered: test-cycle-narrow-range-move-construct
+.PHONY: test-cycle-narrow-range-move-construct
