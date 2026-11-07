@@ -3323,3 +3323,16 @@ test-cycle-matrix-scaled-vector-accumulate: $(OUT)/reriff-match $(OUT)/matrix_sc
 
 test-recovered: test-cycle-matrix-scaled-vector-accumulate
 .PHONY: test-cycle-matrix-scaled-vector-accumulate
+
+# Reviewed cycle reference: body-vector-pair-accumulate (assembly evidence only).
+$(OUT)/body_vector_pair_accumulate.bin: native/body_vector_pair_accumulate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/body_vector_pair_accumulate.o
+	ld -m elf_i386 -Ttext=0x4386f0 -e original_body_vector_pair_accumulate $(OUT)/body_vector_pair_accumulate.o -o $(OUT)/body_vector_pair_accumulate.elf
+	objcopy -O binary --only-section=.text $(OUT)/body_vector_pair_accumulate.elf $@
+
+test-cycle-body-vector-pair-accumulate: $(OUT)/reriff-match $(OUT)/body_vector_pair_accumulate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" body-vector-pair-accumulate $(OUT)/body_vector_pair_accumulate.bin $(OUT)/body-vector-pair-accumulate-comparison.json
+
+test-recovered: test-cycle-body-vector-pair-accumulate
+.PHONY: test-cycle-body-vector-pair-accumulate
