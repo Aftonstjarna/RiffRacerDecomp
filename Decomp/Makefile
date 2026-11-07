@@ -2946,3 +2946,16 @@ test-cycle-record12-default-initialize: $(OUT)/reriff-match $(OUT)/record12_defa
 
 test-recovered: test-cycle-record12-default-initialize
 .PHONY: test-cycle-record12-default-initialize
+
+# Reviewed cycle reference: shader-boolean-register (assembly evidence only).
+$(OUT)/shader_boolean_register.bin: native/shader_boolean_register.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_boolean_register.o
+	ld -m elf_i386 -Ttext=0x510ee0 -e original_shader_boolean_register $(OUT)/shader_boolean_register.o -o $(OUT)/shader_boolean_register.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_boolean_register.elf $@
+
+test-cycle-shader-boolean-register: $(OUT)/reriff-match $(OUT)/shader_boolean_register.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-boolean-register $(OUT)/shader_boolean_register.bin $(OUT)/shader-boolean-register-comparison.json
+
+test-recovered: test-cycle-shader-boolean-register
+.PHONY: test-cycle-shader-boolean-register
