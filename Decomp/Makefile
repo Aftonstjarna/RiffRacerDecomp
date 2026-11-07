@@ -3245,3 +3245,16 @@ test-cycle-matrix48-initialize-basis: $(OUT)/reriff-match $(OUT)/matrix48_initia
 
 test-recovered: test-cycle-matrix48-initialize-basis
 .PHONY: test-cycle-matrix48-initialize-basis
+
+# Reviewed cycle reference: record32-index-reference (assembly evidence only).
+$(OUT)/record32_index_reference.bin: native/record32_index_reference.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record32_index_reference.o
+	ld -m elf_i386 -Ttext=0x41dfb0 -e original_record32_index_reference $(OUT)/record32_index_reference.o -o $(OUT)/record32_index_reference.elf
+	objcopy -O binary --only-section=.text $(OUT)/record32_index_reference.elf $@
+
+test-cycle-record32-index-reference: $(OUT)/reriff-match $(OUT)/record32_index_reference.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record32-index-reference $(OUT)/record32_index_reference.bin $(OUT)/record32-index-reference-comparison.json
+
+test-recovered: test-cycle-record32-index-reference
+.PHONY: test-cycle-record32-index-reference
