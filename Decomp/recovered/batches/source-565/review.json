@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Control flow, cdecl arguments, unsigned widening, capacity handling, overlapping-buffer ordering and terminator writes agree with the original reference, independently verified against Game.exe. An independent optimized build passed the submitted tests and 57,600 expanded overlap cases. Tests call the original and compare complete buffers and guards. Native Windows compilation records cover the actual implementation. Return-register, alignment and fault-behavior limitations are explicit; sampled validation does not establish all-input equivalence."
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Terminated unsigned-byte widening",
+  "summary": "Recovered the free cdecl helper at VA 0x425c40 (59 bytes). It halves the unsigned byte capacity, widens source bytes without encoding conversion, reserves one 16-bit slot, and always writes a 16-bit terminator, including capacities 0 and 1. No object fields, globals, imports, allocation or FS accesses. Two direct callers at 0x4157b8 and 0x415832 pass 512-byte stack buffers and discard EAX. Original evidence and the accepted reference were checked directly against Game.exe. Readable implementation compiled with GCC and pinned MSVC O1, O2 and O2 /Oy-; no byte-matching claim.",
+  "targets": ["byte-widen-terminated"],
+  "references": ["byte-widen-terminated"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Freestanding GCC i386 test links the accepted reference at 0x425c40. 576 separate-buffer cases span empty through 511-byte sources, all nonzero byte values, capacities 0 through small odd/even boundaries and 510..513; two additional cases cover high-bit/maximum unsigned sizes with short sources. Compare every destination word against the original and independent expectations, including prefix/suffix canaries, and verify all source bytes remain unchanged. 2448 overlapping-buffer cases compare all 128 bytes, testing source/store ordering. Accepted 59-byte reference binary compared exactly with the original PE section. test_main returned zero.",
+  "known_limits": [
+    "Source-level return type is unresolved: nonempty original path leaves EAX zero, empty path leaves the destination address. Observed callers ignore EAX; recovered API models void and does not reproduce incidental register contents.",
+    "Null, inaccessible and undersized actual storage cause invalid memory access in the original; tests always supply readable source and at least two writable destination bytes, even when nominal capacity is zero.",
+    "Portable interface uses aligned uint16_t destination storage; original x86 instructions can also store at unaligned addresses. Unaligned pointers, concurrent access and fault timing are not modeled or tested.",
+    "Original bytewise widening is not Unicode decoding. Scope excludes the virtual source provider and subsequent caller formatting behavior."
+  ]
+}
