@@ -3349,3 +3349,16 @@ test-cycle-box-support-without-margin: $(OUT)/reriff-match $(OUT)/box_support_wi
 
 test-recovered: test-cycle-box-support-without-margin
 .PHONY: test-cycle-box-support-without-margin
+
+# Reviewed cycle reference: record12-copy-assign-range (assembly evidence only).
+$(OUT)/record12_copy_assign_range.bin: native/record12_copy_assign_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_copy_assign_range.o
+	ld -m elf_i386 -Ttext=0x43e7a0 -e original_record12_copy_assign_range $(OUT)/record12_copy_assign_range.o -o $(OUT)/record12_copy_assign_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_copy_assign_range.elf $@
+
+test-cycle-record12-copy-assign-range: $(OUT)/reriff-match $(OUT)/record12_copy_assign_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-copy-assign-range $(OUT)/record12_copy_assign_range.bin $(OUT)/record12-copy-assign-range-comparison.json
+
+test-recovered: test-cycle-record12-copy-assign-range
+.PHONY: test-cycle-record12-copy-assign-range
