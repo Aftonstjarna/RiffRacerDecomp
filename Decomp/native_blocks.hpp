@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"body-vector-pair-accumulate",0x386f0,304},
+  return {NativeBlock{"box-support-without-margin",0x389b0,98},
+                     NativeBlock{"body-vector-pair-accumulate",0x386f0,304},
                      NativeBlock{"matrix-scaled-vector-accumulate",0x385f0,252},
                      NativeBlock{"device-pending-targets-prepare",0xa4d80,286},
                      NativeBlock{"device-pending-targets-cleanup",0xa4ea0,138},

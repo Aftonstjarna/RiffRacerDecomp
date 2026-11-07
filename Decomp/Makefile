@@ -3336,3 +3336,16 @@ test-cycle-body-vector-pair-accumulate: $(OUT)/reriff-match $(OUT)/body_vector_p
 
 test-recovered: test-cycle-body-vector-pair-accumulate
 .PHONY: test-cycle-body-vector-pair-accumulate
+
+# Reviewed cycle reference: box-support-without-margin (assembly evidence only).
+$(OUT)/box_support_without_margin.bin: native/box_support_without_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_support_without_margin.o
+	ld -m elf_i386 -Ttext=0x4389b0 -e original_box_support_without_margin $(OUT)/box_support_without_margin.o -o $(OUT)/box_support_without_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_support_without_margin.elf $@
+
+test-cycle-box-support-without-margin: $(OUT)/reriff-match $(OUT)/box_support_without_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-support-without-margin $(OUT)/box_support_without_margin.bin $(OUT)/box-support-without-margin-comparison.json
+
+test-recovered: test-cycle-box-support-without-margin
+.PHONY: test-cycle-box-support-without-margin
