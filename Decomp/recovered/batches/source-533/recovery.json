@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Indexed resource acquisition",
+  "summary": "Recovered the 46-byte thiscall routine at VA 0x511e90: unsigned index check against arithmetic-shifted 32-bit byte span, non-atomic wrapping counter increment, and resource-slot return after the increment. Preserves original partial object offsets and reload order. Direct callers use index zero for default acquisition. Accepted oracle bytes were compared directly to immutable Game.exe; GCC differential execution passed and VS2013 helper compiled implementation under O2.",
+  "targets": ["resource-index-acquire"],
+  "references": ["resource-index-acquire"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct GCC i386 thiscall comparison at original VA; empty and short spans, aligned and unaligned byte lengths, reversed spans and sign-bit boundaries; valid first/interior/last indices, exact-end and high unsigned rejected indices; zero resource entries; counters around signed and unsigned wrap; counters aliasing resource entries; null arrays on rejected empty table. Compares return, all object bytes, all resource/counter slots and surrounding guard slots, plus independent expected side effects. Huge accepted indices without backing are deliberately skipped. Reference span byte comparison passed.",
+  "known_limits": [
+    "Partial object only: other fields and resource identity/ownership semantics remain unidentified. Entries are opaque 32-bit values.",
+    "Object stores original 32-bit addresses; a 64-bit native port requires an explicit layout/address migration.",
+    "Caller must supply readable object and valid backing for accepted indices. Invalid pointers, hardware faults and racing access are not tested or made safe.",
+    "No byte-matching compiler claim; successful Wine VS2013 compilation is compatibility evidence only. No Ghidra import was necessary for this straight-line routine."
+  ]
+}
