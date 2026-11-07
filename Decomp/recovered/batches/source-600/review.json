@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery metadata, validation and native Windows compilation evidence against the original routine. Readable C++ preserves thiscall ABI, serializer slots, callback order, raw-word copies and untouched fields. Independent optimized differential execution passed 4,096 calls; the reference's 121 bytes and return text were independently verified against Game.exe. Tests cover meaningful branches, mutations, in-place output and full object changes. Return-address and contract limitations are explicit. Sampled validation does not establish all-input equivalence."
+}
