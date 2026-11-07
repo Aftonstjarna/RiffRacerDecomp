@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as bounded, unmatched behavioral source recovery with zero matching-source byte credit.",
+  "reason": "Readable C++ preserves override priority, offsets, thiscall ABI, wrapping index arithmetic and absence of writes. Source hashes agree with validation; native compilation records cover the actual implementation. Independently verified all 69 reference bytes against Game.exe and passed 2,097,152 differential cases covering every flag pair, wrapping indices and memory snapshots. Partial layouts and untested invalid-memory faults are disclosed. Sampled validation does not establish all-input equivalence."
+}
