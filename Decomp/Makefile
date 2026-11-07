@@ -3154,3 +3154,16 @@ test-cycle-vector3-dot-sse: $(OUT)/reriff-match $(OUT)/vector3_dot_sse.bin
 
 test-recovered: test-cycle-vector3-dot-sse
 .PHONY: test-cycle-vector3-dot-sse
+
+# Reviewed cycle reference: shader-slot-select (assembly evidence only).
+$(OUT)/shader_slot_select.bin: native/shader_slot_select.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_slot_select.o
+	ld -m elf_i386 -Ttext=0x5301b0 -e original_shader_slot_select $(OUT)/shader_slot_select.o -o $(OUT)/shader_slot_select.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_slot_select.elf $@
+
+test-cycle-shader-slot-select: $(OUT)/reriff-match $(OUT)/shader_slot_select.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-slot-select $(OUT)/shader_slot_select.bin $(OUT)/shader-slot-select-comparison.json
+
+test-recovered: test-cycle-shader-slot-select
+.PHONY: test-cycle-shader-slot-select
