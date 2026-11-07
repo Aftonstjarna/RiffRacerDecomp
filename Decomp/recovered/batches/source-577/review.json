@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery metadata, reference routine and validation, including native compilation of impl.cpp. The twelve constant stores preserve the 48-byte layout and documented behavior. Independently verified all 84 reference bytes against Game.exe and rebuilt/reran the differential tests successfully: 768 cases cover exceptional prior bit patterns, MXCSR modes, guards, exact output words and idempotence. Tests call the original routine. ABI and portability limitations are appropriately scoped; sampled validation does not establish all-input equivalence or exact matching."
+}
