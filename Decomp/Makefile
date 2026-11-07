@@ -3076,3 +3076,16 @@ test-cycle-record24-reallocate: $(OUT)/reriff-match $(OUT)/record24_reallocate.b
 
 test-recovered: test-cycle-record24-reallocate
 .PHONY: test-cycle-record24-reallocate
+
+# Reviewed cycle reference: narrow-tree-lower-bound (assembly evidence only).
+$(OUT)/narrow_tree_lower_bound.bin: native/narrow_tree_lower_bound.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_tree_lower_bound.o
+	ld -m elf_i386 -Ttext=0x422d40 -e original_narrow_tree_lower_bound $(OUT)/narrow_tree_lower_bound.o -o $(OUT)/narrow_tree_lower_bound.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_tree_lower_bound.elf $@
+
+test-cycle-narrow-tree-lower-bound: $(OUT)/reriff-match $(OUT)/narrow_tree_lower_bound.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-tree-lower-bound $(OUT)/narrow_tree_lower_bound.bin $(OUT)/narrow-tree-lower-bound-comparison.json
+
+test-recovered: test-cycle-narrow-tree-lower-bound
+.PHONY: test-cycle-narrow-tree-lower-bound
