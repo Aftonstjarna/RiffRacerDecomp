@@ -3037,3 +3037,16 @@ test-cycle-cp1252-wide-construct: $(OUT)/reriff-match $(OUT)/cp1252_wide_constru
 
 test-recovered: test-cycle-cp1252-wide-construct
 .PHONY: test-cycle-cp1252-wide-construct
+
+# Reviewed cycle reference: record12-zero-initialize (assembly evidence only).
+$(OUT)/record12_zero_initialize.bin: native/record12_zero_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_zero_initialize.o
+	ld -m elf_i386 -Ttext=0x437ed0 -e original_record12_zero_initialize $(OUT)/record12_zero_initialize.o -o $(OUT)/record12_zero_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_zero_initialize.elf $@
+
+test-cycle-record12-zero-initialize: $(OUT)/reriff-match $(OUT)/record12_zero_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-zero-initialize $(OUT)/record12_zero_initialize.bin $(OUT)/record12-zero-initialize-comparison.json
+
+test-recovered: test-cycle-record12-zero-initialize
+.PHONY: test-cycle-record12-zero-initialize
