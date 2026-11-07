@@ -3284,3 +3284,16 @@ test-cycle-device-bind-pending-targets: $(OUT)/reriff-match $(OUT)/device_bind_p
 
 test-recovered: test-cycle-device-bind-pending-targets
 .PHONY: test-cycle-device-bind-pending-targets
+
+# Reviewed cycle reference: device-pending-targets-cleanup (assembly evidence only).
+$(OUT)/device_pending_targets_cleanup.bin: native/device_pending_targets_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/device_pending_targets_cleanup.o
+	ld -m elf_i386 -Ttext=0x4a4ea0 -e original_device_pending_targets_cleanup $(OUT)/device_pending_targets_cleanup.o -o $(OUT)/device_pending_targets_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/device_pending_targets_cleanup.elf $@
+
+test-cycle-device-pending-targets-cleanup: $(OUT)/reriff-match $(OUT)/device_pending_targets_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" device-pending-targets-cleanup $(OUT)/device_pending_targets_cleanup.bin $(OUT)/device-pending-targets-cleanup-comparison.json
+
+test-recovered: test-cycle-device-pending-targets-cleanup
+.PHONY: test-cycle-device-pending-targets-cleanup
