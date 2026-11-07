@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"matrix-row-pointer",0x38410,15},
+  return {NativeBlock{"matrix48-initialize-basis",0x38420,84},
+                     NativeBlock{"matrix-row-pointer",0x38410,15},
                      NativeBlock{"matrix64-initialize-basis",0x38480,112},
                      NativeBlock{"owner-handle5c-acquire",0x3f250,28},
                      NativeBlock{"u32-vector-growth-capacity",0x10dfe0,56},
