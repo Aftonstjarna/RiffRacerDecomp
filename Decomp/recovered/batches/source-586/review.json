@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source control flow and 32-bit ABI/layout agree with the original: descending conditional COM Release calls, clearing after callbacks, fresh later-field loads, and viewport zeroing. Independently verified all 138 reference bytes against Game.exe and rebuilt/reran differential tests at O2 successfully. Tests meaningfully cover all pointer masks, aliases, callback mutations, callback-time snapshots, guards, flags, and repeated cleanup. Native Windows compilation records cover the actual implementation without claiming a match. Exception behavior, real resource destruction, and invalid inputs remain explicitly unvalidated; sampled tests do not establish all-input equivalence."
+}

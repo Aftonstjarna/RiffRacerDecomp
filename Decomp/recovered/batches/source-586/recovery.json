@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Pending device target cleanup",
+  "summary": "Recovered the thiscall device-prefix cleanup at VA 0x4a4ea0: descending COM stdcall Release calls at offsets 0x18 through 0x04, post-callback pointer clearing, and zeroing viewport bytes 0x1c through 0x33. Flags and surrounding device fields are preserved. Field roles are inferred from adjacent creation and binding code inspected in Game.exe.",
+  "targets": [
+    "device-pending-targets-cleanup"
+  ],
+  "references": [
+    "device-pending-targets-cleanup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original comparison for all 64 null/non-null masks with distinct resources, aliased resources, and callback mutation of current/later pointers and viewport. Compares full callback-time object/guard snapshots, release identities/order/count, complete final state, unchanged guards and flags, zeroed viewport and (without callback mutation) pointer region, and repeated cleanup for ordinary callbacks. Installs test FS backing and checks restoration after every oracle invocation.",
+  "known_limits": [
+    "Normal-path controlled COM callbacks only; no real Direct3D resource destruction or exception behavior is validated.",
+    "DevicePendingTargets models only the first 0x34 bytes of the larger device; field names are inferred roles, not recovered original identifiers.",
+    "No byte-matching claim; implementation is intended for 32-bit original ABI and readable Linux porting.",
+    "Invalid object, dangling resource, and invalid vtable inputs retain the original caller precondition and are not tested."
+  ]
+}
