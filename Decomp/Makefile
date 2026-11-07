@@ -3427,3 +3427,16 @@ test-cycle-shape-scaled-margin: $(OUT)/reriff-match $(OUT)/shape_scaled_margin.b
 
 test-recovered: test-cycle-shape-scaled-margin
 .PHONY: test-cycle-shape-scaled-margin
+
+# Reviewed cycle reference: four-record20-initialize (assembly evidence only).
+$(OUT)/four_record20_initialize.bin: native/four_record20_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/four_record20_initialize.o
+	ld -m elf_i386 -Ttext=0x439220 -e original_four_record20_initialize $(OUT)/four_record20_initialize.o -o $(OUT)/four_record20_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/four_record20_initialize.elf $@
+
+test-cycle-four-record20-initialize: $(OUT)/reriff-match $(OUT)/four_record20_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" four-record20-initialize $(OUT)/four_record20_initialize.bin $(OUT)/four-record20-initialize-comparison.json
+
+test-recovered: test-cycle-four-record20-initialize
+.PHONY: test-cycle-four-record20-initialize
