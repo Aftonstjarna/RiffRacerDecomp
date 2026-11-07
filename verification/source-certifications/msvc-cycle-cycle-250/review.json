@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "bcb75c461738d227198fc5c55b942ecb649f3ae5210827dd532999e64c8ac325",
+  "behavior_sha256": "2d2c6c535dafef7ac3f3e25637176ca75f652153fe5507636e3f010f2c410b8d",
+  "functions": [
+    {
+      "scope": "matrix64-initialize-basis",
+      "source_sha256": "0303926008f39cf064bf83ce55ab9450cf7678cee71440356f7a5acad991efd0",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation matched the entire unmodified compiler code section to Game.exe at 0x438480–0x4384f0. Confirmed routine boundaries, thiscall ABI and absence of branches or relocations. Executed compiled and original fragments across 4,160 cases checking output bytes, surrounding untouched memory and idempotence. Approval covers this routine only."
+    }
+  ],
+  "review_receipt_sha256": "8df37240aaaea0353bad0b7e8e7a79f276b0ccf0c4253eacad1547f7dfce5814",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

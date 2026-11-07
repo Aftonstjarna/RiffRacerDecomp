@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-250",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "matrix64-initialize-basis",
+      "stem": "cycle_matrix64_initialize_basis",
+      "source": "Decomp/recovered/msvc/cycle_matrix64_initialize_basis.cpp",
+      "sha256": "0303926008f39cf064bf83ce55ab9450cf7678cee71440356f7a5acad991efd0"
+    }
+  ]
+}
