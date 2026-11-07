@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source preserves the original sequential copies, alias dependencies, zero padding, 48-byte layout and thiscall return contract. Tests call the byte-checked original and cover special bit patterns, destination aliases, guards, external inputs and MXCSR. Independent original-byte verification and O0/O2 differential runs passed; the unchanged implementation also compiled with pinned VS2013. Native compilation evidence was inspected. Documented type and invalid-reference limitations are reasonable; sampled validation does not establish all-input equivalence or exact matching."
+}

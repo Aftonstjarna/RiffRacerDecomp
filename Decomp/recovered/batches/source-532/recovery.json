@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Matrix3 construction from nine references",
+  "summary": "Recovered 0x426f30 (101 bytes): sequential raw 32-bit copies into a 48-byte matrix with zero padding at offsets 12, 28 and 44. Genuine thiscall member returns the destination and preserves input/destination alias ordering. Direct caller 0x4d8ca6 initializes global 0xc0d508 from nine zero-valued stack references.",
+  "targets": [
+    "matrix3-construct-refs"
+  ],
+  "references": [
+    "matrix3-construct-refs"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC i386 harness compares original thiscall routine and recovered member, returned destination, all 48 output bytes, surrounding guards, unchanged external inputs and MXCSR. Tests zero initialization, signed zero, ordinary floats, infinities, quiet/signaling NaN payloads, subnormal bit patterns, each argument aliasing each destination word, repeated aliases and 1024 mixed deterministic alias maps in each of two MXCSR modes. Local validation passed with oracle at VA 0x426f30 after exact 101-byte comparison to Game.exe; implementation also compiled with pinned VS2013 at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Original source type and mathematical row/column naming are unresolved; uint32_t words intentionally expose exact storage bits.",
+    "Constructor is expressed as a named member returning this to expose the original EAX return contract for testing.",
+    "Invalid pointers, inaccessible memory and fault ordering are outside the valid-reference contract; no exception behavior is claimed.",
+    "No matching-byte credit claimed; recovered scope excludes callers and other matrix operations."
+  ]
+}
