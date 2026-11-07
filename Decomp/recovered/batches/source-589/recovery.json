@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Pending render-target preparation",
+  "summary": "Recovered thiscall Device::prepare_pending at 0x4a4d80. Unsigned width clamps to 8192, height truncates width*9/16. Creates one or two render-target textures and level-zero surfaces, depth surface and system-memory offscreen surface using stdcall COM slots. Negative HRESULTs invoke accepted cleanup; nonnegative results initialize the six-field viewport and return true in AL. Flags and surrounding fields remain untouched. Direct Game.exe disassembly confirms target, cleanup and caller at 0x4a4f30.",
+  "targets": [
+    "device-pending-targets-prepare"
+  ],
+  "references": [
+    "device-pending-targets-prepare",
+    "device-pending-targets-cleanup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "6912 original-versus-C++ cases: 12 widths including zero, rounding boundaries, 8191/8192/8193 and unsigned extremes; mode 0/1/2/255; failure indices 0..7; successful HRESULT 0/1/INT_MAX; seeded or null resource slots; failure outputs written, cleared or untouched. Compare boolean, COM argument trace, receiver/output addresses, descending Release order and callback-visible resource/viewport state, entire Device bytes and untouched fields, success viewport and failure zeroing. Test-owned FS setup is required and its head checked after calls. Both accepted oracle sections were compared byte-for-byte with immutable Game.exe. GCC freestanding differential test passed; pinned MSVC2013 O1, O2 and O2 /Oy- compilation passed.",
+  "known_limits": [
+    "D3D9-style method names and field roles are inferred from vtable slots and neighboring binding code; no real rendering or driver behavior is tested.",
+    "Cleanup is an accepted external reference dependency, supplied through a test-only adapter; it is not recovered again here.",
+    "Valid COM objects and pointers are required, as in the original; exceptions, invalid pointers and concurrent/reentrant mutation are not validated.",
+    "This is unmatched readable source; no matching-byte credit is claimed."
+  ]
+}
