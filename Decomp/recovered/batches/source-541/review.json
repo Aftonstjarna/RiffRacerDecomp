@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 24-byte layout, writes, null handling, and ignored caller arguments agree with original evidence. Independent optimized 32-bit testing passed 66,304 patterned cases against a fragment verified against Game.exe, checking all bytes and guards. The actual implementation also compiled with pinned MSVC2013. Submitted tests meaningfully call the original. Address-wrap, invalid-memory fault behavior, and 64-bit limitations are disclosed; sampled validation does not establish all-input equivalence."
+}

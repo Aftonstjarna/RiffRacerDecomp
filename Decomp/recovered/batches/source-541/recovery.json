@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow record array default initialization",
+  "summary": "Recovers cdecl VA 0x4268c0: for each 24-byte record store capacity 15, length zero, and a first-byte terminator, preserving storage bytes 1 through 15. Observed array-growth and construction callers pass three additional ignored stack arguments. No allocation or destruction occurs.",
+  "targets": ["narrow-record24-default-initialize"],
+  "references": ["narrow-record24-default-initialize"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct original comparison over counts 0 through 17 with 16 patterned initial states, full-byte expected-value checks including guard records and untouched storage. Tests null with counts zero and one, nonnull invalid address with count zero, ignored trailing arguments, and FS head restoration after every original call. Uses initialized test-owned FS backing and requires successful installation.",
+  "known_limits": ["No byte-matching claim; field names and narrow-string interpretation are inferred from layout and callers.", "Nonzero-count ranges must name writable records. Null with count greater than one advances to address 24 and can fault; this invalid-memory path is not executed.", "32-bit address wrap and fault timing are not exercised. uintptr_t arithmetic follows native pointer width on a 64-bit port.", "No return value is recovered: the original has no explicit return-value contract. Template argument types for three ignored trailing arguments remain unresolved."]
+}
