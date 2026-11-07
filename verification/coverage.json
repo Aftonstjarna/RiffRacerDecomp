@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 81768,
-  "remaining_bytes": 8553624,
-  "verified_percent": 0.9468938989683386,
-  "registered_blocks": 267,
-  "exact_blocks": 267,
+  "verified_bytes": 81803,
+  "remaining_bytes": 8553589,
+  "verified_percent": 0.9472992077256018,
+  "registered_blocks": 268,
+  "exact_blocks": 268,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -191,6 +191,15 @@
       "byte_equal": true,
       "reference_sha256": "560d7ef9785ace08532787e0cbf95d75f7abae6dc955414e56d56a89cee6f9c9",
       "candidate_sha256": "560d7ef9785ace08532787e0cbf95d75f7abae6dc955414e56d56a89cee6f9c9"
+    },
+    {
+      "name": "record12-default-initialize",
+      "file_offset": 118544,
+      "size": 35,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "46a1b6f5e98e3462d414d3789cb2b8139b175f50eb0f8e325d4fbfa2019a879d",
+      "candidate_sha256": "46a1b6f5e98e3462d414d3789cb2b8139b175f50eb0f8e325d4fbfa2019a879d"
     },
     {
       "name": "resource-table-acquire",

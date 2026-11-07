@@ -2933,3 +2933,16 @@ test-cycle-resource-index-acquire: $(OUT)/reriff-match $(OUT)/resource_index_acq
 
 test-recovered: test-cycle-resource-index-acquire
 .PHONY: test-cycle-resource-index-acquire
+
+# Reviewed cycle reference: record12-default-initialize (assembly evidence only).
+$(OUT)/record12_default_initialize.bin: native/record12_default_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_default_initialize.o
+	ld -m elf_i386 -Ttext=0x41db10 -e original_record12_default_initialize $(OUT)/record12_default_initialize.o -o $(OUT)/record12_default_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_default_initialize.elf $@
+
+test-cycle-record12-default-initialize: $(OUT)/reriff-match $(OUT)/record12_default_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-default-initialize $(OUT)/record12_default_initialize.bin $(OUT)/record12-default-initialize-comparison.json
+
+test-recovered: test-cycle-record12-default-initialize
+.PHONY: test-cycle-record12-default-initialize
