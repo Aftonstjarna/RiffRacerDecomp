@@ -3193,3 +3193,16 @@ test-cycle-u32-vector-growth-capacity: $(OUT)/reriff-match $(OUT)/u32_vector_gro
 
 test-recovered: test-cycle-u32-vector-growth-capacity
 .PHONY: test-cycle-u32-vector-growth-capacity
+
+# Reviewed cycle reference: owner-handle5c-acquire (assembly evidence only).
+$(OUT)/owner_handle5c_acquire.bin: native/owner_handle5c_acquire.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/owner_handle5c_acquire.o
+	ld -m elf_i386 -Ttext=0x43f250 -e original_owner_handle5c_acquire $(OUT)/owner_handle5c_acquire.o -o $(OUT)/owner_handle5c_acquire.elf
+	objcopy -O binary --only-section=.text $(OUT)/owner_handle5c_acquire.elf $@
+
+test-cycle-owner-handle5c-acquire: $(OUT)/reriff-match $(OUT)/owner_handle5c_acquire.bin
+	$(OUT)/reriff-match native-check "$(GAME)" owner-handle5c-acquire $(OUT)/owner_handle5c_acquire.bin $(OUT)/owner-handle5c-acquire-comparison.json
+
+test-recovered: test-cycle-owner-handle5c-acquire
+.PHONY: test-cycle-owner-handle5c-acquire
