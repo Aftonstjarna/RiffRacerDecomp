@@ -3063,3 +3063,16 @@ test-cycle-record24-ensure-spare: $(OUT)/reriff-match $(OUT)/record24_ensure_spa
 
 test-recovered: test-cycle-record24-ensure-spare
 .PHONY: test-cycle-record24-ensure-spare
+
+# Reviewed cycle reference: record24-reallocate (assembly evidence only).
+$(OUT)/record24_reallocate.bin: native/record24_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record24_reallocate.o
+	ld -m elf_i386 -Ttext=0x4b2840 -e original_record24_reallocate $(OUT)/record24_reallocate.o -o $(OUT)/record24_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/record24_reallocate.elf $@
+
+test-cycle-record24-reallocate: $(OUT)/reriff-match $(OUT)/record24_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record24-reallocate $(OUT)/record24_reallocate.bin $(OUT)/record24-reallocate-comparison.json
+
+test-recovered: test-cycle-record24-reallocate
+.PHONY: test-cycle-record24-reallocate

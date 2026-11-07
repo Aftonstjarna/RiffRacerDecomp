@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 82628,
-  "remaining_bytes": 8552764,
-  "verified_percent": 0.9568529141468042,
-  "registered_blocks": 277,
-  "exact_blocks": 277,
+  "verified_bytes": 82772,
+  "remaining_bytes": 8552620,
+  "verified_percent": 0.9585204701766868,
+  "registered_blocks": 278,
+  "exact_blocks": 278,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1352,6 +1352,15 @@
       "byte_equal": true,
       "reference_sha256": "6c78925cc7c6e3b6db0bc7c21bc878948c9154c72efbe41815b2db3e1d9aeb18",
       "candidate_sha256": "6c78925cc7c6e3b6db0bc7c21bc878948c9154c72efbe41815b2db3e1d9aeb18"
+    },
+    {
+      "name": "record24-reallocate",
+      "file_offset": 728128,
+      "size": 144,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "8bb9f0054ee77c908847756db3f67e6cd164c422025bf1e589a592403f7ad234",
+      "candidate_sha256": "8bb9f0054ee77c908847756db3f67e6cd164c422025bf1e589a592403f7ad234"
     },
     {
       "name": "record24-ensure-spare",
