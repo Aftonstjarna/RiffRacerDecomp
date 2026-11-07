@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 84546,
-  "remaining_bytes": 8550846,
-  "verified_percent": 0.9790638340448239,
-  "registered_blocks": 295,
-  "exact_blocks": 295,
+  "verified_bytes": 84832,
+  "remaining_bytes": 8550560,
+  "verified_percent": 0.982375785604174,
+  "registered_blocks": 296,
+  "exact_blocks": 296,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1325,6 +1325,15 @@
       "byte_equal": true,
       "reference_sha256": "efbef3b8ddca2a24c3d52ade14a20ad2c221c6847cbdad432c7109730376fcc5",
       "candidate_sha256": "efbef3b8ddca2a24c3d52ade14a20ad2c221c6847cbdad432c7109730376fcc5"
+    },
+    {
+      "name": "device-pending-targets-prepare",
+      "file_offset": 672128,
+      "size": 286,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "1870f70d13bd173dbb044674db453a0728200cacfc0ec6c54f8a0acae883584a",
+      "candidate_sha256": "1870f70d13bd173dbb044674db453a0728200cacfc0ec6c54f8a0acae883584a"
     },
     {
       "name": "device-pending-targets-cleanup",
