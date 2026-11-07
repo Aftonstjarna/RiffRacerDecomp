@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Bind pending device render targets",
+  "summary": "Recover 0x4a4f30 thiscall method: consume pending request, prepare via external helper, bind selected color/depth/viewport through stdcall COM slots, clean up on negative HRESULT, and update bound flags only on success. Caller at 0x4a1100 tests AL and provides fallback bindings on false.",
+  "targets": [
+    "device-bind-pending-targets"
+  ],
+  "references": [
+    "device-bind-pending-targets",
+    "device-pending-targets-prepare",
+    "device-pending-targets-cleanup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "15360 original-versus-C++ comparisons using accepted preparation and cleanup routines, controlled stdcall COM callbacks, and initialized FS backing with restoration checks. Pending zero/nonzero; modes 0/1/2/255; indices 0..3 (ignored huge index in mode zero); widths 0,1,15,16,8191,8192,8193,UINT32_MAX; failure steps 1..9 and success; HRESULT success 0,1,INT32_MAX; initially null or populated resource fields. Compare return, ordered callback arguments/releases, viewport bits and every object byte including untouched fields. GCC freestanding i386 harness passed. Linked accepted references compared byte-for-byte against Game.exe. Optional supplied MSVC2013 O2 compilation passed.",
+  "known_limits": [
+    "Unmatched high-level source; no matching-byte claim.",
+    "Preparation and cleanup remain external member dependencies; test-only adapters call their accepted original routines.",
+    "Mock COM callbacks do not validate real D3D rendering or driver behavior.",
+    "Invalid pointers and indices outside the in-object resource range are not executed; original performs no validation.",
+    "Field names are inferred from offsets and D3D9-style vtable signatures. Callback reentrancy, exceptions and Windows exception dispatch are not validated.",
+    "Layout and original ABI require 32-bit pointers."
+  ]
+}
