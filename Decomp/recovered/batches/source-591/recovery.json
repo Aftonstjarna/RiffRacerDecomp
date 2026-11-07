@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Body vector pair accumulation",
+  "summary": "Recovered VA 0x4386f0 (RVA 0x386f0), 304 bytes, as a genuine thiscall void member taking two three-float pointers. A zero factor at +0x150 returns; unordered comparisons proceed. It adds factor times component-scaled first input to +0x130, reloads input after those stores, computes second input cross component-scaled first input, and applies accepted matrix/scaling dependency at 0x4385f0 to +0x140. Only the six accumulator floats are modified. Fields, evaluation association, ABI and callers were inspected directly in Game.exe. Accepted body and helper assembly byte spans compare equal to original. Readable source compiles with GCC and pinned VS2013 O1, O2 and O2 /Oy-; no matching-source claim.",
+  "targets": [
+    "body-vector-pair-accumulate"
+  ],
+  "references": [
+    "body-vector-pair-accumulate",
+    "matrix-scaled-vector-accumulate"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Freestanding GCC i386 differential harness calls original_body_vector_pair_accumulate using thiscall at its original address and links accepted matrix-scaled-vector-accumulate helper at its original address. 200704 comparisons: 256 edge/random fixtures times 49 independent pointer alias pairs times four rounding modes times four FTZ/DAZ combinations. Includes signed zero, denormals, finite extremes, infinities, quiet/signaling NaNs, input aliases into both accumulators, factor, scales and matrix, and explicit identity-matrix/cross-product results. Compares full MXCSR, exact finite and infinity output bits, quiet-NaN classification, every untouched byte and surrounding guards, and external input preservation. Two additional signed-zero cases use null input pointers and assert complete object and MXCSR preservation. Initialized test-owned FS installed successfully; head restoration checked after every original call. Local GCC run passes. Both original reference spans checked byte-for-byte against immutable Game.exe. VS2013 implementation compilation passes at O1/O2/O2 Oy-.",
+  "known_limits": [
+    "Original class name and physical interpretation/units of vectors, matrix and factors remain unresolved; names describe operations only.",
+    "C++ does not prescribe NaN sign/payload selection when multiple NaNs participate; tests accept differing quiet NaN payloads/signs while requiring identical MXCSR and exact non-NaN bits.",
+    "Valid object and readable input triples required except zero-factor early return. The original this+0x218 address-null test is unreachable for a valid C++ object; wrapped/invalid object addresses and access faults are outside this recovery.",
+    "Floating-point exceptions are tested masked; trap dispatch and Windows exception unwinding are not modeled.",
+    "Behavioral validation uses specified GCC scalar SSE flags. MSVC compilation checks compatibility, not native behavioral or matching-byte equivalence.",
+    "Dependency arithmetic is included locally only to implement the assigned function; no wider physics integration, gameplay behavior, or Linux platform replacement is claimed."
+  ]
+}
