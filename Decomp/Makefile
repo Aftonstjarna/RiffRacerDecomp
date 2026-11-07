@@ -3206,3 +3206,16 @@ test-cycle-owner-handle5c-acquire: $(OUT)/reriff-match $(OUT)/owner_handle5c_acq
 
 test-recovered: test-cycle-owner-handle5c-acquire
 .PHONY: test-cycle-owner-handle5c-acquire
+
+# Reviewed cycle reference: matrix64-initialize-basis (assembly evidence only).
+$(OUT)/matrix64_initialize_basis.bin: native/matrix64_initialize_basis.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix64_initialize_basis.o
+	ld -m elf_i386 -Ttext=0x438480 -e original_matrix64_initialize_basis $(OUT)/matrix64_initialize_basis.o -o $(OUT)/matrix64_initialize_basis.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix64_initialize_basis.elf $@
+
+test-cycle-matrix64-initialize-basis: $(OUT)/reriff-match $(OUT)/matrix64_initialize_basis.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix64-initialize-basis $(OUT)/matrix64_initialize_basis.bin $(OUT)/matrix64-initialize-basis-comparison.json
+
+test-recovered: test-cycle-matrix64-initialize-basis
+.PHONY: test-cycle-matrix64-initialize-basis

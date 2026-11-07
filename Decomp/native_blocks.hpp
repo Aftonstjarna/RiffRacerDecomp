@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"owner-handle5c-acquire",0x3f250,28},
+  return {NativeBlock{"matrix64-initialize-basis",0x38480,112},
+                     NativeBlock{"owner-handle5c-acquire",0x3f250,28},
                      NativeBlock{"u32-vector-growth-capacity",0x10dfe0,56},
                      NativeBlock{"vector3-normalize",0x26d90,276},
                      NativeBlock{"shader-slot-select",0x1301b0,69},
