@@ -3401,3 +3401,16 @@ test-cycle-convex-internal-shape-serialize: $(OUT)/reriff-match $(OUT)/convex_in
 
 test-recovered: test-cycle-convex-internal-shape-serialize
 .PHONY: test-cycle-convex-internal-shape-serialize
+
+# Reviewed cycle reference: box-point-inside-tolerance (assembly evidence only).
+$(OUT)/box_point_inside_tolerance.bin: native/box_point_inside_tolerance.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_point_inside_tolerance.o
+	ld -m elf_i386 -Ttext=0x438fe0 -e original_box_point_inside_tolerance $(OUT)/box_point_inside_tolerance.o -o $(OUT)/box_point_inside_tolerance.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_point_inside_tolerance.elf $@
+
+test-cycle-box-point-inside-tolerance: $(OUT)/reriff-match $(OUT)/box_point_inside_tolerance.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-point-inside-tolerance $(OUT)/box_point_inside_tolerance.bin $(OUT)/box-point-inside-tolerance-comparison.json
+
+test-recovered: test-cycle-box-point-inside-tolerance
+.PHONY: test-cycle-box-point-inside-tolerance
