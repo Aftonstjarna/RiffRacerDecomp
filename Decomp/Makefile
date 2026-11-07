@@ -2998,3 +2998,16 @@ test-cycle-narrow-element-destroy-callback: $(OUT)/reriff-match $(OUT)/narrow_el
 
 test-recovered: test-cycle-narrow-element-destroy-callback
 .PHONY: test-cycle-narrow-element-destroy-callback
+
+# Reviewed cycle reference: u32-allocate (assembly evidence only).
+$(OUT)/u32_allocate.bin: native/u32_allocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u32_allocate.o
+	ld -m elf_i386 -Ttext=0x426880 -e original_u32_allocate $(OUT)/u32_allocate.o -o $(OUT)/u32_allocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/u32_allocate.elf $@
+
+test-cycle-u32-allocate: $(OUT)/reriff-match $(OUT)/u32_allocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u32-allocate $(OUT)/u32_allocate.bin $(OUT)/u32-allocate-comparison.json
+
+test-recovered: test-cycle-u32-allocate
+.PHONY: test-cycle-u32-allocate
