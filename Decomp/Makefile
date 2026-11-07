@@ -3219,3 +3219,16 @@ test-cycle-matrix64-initialize-basis: $(OUT)/reriff-match $(OUT)/matrix64_initia
 
 test-recovered: test-cycle-matrix64-initialize-basis
 .PHONY: test-cycle-matrix64-initialize-basis
+
+# Reviewed cycle reference: matrix-row-pointer (assembly evidence only).
+$(OUT)/matrix_row_pointer.bin: native/matrix_row_pointer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix_row_pointer.o
+	ld -m elf_i386 -Ttext=0x438410 -e original_matrix_row_pointer $(OUT)/matrix_row_pointer.o -o $(OUT)/matrix_row_pointer.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix_row_pointer.elf $@
+
+test-cycle-matrix-row-pointer: $(OUT)/reriff-match $(OUT)/matrix_row_pointer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix-row-pointer $(OUT)/matrix_row_pointer.bin $(OUT)/matrix-row-pointer-comparison.json
+
+test-recovered: test-cycle-matrix-row-pointer
+.PHONY: test-cycle-matrix-row-pointer
