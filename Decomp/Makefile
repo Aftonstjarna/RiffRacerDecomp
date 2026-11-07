@@ -3050,3 +3050,16 @@ test-cycle-record12-zero-initialize: $(OUT)/reriff-match $(OUT)/record12_zero_in
 
 test-recovered: test-cycle-record12-zero-initialize
 .PHONY: test-cycle-record12-zero-initialize
+
+# Reviewed cycle reference: record24-ensure-spare (assembly evidence only).
+$(OUT)/record24_ensure_spare.bin: native/record24_ensure_spare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record24_ensure_spare.o
+	ld -m elf_i386 -Ttext=0x4b28d0 -e original_record24_ensure_spare $(OUT)/record24_ensure_spare.o -o $(OUT)/record24_ensure_spare.elf
+	objcopy -O binary --only-section=.text $(OUT)/record24_ensure_spare.elf $@
+
+test-cycle-record24-ensure-spare: $(OUT)/reriff-match $(OUT)/record24_ensure_spare.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record24-ensure-spare $(OUT)/record24_ensure_spare.bin $(OUT)/record24-ensure-spare-comparison.json
+
+test-recovered: test-cycle-record24-ensure-spare
+.PHONY: test-cycle-record24-ensure-spare

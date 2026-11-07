@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"record12-zero-initialize",0x37ed0,35},
+  return {NativeBlock{"record24-ensure-spare",0xb28d0,146},
+                     NativeBlock{"record12-zero-initialize",0x37ed0,35},
                      NativeBlock{"cp1252-wide-construct",0x4f3e0,166},
                      NativeBlock{"narrow-range-move-construct",0x26960,138},
                      NativeBlock{"u32-allocate",0x26880,50},
