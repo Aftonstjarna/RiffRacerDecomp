@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated, unmatched C++ source with zero matching-source byte credit.",
+  "reason": "Readable implementation agrees with original arithmetic, thiscall ABI, field layout and output side effects. Independently verified the 184-byte reference against Game.exe, reproduced 4,096 comparisons, and passed 262,144 additional randomized comparisons checking guarded memory and MXCSR. Native Windows compilation records cover the actual implementation. Documented layout, memory-access and floating-point limitations are appropriately scoped; sampled validation does not establish all-input equivalence."
+}

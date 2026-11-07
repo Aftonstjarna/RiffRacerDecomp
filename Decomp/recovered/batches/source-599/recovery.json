@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Box vertex without collision margin",
+  "summary": "Recovered VA 0x438d30 (RVA 0x38d30), 184 bytes, as a genuine thiscall member. Low three index bits choose signs for the three float extents at +0x1c; each component preserves (1-bit)*extent - bit*extent arithmetic and output w is positive zero. All calculations precede the 16-byte output write. Prefix fields remain unresolved. Original vtable 0x9f98d0 slot +0x5c and edge-query calls at 0x438f89/0x438f94 corroborate index/output argument order. No helpers or globals are called by the target.",
+  "targets": ["box-vertex-without-margin"],
+  "references": ["box-vertex-without-margin"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "4096 direct comparisons with accepted original_box_vertex_without_margin linked at 0x438d30; oracle bytes independently checked against Game.exe. Eight extent triples include positive/negative finite values, signed zeros, minimum and maximum subnormals, minimum normal, maximum finite, infinities, quiet and signaling NaN representations. Sixteen indices include all corners, excess high bits, negative values and signed integer extremes. Four rounding modes and all DAZ/FTZ combinations run with exceptions masked. Separate output and in-place extent output cases compare whole guarded arenas bitwise, exact positive-zero w, all untouched bytes, and MXCSR status/control bits. No imports, TLS/FS registration, allocation, or external dependencies are used by this routine.",
+  "known_limits": [
+    "High-level behavior recovery only; implementation byte matching is not claimed.",
+    "Object prefix identities and full class layout beyond the accessed extent vector are unresolved; modeled prefix is opaque and no vtable is synthesized.",
+    "Invalid pointers, unmapped memory, partial overlaps outside the tested in-place extent case, and unmasked floating-point traps are not tested.",
+    "Exceptional floating-point bit/status fidelity is validated for x86 SSE with the supplied strict flags; other Linux architectures require equivalent floating-point semantics. The original physically reads 16 extent bytes although the fourth lane is unused; the portable source need not reproduce that unused memory access."
+  ]
+}
