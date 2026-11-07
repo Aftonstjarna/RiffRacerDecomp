@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Three-component SSE dot product",
+  "summary": "Recovered VA 0x4383e0 (RVA 0x383e0), 46 bytes, from accepted assembly and direct Game.exe disassembly. Genuine const member method takes this in ECX and one callee-popped pointer; explicit scalar SSE returns lane zero in XMM0 with zero upper lanes. Computes (rhs.y*this.y + rhs.x*this.x) + rhs.z*this.z. Reads offsets 0,4,8 only; writes no memory. Direct callers 0x4bda9b and 0x4bdab6 confirm XMM0 result consumption. Accepted oracle verified byte-for-byte against immutable original; no matching-source claim.",
+  "targets": [
+    "vector3-dot-sse"
+  ],
+  "references": [
+    "vector3-dot-sse"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC i386 freestanding O0 harness directly calls original_vector3_dot_sse with thiscall and __m128 return. 38,400 comparisons include 19 bit-pattern edge values, pseudorandom bits, self-aliasing, four rounding modes, all FTZ/DAZ combinations, and clear/preexisting status flags. Checks all 128 return bits, exact MXCSR, unchanged input fields and surrounding guards. Repeated successfully with GCC C++11 O2 implementation. Accepted oracle is linked at 0x4383e0 and all 46 bytes checked against Game.exe. Pinned MSVC2013 helper compiled implementation under O1, O2, and O2 /Oy-.",
+  "known_limits": [
+    "Behavior-validated source, not a matching rebuild; compiler instruction selection is not asserted.",
+    "Full containing vector/matrix type, original source names and any fourth component are unresolved; only the three accessed floats are represented.",
+    "Tests mask SSE exceptions. Unmasked exception delivery, invalid pointers, concurrent mutation and OS exception handling are outside the tested contract.",
+    "Exact SSE floating-point semantics require SSE support and disabled fast math/reassociation; this implementation is intended for x86 Linux and the original x86 Windows ABI. MSVC helper compilation is not native Windows behavioral validation."
+  ]
+}

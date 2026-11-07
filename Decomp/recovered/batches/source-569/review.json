@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, reference assembly, and original callers. Independently verified the 46-byte oracle against Game.exe, reran 38,400 differential cases at GCC O0 and O2, and compiled the actual implementation with pinned MSVC. Operand order, thiscall ABI, layouts, full XMM0 result, MXCSR effects, and unchanged memory agree within the tested contract. Edge cases cover NaNs, infinities, subnormals, aliasing, rounding and FTZ/DAZ modes. Unmasked exceptions and other stated limitations remain unverified; sampled validation does not establish all-input equivalence."
+}
