@@ -3167,3 +3167,16 @@ test-cycle-shader-slot-select: $(OUT)/reriff-match $(OUT)/shader_slot_select.bin
 
 test-recovered: test-cycle-shader-slot-select
 .PHONY: test-cycle-shader-slot-select
+
+# Reviewed cycle reference: vector3-normalize (assembly evidence only).
+$(OUT)/vector3_normalize.bin: native/vector3_normalize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/vector3_normalize.o
+	ld -m elf_i386 -Ttext=0x426d90 -e original_vector3_normalize $(OUT)/vector3_normalize.o -o $(OUT)/vector3_normalize.elf
+	objcopy -O binary --only-section=.text $(OUT)/vector3_normalize.elf $@
+
+test-cycle-vector3-normalize: $(OUT)/reriff-match $(OUT)/vector3_normalize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" vector3-normalize $(OUT)/vector3_normalize.bin $(OUT)/vector3-normalize-comparison.json
+
+test-recovered: test-cycle-vector3-normalize
+.PHONY: test-cycle-vector3-normalize
