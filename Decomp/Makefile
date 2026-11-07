@@ -2972,3 +2972,16 @@ test-cycle-u32-vector-reallocate: $(OUT)/reriff-match $(OUT)/u32_vector_realloca
 
 test-recovered: test-cycle-u32-vector-reallocate
 .PHONY: test-cycle-u32-vector-reallocate
+
+# Reviewed cycle reference: narrow-record24-default-initialize (assembly evidence only).
+$(OUT)/narrow_record24_default_initialize.bin: native/narrow_record24_default_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_record24_default_initialize.o
+	ld -m elf_i386 -Ttext=0x4268c0 -e original_narrow_record24_default_initialize $(OUT)/narrow_record24_default_initialize.o -o $(OUT)/narrow_record24_default_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_record24_default_initialize.elf $@
+
+test-cycle-narrow-record24-default-initialize: $(OUT)/reriff-match $(OUT)/narrow_record24_default_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-record24-default-initialize $(OUT)/narrow_record24_default_initialize.bin $(OUT)/narrow-record24-default-initialize-comparison.json
+
+test-recovered: test-cycle-narrow-record24-default-initialize
+.PHONY: test-cycle-narrow-record24-default-initialize
