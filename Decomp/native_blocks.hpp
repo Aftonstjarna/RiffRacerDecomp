@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"affine48-to-matrix64",0x271a0,218},
+  return {NativeBlock{"device-bind-pending-targets",0xa4f30,122},
+                     NativeBlock{"affine48-to-matrix64",0x271a0,218},
                      NativeBlock{"record32-index-reference",0x1dfb0,40},
                      NativeBlock{"matrix48-initialize-basis",0x38420,84},
                      NativeBlock{"matrix-row-pointer",0x38410,15},

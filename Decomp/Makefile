@@ -3271,3 +3271,16 @@ test-cycle-affine48-to-matrix64: $(OUT)/reriff-match $(OUT)/affine48_to_matrix64
 
 test-recovered: test-cycle-affine48-to-matrix64
 .PHONY: test-cycle-affine48-to-matrix64
+
+# Reviewed cycle reference: device-bind-pending-targets (assembly evidence only).
+$(OUT)/device_bind_pending_targets.bin: native/device_bind_pending_targets.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/device_bind_pending_targets.o
+	ld -m elf_i386 -Ttext=0x4a4f30 -e original_device_bind_pending_targets $(OUT)/device_bind_pending_targets.o -o $(OUT)/device_bind_pending_targets.elf
+	objcopy -O binary --only-section=.text $(OUT)/device_bind_pending_targets.elf $@
+
+test-cycle-device-bind-pending-targets: $(OUT)/reriff-match $(OUT)/device_bind_pending_targets.bin
+	$(OUT)/reriff-match native-check "$(GAME)" device-bind-pending-targets $(OUT)/device_bind_pending_targets.bin $(OUT)/device-bind-pending-targets-comparison.json
+
+test-recovered: test-cycle-device-bind-pending-targets
+.PHONY: test-cycle-device-bind-pending-targets
