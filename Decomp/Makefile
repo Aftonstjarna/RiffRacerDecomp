@@ -3258,3 +3258,16 @@ test-cycle-record32-index-reference: $(OUT)/reriff-match $(OUT)/record32_index_r
 
 test-recovered: test-cycle-record32-index-reference
 .PHONY: test-cycle-record32-index-reference
+
+# Reviewed cycle reference: affine48-to-matrix64 (assembly evidence only).
+$(OUT)/affine48_to_matrix64.bin: native/affine48_to_matrix64.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/affine48_to_matrix64.o
+	ld -m elf_i386 -Ttext=0x4271a0 -e original_affine48_to_matrix64 $(OUT)/affine48_to_matrix64.o -o $(OUT)/affine48_to_matrix64.elf
+	objcopy -O binary --only-section=.text $(OUT)/affine48_to_matrix64.elf $@
+
+test-cycle-affine48-to-matrix64: $(OUT)/reriff-match $(OUT)/affine48_to_matrix64.bin
+	$(OUT)/reriff-match native-check "$(GAME)" affine48-to-matrix64 $(OUT)/affine48_to_matrix64.bin $(OUT)/affine48-to-matrix64-comparison.json
+
+test-recovered: test-cycle-affine48-to-matrix64
+.PHONY: test-cycle-affine48-to-matrix64
