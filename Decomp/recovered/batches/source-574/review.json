@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit thiscall layout, wrapping arithmetic, unsigned comparisons and absence of writes agree with the original routine. Independently rebuilt and ran 198,496 differential cases against bytes extracted from the hash-verified original, including boundary inputs and object canaries; all passed. Source hashes and native Windows compilation records cover the actual implementation. Stated limitations are appropriate; sampled validation does not establish all-input or whole-game equivalence."
+}
