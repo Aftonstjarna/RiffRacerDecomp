@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source preserves the reference ABI, field offsets, arithmetic association, alias handling, and output write scope. Independently verified all 252 oracle bytes against Game.exe, reran 16,384 comparisons, passed 262,144 expanded comparisons, and compiled the unchanged implementation with pinned VS2013 /O2. Tests meaningfully check numerical edges, aliases, MXCSR, guards, and unchanged storage. NaN payload differences and exception/platform limitations are explicitly documented; sampled validation does not establish all-input equivalence."
+}

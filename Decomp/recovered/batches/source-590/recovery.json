@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Scaled matrix-vector accumulation",
+  "summary": "Recovered VA 0x4385f0 (RVA 0x385f0), 252 bytes, as a genuine thiscall member with a partial object layout. Reads a three-float vector, computes each padded matrix row as ((rowY*y)+(rowX*x))+(rowZ*z), multiplies by the corresponding scale, and adds to the three accumulator fields. Only offsets 0x140 through 0x14b are written. Direct caller 0x438815 supplies a stack-local difference-of-products vector; original class name and physical meanings are unresolved. Original instructions were checked directly against Game.exe and the accepted oracle bytes compared equal. This is readable behavioral recovery, not a matching rebuild.",
+  "targets": ["matrix-scaled-vector-accumulate"],
+  "references": ["matrix-scaled-vector-accumulate"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding harness calls the accepted original at 0x4385f0 with thiscall ABI and the recovered member. 16384 comparisons cover four rounding modes, four FTZ/DAZ combinations, 256 edge/random fixtures, and external vector plus aliases into accumulator, matrix, and scale. Edge fixtures include signed zero, subnormal limits, finite extremes, infinities, quiet/signaling NaNs, identity and cancellation-order assertions. Compares finite/non-NaN output bits and quiet-NaN classification, full MXCSR status/control, all object bytes outside the three outputs, surrounding guards, and external input preservation. Installs initialized test-owned FS backing and checks head restoration after every oracle call. Accepted oracle bytes compare equal with original executable. Local GCC test passes; pinned VS2013 compiles implementation at O1, O2, and O2 /Oy-.",
+  "known_limits": [
+    "Partial object view ends at 0x224; original class identity, full size, field names and physical units are not established.",
+    "NaN payload and sign selection when multiple NaNs participate are not specified by portable C++; tests require quiet-NaN classification rather than payload identity.",
+    "Floating-point exceptions are masked in tests. Trapping exception timing, invalid pointers, concurrent mutation and Windows exception dispatch are outside validation.",
+    "Arithmetic assumes scalar float rounding without reassociation or fused operations, as in the supplied GCC flags. Native MSVC compilation is compatibility evidence, not native behavioral or byte-matching validation."
+  ]
+}
