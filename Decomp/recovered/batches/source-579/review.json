@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source review confirms register ABI, layouts, bit-preserving transpose, translation-first overlap behavior, zero entries and destination return. Independently rebuilt tests passed 17,760 comparisons covering edge payloads, overlaps, guards and MXCSR; reference bytes independently match the original PE. Native Windows evidence compiles the actual implementation. Cookie-failure and invalid-pointer limitations are disclosed. Sampled validation does not establish all-input equivalence."
+}
