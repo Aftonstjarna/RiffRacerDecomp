@@ -3414,3 +3414,16 @@ test-cycle-box-point-inside-tolerance: $(OUT)/reriff-match $(OUT)/box_point_insi
 
 test-recovered: test-cycle-box-point-inside-tolerance
 .PHONY: test-cycle-box-point-inside-tolerance
+
+# Reviewed cycle reference: shape-scaled-margin (assembly evidence only).
+$(OUT)/shape_scaled_margin.bin: native/shape_scaled_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shape_scaled_margin.o
+	ld -m elf_i386 -Ttext=0x4391c0 -e original_shape_scaled_margin $(OUT)/shape_scaled_margin.o -o $(OUT)/shape_scaled_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/shape_scaled_margin.elf $@
+
+test-cycle-shape-scaled-margin: $(OUT)/reriff-match $(OUT)/shape_scaled_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shape-scaled-margin $(OUT)/shape_scaled_margin.bin $(OUT)/shape-scaled-margin-comparison.json
+
+test-recovered: test-cycle-shape-scaled-margin
+.PHONY: test-cycle-shape-scaled-margin
