@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Four record initializer",
+  "summary": "Recovered the thiscall initializer at VA 0x439220: return this after setting each of four 20-byte records' +16 flag to one and +4/+8/+12 words to zero. Preserve +0 and +17..19. Direct original disassembly agrees with accepted reference; callers embed 80-byte blocks. No dependencies or global side effects.",
+  "targets": ["four-record20-initialize"],
+  "references": ["four-record20-initialize"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare C++ directly with original_four_record20_initialize using GCC i386 thiscall: 256 uniform byte fills and 256 varying patterns, each initialized twice. Check both returned pointers, every output byte, all preserved words/trailing bytes, and 16-byte guards on either side against independent expectations.",
+  "known_limits": ["Original class and field names and precise field semantics remain unresolved; neutral fixed-width storage models the observed layout.", "Requires a valid writable 80-byte object; null and invalid storage are outside the contract. No concurrency or fault-path guarantees are inferred.", "Behavioral recovery only; no byte matching claimed."]
+}
