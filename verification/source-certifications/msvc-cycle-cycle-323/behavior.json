@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "classification": "sampled_actual_native_msvc_fragment_behavior",
+  "build_report_sha256": "1b92e1f2ea89e48b0edd0e314665a0ce3d061d4c21ac8bd00ead9a2cde36a7fc",
+  "input_sha256": {
+    "cycle_convex_internal_shape_set_margin.bin": "768e02b04c64c2deb022321fe1274a1cd323ba318c0f57ea96351b8ada1a0c65",
+    "cycle_convex_internal_shape_set_margin.S": "a74075f3fefd859a24fa7614c5139adb64ec7b3bf8c87ff971654229f34db9c6",
+    "test_runtime.S": "0e86daf0873de519c5517d7a7e4c266c67e4a967f9deae711a3d08704783690e",
+    "test_fragment.cpp": "cebbc578d0f5fa8ae16f489de36bbc612c44b4c1e45d806cd796384a324c8c56"
+  },
+  "test_executable_sha256": "a3c3b03483dae482197d0d6fc8a88a06e6fbb0fa6b746fc2efd94e353bb3f5df",
+  "passed": true,
+  "output": "PASS: fragment behavior 4168 cases\n",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-323",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "convex-internal-shape-set-margin",
+      "stem": "cycle_convex_internal_shape_set_margin",
+      "source": "Decomp/recovered/msvc/cycle_convex_internal_shape_set_margin.cpp",
+      "sha256": "e3d9497dd85d96e2b2cf73b5e3bc885bc00c5aba127ae7a0dec5b805d9f5ea99"
+    }
+  ]
+}
