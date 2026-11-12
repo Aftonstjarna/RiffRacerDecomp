@@ -3583,3 +3583,16 @@ test-cycle-record-pointer-stack-recycle: $(OUT)/reriff-match $(OUT)/record_point
 
 test-recovered: test-cycle-record-pointer-stack-recycle
 .PHONY: test-cycle-record-pointer-stack-recycle
+
+# Reviewed cycle reference: box-shape-count-six (assembly evidence only).
+$(OUT)/box_shape_count_six.bin: native/box_shape_count_six.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_shape_count_six.o
+	ld -m elf_i386 -Ttext=0x438d00 -e original_box_shape_count_six $(OUT)/box_shape_count_six.o -o $(OUT)/box_shape_count_six.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_shape_count_six.elf $@
+
+test-cycle-box-shape-count-six: $(OUT)/reriff-match $(OUT)/box_shape_count_six.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-shape-count-six $(OUT)/box_shape_count_six.bin $(OUT)/box-shape-count-six-comparison.json
+
+test-recovered: test-cycle-box-shape-count-six
+.PHONY: test-cycle-box-shape-count-six
