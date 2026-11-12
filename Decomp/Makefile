@@ -3648,3 +3648,16 @@ test-cycle-box-support-with-margin: $(OUT)/reriff-match $(OUT)/box_support_with_
 
 test-recovered: test-cycle-box-support-with-margin
 .PHONY: test-cycle-box-support-with-margin
+
+# Reviewed cycle reference: box-local-inertia (assembly evidence only).
+$(OUT)/box_local_inertia.bin: native/box_local_inertia.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_local_inertia.o
+	ld -m elf_i386 -Ttext=0x47b070 -e original_box_local_inertia $(OUT)/box_local_inertia.o -o $(OUT)/box_local_inertia.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_local_inertia.elf $@
+
+test-cycle-box-local-inertia: $(OUT)/reriff-match $(OUT)/box_local_inertia.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-local-inertia $(OUT)/box_local_inertia.bin $(OUT)/box-local-inertia-comparison.json
+
+test-recovered: test-cycle-box-local-inertia
+.PHONY: test-cycle-box-local-inertia
