@@ -3570,3 +3570,16 @@ test-cycle-convex-internal-shape-set-margin: $(OUT)/reriff-match $(OUT)/convex_i
 
 test-recovered: test-cycle-convex-internal-shape-set-margin
 .PHONY: test-cycle-convex-internal-shape-set-margin
+
+# Reviewed cycle reference: record-pointer-stack-recycle (assembly evidence only).
+$(OUT)/record_pointer_stack_recycle.bin: native/record_pointer_stack_recycle.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record_pointer_stack_recycle.o
+	ld -m elf_i386 -Ttext=0x548b30 -e original_record_pointer_stack_recycle $(OUT)/record_pointer_stack_recycle.o -o $(OUT)/record_pointer_stack_recycle.elf
+	objcopy -O binary --only-section=.text $(OUT)/record_pointer_stack_recycle.elf $@
+
+test-cycle-record-pointer-stack-recycle: $(OUT)/reriff-match $(OUT)/record_pointer_stack_recycle.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record-pointer-stack-recycle $(OUT)/record_pointer_stack_recycle.bin $(OUT)/record-pointer-stack-recycle-comparison.json
+
+test-recovered: test-cycle-record-pointer-stack-recycle
+.PHONY: test-cycle-record-pointer-stack-recycle

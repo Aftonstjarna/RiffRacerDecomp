@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 86481,
-  "remaining_bytes": 8548911,
-  "verified_percent": 1.0014716181963714,
-  "registered_blocks": 316,
-  "exact_blocks": 316,
+  "verified_bytes": 86521,
+  "remaining_bytes": 8548871,
+  "verified_percent": 1.001934828204672,
+  "registered_blocks": 317,
+  "exact_blocks": 317,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2207,6 +2207,15 @@
       "byte_equal": true,
       "reference_sha256": "1c9ec06130a2ca7ee7c4c90e17145077ee87eba6de2253f24e37144cbebd6370",
       "candidate_sha256": "1c9ec06130a2ca7ee7c4c90e17145077ee87eba6de2253f24e37144cbebd6370"
+    },
+    {
+      "name": "record-pointer-stack-recycle",
+      "file_offset": 1343280,
+      "size": 40,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "38b3803c5792e873122a04be37ae65a7ad341c6eabddf80db8baaf36507834a3",
+      "candidate_sha256": "38b3803c5792e873122a04be37ae65a7ad341c6eabddf80db8baaf36507834a3"
     },
     {
       "name": "shader-drawprim-ctor",
