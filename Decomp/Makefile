@@ -3700,3 +3700,16 @@ test-cycle-transform-half-extents-aabb: $(OUT)/reriff-match $(OUT)/transform_hal
 
 test-recovered: test-cycle-transform-half-extents-aabb
 .PHONY: test-cycle-transform-half-extents-aabb
+
+# Reviewed cycle reference: matrix3-absolute (assembly evidence only).
+$(OUT)/matrix3_absolute.bin: native/matrix3_absolute.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix3_absolute.o
+	ld -m elf_i386 -Ttext=0x47ad90 -e original_matrix3_absolute $(OUT)/matrix3_absolute.o -o $(OUT)/matrix3_absolute.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix3_absolute.elf $@
+
+test-cycle-matrix3-absolute: $(OUT)/reriff-match $(OUT)/matrix3_absolute.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix3-absolute $(OUT)/matrix3_absolute.bin $(OUT)/matrix3-absolute-comparison.json
+
+test-recovered: test-cycle-matrix3-absolute
+.PHONY: test-cycle-matrix3-absolute
