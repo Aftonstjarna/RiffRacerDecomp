@@ -3596,3 +3596,16 @@ test-cycle-box-shape-count-six: $(OUT)/reriff-match $(OUT)/box_shape_count_six.b
 
 test-recovered: test-cycle-box-shape-count-six
 .PHONY: test-cycle-box-shape-count-six
+
+# Reviewed cycle reference: box-shape-vertex-count (assembly evidence only).
+$(OUT)/box_shape_vertex_count.bin: native/box_shape_vertex_count.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_shape_vertex_count.o
+	ld -m elf_i386 -Ttext=0x438d10 -e original_box_shape_vertex_count $(OUT)/box_shape_vertex_count.o -o $(OUT)/box_shape_vertex_count.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_shape_vertex_count.elf $@
+
+test-cycle-box-shape-vertex-count: $(OUT)/reriff-match $(OUT)/box_shape_vertex_count.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-shape-vertex-count $(OUT)/box_shape_vertex_count.bin $(OUT)/box-shape-vertex-count-comparison.json
+
+test-recovered: test-cycle-box-shape-vertex-count
+.PHONY: test-cycle-box-shape-vertex-count
