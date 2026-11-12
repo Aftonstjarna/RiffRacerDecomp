@@ -3687,3 +3687,16 @@ test-cycle-convex-internal-shape-aabb: $(OUT)/reriff-match $(OUT)/convex_interna
 
 test-recovered: test-cycle-convex-internal-shape-aabb
 .PHONY: test-cycle-convex-internal-shape-aabb
+
+# Reviewed cycle reference: transform-half-extents-aabb (assembly evidence only).
+$(OUT)/transform_half_extents_aabb.bin: native/transform_half_extents_aabb.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/transform_half_extents_aabb.o
+	ld -m elf_i386 -Ttext=0x47aec0 -e original_transform_half_extents_aabb $(OUT)/transform_half_extents_aabb.o -o $(OUT)/transform_half_extents_aabb.elf
+	objcopy -O binary --only-section=.text $(OUT)/transform_half_extents_aabb.elf $@
+
+test-cycle-transform-half-extents-aabb: $(OUT)/reriff-match $(OUT)/transform_half_extents_aabb.bin
+	$(OUT)/reriff-match native-check "$(GAME)" transform-half-extents-aabb $(OUT)/transform_half_extents_aabb.bin $(OUT)/transform-half-extents-aabb-comparison.json
+
+test-recovered: test-cycle-transform-half-extents-aabb
+.PHONY: test-cycle-transform-half-extents-aabb
