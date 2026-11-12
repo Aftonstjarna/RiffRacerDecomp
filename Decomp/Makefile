@@ -3713,3 +3713,16 @@ test-cycle-matrix3-absolute: $(OUT)/reriff-match $(OUT)/matrix3_absolute.bin
 
 test-recovered: test-cycle-matrix3-absolute
 .PHONY: test-cycle-matrix3-absolute
+
+# Reviewed cycle reference: collision-shape-contact-threshold (assembly evidence only).
+$(OUT)/collision_shape_contact_threshold.bin: native/collision_shape_contact_threshold.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_shape_contact_threshold.o
+	ld -m elf_i386 -Ttext=0x47c190 -e original_collision_shape_contact_threshold $(OUT)/collision_shape_contact_threshold.o -o $(OUT)/collision_shape_contact_threshold.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_shape_contact_threshold.elf $@
+
+test-cycle-collision-shape-contact-threshold: $(OUT)/reriff-match $(OUT)/collision_shape_contact_threshold.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-shape-contact-threshold $(OUT)/collision_shape_contact_threshold.bin $(OUT)/collision-shape-contact-threshold-comparison.json
+
+test-recovered: test-cycle-collision-shape-contact-threshold
+.PHONY: test-cycle-collision-shape-contact-threshold
