@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-305",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "owner-handle5c-acquire",
+      "stem": "cycle_owner_handle5c_acquire",
+      "source": "Decomp/recovered/msvc/cycle_owner_handle5c_acquire.cpp",
+      "sha256": "036acf69c22c72d1d3ed2be89baf0d26007834ba5091044e7b0813fee5e56964"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "bbbdee49ca163eacfb7b8f7c1db7daad66a122f141f51d01fe2c6bada531a910",
+  "behavior_sha256": "7d98f85980e8ac55a49f8d8163ffa01e8d26b4e3c179901f70eb006b7634b7cb",
+  "functions": [
+    {
+      "scope": "owner-handle5c-acquire",
+      "source_sha256": "036acf69c22c72d1d3ed2be89baf0d26007834ba5091044e7b0813fee5e56964",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified function section exactly, with no relocations. Original instructions, boundaries, layout and thiscall ABI agree with the source. Actual compiled code and directly extracted original code passed 210 submitted and 726 expanded cases covering null/non-null branches, signed offsets, counter wraparound, output aliasing, return values and untouched state. Certification covers this routine only."
+    }
+  ],
+  "review_receipt_sha256": "ce97ddee0292ed083c03ee2a74474bd4d1b431df85129505e61b105e289558f5",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
