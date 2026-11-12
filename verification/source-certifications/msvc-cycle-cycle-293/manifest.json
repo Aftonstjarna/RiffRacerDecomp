@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-293",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "nested-record-count",
+      "stem": "cycle_nested_record_count",
+      "source": "Decomp/recovered/msvc/cycle_nested_record_count.cpp",
+      "sha256": "f87ec7cf317facf70675326ec434b6500c04f7f03886dfc0e2ae4063abd9d076"
+    }
+  ]
+}
