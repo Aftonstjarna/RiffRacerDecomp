@@ -3635,3 +3635,16 @@ test-cycle-body-construction-record-initialize: $(OUT)/reriff-match $(OUT)/body_
 
 test-recovered: test-cycle-body-construction-record-initialize
 .PHONY: test-cycle-body-construction-record-initialize
+
+# Reviewed cycle reference: box-support-with-margin (assembly evidence only).
+$(OUT)/box_support_with_margin.bin: native/box_support_with_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_support_with_margin.o
+	ld -m elf_i386 -Ttext=0x4388f0 -e original_box_support_with_margin $(OUT)/box_support_with_margin.o -o $(OUT)/box_support_with_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_support_with_margin.elf $@
+
+test-cycle-box-support-with-margin: $(OUT)/reriff-match $(OUT)/box_support_with_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-support-with-margin $(OUT)/box_support_with_margin.bin $(OUT)/box-support-with-margin-comparison.json
+
+test-recovered: test-cycle-box-support-with-margin
+.PHONY: test-cycle-box-support-with-margin
