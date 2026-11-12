@@ -4,10 +4,10 @@
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
   "text_size": 5421056,
-  "certified_bytes": 1757,
-  "certified_percent": 0.020346499614609274,
-  "certified_text_bytes": 1757,
-  "certified_text_percent": 0.03241065947298829,
+  "certified_bytes": 1797,
+  "certified_percent": 0.020809709622909997,
+  "certified_text_bytes": 1797,
+  "certified_text_percent": 0.033148523092179825,
   "whole_executable_compared": false,
   "note": "Exact compiler-built function spans only. Assembly reference overlaps are not added. This is not a complete rebuilt EXE or port-completion percentage.",
   "entries": [
@@ -534,6 +534,21 @@
       "isolated_object_sha256": "0d18468db82895f4d76247a30cec9335949080364f05c40ffc25084d500ae88f",
       "classification": "compiler_built_matching_source",
       "evidence": "verification/source-certifications/msvc-cycle-cycle-77",
+      "source_rebuild_verified": true
+    },
+    {
+      "scope": "record-pointer-stack-recycle",
+      "source": "Decomp/recovered/msvc/cycle_record_pointer_stack_recycle.cpp",
+      "source_sha256": "d572355732bb5dcb770249693ea77d20b388ff284ddb54f28eaf10a0ba83860f",
+      "rva": 1346352,
+      "file_offset": 1343280,
+      "size": 40,
+      "section": ".text",
+      "code_sha256": "38b3803c5792e873122a04be37ae65a7ad341c6eabddf80db8baaf36507834a3",
+      "native_object_sha256": "9be8a4bb79b7a16adaa0582d6484fa9da38a51094a8fcfb5106b2010f7f27002",
+      "isolated_object_sha256": "86780724251e9b52f3fab466de788f66d2ce1fb30549419e26d89ab4ac46f149",
+      "classification": "compiler_built_matching_source",
+      "evidence": "verification/source-certifications/msvc-cycle-cycle-335",
       "source_rebuild_verified": true
     }
   ]

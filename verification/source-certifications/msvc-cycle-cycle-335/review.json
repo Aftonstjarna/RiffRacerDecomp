@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "c1093378aea4c811f8ec558a0dbe558ba07546139fd3f89c6acfaf08ed426d4d",
+  "behavior_sha256": "08b64619a1bfbbcd2c75f148e19ab63e0c2eab524ca66609759e72a4f406d631",
+  "functions": [
+    {
+      "scope": "record-pointer-stack-recycle",
+      "source_sha256": "d572355732bb5dcb770249693ea77d20b388ff284ddb54f28eaf10a0ba83860f",
+      "approved": true,
+      "reason": "The full unmodified 40-byte MSVC section matches Game.exe at 0x548b30–0x548b58, with correct thiscall ABI and no relocations. All 256 proposed cases and 4,000 independent repeated-pop checks passed against extracted original code, including untouched storage checks. The routine has no conditional branches. Approval covers this fragment only."
+    }
+  ],
+  "review_receipt_sha256": "d39f834cc73beb7db2ad4338574adc9396ac3d49f3f209d4a3729f11266ae3c3",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

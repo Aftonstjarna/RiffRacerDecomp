@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-335",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "record-pointer-stack-recycle",
+      "stem": "cycle_record_pointer_stack_recycle",
+      "source": "Decomp/recovered/msvc/cycle_record_pointer_stack_recycle.cpp",
+      "sha256": "d572355732bb5dcb770249693ea77d20b388ff284ddb54f28eaf10a0ba83860f"
+    }
+  ]
+}
