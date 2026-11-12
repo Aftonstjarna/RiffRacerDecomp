@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "a12b1c5ba4b34c939a4cc13e7a7f88a625201f8c15cd8bc386a0b550f32ec472",
+  "behavior_sha256": "3902da26b2c76d22713b9d956a26fe83d47e85aa184e1f67ce1f6af2a6cf9794",
+  "functions": [
+    {
+      "scope": "box-shape-count-six",
+      "source_sha256": "b7ba84055bab44d76942df73596794501b5d8b8af28e056c5dd46ca00c3c3619",
+      "approved": true,
+      "reason": "Readable C++ independently compiled with pinned MSVC to the complete, unmodified original function bytes, with no relocations. Original instructions confirm valid boundaries, thiscall-compatible behavior, and no branches or memory accesses. Differential execution of actual compiled code and directly extracted original bytes passed 1,025 cases, including unaligned and null receivers and unchanged surrounding memory."
+    }
+  ],
+  "review_receipt_sha256": "2e2c6ad602206ad8f3ceccedc3761360523483ab91855ed70121fda7a20fa78c",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

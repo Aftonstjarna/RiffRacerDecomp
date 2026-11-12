@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-327",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "box-shape-count-six",
+      "stem": "cycle_box_shape_count_six",
+      "source": "Decomp/recovered/msvc/cycle_box_shape_count_six.cpp",
+      "sha256": "b7ba84055bab44d76942df73596794501b5d8b8af28e056c5dd46ca00c3c3619"
+    }
+  ]
+}
