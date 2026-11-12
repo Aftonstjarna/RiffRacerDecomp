@@ -3531,3 +3531,16 @@ test-cycle-convex-internal-shape-margin: $(OUT)/reriff-match $(OUT)/convex_inter
 
 test-recovered: test-cycle-convex-internal-shape-margin
 .PHONY: test-cycle-convex-internal-shape-margin
+
+# Reviewed cycle reference: convex-internal-shape-scaling-pointer (assembly evidence only).
+$(OUT)/convex_internal_shape_scaling_pointer.bin: native/convex_internal_shape_scaling_pointer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_internal_shape_scaling_pointer.o
+	ld -m elf_i386 -Ttext=0x438820 -e original_convex_internal_shape_scaling_pointer $(OUT)/convex_internal_shape_scaling_pointer.o -o $(OUT)/convex_internal_shape_scaling_pointer.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_internal_shape_scaling_pointer.elf $@
+
+test-cycle-convex-internal-shape-scaling-pointer: $(OUT)/reriff-match $(OUT)/convex_internal_shape_scaling_pointer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-internal-shape-scaling-pointer $(OUT)/convex_internal_shape_scaling_pointer.bin $(OUT)/convex-internal-shape-scaling-pointer-comparison.json
+
+test-recovered: test-cycle-convex-internal-shape-scaling-pointer
+.PHONY: test-cycle-convex-internal-shape-scaling-pointer
