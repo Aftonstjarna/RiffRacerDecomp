@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-301",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "shader-boolean-callback",
+      "stem": "cycle_shader_boolean_callback",
+      "source": "Decomp/recovered/msvc/cycle_shader_boolean_callback.cpp",
+      "sha256": "eb0188023a537ff33bfe2c1d21d04b350ebdf2e8402373007926b6d8ba6c07ce"
+    }
+  ]
+}
