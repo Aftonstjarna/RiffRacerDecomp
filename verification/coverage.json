@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 87079,
-  "remaining_bytes": 8548313,
-  "verified_percent": 1.0083966078204671,
-  "registered_blocks": 324,
-  "exact_blocks": 324,
+  "verified_bytes": 87125,
+  "remaining_bytes": 8548267,
+  "verified_percent": 1.008929299330013,
+  "registered_blocks": 325,
+  "exact_blocks": 325,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1145,6 +1145,15 @@
       "byte_equal": true,
       "reference_sha256": "08634d9df20df96dd105332e4256ac7b2885b1b55be0c6e46499ce6e4a57f927",
       "candidate_sha256": "08634d9df20df96dd105332e4256ac7b2885b1b55be0c6e46499ce6e4a57f927"
+    },
+    {
+      "name": "convex-internal-shape-aabb",
+      "file_offset": 500800,
+      "size": 46,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "e33faaeeeb51e7f7b52b7213a95c4aa854649b9c9b2a744167be4a2d884fd9e9",
+      "candidate_sha256": "e33faaeeeb51e7f7b52b7213a95c4aa854649b9c9b2a744167be4a2d884fd9e9"
     },
     {
       "name": "box-local-inertia",

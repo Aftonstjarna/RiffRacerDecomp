@@ -3674,3 +3674,16 @@ test-cycle-convex-internal-shape-set-scaling: $(OUT)/reriff-match $(OUT)/convex_
 
 test-recovered: test-cycle-convex-internal-shape-set-scaling
 .PHONY: test-cycle-convex-internal-shape-set-scaling
+
+# Reviewed cycle reference: convex-internal-shape-aabb (assembly evidence only).
+$(OUT)/convex_internal_shape_aabb.bin: native/convex_internal_shape_aabb.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_internal_shape_aabb.o
+	ld -m elf_i386 -Ttext=0x47b040 -e original_convex_internal_shape_aabb $(OUT)/convex_internal_shape_aabb.o -o $(OUT)/convex_internal_shape_aabb.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_internal_shape_aabb.elf $@
+
+test-cycle-convex-internal-shape-aabb: $(OUT)/reriff-match $(OUT)/convex_internal_shape_aabb.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-internal-shape-aabb $(OUT)/convex_internal_shape_aabb.bin $(OUT)/convex-internal-shape-aabb-comparison.json
+
+test-recovered: test-cycle-convex-internal-shape-aabb
+.PHONY: test-cycle-convex-internal-shape-aabb
