@@ -3440,3 +3440,16 @@ test-cycle-four-record20-initialize: $(OUT)/reriff-match $(OUT)/four_record20_in
 
 test-recovered: test-cycle-four-record20-initialize
 .PHONY: test-cycle-four-record20-initialize
+
+# Reviewed cycle reference: collision-shape-vtable-reset (assembly evidence only).
+$(OUT)/collision_shape_vtable_reset.bin: native/collision_shape_vtable_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_shape_vtable_reset.o
+	ld -m elf_i386 -Ttext=0x4391d0 -e original_collision_shape_vtable_reset $(OUT)/collision_shape_vtable_reset.o -o $(OUT)/collision_shape_vtable_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_shape_vtable_reset.elf $@
+
+test-cycle-collision-shape-vtable-reset: $(OUT)/reriff-match $(OUT)/collision_shape_vtable_reset.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-shape-vtable-reset $(OUT)/collision_shape_vtable_reset.bin $(OUT)/collision-shape-vtable-reset-comparison.json
+
+test-recovered: test-cycle-collision-shape-vtable-reset
+.PHONY: test-cycle-collision-shape-vtable-reset
