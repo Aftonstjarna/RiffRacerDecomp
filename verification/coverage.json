@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 86533,
-  "remaining_bytes": 8548859,
-  "verified_percent": 1.0020737912071624,
-  "registered_blocks": 319,
-  "exact_blocks": 319,
+  "verified_bytes": 86539,
+  "remaining_bytes": 8548853,
+  "verified_percent": 1.0021432727084074,
+  "registered_blocks": 320,
+  "exact_blocks": 320,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -713,6 +713,15 @@
       "byte_equal": true,
       "reference_sha256": "accecba762116532de10ac30681ff4b25ad91fe217568ec41c8ffd67b9ef2bcf",
       "candidate_sha256": "accecba762116532de10ac30681ff4b25ad91fe217568ec41c8ffd67b9ef2bcf"
+    },
+    {
+      "name": "box-shape-edge-count",
+      "file_offset": 229664,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "a4ae91e3264ef3ed675d42b018652c5382b55000de1b6d7266981449c4f2d0d6",
+      "candidate_sha256": "a4ae91e3264ef3ed675d42b018652c5382b55000de1b6d7266981449c4f2d0d6"
     },
     {
       "name": "box-vertex-without-margin",

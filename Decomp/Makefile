@@ -3609,3 +3609,16 @@ test-cycle-box-shape-vertex-count: $(OUT)/reriff-match $(OUT)/box_shape_vertex_c
 
 test-recovered: test-cycle-box-shape-vertex-count
 .PHONY: test-cycle-box-shape-vertex-count
+
+# Reviewed cycle reference: box-shape-edge-count (assembly evidence only).
+$(OUT)/box_shape_edge_count.bin: native/box_shape_edge_count.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_shape_edge_count.o
+	ld -m elf_i386 -Ttext=0x438d20 -e original_box_shape_edge_count $(OUT)/box_shape_edge_count.o -o $(OUT)/box_shape_edge_count.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_shape_edge_count.elf $@
+
+test-cycle-box-shape-edge-count: $(OUT)/reriff-match $(OUT)/box_shape_edge_count.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-shape-edge-count $(OUT)/box_shape_edge_count.bin $(OUT)/box-shape-edge-count-comparison.json
+
+test-recovered: test-cycle-box-shape-edge-count
+.PHONY: test-cycle-box-shape-edge-count
