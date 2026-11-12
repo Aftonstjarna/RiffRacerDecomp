@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "b1ea61dda156a54145e55f37720a9abf93bd6fa9720d330442cec2e39d482708",
+  "behavior_sha256": "534f736f73bcf71233b9f13e5061a33ec82b7516954a74b635000641eb79a5c5",
+  "functions": [
+    {
+      "scope": "matrix-row-pointer",
+      "source_sha256": "86833831b49a281aabf376f2e72ccc052d8060de4b605731061ecb6a39451cdc",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild matched the complete original function byte-for-byte, without relocations or modifications. Original instructions confirm boundaries and thiscall ABI. All 512 differential cases passed using actual compiled code and directly extracted original bytes, checking returned addresses, valid row contents, and untouched state. The routine has no branches. Approval is limited to this function, not a whole-executable rebuild."
+    }
+  ],
+  "review_receipt_sha256": "0f415f5ddd2ee6f165a0fb6740eea31a13f4f0f992fb06e96e0b3a87682fd843",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

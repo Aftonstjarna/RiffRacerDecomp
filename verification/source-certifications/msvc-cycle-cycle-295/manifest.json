@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-295",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "matrix-row-pointer",
+      "stem": "cycle_matrix_row_pointer",
+      "source": "Decomp/recovered/msvc/cycle_matrix_row_pointer.cpp",
+      "sha256": "86833831b49a281aabf376f2e72ccc052d8060de4b605731061ecb6a39451cdc"
+    }
+  ]
+}
