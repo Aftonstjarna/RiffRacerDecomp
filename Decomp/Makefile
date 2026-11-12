@@ -3492,3 +3492,16 @@ test-cycle-narrow-path-slashes-normalize: $(OUT)/reriff-match $(OUT)/narrow_path
 
 test-recovered: test-cycle-narrow-path-slashes-normalize
 .PHONY: test-cycle-narrow-path-slashes-normalize
+
+# Reviewed cycle reference: box-shape-name (assembly evidence only).
+$(OUT)/box_shape_name.bin: native/box_shape_name.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_shape_name.o
+	ld -m elf_i386 -Ttext=0x439080 -e original_box_shape_name $(OUT)/box_shape_name.o -o $(OUT)/box_shape_name.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_shape_name.elf $@
+
+test-cycle-box-shape-name: $(OUT)/reriff-match $(OUT)/box_shape_name.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-shape-name $(OUT)/box_shape_name.bin $(OUT)/box-shape-name-comparison.json
+
+test-recovered: test-cycle-box-shape-name
+.PHONY: test-cycle-box-shape-name
