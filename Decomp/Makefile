@@ -3453,3 +3453,16 @@ test-cycle-collision-shape-vtable-reset: $(OUT)/reriff-match $(OUT)/collision_sh
 
 test-recovered: test-cycle-collision-shape-vtable-reset
 .PHONY: test-cycle-collision-shape-vtable-reset
+
+# Reviewed cycle reference: named-record-narrow-data (assembly evidence only).
+$(OUT)/named_record_narrow_data.bin: native/named_record_narrow_data.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/named_record_narrow_data.o
+	ld -m elf_i386 -Ttext=0x44bf30 -e original_named_record_narrow_data $(OUT)/named_record_narrow_data.o -o $(OUT)/named_record_narrow_data.elf
+	objcopy -O binary --only-section=.text $(OUT)/named_record_narrow_data.elf $@
+
+test-cycle-named-record-narrow-data: $(OUT)/reriff-match $(OUT)/named_record_narrow_data.bin
+	$(OUT)/reriff-match native-check "$(GAME)" named-record-narrow-data $(OUT)/named_record_narrow_data.bin $(OUT)/named-record-narrow-data-comparison.json
+
+test-recovered: test-cycle-named-record-narrow-data
+.PHONY: test-cycle-named-record-narrow-data
