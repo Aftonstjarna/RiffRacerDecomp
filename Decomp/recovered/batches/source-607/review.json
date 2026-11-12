@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, reference assembly, and original caller. ABI, layout, write ordering, staged reads, floating-point operations, return value, and untouched tail agree with the evidence. Native Windows compilation records cover the actual implementation. Independently verified all 133 reference bytes against Game.exe and passed 39,424 additional comparisons covering unaligned overlaps, full-buffer changes, return pointers, and MXCSR. Submitted tests meaningfully cover floating-point edge cases and call the original. Stated limitations are appropriate; sampled validation does not establish all-input equivalence or exact matching."
+}

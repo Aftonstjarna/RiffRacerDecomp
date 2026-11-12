@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Box shape construction",
+  "summary": "Recovered 0x438ab0 constructor as a genuine thiscall member with explicit original layout and staged scalar multiplication. Sets image vtable identity, zero header fields, unit scale, 0.04 margin and scaled input dimensions with a zero fourth lane; leaves allocation tail untouched. Direct original disassembly and caller at 0x46cc10 establish ABI, return pointer and 0x34-byte allocation. Oracle bytes independently equal the immutable executable.",
+  "targets": ["box-shape-construct"],
+  "references": ["box-shape-construct"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "400 direct comparisons with original_box_shape_construct linked at 0x438ab0, under GCC i386 O0 and additionally optimized implementation O2. Tests 14 floating point bit patterns including signed zeros, finite extremes, infinities, quiet/signaling NaNs and subnormals, all four rounding modes and four DAZ/FTZ combinations; overlaps at every aligned offset 0 through 40. Checks full allocation and surrounding guards, untouched +0x30 field, unchanged external input, returned this pointer and exact MXCSR flags. Installs test-owned FS backing and checks restored head after every original call. Pinned MSVC2013 compilation succeeds at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Original class name and semantic names of header fields are unresolved; names are descriptive. Caller allocation establishes size but not the role of the untouched final word.",
+    "Original vtable address is retained as image identity only; virtual dispatch and downstream physics are outside scope.",
+    "Invalid pointers, trapping floating-point exceptions and exception dispatch are not tested. Normal masked-exception SSE behavior is tested.",
+    "No compiler byte matching or native Windows behavioral execution is claimed. GCC floating-point parity depends on the documented SSE and non-fast-math settings."
+  ]
+}
