@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Length-based narrow path slash normalization",
+  "summary": "Recover VA 0x43fd50 as a free stdcall helper over a 24-byte VS2013 narrow string. Capacity at +20 selects inline bytes or the pointer at +0; length at +16 bounds replacement of byte 0x5c with 0x2f. Caller at 0x43f453 passes the string after assignment and before further path processing. No allocation or metadata changes occur.",
+  "targets": ["narrow-path-slashes-normalize"],
+  "references": ["narrow-path-slashes-normalize"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct comparison with the accepted original stdcall routine. Exercise lengths zero through inline/heap boundaries and 64, capacities 0,15,16,31,64,0x80000000,0xffffffff, each possible byte and mixed embedded-NUL paths. Verify all object bytes, heap bytes, guards, trailing backslash, length, capacity and pointer remain unchanged except in-range backslashes; verify idempotence.",
+  "known_limits": ["Requires valid string storage and length; null, dangling pointers, overflowing or inconsistent ranges are not supported inputs and are not tested.", "Return EAX incidentally equals the ending pointer; no semantic return use is established, so the recovered interface is void.", "No byte matching claim. No filesystem, Unicode conversion or path canonicalization beyond slash substitution is implied."]
+}

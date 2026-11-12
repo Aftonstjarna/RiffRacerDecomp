@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery metadata, validation records, native compilation evidence, and original assembly. Control flow, 32-bit layout, stdcall ABI, and bounded slash replacement agree with the reference. Independently verified the reference bytes against Game.exe and rebuilt and ran the differential tests at O2: PASS. Tests call the original and check edge lengths, all byte values, embedded NULs, storage boundaries, metadata, guards, and idempotence. Invalid storage and incidental EAX behavior are explicitly excluded; sampled validation does not establish all-input equivalence."
+}
