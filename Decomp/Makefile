@@ -3466,3 +3466,16 @@ test-cycle-named-record-narrow-data: $(OUT)/reriff-match $(OUT)/named_record_nar
 
 test-recovered: test-cycle-named-record-narrow-data
 .PHONY: test-cycle-named-record-narrow-data
+
+# Reviewed cycle reference: triangle-info-map-serialized-size (assembly evidence only).
+$(OUT)/triangle_info_map_serialized_size.bin: native/triangle_info_map_serialized_size.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/triangle_info_map_serialized_size.o
+	ld -m elf_i386 -Ttext=0x4393e0 -e original_triangle_info_map_serialized_size $(OUT)/triangle_info_map_serialized_size.o -o $(OUT)/triangle_info_map_serialized_size.elf
+	objcopy -O binary --only-section=.text $(OUT)/triangle_info_map_serialized_size.elf $@
+
+test-cycle-triangle-info-map-serialized-size: $(OUT)/reriff-match $(OUT)/triangle_info_map_serialized_size.bin
+	$(OUT)/reriff-match native-check "$(GAME)" triangle-info-map-serialized-size $(OUT)/triangle_info_map_serialized_size.bin $(OUT)/triangle-info-map-serialized-size-comparison.json
+
+test-recovered: test-cycle-triangle-info-map-serialized-size
+.PHONY: test-cycle-triangle-info-map-serialized-size
