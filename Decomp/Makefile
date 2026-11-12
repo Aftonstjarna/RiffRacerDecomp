@@ -3661,3 +3661,16 @@ test-cycle-box-local-inertia: $(OUT)/reriff-match $(OUT)/box_local_inertia.bin
 
 test-recovered: test-cycle-box-local-inertia
 .PHONY: test-cycle-box-local-inertia
+
+# Reviewed cycle reference: convex-internal-shape-set-scaling (assembly evidence only).
+$(OUT)/convex_internal_shape_set_scaling.bin: native/convex_internal_shape_set_scaling.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_internal_shape_set_scaling.o
+	ld -m elf_i386 -Ttext=0x47b100 -e original_convex_internal_shape_set_scaling $(OUT)/convex_internal_shape_set_scaling.o -o $(OUT)/convex_internal_shape_set_scaling.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_internal_shape_set_scaling.elf $@
+
+test-cycle-convex-internal-shape-set-scaling: $(OUT)/reriff-match $(OUT)/convex_internal_shape_set_scaling.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-internal-shape-set-scaling $(OUT)/convex_internal_shape_set_scaling.bin $(OUT)/convex-internal-shape-set-scaling-comparison.json
+
+test-recovered: test-cycle-convex-internal-shape-set-scaling
+.PHONY: test-cycle-convex-internal-shape-set-scaling
