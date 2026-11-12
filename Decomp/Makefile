@@ -3622,3 +3622,16 @@ test-cycle-box-shape-edge-count: $(OUT)/reriff-match $(OUT)/box_shape_edge_count
 
 test-recovered: test-cycle-box-shape-edge-count
 .PHONY: test-cycle-box-shape-edge-count
+
+# Reviewed cycle reference: body-construction-record-initialize (assembly evidence only).
+$(OUT)/body_construction_record_initialize.bin: native/body_construction_record_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/body_construction_record_initialize.o
+	ld -m elf_i386 -Ttext=0x438560 -e original_body_construction_record_initialize $(OUT)/body_construction_record_initialize.o -o $(OUT)/body_construction_record_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/body_construction_record_initialize.elf $@
+
+test-cycle-body-construction-record-initialize: $(OUT)/reriff-match $(OUT)/body_construction_record_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" body-construction-record-initialize $(OUT)/body_construction_record_initialize.bin $(OUT)/body-construction-record-initialize-comparison.json
+
+test-recovered: test-cycle-body-construction-record-initialize
+.PHONY: test-cycle-body-construction-record-initialize
