@@ -3505,3 +3505,16 @@ test-cycle-box-shape-name: $(OUT)/reriff-match $(OUT)/box_shape_name.bin
 
 test-recovered: test-cycle-box-shape-name
 .PHONY: test-cycle-box-shape-name
+
+# Reviewed cycle reference: box-shape-construct (assembly evidence only).
+$(OUT)/box_shape_construct.bin: native/box_shape_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_shape_construct.o
+	ld -m elf_i386 -Ttext=0x438ab0 -e original_box_shape_construct $(OUT)/box_shape_construct.o -o $(OUT)/box_shape_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_shape_construct.elf $@
+
+test-cycle-box-shape-construct: $(OUT)/reriff-match $(OUT)/box_shape_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-shape-construct $(OUT)/box_shape_construct.bin $(OUT)/box-shape-construct-comparison.json
+
+test-recovered: test-cycle-box-shape-construct
+.PHONY: test-cycle-box-shape-construct
