@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "ecdd20a488a86d0245f69d969846e9e0cb6bf59908adbccf4d7a1450df68b273",
+  "behavior_sha256": "e8dc6d3b5eb3171b78ae7b04032acf9df3878ddc9b9ecb2ce2e0f4598eb977b7",
+  "functions": [
+    {
+      "scope": "box-shape-edge-count",
+      "source_sha256": "db7bb9c285210e3b08f03bd4a96a857b64de8c35cab632ef0286f37cc020284d",
+      "approved": true,
+      "reason": "Readable C++ independently rebuilt with pinned MSVC. The complete unmodified compiler code section matches Game.exe exactly; original instructions and vtable confirm boundaries and ABI. Independently executed compiled and extracted original code passed 4,096 comparisons with backing storage and guards unchanged. The routine has no branches. Approval covers only this fragment."
+    }
+  ],
+  "review_receipt_sha256": "0f9b8b80df5a046da74abce9957346ef504edcee1101f0a2747debb71117fff7",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

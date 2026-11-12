@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-331",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "box-shape-edge-count",
+      "stem": "cycle_box_shape_edge_count",
+      "source": "Decomp/recovered/msvc/cycle_box_shape_edge_count.cpp",
+      "sha256": "db7bb9c285210e3b08f03bd4a96a857b64de8c35cab632ef0286f37cc020284d"
+    }
+  ]
+}
