@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "659ce504049e8ff167a15dd3b142fb9fb47a3bd0aa6c9d537f1abef19c4cf776",
+  "behavior_sha256": "be419c973691b96bbdbfd80805f9c81366a47180d00431ac87c7664f55cc5541",
+  "functions": [
+    {
+      "scope": "convex-internal-shape-scaling-pointer",
+      "source_sha256": "34e0a645dce113276c8c3cf9ca3da206a5a97ccf0fb93827f48a781189133eae",
+      "approved": true,
+      "reason": "Readable C++ independently compiled with pinned MSVC matches the entire unmodified original span at 0x438820–0x438824, with no relocations. Original instructions and surrounding padding confirm the boundary and thiscall ABI. Executing actual compiled and original bytes passed 520 cases covering pointer results, aliasing, untouched memory, alignment and address wraparound. The routine has no conditional branches. Certification is limited to this accessor."
+    }
+  ],
+  "review_receipt_sha256": "ce64d6f106d10e0435760fb60d28666f881aca18a9d6727929265155eca6019e",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

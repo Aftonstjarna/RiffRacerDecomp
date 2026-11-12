@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-319",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "convex-internal-shape-scaling-pointer",
+      "stem": "cycle_convex_internal_shape_scaling_pointer",
+      "source": "Decomp/recovered/msvc/cycle_convex_internal_shape_scaling_pointer.cpp",
+      "sha256": "34e0a645dce113276c8c3cf9ca3da206a5a97ccf0fb93827f48a781189133eae"
+    }
+  ]
+}
