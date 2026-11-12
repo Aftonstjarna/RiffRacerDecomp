@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Body construction record initialization",
+  "summary": "Recovered VA 0x438560 (RVA 0x38560), 129 bytes. Original custom thiscall ABI uses ECX for this, XMM1 for scalar, three callee-popped stack arguments, and returns this in EAX. Callers at 0x43a868 and 0x47fdbd confirm this convention. Initializes a 0x88-byte construction record, snapshots sixteen source bytes after owner/descriptor/scalar stores, sets fixed parameters, and invokes matrix64-initialize-basis semantics with only three unit diagonal entries. Bytes 0x75..0x77 are untouched. Portable member method uses a conventional source-level ABI. Accepted references were compared directly to immutable Game.exe bytes.",
+  "targets": [
+    "body-construction-record-initialize"
+  ],
+  "references": [
+    "body-construction-record-initialize",
+    "matrix64-initialize-basis"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "21,296 direct oracle comparisons: 11 scalar bit patterns (signed zeros, finite values, subnormals, infinities, quiet/signaling NaNs), 16 MXCSR rounding/FTZ/DAZ modes, external unaligned source and all 121 overlapping source offsets 0..0x78. Checks entire guarded records, return pointer, explicit scalar/token/matrix bits, untouched padding and guards, MXCSR preservation and FS head after every original call. GCC strict warning build and executable pass; supplied VS2013 compiles implementation under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Exact gameplay meanings of scalar, tokens, vector and parameter fields remain unresolved; names intentionally describe offsets or construction context.",
+    "Original optimized XMM1 ABI is exposed only through the GCC test adapter using thiscall plus sseregparm; portable member method does not promise binary ABI compatibility.",
+    "Valid readable sixteen-byte source and writable record are required; invalid pointers and hardware fault behavior are not modeled.",
+    "Matrix helper semantics are included only as this initializer dependency; no expanded recovery scope or byte-matching credit is claimed.",
+    "Local supplied MSVC runs use the provided helper; independent native Windows coordinator validation remains external."
+  ]
+}
