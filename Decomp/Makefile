@@ -3544,3 +3544,16 @@ test-cycle-convex-internal-shape-scaling-pointer: $(OUT)/reriff-match $(OUT)/con
 
 test-recovered: test-cycle-convex-internal-shape-scaling-pointer
 .PHONY: test-cycle-convex-internal-shape-scaling-pointer
+
+# Reviewed cycle reference: convex-internal-shape-serialized-size (assembly evidence only).
+$(OUT)/convex_internal_shape_serialized_size.bin: native/convex_internal_shape_serialized_size.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_internal_shape_serialized_size.o
+	ld -m elf_i386 -Ttext=0x438860 -e original_convex_internal_shape_serialized_size $(OUT)/convex_internal_shape_serialized_size.o -o $(OUT)/convex_internal_shape_serialized_size.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_internal_shape_serialized_size.elf $@
+
+test-cycle-convex-internal-shape-serialized-size: $(OUT)/reriff-match $(OUT)/convex_internal_shape_serialized_size.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-internal-shape-serialized-size $(OUT)/convex_internal_shape_serialized_size.bin $(OUT)/convex-internal-shape-serialized-size-comparison.json
+
+test-recovered: test-cycle-convex-internal-shape-serialized-size
+.PHONY: test-cycle-convex-internal-shape-serialized-size
