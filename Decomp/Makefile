@@ -3557,3 +3557,16 @@ test-cycle-convex-internal-shape-serialized-size: $(OUT)/reriff-match $(OUT)/con
 
 test-recovered: test-cycle-convex-internal-shape-serialized-size
 .PHONY: test-cycle-convex-internal-shape-serialized-size
+
+# Reviewed cycle reference: convex-internal-shape-set-margin (assembly evidence only).
+$(OUT)/convex_internal_shape_set_margin.bin: native/convex_internal_shape_set_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_internal_shape_set_margin.o
+	ld -m elf_i386 -Ttext=0x438830 -e original_convex_internal_shape_set_margin $(OUT)/convex_internal_shape_set_margin.o -o $(OUT)/convex_internal_shape_set_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_internal_shape_set_margin.elf $@
+
+test-cycle-convex-internal-shape-set-margin: $(OUT)/reriff-match $(OUT)/convex_internal_shape_set_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-internal-shape-set-margin $(OUT)/convex_internal_shape_set_margin.bin $(OUT)/convex-internal-shape-set-margin-comparison.json
+
+test-recovered: test-cycle-convex-internal-shape-set-margin
+.PHONY: test-cycle-convex-internal-shape-set-margin
