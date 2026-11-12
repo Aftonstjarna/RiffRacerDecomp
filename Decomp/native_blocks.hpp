@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"triangle-info-map-serialized-size",0x393e0,6},
+  return {NativeBlock{"narrow-path-slashes-normalize",0x3fd50,56},
+                     NativeBlock{"triangle-info-map-serialized-size",0x393e0,6},
                      NativeBlock{"named-record-narrow-data",0x4bf30,12},
                      NativeBlock{"collision-shape-vtable-reset",0x391d0,7},
                      NativeBlock{"four-record20-initialize",0x39220,103},

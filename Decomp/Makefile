@@ -3479,3 +3479,16 @@ test-cycle-triangle-info-map-serialized-size: $(OUT)/reriff-match $(OUT)/triangl
 
 test-recovered: test-cycle-triangle-info-map-serialized-size
 .PHONY: test-cycle-triangle-info-map-serialized-size
+
+# Reviewed cycle reference: narrow-path-slashes-normalize (assembly evidence only).
+$(OUT)/narrow_path_slashes_normalize.bin: native/narrow_path_slashes_normalize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_path_slashes_normalize.o
+	ld -m elf_i386 -Ttext=0x43fd50 -e original_narrow_path_slashes_normalize $(OUT)/narrow_path_slashes_normalize.o -o $(OUT)/narrow_path_slashes_normalize.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_path_slashes_normalize.elf $@
+
+test-cycle-narrow-path-slashes-normalize: $(OUT)/reriff-match $(OUT)/narrow_path_slashes_normalize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-path-slashes-normalize $(OUT)/narrow_path_slashes_normalize.bin $(OUT)/narrow-path-slashes-normalize-comparison.json
+
+test-recovered: test-cycle-narrow-path-slashes-normalize
+.PHONY: test-cycle-narrow-path-slashes-normalize
