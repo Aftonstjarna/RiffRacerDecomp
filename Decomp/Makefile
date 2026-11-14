@@ -3726,3 +3726,16 @@ test-cycle-collision-shape-contact-threshold: $(OUT)/reriff-match $(OUT)/collisi
 
 test-recovered: test-cycle-collision-shape-contact-threshold
 .PHONY: test-cycle-collision-shape-contact-threshold
+
+# Reviewed cycle reference: random-range-inclusive (assembly evidence only).
+$(OUT)/random_range_inclusive.bin: native/random_range_inclusive.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/random_range_inclusive.o
+	ld -m elf_i386 -Ttext=0x478850 -e original_random_range_inclusive $(OUT)/random_range_inclusive.o -o $(OUT)/random_range_inclusive.elf
+	objcopy -O binary --only-section=.text $(OUT)/random_range_inclusive.elf $@
+
+test-cycle-random-range-inclusive: $(OUT)/reriff-match $(OUT)/random_range_inclusive.bin
+	$(OUT)/reriff-match native-check "$(GAME)" random-range-inclusive $(OUT)/random_range_inclusive.bin $(OUT)/random-range-inclusive-comparison.json
+
+test-recovered: test-cycle-random-range-inclusive
+.PHONY: test-cycle-random-range-inclusive
