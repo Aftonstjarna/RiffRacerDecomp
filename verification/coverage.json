@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 88158,
-  "remaining_bytes": 8547234,
-  "verified_percent": 1.0208916977943792,
-  "registered_blocks": 332,
-  "exact_blocks": 332,
+  "verified_bytes": 88276,
+  "remaining_bytes": 8547116,
+  "verified_percent": 1.0222581673188664,
+  "registered_blocks": 333,
+  "exact_blocks": 333,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1226,6 +1226,15 @@
       "byte_equal": true,
       "reference_sha256": "f0250eeed93f50ca56b241ac61f48097f07ae493819676a9059bbc2f1b0c1936",
       "candidate_sha256": "f0250eeed93f50ca56b241ac61f48097f07ae493819676a9059bbc2f1b0c1936"
+    },
+    {
+      "name": "convex-aabb-caching-shape-construct",
+      "file_offset": 502336,
+      "size": 118,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "8279cd223de5688390a55eea9148783eb41712d3bc39ea7705dc1e57d2b3f819",
+      "candidate_sha256": "8279cd223de5688390a55eea9148783eb41712d3bc39ea7705dc1e57d2b3f819"
     },
     {
       "name": "collision-shape-contact-threshold",

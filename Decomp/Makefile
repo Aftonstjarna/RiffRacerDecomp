@@ -3778,3 +3778,16 @@ test-cycle-box-shape-set-scaling: $(OUT)/reriff-match $(OUT)/box_shape_set_scali
 
 test-recovered: test-cycle-box-shape-set-scaling
 .PHONY: test-cycle-box-shape-set-scaling
+
+# Reviewed cycle reference: convex-aabb-caching-shape-construct (assembly evidence only).
+$(OUT)/convex_aabb_caching_shape_construct.bin: native/convex_aabb_caching_shape_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_aabb_caching_shape_construct.o
+	ld -m elf_i386 -Ttext=0x47b640 -e original_convex_aabb_caching_shape_construct $(OUT)/convex_aabb_caching_shape_construct.o -o $(OUT)/convex_aabb_caching_shape_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_aabb_caching_shape_construct.elf $@
+
+test-cycle-convex-aabb-caching-shape-construct: $(OUT)/reriff-match $(OUT)/convex_aabb_caching_shape_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-aabb-caching-shape-construct $(OUT)/convex_aabb_caching_shape_construct.bin $(OUT)/convex-aabb-caching-shape-construct-comparison.json
+
+test-recovered: test-cycle-convex-aabb-caching-shape-construct
+.PHONY: test-cycle-convex-aabb-caching-shape-construct
