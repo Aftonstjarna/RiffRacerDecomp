@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-361",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "triangle-info-map-serialized-size",
+      "stem": "cycle_triangle_info_map_serialized_size",
+      "source": "Decomp/recovered/msvc/cycle_triangle_info_map_serialized_size.cpp",
+      "sha256": "345fc2a9f60ff76934871dc9f515d031c08f0811b4b5deee83b6fd0afe86c336"
+    }
+  ]
+}
