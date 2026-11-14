@@ -3856,3 +3856,16 @@ test-cycle-physics-allocation-release: $(OUT)/reriff-match $(OUT)/physics_alloca
 
 test-recovered: test-cycle-physics-allocation-release
 .PHONY: test-cycle-physics-allocation-release
+
+# Reviewed cycle reference: signed64-divide (assembly evidence only).
+$(OUT)/signed64_divide.bin: native/signed64_divide.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/signed64_divide.o
+	ld -m elf_i386 -Ttext=0x8f9830 -e original_signed64_divide $(OUT)/signed64_divide.o -o $(OUT)/signed64_divide.elf
+	objcopy -O binary --only-section=.text $(OUT)/signed64_divide.elf $@
+
+test-cycle-signed64-divide: $(OUT)/reriff-match $(OUT)/signed64_divide.bin
+	$(OUT)/reriff-match native-check "$(GAME)" signed64-divide $(OUT)/signed64_divide.bin $(OUT)/signed64-divide-comparison.json
+
+test-recovered: test-cycle-signed64-divide
+.PHONY: test-cycle-signed64-divide
