@@ -3869,3 +3869,16 @@ test-cycle-signed64-divide: $(OUT)/reriff-match $(OUT)/signed64_divide.bin
 
 test-recovered: test-cycle-signed64-divide
 .PHONY: test-cycle-signed64-divide
+
+# Reviewed cycle reference: box-plane-equation (assembly evidence only).
+$(OUT)/box_plane_equation.bin: native/box_plane_equation.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_plane_equation.o
+	ld -m elf_i386 -Ttext=0x438df0 -e original_box_plane_equation $(OUT)/box_plane_equation.o -o $(OUT)/box_plane_equation.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_plane_equation.elf $@
+
+test-cycle-box-plane-equation: $(OUT)/reriff-match $(OUT)/box_plane_equation.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-plane-equation $(OUT)/box_plane_equation.bin $(OUT)/box-plane-equation-comparison.json
+
+test-recovered: test-cycle-box-plane-equation
+.PHONY: test-cycle-box-plane-equation

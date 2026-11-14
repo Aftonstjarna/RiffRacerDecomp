@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"signed64-divide",0x4f9830,170},
+  return {NativeBlock{"box-plane-equation",0x38df0,243},
+                     NativeBlock{"signed64-divide",0x4f9830,170},
                      NativeBlock{"physics-allocation-release",0x38540,19},
                      NativeBlock{"polyhedral-cached-aabb-recalculate",0x7bf40,274},
                      NativeBlock{"polyhedral-convex-aabb-construct",0x7bec0,118},
