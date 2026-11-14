@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery metadata, validation evidence, reference assembly, and original caller. Layout, thiscall ABI, constants, return pointer, and untouched bytes agree. Independent GCC O0/O2 tests executed the immutable original’s extracted routine and passed full-byte, guard, repeated-initialization, and MXCSR checks. The unchanged implementation also compiled with pinned MSVC2013. Documented vtable relocation and inferred-field limitations are appropriate. Sampled validation does not establish all-input equivalence or exact matching certification."
+}
