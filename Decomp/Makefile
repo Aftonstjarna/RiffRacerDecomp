@@ -3765,3 +3765,16 @@ test-cycle-record12-range-copy-construct: $(OUT)/reriff-match $(OUT)/record12_ra
 
 test-recovered: test-cycle-record12-range-copy-construct
 .PHONY: test-cycle-record12-range-copy-construct
+
+# Reviewed cycle reference: box-shape-set-scaling (assembly evidence only).
+$(OUT)/box_shape_set_scaling.bin: native/box_shape_set_scaling.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_shape_set_scaling.o
+	ld -m elf_i386 -Ttext=0x438b40 -e original_box_shape_set_scaling $(OUT)/box_shape_set_scaling.o -o $(OUT)/box_shape_set_scaling.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_shape_set_scaling.elf $@
+
+test-cycle-box-shape-set-scaling: $(OUT)/reriff-match $(OUT)/box_shape_set_scaling.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-shape-set-scaling $(OUT)/box_shape_set_scaling.bin $(OUT)/box-shape-set-scaling-comparison.json
+
+test-recovered: test-cycle-box-shape-set-scaling
+.PHONY: test-cycle-box-shape-set-scaling
