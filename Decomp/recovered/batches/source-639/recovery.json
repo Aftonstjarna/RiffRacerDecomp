@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "12-byte record range copy construction",
+  "summary": "Recovered VA 0x437fe0 (RVA 0x37fe0), 58 bytes: forward copy of three ordered 32-bit fields per 12-byte record, skipping stores and source loads for a null current destination, returning the advanced destination. Original caller-cleaned ECX/EDX/stack ABI is documented; portable source uses an ordinary function. Original callers at 0x437e21 and 0x5a93c4 onward show vector-style relocation and insertion. Accepted oracle was checked against all 58 original executable bytes.",
+  "targets": ["record12-range-copy-construct"],
+  "references": ["record12-range-copy-construct"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding harness linked accepted oracle at 0x437fe0 and ran with exit zero. Compared empty and 1 through 12 record ranges, return pointers, all fields, unchanged source, destination guards, exact aliasing, forward and backward overlapping records, empty null pointers, and one-record null destination with unreadable source. GNU regparm(3) adapter supplies ignored EAX, last in EDX, first in ECX and caller-cleaned destination on stack. VS2013 implementation compilation passed O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Original record type and semantic field names are unresolved; fields are preserved as raw 32-bit words.",
+    "Valid nonempty input must reach last by 12-byte increments and provide readable/writable storage except for the explicit null-current-destination skip. Malformed ranges, address wraparound and faulting accesses were not executed.",
+    "A null destination with multiple records advances to address 12 after the first skip and can fault on subsequent copies; it is not a general discard-output mode.",
+    "No exception handling, allocation, OS behavior or surrounding vector operations are recovered by this bounded function. No byte-matching source claim is made."
+  ]
+}

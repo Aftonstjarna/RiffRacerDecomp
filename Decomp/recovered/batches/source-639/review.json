@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 12-byte layout, ordered field copies, null-destination skip and return behavior agree with the reference. ABI adaptation and untested malformed/faulting cases are documented. Independently verified all 58 reference bytes against Game.exe and rebuilt/reran differential tests at GCC O0 and O2; both passed. Tests call the original and check overlap, guards, source preservation, empty ranges and unreadable-source skipping. Native Windows compilation records cover the actual implementation without claiming matching credit. Sampled validation does not establish all-input equivalence."
+}
