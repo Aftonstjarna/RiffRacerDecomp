@@ -3817,3 +3817,16 @@ test-cycle-triangle-info-map-destruct: $(OUT)/reriff-match $(OUT)/triangle_info_
 
 test-recovered: test-cycle-triangle-info-map-destruct
 .PHONY: test-cycle-triangle-info-map-destruct
+
+# Reviewed cycle reference: polyhedral-convex-aabb-construct (assembly evidence only).
+$(OUT)/polyhedral_convex_aabb_construct.bin: native/polyhedral_convex_aabb_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/polyhedral_convex_aabb_construct.o
+	ld -m elf_i386 -Ttext=0x47bec0 -e original_polyhedral_convex_aabb_construct $(OUT)/polyhedral_convex_aabb_construct.o -o $(OUT)/polyhedral_convex_aabb_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/polyhedral_convex_aabb_construct.elf $@
+
+test-cycle-polyhedral-convex-aabb-construct: $(OUT)/reriff-match $(OUT)/polyhedral_convex_aabb_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" polyhedral-convex-aabb-construct $(OUT)/polyhedral_convex_aabb_construct.bin $(OUT)/polyhedral-convex-aabb-construct-comparison.json
+
+test-recovered: test-cycle-polyhedral-convex-aabb-construct
+.PHONY: test-cycle-polyhedral-convex-aabb-construct

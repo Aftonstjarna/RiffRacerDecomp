@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"triangle-info-map-destruct",0x391e0,14},
+  return {NativeBlock{"polyhedral-convex-aabb-construct",0x7bec0,118},
+                     NativeBlock{"triangle-info-map-destruct",0x391e0,14},
                      NativeBlock{"box-shape-deleting-destructor",0x39180,41},
                      NativeBlock{"convex-aabb-caching-shape-construct",0x7b640,118},
                      NativeBlock{"box-shape-set-scaling",0x38b40,224},
