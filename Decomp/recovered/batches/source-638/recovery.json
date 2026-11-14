@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Stateful inclusive random range",
+  "summary": "Recovered VA 0x478850 (58 bytes) as a genuine member method with a single uint32_t state at offset zero. Multiply by 39 and add 0x27a39e8f modulo 2^32, rotate left 13, retain the full state, then return lower plus unsigned remainder of the low 31 bits by the wrapping inclusive width. Original ABI is ECX this and callee-pop two stack arguments. Observed direct caller at 0x432d52 passes edi+0x36c and lower zero. No dependencies or global side effects.",
+  "targets": ["random-range-inclusive"],
+  "references": ["random-range-inclusive"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 harness compares return values and full RNG state against the accepted original at VA 0x478850 for nine seeds, twelve ranges, and 257 consecutive calls per combination (27756 comparisons). Covers zero/max/high-bit seeds, singleton, ordinary, signed-boundary, very large, wrapping and reversed ranges; checks five surrounding guard words and ordinary inclusive bounds after every call. Independent seed-zero singleton checks expected state 0x73d1e4f4. Locally linked accepted assembly bytes are checked against immutable Game.exe. VS2013 O1, O2 and O2 /Oy- compilation also checked.",
+  "known_limits": [
+    "Width zero (upper-lower+1 modulo 2^32 equals zero) makes original unsigned DIV raise a hardware divide exception after updating state. C++ division by zero is undefined; this fault path is documented but excluded from the portable contract and execution tests.",
+    "Original source signedness and original class name are unknown; unsigned parameters and result expose exact machine bit patterns, including signed-looking caller values.",
+    "Only the assigned routine is recovered. No claim of byte-identical compiler output or uniform distribution beyond original modulo behavior. Concurrent access to the same RNG object is not supported."
+  ]
+}
