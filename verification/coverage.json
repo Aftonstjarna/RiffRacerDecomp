@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 88449,
-  "remaining_bytes": 8546943,
-  "verified_percent": 1.024261550604767,
-  "registered_blocks": 336,
-  "exact_blocks": 336,
+  "verified_bytes": 88723,
+  "remaining_bytes": 8546669,
+  "verified_percent": 1.0274345391616269,
+  "registered_blocks": 337,
+  "exact_blocks": 337,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1262,6 +1262,15 @@
       "byte_equal": true,
       "reference_sha256": "e05bb6b0adbf68ae3095f6f65c61a176285ab33251e1ce3a47e0b83aaf9d18d0",
       "candidate_sha256": "e05bb6b0adbf68ae3095f6f65c61a176285ab33251e1ce3a47e0b83aaf9d18d0"
+    },
+    {
+      "name": "polyhedral-cached-aabb-recalculate",
+      "file_offset": 504640,
+      "size": 274,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "3400dfb9515f8249e2766f755969da4cd8a82a9fea918ddd0db8c15c9f3b7f61",
+      "candidate_sha256": "3400dfb9515f8249e2766f755969da4cd8a82a9fea918ddd0db8c15c9f3b7f61"
     },
     {
       "name": "collision-shape-contact-threshold",

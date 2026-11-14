@@ -3830,3 +3830,16 @@ test-cycle-polyhedral-convex-aabb-construct: $(OUT)/reriff-match $(OUT)/polyhedr
 
 test-recovered: test-cycle-polyhedral-convex-aabb-construct
 .PHONY: test-cycle-polyhedral-convex-aabb-construct
+
+# Reviewed cycle reference: polyhedral-cached-aabb-recalculate (assembly evidence only).
+$(OUT)/polyhedral_cached_aabb_recalculate.bin: native/polyhedral_cached_aabb_recalculate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/polyhedral_cached_aabb_recalculate.o
+	ld -m elf_i386 -Ttext=0x47bf40 -e original_polyhedral_cached_aabb_recalculate $(OUT)/polyhedral_cached_aabb_recalculate.o -o $(OUT)/polyhedral_cached_aabb_recalculate.elf
+	objcopy -O binary --only-section=.text $(OUT)/polyhedral_cached_aabb_recalculate.elf $@
+
+test-cycle-polyhedral-cached-aabb-recalculate: $(OUT)/reriff-match $(OUT)/polyhedral_cached_aabb_recalculate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" polyhedral-cached-aabb-recalculate $(OUT)/polyhedral_cached_aabb_recalculate.bin $(OUT)/polyhedral-cached-aabb-recalculate-comparison.json
+
+test-recovered: test-cycle-polyhedral-cached-aabb-recalculate
+.PHONY: test-cycle-polyhedral-cached-aabb-recalculate
