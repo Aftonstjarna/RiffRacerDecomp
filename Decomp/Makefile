@@ -3739,3 +3739,16 @@ test-cycle-random-range-inclusive: $(OUT)/reriff-match $(OUT)/random_range_inclu
 
 test-recovered: test-cycle-random-range-inclusive
 .PHONY: test-cycle-random-range-inclusive
+
+# Reviewed cycle reference: shared-noop-pop4 (assembly evidence only).
+$(OUT)/shared_noop_pop4.bin: native/shared_noop_pop4.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shared_noop_pop4.o
+	ld -m elf_i386 -Ttext=0x4141c0 -e original_shared_noop_pop4 $(OUT)/shared_noop_pop4.o -o $(OUT)/shared_noop_pop4.elf
+	objcopy -O binary --only-section=.text $(OUT)/shared_noop_pop4.elf $@
+
+test-cycle-shared-noop-pop4: $(OUT)/reriff-match $(OUT)/shared_noop_pop4.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shared-noop-pop4 $(OUT)/shared_noop_pop4.bin $(OUT)/shared-noop-pop4-comparison.json
+
+test-recovered: test-cycle-shared-noop-pop4
+.PHONY: test-cycle-shared-noop-pop4
