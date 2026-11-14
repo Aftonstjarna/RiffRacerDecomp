@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-359",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "convex-internal-shape-serialized-size",
+      "stem": "cycle_convex_internal_shape_serialized_size",
+      "source": "Decomp/recovered/msvc/cycle_convex_internal_shape_serialized_size.cpp",
+      "sha256": "5ae698a941a77d0f5f6d8752f2fab2807995dc6168c01623f6c99cdfeb89ef2e"
+    }
+  ]
+}

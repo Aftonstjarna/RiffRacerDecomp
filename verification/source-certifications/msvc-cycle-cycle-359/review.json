@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "4f950992b00a761e6d50e9dc5a32575f4591a83ad57f95dcbd0229baab5106d8",
+  "behavior_sha256": "e7dfc8bd900788b09406045c412a9bb7713301a8e354acce1b90d192b2b0912c",
+  "functions": [
+    {
+      "scope": "convex-internal-shape-serialized-size",
+      "source_sha256": "5ae698a941a77d0f5f6d8752f2fab2807995dc6168c01623f6c99cdfeb89ef2e",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild exactly matches the complete original function, with no code relocations or masked bytes. Readable C++ preserves its 32-bit ABI and constant return value of 52. Independently executed compiled and original fragments pass 1,024 comparisons checking results and untouched object/guard memory. Original instructions confirm no branches or other side effects. Approval covers only this function."
+    }
+  ],
+  "review_receipt_sha256": "6875683e6b5eac165b7e85f82b6816ffeb95a11fa0c19470321dcebb6824af42",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
