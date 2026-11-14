@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 88723,
-  "remaining_bytes": 8546669,
-  "verified_percent": 1.0274345391616269,
-  "registered_blocks": 337,
-  "exact_blocks": 337,
+  "verified_bytes": 88742,
+  "remaining_bytes": 8546650,
+  "verified_percent": 1.0276545639155699,
+  "registered_blocks": 338,
+  "exact_blocks": 338,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -623,6 +623,15 @@
       "byte_equal": true,
       "reference_sha256": "62a2ece37e456440b274d225c216d54e4af70e3fbb29422a773d7a27ea5454d9",
       "candidate_sha256": "62a2ece37e456440b274d225c216d54e4af70e3fbb29422a773d7a27ea5454d9"
+    },
+    {
+      "name": "physics-allocation-release",
+      "file_offset": 227648,
+      "size": 19,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "b5888515da814811dcc34166caa0aa8709a8de5aa135b40a16b7f970fe090eb7",
+      "candidate_sha256": "b5888515da814811dcc34166caa0aa8709a8de5aa135b40a16b7f970fe090eb7"
     },
     {
       "name": "body-construction-record-initialize",

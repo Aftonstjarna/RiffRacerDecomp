@@ -3843,3 +3843,16 @@ test-cycle-polyhedral-cached-aabb-recalculate: $(OUT)/reriff-match $(OUT)/polyhe
 
 test-recovered: test-cycle-polyhedral-cached-aabb-recalculate
 .PHONY: test-cycle-polyhedral-cached-aabb-recalculate
+
+# Reviewed cycle reference: physics-allocation-release (assembly evidence only).
+$(OUT)/physics_allocation_release.bin: native/physics_allocation_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/physics_allocation_release.o
+	ld -m elf_i386 -Ttext=0x438540 -e original_physics_allocation_release $(OUT)/physics_allocation_release.o -o $(OUT)/physics_allocation_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/physics_allocation_release.elf $@
+
+test-cycle-physics-allocation-release: $(OUT)/reriff-match $(OUT)/physics_allocation_release.bin
+	$(OUT)/reriff-match native-check "$(GAME)" physics-allocation-release $(OUT)/physics_allocation_release.bin $(OUT)/physics-allocation-release-comparison.json
+
+test-recovered: test-cycle-physics-allocation-release
+.PHONY: test-cycle-physics-allocation-release
