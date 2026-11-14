@@ -3752,3 +3752,16 @@ test-cycle-shared-noop-pop4: $(OUT)/reriff-match $(OUT)/shared_noop_pop4.bin
 
 test-recovered: test-cycle-shared-noop-pop4
 .PHONY: test-cycle-shared-noop-pop4
+
+# Reviewed cycle reference: record12-range-copy-construct (assembly evidence only).
+$(OUT)/record12_range_copy_construct.bin: native/record12_range_copy_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_range_copy_construct.o
+	ld -m elf_i386 -Ttext=0x437fe0 -e original_record12_range_copy_construct $(OUT)/record12_range_copy_construct.o -o $(OUT)/record12_range_copy_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_range_copy_construct.elf $@
+
+test-cycle-record12-range-copy-construct: $(OUT)/reriff-match $(OUT)/record12_range_copy_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-range-copy-construct $(OUT)/record12_range_copy_construct.bin $(OUT)/record12-range-copy-construct-comparison.json
+
+test-recovered: test-cycle-record12-range-copy-construct
+.PHONY: test-cycle-record12-range-copy-construct

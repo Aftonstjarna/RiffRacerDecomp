@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"shared-noop-pop4",0x141c0,3},
+  return {NativeBlock{"record12-range-copy-construct",0x37fe0,58},
+                     NativeBlock{"shared-noop-pop4",0x141c0,3},
                      NativeBlock{"random-range-inclusive",0x78850,58},
                      NativeBlock{"collision-shape-contact-threshold",0x7c190,17},
                      NativeBlock{"matrix3-absolute",0x7ad90,294},
