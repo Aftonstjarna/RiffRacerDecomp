@@ -3791,3 +3791,16 @@ test-cycle-convex-aabb-caching-shape-construct: $(OUT)/reriff-match $(OUT)/conve
 
 test-recovered: test-cycle-convex-aabb-caching-shape-construct
 .PHONY: test-cycle-convex-aabb-caching-shape-construct
+
+# Reviewed cycle reference: box-shape-deleting-destructor (assembly evidence only).
+$(OUT)/box_shape_deleting_destructor.bin: native/box_shape_deleting_destructor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/box_shape_deleting_destructor.o
+	ld -m elf_i386 -Ttext=0x439180 -e original_box_shape_deleting_destructor $(OUT)/box_shape_deleting_destructor.o -o $(OUT)/box_shape_deleting_destructor.elf
+	objcopy -O binary --only-section=.text $(OUT)/box_shape_deleting_destructor.elf $@
+
+test-cycle-box-shape-deleting-destructor: $(OUT)/reriff-match $(OUT)/box_shape_deleting_destructor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" box-shape-deleting-destructor $(OUT)/box_shape_deleting_destructor.bin $(OUT)/box-shape-deleting-destructor-comparison.json
+
+test-recovered: test-cycle-box-shape-deleting-destructor
+.PHONY: test-cycle-box-shape-deleting-destructor
