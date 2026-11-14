@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-353",
+  "classification": "source_match_pending_review",
+  "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "original_size": 8635392,
+  "sections": [
+    {
+      "name": ".text",
+      "rva": 4096,
+      "size": 5421056,
+      "offset": 1024
+    },
+    {
+      "name": ".rdata",
+      "rva": 5427200,
+      "size": 2574848,
+      "offset": 5422080
+    },
+    {
+      "name": ".data",
+      "rva": 8003584,
+      "size": 160256,
+      "offset": 7996928
+    },
+    {
+      "name": "_RDATA",
+      "rva": 8450048,
+      "size": 2560,
+      "offset": 8157184
+    },
+    {
+      "name": ".rsrc",
+      "rva": 8454144,
+      "size": 274944,
+      "offset": 8159744
+    },
+    {
+      "name": ".reloc",
+      "rva": 8732672,
+      "size": 200704,
+      "offset": 8434688
+    }
+  ],
+  "source_commit": "f4586ca2f32aa382e73959aacac879aae58deb17",
+  "manifest_sha256": "6096a55f67f1e477e35a5bffc7d0bd6398501ff3f2acdd5cc89e9a463d5a1c9f",
+  "compiler": "18.00.40629.0 built by: REL",
+  "profile": "O2-frame",
+  "flags": "/O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise",
+  "native_toolchain_manifest": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+  "isolated_toolchain_manifest": "663a537894a7ad9d0698931863c652acbd86406b07905f637c7dad96fcc69c41",
+  "checker_sha256": "d864faffb160d0064722f09e2f4f66214abd1f3d5d691e6e60f4eb1dfd0a3adf",
+  "whole_executable_compared": false,
+  "certified_matching_credit": 0,
+  "functions": [
+    {
+      "scope": "convex-internal-shape-margin",
+      "source": "Decomp/recovered/msvc/cycle_convex_internal_shape_margin.cpp",
+      "source_sha256": "b7720e627c28b6a71ef3caa54be81a36ae48acd6f8655dd864f45dabb10c864e",
+      "rva": 231504,
+      "file_offset": 228432,
+      "size": 4,
+      "section": ".text",
+      "code_sha256": "f95341a99d51f5475633b0a992fa6bb809c41744fe61f8de030d059a5d1f6bb6",
+      "native_object_sha256": "b3c354b0a267840812defa1afe11f3ad725ce961200713f7a6abd5350152ef7c",
+      "isolated_object_sha256": "e66c00f321e223434655a7ad24d180bd6eec6b48821969686299cb101fd899d0",
+      "comparison": {
+        "schema": 1,
+        "byte_equal": true,
+        "different_bytes": 0,
+        "original_size": 4,
+        "candidate_size": 4,
+        "candidate_sha256": "f95341a99d51f5475633b0a992fa6bb809c41744fe61f8de030d059a5d1f6bb6",
+        "masked_bytes": 0,
+        "source_rebuild_verified": false,
+        "note": "Binary equality alone does not prove reconstruction from source.",
+        "difference_ranges": [],
+        "reference_fragment_sha256": "f95341a99d51f5475633b0a992fa6bb809c41744fe61f8de030d059a5d1f6bb6",
+        "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "scope": "convex-internal-shape-margin",
+        "rva": 231504,
+        "whole_executable_compared": false
+      }
+    }
+  ]
+}
