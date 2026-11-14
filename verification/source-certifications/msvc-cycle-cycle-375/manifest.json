@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-375",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "record12-default-initialize",
+      "stem": "cycle_record12_default_initialize",
+      "source": "Decomp/recovered/msvc/cycle_record12_default_initialize.cpp",
+      "sha256": "132edb74cc52fdc2e272f94bab609658cedd6c69fa88d6dfe7ca70e3a817b5eb"
+    }
+  ]
+}
