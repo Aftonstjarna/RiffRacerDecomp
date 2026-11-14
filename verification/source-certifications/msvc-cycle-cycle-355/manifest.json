@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-355",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "shared-noop-pop4",
+      "stem": "cycle_shared_noop_pop4",
+      "source": "Decomp/recovered/msvc/cycle_shared_noop_pop4.cpp",
+      "sha256": "20568851cb0261d008110284a311ae6c2122907786e6be748f257ce337059e48"
+    }
+  ]
+}

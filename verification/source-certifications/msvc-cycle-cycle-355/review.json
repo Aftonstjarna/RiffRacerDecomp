@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "d6b8b18edb73b1f4eccf2dd7590f04a481c0590e5ae521e6486a410c418a9d21",
+  "behavior_sha256": "4cb0e73bfa636d9bac2085a206d9267bd4af3251c688b3970f8a53b739165128",
+  "functions": [
+    {
+      "scope": "shared-noop-pop4",
+      "source_sha256": "20568851cb0261d008110284a311ae6c2122907786e6be748f257ce337059e48",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation produced a complete, unmodified code section matching original bytes C2 04 00. Original disassembly confirms the boundary and branchless semantics. Both actual fragments passed 32,896 guarded-state cases and an independent stack, register and flags countercheck. Source is readable C++ without embedded instructions. Approval covers only this routine."
+    }
+  ],
+  "review_receipt_sha256": "bd6fae354c2f9077facb1b3f3a182138f2ba0d9bc83958a302b18c833d04e3eb",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
