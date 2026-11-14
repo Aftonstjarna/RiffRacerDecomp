@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Signed 64-bit division helper",
+  "summary": "Recovered VA 0x8f9830 (RVA 0x4f9830), 170 bytes, as readable portable C++. Two signed 64-bit stack arguments, stdcall RET 16, EDX:EAX result. Caller evidence at 0x562f9d and 0x564878 confirms argument order and result consumption. Unsigned magnitudes, two-limb fast path and normalized quotient estimation with correction implement truncation toward zero, including wrapping INT64_MIN/-1. Original mutates only its private by-value stack argument slots; no object fields, imports, global state or FS accesses. Accepted reference bytes were compared directly with Game.exe. Implementation is behavior-validated, not byte matched.",
+  "targets": ["signed64-divide"],
+  "references": ["signed64-divide"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Freestanding GCC i386 harness calls original_signed64_divide at 0x8f9830 using stdcall, compares recovered results and an independent restoring-division model. Cross-product edge values covers zero numerator, both signs, INT64_MIN/MAX, MIN/-1, limb boundaries, exact and inexact divisions. Tests every power-of-two boundary plus neighboring operands and 30000 deterministic generated cases, including narrow divisors. Checks caller-owned operand storage and neighboring canaries, initialized FS backing and head after every original call, and unchanged MXCSR. Explicit FS installation must succeed. Local assembled oracle is verified byte-for-byte against the immutable original's 170 bytes; test exits zero. Pinned MSVC2013 O2 compilation also succeeded.",
+  "known_limits": [
+    "Zero divisor raises x86 divide error in the original. Portable source requires nonzero divisors; platform-specific fault and exception delivery are not tested or guaranteed.",
+    "Converting wrapped unsigned quotient bits to signed relies on the two's-complement behavior of the supported GCC and MSVC targets, including INT64_MIN/-1.",
+    "Original argument-slot rewrites are private to the callee and not exposed by the C++ interface; tests verify caller storage remains intact.",
+    "No claim of matching generated machine code, whole-game recovery or gameplay validation."
+  ]
+}

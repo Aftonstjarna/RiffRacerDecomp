@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, reference assembly, recovery claims and validation evidence. Control flow, stdcall ABI, signed wrapping and side effects agree within the documented nonzero-divisor contract. Tests call the original and cover meaningful boundaries. Independently verified its 170 reference bytes against Game.exe, passed 500,000 differential cases, and compiled the actual implementation with pinned MSVC. Divide-by-zero exception delivery remains excluded; sampled validation does not establish all-input equivalence."
+}
