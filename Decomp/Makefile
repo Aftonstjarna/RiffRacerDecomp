@@ -3804,3 +3804,16 @@ test-cycle-box-shape-deleting-destructor: $(OUT)/reriff-match $(OUT)/box_shape_d
 
 test-recovered: test-cycle-box-shape-deleting-destructor
 .PHONY: test-cycle-box-shape-deleting-destructor
+
+# Reviewed cycle reference: triangle-info-map-destruct (assembly evidence only).
+$(OUT)/triangle_info_map_destruct.bin: native/triangle_info_map_destruct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/triangle_info_map_destruct.o
+	ld -m elf_i386 -Ttext=0x4391e0 -e original_triangle_info_map_destruct $(OUT)/triangle_info_map_destruct.o -o $(OUT)/triangle_info_map_destruct.elf
+	objcopy -O binary --only-section=.text $(OUT)/triangle_info_map_destruct.elf $@
+
+test-cycle-triangle-info-map-destruct: $(OUT)/reriff-match $(OUT)/triangle_info_map_destruct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" triangle-info-map-destruct $(OUT)/triangle_info_map_destruct.bin $(OUT)/triangle-info-map-destruct-comparison.json
+
+test-recovered: test-cycle-triangle-info-map-destruct
+.PHONY: test-cycle-triangle-info-map-destruct
