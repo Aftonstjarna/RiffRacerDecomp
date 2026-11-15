@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Sphere world-space AABB",
+  "summary": "Recovered Game.exe VA 0x47d710 (RVA 0x7d710), 205 bytes, sphere vtable 0x9f987c slot +4. A thiscall member receives transform, lower and upper pointers and pops 12 argument bytes. Three separately rounded virtual slot +0x28 returns supply Z, Y, then X extents. Subtracts/adds these to translation at transform +0x30/+0x34/+0x38 and writes two 16-byte vectors with positive-zero fourth lanes. Lower is committed before translation is reread for upper. Original default extent dependency at 0x4391c0 loads sphere +0x1c and multiplies +0x0c on x87; retained as a virtual dependency, outside recovered scope. Caller evidence includes 0x460f33 (copied transform plus vector outputs) and 0x47db87 (bounds aggregation). No direct writes to shape or transform except output aliasing and callback effects. Accepted assembly was independently compared against all 205 immutable executable bytes and executed at 0x47d710. Readable member implementation also compiled with pinned VS2013 /O2; no matching claim.",
+  "targets": ["sphere-aabb"],
+  "references": ["sphere-aabb"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 differential harness compares entire guarded shape/transform/output state against original_sphere_aabb with thiscall declaration. 3380 cases cross 13 representative translation and margin bit patterns, four MXCSR rounding modes, and five alias layouts: disjoint, same output, lower aliases translation, upper aliases translation, lower aliases an ignored basis row. Includes signed zeros, negatives, subnormals, normal extrema, infinities, quiet and signaling NaNs. Buffers are four-byte aligned without requiring 16-byte alignment. Audited test callbacks verify receiver, three calls and order, replace vtable after first call, mutate shape fields and optionally translation. Entire-state comparison checks callback side effects and all untouched bytes; independent guards, shape and unused-transform-row assertions supplement it. An explicit finite expected-value assertion checks reverse axis mapping. MXCSR is restored. No imports, FS registration, allocations or external dependencies are used by this routine.",
+  "known_limits": [
+    "High-level unmatched source; neither source matching nor full-game or physics recovery is claimed.",
+    "Virtual margin implementation remains an external dependency. Controlled callbacks test dispatch, rounding and side effects; the default x87 multiplication routine itself is not submitted or independently recovered.",
+    "Original type names are inferred. Only vtable slot +0x28 and 64-byte transform translation layout are interpreted; other shape fields and vtable slots remain opaque.",
+    "Tests use masked floating-point exceptions and default DAZ/FTZ disabled. Exception traps, exact floating-point status flags, alternate x87 precision modes and other architectures' NaN rules are not certified.",
+    "Valid readable/writable typed buffers are required. Null, dangling or inaccessible pointers and arbitrary partial byte overlaps are outside the tests; complete vector aliases with transform and each other are covered.",
+    "Callback-thrown exceptions, concurrent mutation and Windows exception dispatch are not tested. The routine itself does not access FS or register an exception frame."
+  ]
+}
