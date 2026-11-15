@@ -5598,3 +5598,16 @@ test-cycle-script-close-upvalues: $(OUT)/reriff-match $(OUT)/script_close_upvalu
 
 test-recovered: test-cycle-script-close-upvalues
 .PHONY: test-cycle-script-close-upvalues
+
+# Reviewed cycle reference: script-error-object-set (assembly evidence only).
+$(OUT)/script_error_object_set.bin: native/script_error_object_set.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_error_object_set.o
+	ld -m elf_i386 -Ttext=0x4f4c90 -e original_script_error_object_set $(OUT)/script_error_object_set.o -o $(OUT)/script_error_object_set.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_error_object_set.elf $@
+
+test-cycle-script-error-object-set: $(OUT)/reriff-match $(OUT)/script_error_object_set.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-error-object-set $(OUT)/script_error_object_set.bin $(OUT)/script-error-object-set-comparison.json
+
+test-recovered: test-cycle-script-error-object-set
+.PHONY: test-cycle-script-error-object-set
