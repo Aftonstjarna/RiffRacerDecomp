@@ -4259,3 +4259,16 @@ test-cycle-narrow-append-substring: $(OUT)/reriff-match $(OUT)/narrow_append_sub
 
 test-recovered: test-cycle-narrow-append-substring
 .PHONY: test-cycle-narrow-append-substring
+
+# Reviewed cycle reference: convex-hull-vertex-without-margin (assembly evidence only).
+$(OUT)/convex_hull_vertex_without_margin.bin: native/convex_hull_vertex_without_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_hull_vertex_without_margin.o
+	ld -m elf_i386 -Ttext=0x47d280 -e original_convex_hull_vertex_without_margin $(OUT)/convex_hull_vertex_without_margin.o -o $(OUT)/convex_hull_vertex_without_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_hull_vertex_without_margin.elf $@
+
+test-cycle-convex-hull-vertex-without-margin: $(OUT)/reriff-match $(OUT)/convex_hull_vertex_without_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-hull-vertex-without-margin $(OUT)/convex_hull_vertex_without_margin.bin $(OUT)/convex-hull-vertex-without-margin-comparison.json
+
+test-recovered: test-cycle-convex-hull-vertex-without-margin
+.PHONY: test-cycle-convex-hull-vertex-without-margin
