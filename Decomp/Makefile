@@ -4363,3 +4363,16 @@ test-cycle-sphere-aabb: $(OUT)/reriff-match $(OUT)/sphere_aabb.bin
 
 test-recovered: test-cycle-sphere-aabb
 .PHONY: test-cycle-sphere-aabb
+
+# Reviewed cycle reference: handle-record-flag10-present (assembly evidence only).
+$(OUT)/handle_record_flag10_present.bin: native/handle_record_flag10_present.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/handle_record_flag10_present.o
+	ld -m elf_i386 -Ttext=0x499e40 -e original_handle_record_flag10_present $(OUT)/handle_record_flag10_present.o -o $(OUT)/handle_record_flag10_present.elf
+	objcopy -O binary --only-section=.text $(OUT)/handle_record_flag10_present.elf $@
+
+test-cycle-handle-record-flag10-present: $(OUT)/reriff-match $(OUT)/handle_record_flag10_present.bin
+	$(OUT)/reriff-match native-check "$(GAME)" handle-record-flag10-present $(OUT)/handle_record_flag10_present.bin $(OUT)/handle-record-flag10-present-comparison.json
+
+test-recovered: test-cycle-handle-record-flag10-present
+.PHONY: test-cycle-handle-record-flag10-present
