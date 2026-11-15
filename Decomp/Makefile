@@ -4090,3 +4090,16 @@ test-cycle-motion-state-base-destruct: $(OUT)/reriff-match $(OUT)/motion_state_b
 
 test-recovered: test-cycle-motion-state-base-destruct
 .PHONY: test-cycle-motion-state-base-destruct
+
+# Reviewed cycle reference: sse2-pow-precise-import (assembly evidence only).
+$(OUT)/sse2_pow_precise_import.bin: native/sse2_pow_precise_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sse2_pow_precise_import.o
+	ld -m elf_i386 -Ttext=0x8f8f2e -e original_sse2_pow_precise_import $(OUT)/sse2_pow_precise_import.o -o $(OUT)/sse2_pow_precise_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/sse2_pow_precise_import.elf $@
+
+test-cycle-sse2-pow-precise-import: $(OUT)/reriff-match $(OUT)/sse2_pow_precise_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sse2-pow-precise-import $(OUT)/sse2_pow_precise_import.bin $(OUT)/sse2-pow-precise-import-comparison.json
+
+test-recovered: test-cycle-sse2-pow-precise-import
+.PHONY: test-cycle-sse2-pow-precise-import

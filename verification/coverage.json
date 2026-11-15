@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 89708,
-  "remaining_bytes": 8545684,
-  "verified_percent": 1.0388410856160322,
-  "registered_blocks": 356,
-  "exact_blocks": 356,
+  "verified_bytes": 89714,
+  "remaining_bytes": 8545678,
+  "verified_percent": 1.0389105671172774,
+  "registered_blocks": 357,
+  "exact_blocks": 357,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2828,6 +2828,15 @@
       "byte_equal": true,
       "reference_sha256": "34dac2f64147b3c6a452716ae1b827e12a95d5b34e95ba54abd72c845d6baaca",
       "candidate_sha256": "34dac2f64147b3c6a452716ae1b827e12a95d5b34e95ba54abd72c845d6baaca"
+    },
+    {
+      "name": "sse2-pow-precise-import",
+      "file_offset": 5210926,
+      "size": 6,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "cf1ba3bf10a589a0001ee9773db60b91f95d1967ade2c1003ad7b4e155748006",
+      "candidate_sha256": "cf1ba3bf10a589a0001ee9773db60b91f95d1967ade2c1003ad7b4e155748006"
     },
     {
       "name": "ceil-import",
