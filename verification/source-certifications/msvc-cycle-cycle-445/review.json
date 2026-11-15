@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "f0b04e35c4c69a1105ca206c3d2b57ea6c8dc732f79056ee7ad5891045e7697e",
+  "behavior_sha256": "93a2aa2216f8b409313c4165ea7c52769f5216491e98b86d5ad8d8184eed51a7",
+  "functions": [
+    {
+      "scope": "convex-hull-vertex-edge-count",
+      "source_sha256": "166c4070ea570a4767eed3aad7288afdde3f2bb64197fb428f06fc0df83880d6",
+      "approved": true,
+      "reason": "Independently rebuilt the readable C++ with pinned MSVC. Its entire unmodified code section matches the original bytes 8b415cc3, with no code relocations. Verified original boundaries and thiscall ABI. Executed both actual fragments: all 48 differential cases passed, including unsigned extremes and unchanged object/guard memory. The routine has no branches. Approval covers this getter only."
+    }
+  ],
+  "review_receipt_sha256": "a63435224b58e74e14ab7feaf4aa3315a264f58dbfce032c5a8dce08a3f1db52",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

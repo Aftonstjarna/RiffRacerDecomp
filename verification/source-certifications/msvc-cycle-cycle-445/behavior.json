@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "classification": "sampled_actual_native_msvc_fragment_behavior",
+  "build_report_sha256": "f0b04e35c4c69a1105ca206c3d2b57ea6c8dc732f79056ee7ad5891045e7697e",
+  "input_sha256": {
+    "cycle_convex_hull_vertex_edge_count.bin": "e8a390f77a2c35edee25e41f4902293a876d5b3af20791cc05da79c2f55d4983",
+    "cycle_convex_hull_vertex_edge_count.S": "4488ce54ed0999c9fd74c2c096356b0c8e3755de56e0cea2ca6bbc4dffab8642",
+    "test_runtime.S": "0e86daf0873de519c5517d7a7e4c266c67e4a967f9deae711a3d08704783690e",
+    "test_fragment.cpp": "baf554876f1a544cc2becd7a1f0a6a33b3903a377ca1f1ed1336d68802e06c59"
+  },
+  "test_executable_sha256": "84b2b2003a1789f67683a6b5277398f0082af90208eb652a9c18e147a3be6669",
+  "passed": true,
+  "output": "PASS: fragment behavior 48 cases\n",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
