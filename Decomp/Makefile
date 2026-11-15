@@ -5507,3 +5507,16 @@ test-cycle-script-stream-peek: $(OUT)/reriff-match $(OUT)/script_stream_peek.bin
 
 test-recovered: test-cycle-script-stream-peek
 .PHONY: test-cycle-script-stream-peek
+
+# Reviewed cycle reference: script-value-metamethod-lookup (assembly evidence only).
+$(OUT)/script_value_metamethod_lookup.bin: native/script_value_metamethod_lookup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_value_metamethod_lookup.o
+	ld -m elf_i386 -Ttext=0x4f5d00 -e original_script_value_metamethod_lookup $(OUT)/script_value_metamethod_lookup.o -o $(OUT)/script_value_metamethod_lookup.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_value_metamethod_lookup.elf $@
+
+test-cycle-script-value-metamethod-lookup: $(OUT)/reriff-match $(OUT)/script_value_metamethod_lookup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-value-metamethod-lookup $(OUT)/script_value_metamethod_lookup.bin $(OUT)/script-value-metamethod-lookup-comparison.json
+
+test-recovered: test-cycle-script-value-metamethod-lookup
+.PHONY: test-cycle-script-value-metamethod-lookup
