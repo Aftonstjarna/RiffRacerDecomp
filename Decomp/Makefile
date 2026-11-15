@@ -4402,3 +4402,16 @@ test-cycle-compound-shape-scaling-pointer: $(OUT)/reriff-match $(OUT)/compound_s
 
 test-recovered: test-cycle-compound-shape-scaling-pointer
 .PHONY: test-cycle-compound-shape-scaling-pointer
+
+# Reviewed cycle reference: transform64-serialize-copy (assembly evidence only).
+$(OUT)/transform64_serialize_copy.bin: native/transform64_serialize_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/transform64_serialize_copy.o
+	ld -m elf_i386 -Ttext=0x47d840 -e original_transform64_serialize_copy $(OUT)/transform64_serialize_copy.o -o $(OUT)/transform64_serialize_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/transform64_serialize_copy.elf $@
+
+test-cycle-transform64-serialize-copy: $(OUT)/reriff-match $(OUT)/transform64_serialize_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" transform64-serialize-copy $(OUT)/transform64_serialize_copy.bin $(OUT)/transform64-serialize-copy-comparison.json
+
+test-recovered: test-cycle-transform64-serialize-copy
+.PHONY: test-cycle-transform64-serialize-copy

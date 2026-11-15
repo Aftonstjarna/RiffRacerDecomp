@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 91214,
-  "remaining_bytes": 8544178,
-  "verified_percent": 1.0562809424285544,
-  "registered_blocks": 380,
-  "exact_blocks": 380,
+  "verified_bytes": 91316,
+  "remaining_bytes": 8544076,
+  "verified_percent": 1.0574621279497214,
+  "registered_blocks": 381,
+  "exact_blocks": 381,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1541,6 +1541,15 @@
       "byte_equal": true,
       "reference_sha256": "5b7b8eef789a0328c6bdf9d777eb39269c37f0b861fd916f26381af992332cdf",
       "candidate_sha256": "5b7b8eef789a0328c6bdf9d777eb39269c37f0b861fd916f26381af992332cdf"
+    },
+    {
+      "name": "transform64-serialize-copy",
+      "file_offset": 511040,
+      "size": 102,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "5cba305ae3878471d43c0822efe44364cd230ac8f2808306c9662a5caa178355",
+      "candidate_sha256": "5cba305ae3878471d43c0822efe44364cd230ac8f2808306c9662a5caa178355"
     },
     {
       "name": "compound-shape-scaling-pointer",
