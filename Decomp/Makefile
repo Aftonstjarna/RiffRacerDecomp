@@ -5572,3 +5572,16 @@ test-cycle-script-error-reset-state: $(OUT)/reriff-match $(OUT)/script_error_res
 
 test-recovered: test-cycle-script-error-reset-state
 .PHONY: test-cycle-script-error-reset-state
+
+# Reviewed cycle reference: script-callinfo-resize (assembly evidence only).
+$(OUT)/script_callinfo_resize.bin: native/script_callinfo_resize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_callinfo_resize.o
+	ld -m elf_i386 -Ttext=0x4f4f50 -e original_script_callinfo_resize $(OUT)/script_callinfo_resize.o -o $(OUT)/script_callinfo_resize.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_callinfo_resize.elf $@
+
+test-cycle-script-callinfo-resize: $(OUT)/reriff-match $(OUT)/script_callinfo_resize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-callinfo-resize $(OUT)/script_callinfo_resize.bin $(OUT)/script-callinfo-resize-comparison.json
+
+test-recovered: test-cycle-script-callinfo-resize
+.PHONY: test-cycle-script-callinfo-resize

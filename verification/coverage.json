@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 101104,
-  "remaining_bytes": 8534288,
-  "verified_percent": 1.1708096169809084,
-  "registered_blocks": 470,
-  "exact_blocks": 470,
+  "verified_bytes": 101226,
+  "remaining_bytes": 8534166,
+  "verified_percent": 1.1722224075062255,
+  "registered_blocks": 471,
+  "exact_blocks": 471,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2792,6 +2792,15 @@
       "byte_equal": true,
       "reference_sha256": "8572c7a8a3c76d4e758a98fc8c63c6fde25f30f8bd24abb400ebbfc582906358",
       "candidate_sha256": "8572c7a8a3c76d4e758a98fc8c63c6fde25f30f8bd24abb400ebbfc582906358"
+    },
+    {
+      "name": "script-callinfo-resize",
+      "file_offset": 1000272,
+      "size": 122,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "746963c1c4ff4c93a9d78c4fe8d1871b3fc87c5c13f730ffae232ac6621df2a0",
+      "candidate_sha256": "746963c1c4ff4c93a9d78c4fe8d1871b3fc87c5c13f730ffae232ac6621df2a0"
     },
     {
       "name": "script-table-cached-event-lookup",
