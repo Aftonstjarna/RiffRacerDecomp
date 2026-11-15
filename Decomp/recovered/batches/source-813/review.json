@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, validation evidence, native compilation records and reference control flow/layouts. Independently verified both linked oracle spans against Game.exe, reran 1,408 differential cases, and passed 720,896 extended comparisons with optimized source, all mark-byte values and an extreme negative tag. Tests call original code and compare complete fixture side effects. Growth dependencies, dummy-node execution, helper dispatch and ABI limitations are explicitly disclosed. Sampled validation does not establish all-input equivalence."
+}

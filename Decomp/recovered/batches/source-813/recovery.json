@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table new-key insertion",
+  "summary": "Recovery of 0x4f09e0: backward free-node scan, collision linking and displaced-node relocation, key copy and backward GC barrier. State member exposes VM dependencies through Services. Original custom ABI: ECX state, EDX table, stack key, caller cleanup. GCC oracle adapter uses regparm(3) with unused EAX argument. Callers 0x4f0ca4 and 0x4f0cff establish insertion context.",
+  "targets": [
+    "script-table-new-key"
+  ],
+  "references": [
+    "script-table-new-key",
+    "script-table-main-bucket"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "1408 direct original differential cases: negative tags and collectable tag 5; empty and stale nil buckets, collision insertion, direct/deep displaced-node relocation, backward scan to base, all low key/table GC mark combinations. Full fixture byte comparison includes guards, padding, state, global, object and every node. Return pointers and GC effects checked explicitly. Source-only exhaustion tests check dependency call order, cursor underflow, argument identity and return forwarding. GCC i386 harness passes; pinned MSVC2013 /O2 implementation compilation passes. Linked accepted reference bytes verified against immutable Game.exe.",
+  "known_limits": [
+    "Original growth path is unavailable: rehash 0x4f0800 and general setter 0x4f0c50 lack accepted reference spans. They remain external dependencies; callback tests validate only recovered call boundaries.",
+    "Dummy node 0x99a424 handling follows instructions but is not executed; no audited dummy fixture was supplied.",
+    "Helper dispatch tags 1 through 4, numeric floating-point behavior and string hashing are outside these tests.",
+    "Invalid tables, broken collision chains, real allocation, collection and exceptional paths remain outside controlled normal-path tests.",
+    "Portable State member with explicit Services does not reproduce the original mixed-register ABI. No matching-byte claim."
+  ]
+}
