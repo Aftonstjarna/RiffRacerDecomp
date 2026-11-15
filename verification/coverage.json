@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 90802,
-  "remaining_bytes": 8544590,
-  "verified_percent": 1.051509879343057,
-  "registered_blocks": 372,
-  "exact_blocks": 372,
+  "verified_bytes": 90806,
+  "remaining_bytes": 8544586,
+  "verified_percent": 1.0515562003438872,
+  "registered_blocks": 373,
+  "exact_blocks": 373,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1478,6 +1478,15 @@
       "byte_equal": true,
       "reference_sha256": "9dbfff9671d3791c57f0d69e27c1189ddc5d248fd326d386da0aa1e147fbc766",
       "candidate_sha256": "9dbfff9671d3791c57f0d69e27c1189ddc5d248fd326d386da0aa1e147fbc766"
+    },
+    {
+      "name": "convex-hull-vertex-edge-count",
+      "file_offset": 509376,
+      "size": 4,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "e8a390f77a2c35edee25e41f4902293a876d5b3af20791cc05da79c2f55d4983",
+      "candidate_sha256": "e8a390f77a2c35edee25e41f4902293a876d5b3af20791cc05da79c2f55d4983"
     },
     {
       "name": "convex-hull-edge-without-margin",

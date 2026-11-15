@@ -4298,3 +4298,16 @@ test-cycle-convex-hull-edge-without-margin: $(OUT)/reriff-match $(OUT)/convex_hu
 
 test-recovered: test-cycle-convex-hull-edge-without-margin
 .PHONY: test-cycle-convex-hull-edge-without-margin
+
+# Reviewed cycle reference: convex-hull-vertex-edge-count (assembly evidence only).
+$(OUT)/convex_hull_vertex_edge_count.bin: native/convex_hull_vertex_edge_count.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_hull_vertex_edge_count.o
+	ld -m elf_i386 -Ttext=0x47d1c0 -e original_convex_hull_vertex_edge_count $(OUT)/convex_hull_vertex_edge_count.o -o $(OUT)/convex_hull_vertex_edge_count.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_hull_vertex_edge_count.elf $@
+
+test-cycle-convex-hull-vertex-edge-count: $(OUT)/reriff-match $(OUT)/convex_hull_vertex_edge_count.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-hull-vertex-edge-count $(OUT)/convex_hull_vertex_edge_count.bin $(OUT)/convex-hull-vertex-edge-count-comparison.json
+
+test-recovered: test-cycle-convex-hull-vertex-edge-count
+.PHONY: test-cycle-convex-hull-vertex-edge-count
