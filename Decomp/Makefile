@@ -4857,3 +4857,16 @@ test-cycle-u32-range-memmove-end: $(OUT)/reriff-match $(OUT)/u32_range_memmove_e
 
 test-recovered: test-cycle-u32-range-memmove-end
 .PHONY: test-cycle-u32-range-memmove-end
+
+# Reviewed cycle reference: u32-vector-initialize-capacity (assembly evidence only).
+$(OUT)/u32_vector_initialize_capacity.bin: native/u32_vector_initialize_capacity.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u32_vector_initialize_capacity.o
+	ld -m elf_i386 -Ttext=0x43e630 -e original_u32_vector_initialize_capacity $(OUT)/u32_vector_initialize_capacity.o -o $(OUT)/u32_vector_initialize_capacity.elf
+	objcopy -O binary --only-section=.text $(OUT)/u32_vector_initialize_capacity.elf $@
+
+test-cycle-u32-vector-initialize-capacity: $(OUT)/reriff-match $(OUT)/u32_vector_initialize_capacity.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u32-vector-initialize-capacity $(OUT)/u32_vector_initialize_capacity.bin $(OUT)/u32-vector-initialize-capacity-comparison.json
+
+test-recovered: test-cycle-u32-vector-initialize-capacity
+.PHONY: test-cycle-u32-vector-initialize-capacity
