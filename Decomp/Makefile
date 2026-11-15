@@ -4064,3 +4064,16 @@ test-cycle-dispatcher-manifold-index: $(OUT)/reriff-match $(OUT)/dispatcher_mani
 
 test-recovered: test-cycle-dispatcher-manifold-index
 .PHONY: test-cycle-dispatcher-manifold-index
+
+# Reviewed cycle reference: collision-shape-serialize (assembly evidence only).
+$(OUT)/collision_shape_serialize.bin: native/collision_shape_serialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_shape_serialize.o
+	ld -m elf_i386 -Ttext=0x47c220 -e original_collision_shape_serialize $(OUT)/collision_shape_serialize.o -o $(OUT)/collision_shape_serialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_shape_serialize.elf $@
+
+test-cycle-collision-shape-serialize: $(OUT)/reriff-match $(OUT)/collision_shape_serialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-shape-serialize $(OUT)/collision_shape_serialize.bin $(OUT)/collision-shape-serialize-comparison.json
+
+test-recovered: test-cycle-collision-shape-serialize
+.PHONY: test-cycle-collision-shape-serialize
