@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Forward assignment of reference slots",
+  "summary": "Recovered VA 0x43efd0 (RVA 0x3efd0), 86 bytes, from accepted assembly and direct immutable Game.exe disassembly. Iterates four-byte slots forward, skipping identical pointers; releases old destination via signed view-table displacement at +4 to a count owner, decrementing owner+4 and invoking owner vtable slot 0 with thiscall argument 1 on zero. Reloads source after callback, stores it, then retains through its own displacement. Returns advanced destination. Direct caller 0x43edd5 in 0x43edc0 shifts [erase+4,end) over erase and subsequently releases the trailing slot and decrements container end. Original private ECX/EDX/caller-clean stack ABI is exposed through a portable explicit-argument adapter and a test-only regparm(3) declaration. ReferenceBase methods model the actual count owner and callback receiver. Local differential run passed; accepted oracle matched all 86 original bytes. Pinned MSVC2013 implementation compilation passed O1, O2, O2 /Oy-.",
+  "targets": [
+    "reference-slot-assign-range"
+  ],
+  "references": [
+    "reference-slot-assign-range"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "180 differential cases: nine null/equality/count/destruction configurations, lengths 0..4, disjoint/self/overlapping ranges in both directions. Compares all twelve slots, three object counts, guards, table pointers, adjustment metadata, callback receiver IDs, flags, order and old-destination observations. Counts include zero underflow and UINT32_MAX overflow. A destruction callback rewrites the source slot and confirms the original rereads it and retains the replacement. Separate positive-displacement retain/release tests complement negative-displacement fixtures. Empty null ranges return null. Installs initialized FS backing, rejects setup failure, and checks head restoration after every original call. Freestanding GCC i386 harness returned zero.",
+  "known_limits": [
+    "Concrete game class names and table identity remain unknown. Adjustment table word zero is opaque. The owner callback is consistent with a scalar deleting destructor but only thiscall receiver, argument 1 and ignored return are established.",
+    "Callbacks are controlled test doubles; real destruction, allocation, exception unwinding and gameplay are outside this bounded recovery.",
+    "Valid aligned slot ranges and live layout-compatible objects are required. Malformed ranges, invalid pointers, address-space wrapping, concurrent mutation and fault behavior are not tested or emulated. Zero displacement and arbitrary byte overlaps of object metadata with slots are not exercised.",
+    "Original nonstandard ECX/EDX plus caller-clean stack ABI is not a standard thiscall or MS fastcall. Portable implementation uses explicit parameters; only the GCC test declaration supplies that private entry ABI. Callback uses actual i386 thiscall.",
+    "No compiled byte matching or whole-game equivalence claim; native compiler compatibility and sampled behavioral comparisons do not establish either."
+  ]
+}

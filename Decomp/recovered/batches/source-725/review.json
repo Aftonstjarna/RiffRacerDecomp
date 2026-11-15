@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, accepted assembly, and original caller. Control flow, count-owner layout, callback ABI, release/store/retain ordering, and source reload agree. Independently extracted all 86 original bytes and confirmed the reference; differential tests passed at O0 and O2, covering overlap, null/equal slots, count wraparound, callback mutation, and observable side effects. Native Windows compilation records cover the actual implementation. The private entry ABI adapter and untested destruction, exception, and malformed-input behavior are explicitly limited; sampled validation does not establish all-input equivalence."
+}
