@@ -5260,3 +5260,16 @@ test-cycle-script-table-new-key: $(OUT)/reriff-match $(OUT)/script_table_new_key
 
 test-recovered: test-cycle-script-table-new-key
 .PHONY: test-cycle-script-table-new-key
+
+# Reviewed cycle reference: script-table-resize (assembly evidence only).
+$(OUT)/script_table_resize.bin: native/script_table_resize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_resize.o
+	ld -m elf_i386 -Ttext=0x4f0660 -e original_script_table_resize $(OUT)/script_table_resize.o -o $(OUT)/script_table_resize.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_resize.elf $@
+
+test-cycle-script-table-resize: $(OUT)/reriff-match $(OUT)/script_table_resize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-resize $(OUT)/script_table_resize.bin $(OUT)/script-table-resize-comparison.json
+
+test-recovered: test-cycle-script-table-resize
+.PHONY: test-cycle-script-table-resize

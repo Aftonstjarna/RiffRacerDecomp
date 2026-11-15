@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"script-table-new-key",0xf09e0,252},
+  return {NativeBlock{"script-table-resize",0xf0660,416},
+                     NativeBlock{"script-table-new-key",0xf09e0,252},
                      NativeBlock{"script-table-ensure-integer-slot",0xf0cc0,77},
                      NativeBlock{"script-table-construct",0xf0900,113},
                      NativeBlock{"script-table-destroy",0xf0980,84},
