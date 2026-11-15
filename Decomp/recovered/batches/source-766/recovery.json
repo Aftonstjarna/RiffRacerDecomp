@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Forward copy of opaque 520-byte records",
+  "summary": "Recovered VA 0x416a20: equality-terminated range copy, 130 forward dword transfers per record, returning destination end. Callers at 0x415df8 and 0x415e56 pass begin in ECX, end in EDX, destination on caller-cleaned stack. No object fields or external calls are used; only destination bytes change.",
+  "targets": [
+    "record520-range-copy"
+  ],
+  "references": [
+    "record520-range-copy"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original comparison with custom GCC regparm(3) ABI adapter declaration: null and non-null empty ranges, one and three records, unaligned buffers, identity, forward/backward record overlap and 1/2/3/4-byte overlap. Check returned destination end, all 4096 buffer bytes and unchanged bytes outside destination span. Local GCC freestanding i386 executable passed (exit 0); accepted oracle bytes verified against all 50 original bytes. Pinned MSVC2013 compilation passed at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Record fields and owning container types remain unknown; callers show begin/end pointers but their surrounding routines are outside scope.",
+    "Requires a valid readable/writable range whose end is reachable in 520-byte steps; malformed ranges, address wrap and access faults are not tested or assigned new behavior.",
+    "Models normal x86 direction flag clear; DF-set execution is outside the calling convention.",
+    "Portable implementation exposes a normal C++ function rather than the original custom register ABI; test-only GNU regparm declaration maps the original exactly using an unused EAX argument.",
+    "Behavioral recovery only; no byte matching claimed."
+  ]
+}

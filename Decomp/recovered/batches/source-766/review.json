@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source correctly preserves equality termination, 520-byte records, forward dword overlap behavior and destination-end return. Original assembly and callers confirm the documented ABI; the portable ABI difference and validity limits are explicit. Tests call the byte-verified original and compare all buffer bytes and return values. Independent expanded overlap, alignment and count checks passed at GCC O0/O2/O3. Native Windows evidence compiles the actual implementation under three profiles without claiming a match. Sampled validation does not establish all-input equivalence."
+}
