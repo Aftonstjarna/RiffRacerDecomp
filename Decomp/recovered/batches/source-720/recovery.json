@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Terminal node vector-field address",
+  "summary": "Recovered VA 0x457f70 as a thiscall Node member: follow +0x1c0 links until null and return terminal+0x1b0. Original instructions and direct caller at 0x4980e3 confirm address-return behavior without memory writes.",
+  "targets": ["node-chain-terminal-vector"],
+  "references": ["node-chain-terminal-vector"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare original thiscall oracle against member method for 65 standalone nodes, every suffix of permuted chains of lengths 1 through 65, shared suffixes and rewired terminals. Assert exact expected pointer and byte-for-byte preservation of all node storage after each call.",
+  "known_limits": ["Vector field contents and element type are unresolved and represented as opaque storage.", "Valid finite null-ended chains only: null this and invalid links fault in original; cycles never terminate and are not executed in tests.", "Original node size beyond the observed link and broader class identity are unresolved.", "Readable behavior recovery; no byte-matching claim or full game validation."]
+}

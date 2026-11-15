@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Reviewed all submitted source, metadata, reference assembly, and native Windows compilation evidence. Control flow, thiscall ABI, field offsets, returned address, and absence of writes agree with the original. Independently verified the original executable hash and caller, then compiled and ran the candidate tests against bytes extracted directly from Game.exe; meaningful chain, rewiring, and storage-preservation checks passed. Opaque layout and invalid/cyclic-input limitations are stated. Sampled validation does not establish all-input equivalence or exact matching."
+}
