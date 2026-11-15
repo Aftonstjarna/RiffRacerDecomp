@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Readable source preserves the reference control flow, i386 fastcall ABI, layouts, wrapping arithmetic, returns, and saved-PC side effect. Independently verified all 67 reference bytes against Game.exe, confirmed caller register usage, reran 36,518 differential cases at GCC -O2, and compiled the unchanged implementation with pinned MSVC2013. Tests call the original and check complete fixture state, rejection paths, unaligned/wrapped PCs, and boundary values. Documented pointer, table-size, and platform limitations are appropriate; sampled validation does not establish all-input equivalence."
+}

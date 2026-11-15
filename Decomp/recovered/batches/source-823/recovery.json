@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script frame current source line",
+  "summary": "Recover VA 0x485cd0 (RVA 0x85cd0), 67 bytes, as a two-register fastcall routine. Eligible tag-6, non-native closures synchronize the active frame saved PC, derive the preceding instruction index with wrapping subtraction and arithmetic shift, and return the line-table entry, zero for absent table, or minus one for unavailable frames/negative indices. Call sites inspected at 0x485fdb and 0x4869cb. Accepted reference was compared against all 67 original executable bytes. GCC differential tests passed; pinned MSVC2013 /O2 source compilation also passed. No matching-source claim.",
+  "targets": [
+    "script-frame-current-line"
+  ],
+  "references": [
+    "script-frame-current-line"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "36518 direct oracle comparisons: tags 0/5/6/7/UINT32_MAX, native flags 0/1/128/255, active/inactive frames, present/absent tables, three bases including address wrap, all PC differences -20..131, plus signed/wrapped extreme differences with absent tables. Lines include -1, zero, INT32_MIN and INT32_MAX. Two poisoned-downstream-pointer rejection tests establish early return without state/prototype access. Every test checks return values and all fixture bytes against an independent expected result and the original, allowing only the eligible active-frame saved-PC store. GCC freestanding i386 build uses the supplied runtime and accepted original at VA 0x485cd0. No imports or FS registration needed by this leaf routine.",
+  "known_limits": [
+    "Original type and field names are unknown; partial layouts and semantic names are inferred from instructions and callers.",
+    "Exact original ABI/layout validation is i386 only. Pointer-bearing layouts naturally differ on 64-bit Linux; port integration and wider address semantics remain outside this bounded recovery.",
+    "Original performs no null, alignment, or line-table upper-bound validation. Tests supply valid reachable pointers and sufficiently sized tables; invalid-memory faults are not emulated.",
+    "Large positive indices are tested with an absent line table only; no enormous table fixture is manufactured.",
+    "This recovers one leaf helper, not the VM, callers, exception paths, or a full game rebuild. No matching-byte source credit is claimed."
+  ]
+}
