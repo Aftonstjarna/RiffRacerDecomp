@@ -5091,3 +5091,16 @@ test-cycle-script-table-choose-array-capacity: $(OUT)/reriff-match $(OUT)/script
 
 test-recovered: test-cycle-script-table-choose-array-capacity
 .PHONY: test-cycle-script-table-choose-array-capacity
+
+# Reviewed cycle reference: script-table-main-bucket (assembly evidence only).
+$(OUT)/script_table_main_bucket.bin: native/script_table_main_bucket.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_main_bucket.o
+	ld -m elf_i386 -Ttext=0x4f0110 -e original_script_table_main_bucket $(OUT)/script_table_main_bucket.o -o $(OUT)/script_table_main_bucket.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_main_bucket.elf $@
+
+test-cycle-script-table-main-bucket: $(OUT)/reriff-match $(OUT)/script_table_main_bucket.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-main-bucket $(OUT)/script_table_main_bucket.bin $(OUT)/script-table-main-bucket-comparison.json
+
+test-recovered: test-cycle-script-table-main-bucket
+.PHONY: test-cycle-script-table-main-bucket
