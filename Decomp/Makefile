@@ -4467,3 +4467,16 @@ test-cycle-sphere-support-with-margin: $(OUT)/reriff-match $(OUT)/sphere_support
 
 test-recovered: test-cycle-sphere-support-with-margin
 .PHONY: test-cycle-sphere-support-with-margin
+
+# Reviewed cycle reference: collision-shape-bounding-sphere (assembly evidence only).
+$(OUT)/collision_shape_bounding_sphere.bin: native/collision_shape_bounding_sphere.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_shape_bounding_sphere.o
+	ld -m elf_i386 -Ttext=0x47c060 -e original_collision_shape_bounding_sphere $(OUT)/collision_shape_bounding_sphere.o -o $(OUT)/collision_shape_bounding_sphere.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_shape_bounding_sphere.elf $@
+
+test-cycle-collision-shape-bounding-sphere: $(OUT)/reriff-match $(OUT)/collision_shape_bounding_sphere.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-shape-bounding-sphere $(OUT)/collision_shape_bounding_sphere.bin $(OUT)/collision-shape-bounding-sphere-comparison.json
+
+test-recovered: test-cycle-collision-shape-bounding-sphere
+.PHONY: test-cycle-collision-shape-bounding-sphere

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 91776,
-  "remaining_bytes": 8543616,
-  "verified_percent": 1.0627890430451796,
-  "registered_blocks": 385,
-  "exact_blocks": 385,
+  "verified_bytes": 92067,
+  "remaining_bytes": 8543325,
+  "verified_percent": 1.0661588958555674,
+  "registered_blocks": 386,
+  "exact_blocks": 386,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1406,6 +1406,15 @@
       "byte_equal": true,
       "reference_sha256": "3400dfb9515f8249e2766f755969da4cd8a82a9fea918ddd0db8c15c9f3b7f61",
       "candidate_sha256": "3400dfb9515f8249e2766f755969da4cd8a82a9fea918ddd0db8c15c9f3b7f61"
+    },
+    {
+      "name": "collision-shape-bounding-sphere",
+      "file_offset": 504928,
+      "size": 291,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "bd66be3488fac3a4d6f6d74458b84ddcf66ad9fe35255130c2711e52a7d30b32",
+      "candidate_sha256": "bd66be3488fac3a4d6f6d74458b84ddcf66ad9fe35255130c2711e52a7d30b32"
     },
     {
       "name": "collision-shape-contact-threshold",
