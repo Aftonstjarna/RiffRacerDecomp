@@ -4909,3 +4909,16 @@ test-cycle-pointer-range-has-state-six-or-seven: $(OUT)/reriff-match $(OUT)/poin
 
 test-recovered: test-cycle-pointer-range-has-state-six-or-seven
 .PHONY: test-cycle-pointer-range-has-state-six-or-seven
+
+# Reviewed cycle reference: matrix3-identity-initialize (assembly evidence only).
+$(OUT)/matrix3_identity_initialize.bin: native/matrix3_identity_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix3_identity_initialize.o
+	ld -m elf_i386 -Ttext=0x422700 -e original_matrix3_identity_initialize $(OUT)/matrix3_identity_initialize.o -o $(OUT)/matrix3_identity_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix3_identity_initialize.elf $@
+
+test-cycle-matrix3-identity-initialize: $(OUT)/reriff-match $(OUT)/matrix3_identity_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix3-identity-initialize $(OUT)/matrix3_identity_initialize.bin $(OUT)/matrix3-identity-initialize-comparison.json
+
+test-recovered: test-cycle-matrix3-identity-initialize
+.PHONY: test-cycle-matrix3-identity-initialize
