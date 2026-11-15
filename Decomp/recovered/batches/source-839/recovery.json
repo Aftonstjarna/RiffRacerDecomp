@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script stack resize",
+  "summary": "Readable recovery of VA 0x4f4ef0: modulo-32-bit size guard, six reserve slots, allocator byte sizes, ordered stack metadata updates and pointer relocation. Explicit port services preserve dependency boundaries; test-only allocation binding covers successful allocation and accounting, while the oracle executes the accepted original reallocate helper. Original ABI is ECX state / EDX requested slots; the member port adds an explicit service argument.",
+  "targets": [
+    "script-stack-resize"
+  ],
+  "references": [
+    "script-stack-resize",
+    "script-reallocate",
+    "script-allocation-too-large",
+    "script-stack-relocate-pointers"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct comparison against original_script_stack_resize for 9 requests times moving/in-place allocation, empty/two-node upvalue chains and empty/three-frame ranges (72 scenarios). Covers zero, shrinking, growth, largest ordinary accepted request and wraparound requests. Checks allocator arguments/count, accounting delta, whole state including untouched fields, frames, upvalues, old buffer and destination buffer contents. Shared accepted relocation helper is used on both sides. Large requests use a recording successful allocator without dereferencing the requested extent. Tests require successful explicit FS setup and verify the test-owned head after every original call. Local GCC oracle harness passed all 72 scenarios; pinned MSVC2013 implementation compilation passed O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Allocation-too-large error dispatch and allocator failure/longjmp/panic paths are not executable in this controlled harness: original error preparation/runtime error dependency graph and original literal/CRT bindings are not supplied here. The branch and hypothetical returning-error continuation are transcribed but unvalidated.",
+    "Successful reallocation port binding in test.cpp is a controlled dependency adapter, not recovery of the reallocate helper. Production must bind complete allocator/error/accounting services.",
+    "32-bit layout and address arithmetic; native 64-bit port needs explicit layout/address adaptation. No byte matching claimed.",
+    "Relocation semantics are tested through an accepted shared helper, not independently recovered in this task. Invalid linked structures and non-returning error behavior are outside tests."
+  ]
+}
