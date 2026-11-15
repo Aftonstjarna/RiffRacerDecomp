@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "00f605a018fd32237ca660ed329c8ba03d378c68e0c1eb5f8ffdb17f04ec9990",
+  "behavior_sha256": "821887b636eccb7817dbd7eb23d253ba9287c8cb1451902d8262c51f6c74b324",
+  "functions": [
+    {
+      "scope": "convex-callback-filter-test",
+      "source_sha256": "547436f69b1948a05434548e33bb55d06213ea7c319b4712b63ef06dc52842d1",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified, relocation-free code section exactly. Original disassembly confirms boundaries, field offsets, branches and thiscall ABI. Executing both compiled code and bytes extracted directly from Game.exe passed 262144 comparisons covering acceptance, both rejection paths, aliasing and unchanged surrounding state. Source and test hashes match the receipt; approval rests on independent checks."
+    }
+  ],
+  "review_receipt_sha256": "4761d962893fac3af0c7ff22a09ea461faa72abed5e27630af93376925b1dce2",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
