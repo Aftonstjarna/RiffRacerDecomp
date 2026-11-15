@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script value metamethod lookup",
+  "summary": "Recover VA 0x4f5d00 (106 bytes) as a read-only metatable hash-chain lookup. Tags 5 and 7 use the object's +8 metatable; other tags use global +0x7c. Event names are global +0xa0; string keys require tag 4 and interned pointer identity. Missing results return shared nil VA 0x99a41c. Original callers confirm ECX state, EDX value and caller-cleaned stack event; test-only regparm adapter preserves this custom ABI.",
+  "targets": [
+    "script-value-metamethod-lookup"
+  ],
+  "references": [
+    "script-value-metamethod-lookup"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original/recovered/expected pointer comparison for tags 0..8, events 0..17, absent object/type metatables, absent chains, direct and late matches, mismatched key tags and equal-hash distinct key pointers, nil-valued matching nodes and first-match precedence. Hashes include high bits and counts include 0, 31, 32, 33 and 255 to verify x86 shift masking. All fixture bytes are compared before/after each call; test-owned FS setup must succeed and its head must remain unchanged. Missing-table calls also test an invalid event index without accessing names. Conflicting global/object metatables establish selection precedence; an absent object metatable also permits a null global pointer. GCC harness passed; supplied VS2013 compilation passed at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "No matching-byte claim. Portable member signature models behavior rather than reproducing the original nonstandard register ABI.",
+    "Original runtime has 32-bit pointers and payloads; layouts are asserted on 32-bit builds. A 64-bit port must adapt the value payload representation and rebind the shared nil address.",
+    "Valid allocated objects, event names, bucket arrays and terminating chains are caller preconditions. Invalid pointers, out-of-range tags/events with a present metatable and cyclic chains are not made safe by this routine.",
+    "Opaque fields and semantic type names beyond observed Lua-like tags/offsets are not recovered. Large hash masks are tested with bounded bucket indices; enormous real tables are not allocated."
+  ]
+}
