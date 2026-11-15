@@ -4753,3 +4753,16 @@ test-cycle-random-range-float: $(OUT)/reriff-match $(OUT)/random_range_float.bin
 
 test-recovered: test-cycle-random-range-float
 .PHONY: test-cycle-random-range-float
+
+# Reviewed cycle reference: convex-hull-shape-serialize (assembly evidence only).
+$(OUT)/convex_hull_shape_serialize.bin: native/convex_hull_shape_serialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_hull_shape_serialize.o
+	ld -m elf_i386 -Ttext=0x47d2e0 -e original_convex_hull_shape_serialize $(OUT)/convex_hull_shape_serialize.o -o $(OUT)/convex_hull_shape_serialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_hull_shape_serialize.elf $@
+
+test-cycle-convex-hull-shape-serialize: $(OUT)/reriff-match $(OUT)/convex_hull_shape_serialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-hull-shape-serialize $(OUT)/convex_hull_shape_serialize.bin $(OUT)/convex-hull-shape-serialize-comparison.json
+
+test-recovered: test-cycle-convex-hull-shape-serialize
+.PHONY: test-cycle-convex-hull-shape-serialize
