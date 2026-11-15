@@ -4181,3 +4181,16 @@ test-cycle-sse2-exp-precise-import: $(OUT)/reriff-match $(OUT)/sse2_exp_precise_
 
 test-recovered: test-cycle-sse2-exp-precise-import
 .PHONY: test-cycle-sse2-exp-precise-import
+
+# Reviewed cycle reference: object-field78-present (assembly evidence only).
+$(OUT)/object_field78_present.bin: native/object_field78_present.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/object_field78_present.o
+	ld -m elf_i386 -Ttext=0x438530 -e original_object_field78_present $(OUT)/object_field78_present.o -o $(OUT)/object_field78_present.elf
+	objcopy -O binary --only-section=.text $(OUT)/object_field78_present.elf $@
+
+test-cycle-object-field78-present: $(OUT)/reriff-match $(OUT)/object_field78_present.bin
+	$(OUT)/reriff-match native-check "$(GAME)" object-field78-present $(OUT)/object_field78_present.bin $(OUT)/object-field78-present-comparison.json
+
+test-recovered: test-cycle-object-field78-present
+.PHONY: test-cycle-object-field78-present
