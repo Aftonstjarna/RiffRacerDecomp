@@ -3934,3 +3934,16 @@ test-cycle-packed-double-floor-sse41: $(OUT)/reriff-match $(OUT)/packed_double_f
 
 test-recovered: test-cycle-packed-double-floor-sse41
 .PHONY: test-cycle-packed-double-floor-sse41
+
+# Reviewed cycle reference: ray-callback-filter-test (assembly evidence only).
+$(OUT)/ray_callback_filter_test.bin: native/ray_callback_filter_test.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ray_callback_filter_test.o
+	ld -m elf_i386 -Ttext=0x4270e0 -e original_ray_callback_filter_test $(OUT)/ray_callback_filter_test.o -o $(OUT)/ray_callback_filter_test.elf
+	objcopy -O binary --only-section=.text $(OUT)/ray_callback_filter_test.elf $@
+
+test-cycle-ray-callback-filter-test: $(OUT)/reriff-match $(OUT)/ray_callback_filter_test.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ray-callback-filter-test $(OUT)/ray_callback_filter_test.bin $(OUT)/ray-callback-filter-test-comparison.json
+
+test-recovered: test-cycle-ray-callback-filter-test
+.PHONY: test-cycle-ray-callback-filter-test
