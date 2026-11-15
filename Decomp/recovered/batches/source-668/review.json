@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source preserves the reference’s reciprocal 16-bit tests, short-circuit control flow, observed layout, thiscall ABI, bool return, and absence of writes. Independently rebuilt and ran the submitted tests against bytes extracted from immutable Game.exe; all passed, including edge masks, single-bit combinations, mixed masks, aliasing, and memory guards. Source hashes agree with validation, and native Windows compilation records cover the actual implementation. Full class identity, callers, invalid-pointer behavior, and upper EAX bits remain explicitly outside scope. Sampled validation does not establish all-input equivalence."
+}
