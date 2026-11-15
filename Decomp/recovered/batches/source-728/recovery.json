@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Page header stream ID accessor",
+  "summary": "Recovered VA 0x59b370 as a thiscall member accessor: object offset zero points to header bytes; offsets 14 through 17 form an unsigned little-endian 32-bit stream ID. Reads only, with no validation. Direct callers at 0x5644ff and 0x56452d compare the returned ID against stream state. Direct executable disassembly agrees with the accepted reference.",
+  "targets": ["page-header-stream-id-le32"],
+  "references": ["page-header-stream-id-le32"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 thiscall oracle comparison at original address. Tests zero, all ones, sign boundaries, asymmetric byte patterns, all 256 values independently in each byte against zero and one backgrounds, and 4096 deterministic mixed values; uses eight header alignments. Checks expected unsigned value, unchanged pointer, adjacent object sentinel fields, and entire header backing storage.",
+  "known_limits": ["Partial object view: only pointer field at offset zero is known; full object layout is not recovered.", "Invalid object/header pointers and inaccessible bytes fault in the original and are outside the test domain; no validation is added.", "Stable ordinary memory is assumed; concurrent mutation and MMIO access ordering are not supported.", "No byte-identical compiler output claim or broader stream-parser recovery."]
+}
