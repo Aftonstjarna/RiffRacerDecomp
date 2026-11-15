@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-397",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "convex-hull-shape-serialized-size",
+      "stem": "cycle_convex_hull_shape_serialized_size",
+      "source": "Decomp/recovered/msvc/cycle_convex_hull_shape_serialized_size.cpp",
+      "sha256": "97c04194fc8df6323368ae187b4f6b01db209993f904db62fa9e4c6ca27120f6"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "6c51a42e8c7776ecb0f97da627379696207c2508f195b5ba6363aade3c724073",
+  "behavior_sha256": "22c2446cb93d51e343534ed7b9596a6381124646e7a103c112225129aa845c7f",
+  "functions": [
+    {
+      "scope": "convex-hull-shape-serialized-size",
+      "source_sha256": "97c04194fc8df6323368ae187b4f6b01db209993f904db62fa9e4c6ca27120f6",
+      "approved": true,
+      "reason": "Readable C++ independently compiled with pinned MSVC. Its entire code section matches the original bytes exactly, without relocations or patching. Independently executed compiled and original code across 16,388 cases, checking return values, untouched memory, and unused invalid receivers. Original disassembly confirms the boundary, ABI-compatible return, and absence of branches."
+    }
+  ],
+  "review_receipt_sha256": "a003d4bba89ba95946db5a213fa8c4030ee8d5f5113357c01b2ed361fd66c678",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
