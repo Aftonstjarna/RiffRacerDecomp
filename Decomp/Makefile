@@ -5182,3 +5182,16 @@ test-cycle-script-reallocate: $(OUT)/reriff-match $(OUT)/script_reallocate.bin
 
 test-recovered: test-cycle-script-reallocate
 .PHONY: test-cycle-script-reallocate
+
+# Reviewed cycle reference: script-table-initialize-hash-storage (assembly evidence only).
+$(OUT)/script_table_initialize_hash_storage.bin: native/script_table_initialize_hash_storage.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_initialize_hash_storage.o
+	ld -m elf_i386 -Ttext=0x4f0580 -e original_script_table_initialize_hash_storage $(OUT)/script_table_initialize_hash_storage.o -o $(OUT)/script_table_initialize_hash_storage.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_initialize_hash_storage.elf $@
+
+test-cycle-script-table-initialize-hash-storage: $(OUT)/reriff-match $(OUT)/script_table_initialize_hash_storage.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-initialize-hash-storage $(OUT)/script_table_initialize_hash_storage.bin $(OUT)/script-table-initialize-hash-storage-comparison.json
+
+test-recovered: test-cycle-script-table-initialize-hash-storage
+.PHONY: test-cycle-script-table-initialize-hash-storage
