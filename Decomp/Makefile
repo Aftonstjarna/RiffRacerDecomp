@@ -3908,3 +3908,16 @@ test-cycle-random-unit-float: $(OUT)/reriff-match $(OUT)/random_unit_float.bin
 
 test-recovered: test-cycle-random-unit-float
 .PHONY: test-cycle-random-unit-float
+
+# Reviewed cycle reference: packed-double-floor-sse2 (assembly evidence only).
+$(OUT)/packed_double_floor_sse2.bin: native/packed_double_floor_sse2.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/packed_double_floor_sse2.o
+	ld -m elf_i386 -Ttext=0x8fc3c0 -e original_packed_double_floor_sse2 $(OUT)/packed_double_floor_sse2.o -o $(OUT)/packed_double_floor_sse2.elf
+	objcopy -O binary --only-section=.text $(OUT)/packed_double_floor_sse2.elf $@
+
+test-cycle-packed-double-floor-sse2: $(OUT)/reriff-match $(OUT)/packed_double_floor_sse2.bin
+	$(OUT)/reriff-match native-check "$(GAME)" packed-double-floor-sse2 $(OUT)/packed_double_floor_sse2.bin $(OUT)/packed-double-floor-sse2-comparison.json
+
+test-recovered: test-cycle-packed-double-floor-sse2
+.PHONY: test-cycle-packed-double-floor-sse2
