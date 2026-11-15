@@ -4896,3 +4896,16 @@ test-cycle-u32-vector-range-cleanup: $(OUT)/reriff-match $(OUT)/u32_vector_range
 
 test-recovered: test-cycle-u32-vector-range-cleanup
 .PHONY: test-cycle-u32-vector-range-cleanup
+
+# Reviewed cycle reference: pointer-range-has-state-six-or-seven (assembly evidence only).
+$(OUT)/pointer_range_has_state_six_or_seven.bin: native/pointer_range_has_state_six_or_seven.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pointer_range_has_state_six_or_seven.o
+	ld -m elf_i386 -Ttext=0x53c7c0 -e original_pointer_range_has_state_six_or_seven $(OUT)/pointer_range_has_state_six_or_seven.o -o $(OUT)/pointer_range_has_state_six_or_seven.elf
+	objcopy -O binary --only-section=.text $(OUT)/pointer_range_has_state_six_or_seven.elf $@
+
+test-cycle-pointer-range-has-state-six-or-seven: $(OUT)/reriff-match $(OUT)/pointer_range_has_state_six_or_seven.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pointer-range-has-state-six-or-seven $(OUT)/pointer_range_has_state_six_or_seven.bin $(OUT)/pointer-range-has-state-six-or-seven-comparison.json
+
+test-recovered: test-cycle-pointer-range-has-state-six-or-seven
+.PHONY: test-cycle-pointer-range-has-state-six-or-seven
