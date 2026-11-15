@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "7e3008f2cda07db7ede296ed881db469c0590fc800370e47944b345b35265a1d",
+  "behavior_sha256": "0a33cd3aaf218c88e2657d8a7f32330c9b70dd0497675ee7c452529c5994db67",
+  "functions": [
+    {
+      "scope": "pointer-slot-zero-construct",
+      "source_sha256": "4dd1773402aebcb159b896b6cceb3f5843bd00efd1c3c778a59ae827dbf11473",
+      "approved": true,
+      "reason": "Readable C++ independently rebuilt with pinned MSVC. Its complete, unmodified code section exactly matches Game.exe at 0x4223a0–0x4223a9 and preserves the 32-bit thiscall ABI. Independently executed compiled and original bytes passed 14,592 differential cases checking return pointers, zeroed slots and untouched surrounding memory. The routine has no branches. Referenced receipt artifacts were absent; approval rests on independent verification."
+    }
+  ],
+  "review_receipt_sha256": "b981546147cc3cd3a6c84e68211b77d2f36ec086234bc93e33420b3c344e006b",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
