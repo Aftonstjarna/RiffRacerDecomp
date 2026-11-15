@@ -3999,3 +3999,16 @@ test-cycle-collision-shape-angular-motion-disc: $(OUT)/reriff-match $(OUT)/colli
 
 test-recovered: test-cycle-collision-shape-angular-motion-disc
 .PHONY: test-cycle-collision-shape-angular-motion-disc
+
+# Reviewed cycle reference: convex-callback-filter-test (assembly evidence only).
+$(OUT)/convex_callback_filter_test.bin: native/convex_callback_filter_test.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_callback_filter_test.o
+	ld -m elf_i386 -Ttext=0x427110 -e original_convex_callback_filter_test $(OUT)/convex_callback_filter_test.o -o $(OUT)/convex_callback_filter_test.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_callback_filter_test.elf $@
+
+test-cycle-convex-callback-filter-test: $(OUT)/reriff-match $(OUT)/convex_callback_filter_test.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-callback-filter-test $(OUT)/convex_callback_filter_test.bin $(OUT)/convex-callback-filter-test-comparison.json
+
+test-recovered: test-cycle-convex-callback-filter-test
+.PHONY: test-cycle-convex-callback-filter-test
