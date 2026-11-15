@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-419",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "nested-record-pair-copy",
+      "stem": "cycle_nested_record_pair_copy",
+      "source": "Decomp/recovered/msvc/cycle_nested_record_pair_copy.cpp",
+      "sha256": "523e560f8291805677948870404a1ebaa431e437a05c220ae820505a516be16f"
+    }
+  ]
+}

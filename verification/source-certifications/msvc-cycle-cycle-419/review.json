@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "3232cdae39f8f2e3a6cc0a78b8cd564ba9f6c316fd4cf5f007f6fc4415e47c17",
+  "behavior_sha256": "7faf94bed212f3e6f399a28f06e244ae5a645e9e88aa5defcb0d03d1d4a73cb2",
+  "functions": [
+    {
+      "scope": "nested-record-pair-copy",
+      "source_sha256": "523e560f8291805677948870404a1ebaa431e437a05c220ae820505a516be16f",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified compiler section exactly against Game.exe, with no relocations. Verified boundaries, layouts, copy order and thiscall ABI. Freshly compiled code and extracted original code passed all 3,072 submitted cases and 4,096 expanded cases covering branches, overlap, unaligned access and untouched state, plus null-path invalid-output checks. Approval covers this function only."
+    }
+  ],
+  "review_receipt_sha256": "c0780da3a5e457535b6c378408409cd429c59f07a6e52febc75687afda192dda",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
