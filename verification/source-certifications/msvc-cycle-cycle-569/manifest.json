@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-569",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "script-stack-relocate-pointers",
+      "stem": "cycle_script_stack_relocate_pointers",
+      "source": "Decomp/recovered/msvc/cycle_script_stack_relocate_pointers.cpp",
+      "sha256": "aef4c7deac78444bea95ce2421b22d513298a7e3054eea47529d5ca33f309cca"
+    }
+  ]
+}

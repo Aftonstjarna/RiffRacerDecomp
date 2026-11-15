@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "8b7f80adbc6d2c1f0487f8d8a50e07d1759887cc1eb2cb8c866954444097ca67",
+  "behavior_sha256": "927dab10c5a2c47f0306aad6e267a7df91eb5799e5e3d2a6a97f2088765acc46",
+  "functions": [
+    {
+      "scope": "script-stack-relocate-pointers",
+      "source_sha256": "aef4c7deac78444bea95ce2421b22d513298a7e3054eea47529d5ca33f309cca",
+      "approved": true,
+      "reason": "Reviewed all candidate files and original instructions. Pinned MSVC independently rebuilt the readable C++ into a complete, unmodified 142-byte section identical to Game.exe. Verified boundaries, layouts and fastcall ABI. Actual compiled and original code passed 576 supplied cases and 864 expanded countercheck cases, covering empty/populated loops, backward relocation and untouched state. Approval is limited to this function."
+    }
+  ],
+  "review_receipt_sha256": "d27547b9c20b281a1fb9b11d68c006a9f2711d221b45e3809b554ccf89c73df7",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
