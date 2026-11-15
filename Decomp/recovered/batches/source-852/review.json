@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, and original assembly. Control flow, i386 layouts, pointer identity, nil handling and cache mutations agree within documented limits. Independently verified reference bytes and zero nil data against Game.exe. Mapped-nil differential tests passed, including expanded coverage of all byte exponents and event indices; actual implementation also compiled with VS2013 /O2. The portable member’s ABI difference is disclosed. Sampled validation does not establish all-input equivalence."
+}
