@@ -5104,3 +5104,16 @@ test-cycle-script-table-main-bucket: $(OUT)/reriff-match $(OUT)/script_table_mai
 
 test-recovered: test-cycle-script-table-main-bucket
 .PHONY: test-cycle-script-table-main-bucket
+
+# Reviewed cycle reference: script-table-get-value (assembly evidence only).
+$(OUT)/script_table_get_value.bin: native/script_table_get_value.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_get_value.o
+	ld -m elf_i386 -Ttext=0x4f0bb0 -e original_script_table_get_value $(OUT)/script_table_get_value.o -o $(OUT)/script_table_get_value.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_get_value.elf $@
+
+test-cycle-script-table-get-value: $(OUT)/reriff-match $(OUT)/script_table_get_value.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-get-value $(OUT)/script_table_get_value.bin $(OUT)/script-table-get-value-comparison.json
+
+test-recovered: test-cycle-script-table-get-value
+.PHONY: test-cycle-script-table-get-value
