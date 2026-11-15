@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"script-format-variadic-bridge",0xeff40,23},
+  return {NativeBlock{"script-table-resize-array",0xf0520,87},
+                     NativeBlock{"script-format-variadic-bridge",0xeff40,23},
                      NativeBlock{"script-table-count-hash-histogram",0xf0460,190},
                      NativeBlock{"script-table-count-array-histogram",0xf03e0,119},
                      NativeBlock{"script-table-get-value",0xf0bb0,134},

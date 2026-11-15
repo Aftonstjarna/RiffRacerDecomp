@@ -5156,3 +5156,16 @@ test-cycle-script-format-variadic-bridge: $(OUT)/reriff-match $(OUT)/script_form
 
 test-recovered: test-cycle-script-format-variadic-bridge
 .PHONY: test-cycle-script-format-variadic-bridge
+
+# Reviewed cycle reference: script-table-resize-array (assembly evidence only).
+$(OUT)/script_table_resize_array.bin: native/script_table_resize_array.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_resize_array.o
+	ld -m elf_i386 -Ttext=0x4f0520 -e original_script_table_resize_array $(OUT)/script_table_resize_array.o -o $(OUT)/script_table_resize_array.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_resize_array.elf $@
+
+test-cycle-script-table-resize-array: $(OUT)/reriff-match $(OUT)/script_table_resize_array.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-resize-array $(OUT)/script_table_resize_array.bin $(OUT)/script-table-resize-array-comparison.json
+
+test-recovered: test-cycle-script-table-resize-array
+.PHONY: test-cycle-script-table-resize-array
