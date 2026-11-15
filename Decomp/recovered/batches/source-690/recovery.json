@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Matrix3 storage copy",
+  "summary": "Recovered VA 0x467e10 (RVA 0x67e10), 61 bytes: thiscall member taking one source pointer, ret 4; copies three rows of four raw DWORDs in forward order, including row padding. Direct caller 0x46ab1a separately copies the next 16 bytes. No calls or globals. The source uses per-word memcpy to preserve bit patterns and overlap order without aliasing or alignment assumptions.",
+  "targets": ["matrix3-copy-storage"],
+  "references": ["matrix3-copy-storage"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare entire 160-byte envelopes against the accepted original at its original address over 32 patterns, 113 source positions and four MXCSR modes (14464 calls). Includes self-copy, disjoint buffers, both overlap directions, misaligned sources, signed zero, infinities, NaNs and subnormal bit patterns. Check every byte including row padding, untouched prefix/suffix, and unchanged MXCSR. No imports or FS registration are used by this routine.",
+  "known_limits": ["Valid readable 48-byte source and writable 48-byte destination are required; invalid-pointer faults and concurrent modification are not modeled.", "Row padding and geometric matrix interpretation are inferred from storage shape and caller; original class and method names are unknown.", "Behavioral tests do not establish byte-identical code generation or full game behavior."]
+}

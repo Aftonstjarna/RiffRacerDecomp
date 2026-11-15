@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source preserves the original 48-byte extent, thiscall ABI and ordered DWORD transfers, including partial overlaps. Verified reference bytes against immutable Game.exe, reran submitted tests at O0/O2, and passed 165,888 independent randomized cases covering overlap and alignment. Actual unadapted source also compiled with pinned MSVC; inspected output preserves transfer order and ret 4. Tests check complete memory envelopes and MXCSR. Invalid-pointer faults and concurrent modification remain excluded; sampled validation does not establish all-input equivalence."
+}
