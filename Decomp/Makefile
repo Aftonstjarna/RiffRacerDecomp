@@ -5611,3 +5611,16 @@ test-cycle-script-error-object-set: $(OUT)/reriff-match $(OUT)/script_error_obje
 
 test-recovered: test-cycle-script-error-object-set
 .PHONY: test-cycle-script-error-object-set
+
+# Reviewed cycle reference: script-gc-forward-barrier (assembly evidence only).
+$(OUT)/script_gc_forward_barrier.bin: native/script_gc_forward_barrier.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_forward_barrier.o
+	ld -m elf_i386 -Ttext=0x4f2560 -e original_script_gc_forward_barrier $(OUT)/script_gc_forward_barrier.o -o $(OUT)/script_gc_forward_barrier.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_forward_barrier.elf $@
+
+test-cycle-script-gc-forward-barrier: $(OUT)/reriff-match $(OUT)/script_gc_forward_barrier.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-forward-barrier $(OUT)/script_gc_forward_barrier.bin $(OUT)/script-gc-forward-barrier-comparison.json
+
+test-recovered: test-cycle-script-gc-forward-barrier
+.PHONY: test-cycle-script-gc-forward-barrier
