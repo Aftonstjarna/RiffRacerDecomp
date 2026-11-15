@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "5ca33f500dde6b0e267fd65a034336d653dd898c4f1e3663eea594a024bfee6c",
+  "behavior_sha256": "38f7796d6f101702614e60125a0ca57e42af7529d7bc67c3c8410f49f7f6960d",
+  "functions": [
+    {
+      "scope": "ray-callback-filter-test",
+      "source_sha256": "1c51a1837476ddb60e86d77e3511e995a031181995034dea7c8039df8054ff5d",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified function section exactly against Game.exe at 0x4270E0. Original disassembly confirms boundaries, field offsets and thiscall ABI. Reviewed readable source and all candidate metadata/tests; source hashes match receipts. Independently executed compiled and original bytes across 286,752 cases covering both rejection branches, success, high bits and untouched memory; all passed. Approval covers this fragment only."
+    }
+  ],
+  "review_receipt_sha256": "51f8bed6da285c22ebde93a3ac3f02c3457f8a49f696f58b0b286fbf51db76c5",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
