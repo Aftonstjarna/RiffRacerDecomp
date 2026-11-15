@@ -4584,3 +4584,16 @@ test-cycle-crt-seh-dispatch: $(OUT)/reriff-match $(OUT)/crt_seh_dispatch.bin
 
 test-recovered: test-cycle-crt-seh-dispatch
 .PHONY: test-cycle-crt-seh-dispatch
+
+# Reviewed cycle reference: crt-except-handler4-common-import (assembly evidence only).
+$(OUT)/crt_except_handler4_common_import.bin: native/crt_except_handler4_common_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/crt_except_handler4_common_import.o
+	ld -m elf_i386 -Ttext=0x8f9ef4 -e original_crt_except_handler4_common_import $(OUT)/crt_except_handler4_common_import.o -o $(OUT)/crt_except_handler4_common_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/crt_except_handler4_common_import.elf $@
+
+test-cycle-crt-except-handler4-common-import: $(OUT)/reriff-match $(OUT)/crt_except_handler4_common_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" crt-except-handler4-common-import $(OUT)/crt_except_handler4_common_import.bin $(OUT)/crt-except-handler4-common-import-comparison.json
+
+test-recovered: test-cycle-crt-except-handler4-common-import
+.PHONY: test-cycle-crt-except-handler4-common-import
