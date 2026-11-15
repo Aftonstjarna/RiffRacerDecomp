@@ -4506,3 +4506,16 @@ test-cycle-record68-reallocate: $(OUT)/reriff-match $(OUT)/record68_reallocate.b
 
 test-recovered: test-cycle-record68-reallocate
 .PHONY: test-cycle-record68-reallocate
+
+# Reviewed cycle reference: lua-constant-string-name (assembly evidence only).
+$(OUT)/lua_constant_string_name.bin: native/lua_constant_string_name.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lua_constant_string_name.o
+	ld -m elf_i386 -Ttext=0x486650 -e original_lua_constant_string_name $(OUT)/lua_constant_string_name.o -o $(OUT)/lua_constant_string_name.elf
+	objcopy -O binary --only-section=.text $(OUT)/lua_constant_string_name.elf $@
+
+test-cycle-lua-constant-string-name: $(OUT)/reriff-match $(OUT)/lua_constant_string_name.bin
+	$(OUT)/reriff-match native-check "$(GAME)" lua-constant-string-name $(OUT)/lua_constant_string_name.bin $(OUT)/lua-constant-string-name-comparison.json
+
+test-recovered: test-cycle-lua-constant-string-name
+.PHONY: test-cycle-lua-constant-string-name
