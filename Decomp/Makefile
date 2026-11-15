@@ -4675,3 +4675,16 @@ test-cycle-reference-slot-vector-remove-tail: $(OUT)/reriff-match $(OUT)/referen
 
 test-recovered: test-cycle-reference-slot-vector-remove-tail
 .PHONY: test-cycle-reference-slot-vector-remove-tail
+
+# Reviewed cycle reference: render-target-dimensions-initialize (assembly evidence only).
+$(OUT)/render_target_dimensions_initialize.bin: native/render_target_dimensions_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/render_target_dimensions_initialize.o
+	ld -m elf_i386 -Ttext=0x53d2d0 -e original_render_target_dimensions_initialize $(OUT)/render_target_dimensions_initialize.o -o $(OUT)/render_target_dimensions_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/render_target_dimensions_initialize.elf $@
+
+test-cycle-render-target-dimensions-initialize: $(OUT)/reriff-match $(OUT)/render_target_dimensions_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" render-target-dimensions-initialize $(OUT)/render_target_dimensions_initialize.bin $(OUT)/render-target-dimensions-initialize-comparison.json
+
+test-recovered: test-cycle-render-target-dimensions-initialize
+.PHONY: test-cycle-render-target-dimensions-initialize
