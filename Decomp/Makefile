@@ -4610,3 +4610,16 @@ test-cycle-array-copy-construct-with-cleanup: $(OUT)/reriff-match $(OUT)/array_c
 
 test-recovered: test-cycle-array-copy-construct-with-cleanup
 .PHONY: test-cycle-array-copy-construct-with-cleanup
+
+# Reviewed cycle reference: crt-controlfp-s-import (assembly evidence only).
+$(OUT)/crt_controlfp_s_import.bin: native/crt_controlfp_s_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/crt_controlfp_s_import.o
+	ld -m elf_i386 -Ttext=0x8f9eee -e original_crt_controlfp_s_import $(OUT)/crt_controlfp_s_import.o -o $(OUT)/crt_controlfp_s_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/crt_controlfp_s_import.elf $@
+
+test-cycle-crt-controlfp-s-import: $(OUT)/reriff-match $(OUT)/crt_controlfp_s_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" crt-controlfp-s-import $(OUT)/crt_controlfp_s_import.bin $(OUT)/crt-controlfp-s-import-comparison.json
+
+test-recovered: test-cycle-crt-controlfp-s-import
+.PHONY: test-cycle-crt-controlfp-s-import
