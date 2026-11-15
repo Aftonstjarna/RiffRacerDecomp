@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Readable C++ agrees with original control flow, field offsets, fastcall ABI, AL result, and read-only behavior. Source hashes match validation; native Windows compilation covers the actual implementation. Submitted edge-case tests and an independent 500,000-case countercheck against immutable original instructions passed. Partial layout and invalid-pointer exclusions are documented. Sampled validation does not establish all-input equivalence or exact matching."
+}
