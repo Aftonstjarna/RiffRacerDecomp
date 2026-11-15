@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script status propagation and panic dispatch",
+  "summary": "Recovered 0x4f4d80..0x4f4dc5 as a free fastcall function (ECX state, EDX signed 32-bit status). A protected state receives the full status at jump+0x44 then calls the CRT longjmp import with jump+4 and 1. Otherwise state+6 receives the low byte; a non-null global+0x58 panic handler triggers state preparation at 0x4f4d00 then a reloaded cdecl callback. No abort occurs here. Direct Game.exe disassembly agrees with the accepted reference. Callers include script-error-dispatch (statuses 5 and 2), 0x48a696, 0x4f4fe3 and 0x4f5871 (status 5). Adjacent protected-call code at 0x4f4dd0 installs a stack jump record and invokes setjmp on record+4.",
+  "targets": ["script-throw-status"],
+  "references": ["script-throw-status"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "774 direct original-versus-C++ comparisons on the no-jump/no-panic returning path: every low-byte value, positive high bits, negative statuses, INT_MIN, INT_MAX and truncation boundaries. Compares all state bytes and surrounding guards against both implementation and independent expected snapshot; verifies the global and its guards remain unchanged. Installs initialized FS backing, requires successful setup, and checks FS head after every original call.",
+  "known_limits": [
+    "Protected nonlocal-jump path is source-reviewed only: CRT longjmp at IAT 0x92d360 is not provided as an audited executable dependency or test binding for this target. Its Windows jump-buffer internals are opaque; returning longjmp substitutes are unsupported.",
+    "Panic path is source-reviewed only: preparation helper 0x4f4d00 is not an accepted standalone reference and invokes further script-runtime helpers. It is retained as an explicit original-address binding, not reimplemented or mocked.",
+    "Original-address dependency bindings require replacement during Linux integration; the recovered layouts currently require 32-bit pointers. Unknown fields remain opaque, and the callback return type follows the apparent scripting panic convention; its result is ignored here.",
+    "No claim of matching bytes, exception dispatch, CRT nonlocal-jump equivalence, or complete scripting-runtime recovery. Tests validate only the returning path with null panic and null jump record."
+  ]
+}

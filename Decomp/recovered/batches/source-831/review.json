@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, high-level unmatched source with zero matching-source byte credit.",
+  "reason": "Control flow, fastcall ABI, field offsets, status writes, and callback reload agree with the original. Independently verified all 69 reference bytes against Game.exe, rebuilt and passed 774 differential cases, and compiled the unchanged implementation with pinned MSVC. Tests check complete state/global snapshots and guards across meaningful status boundaries. Protected longjmp and panic paths remain explicitly documented as source-reviewed only; unresolved original-address dependencies prevent portable integration. Sampled validation does not establish all-input equivalence."
+}
