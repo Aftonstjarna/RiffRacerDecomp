@@ -5494,3 +5494,16 @@ test-cycle-script-string-parse-number: $(OUT)/reriff-match $(OUT)/script_string_
 
 test-recovered: test-cycle-script-string-parse-number
 .PHONY: test-cycle-script-string-parse-number
+
+# Reviewed cycle reference: script-stream-peek (assembly evidence only).
+$(OUT)/script_stream_peek.bin: native/script_stream_peek.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_stream_peek.o
+	ld -m elf_i386 -Ttext=0x4f6040 -e original_script_stream_peek $(OUT)/script_stream_peek.o -o $(OUT)/script_stream_peek.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_stream_peek.elf $@
+
+test-cycle-script-stream-peek: $(OUT)/reriff-match $(OUT)/script_stream_peek.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-stream-peek $(OUT)/script_stream_peek.bin $(OUT)/script-stream-peek-comparison.json
+
+test-recovered: test-cycle-script-stream-peek
+.PHONY: test-cycle-script-stream-peek
