@@ -5000,3 +5000,16 @@ test-cycle-record513-range-copy: $(OUT)/reriff-match $(OUT)/record513_range_copy
 
 test-recovered: test-cycle-record513-range-copy
 .PHONY: test-cycle-record513-range-copy
+
+# Reviewed cycle reference: record520-range-copy-construct (assembly evidence only).
+$(OUT)/record520_range_copy_construct.bin: native/record520_range_copy_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record520_range_copy_construct.o
+	ld -m elf_i386 -Ttext=0x416a60 -e original_record520_range_copy_construct $(OUT)/record520_range_copy_construct.o -o $(OUT)/record520_range_copy_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/record520_range_copy_construct.elf $@
+
+test-cycle-record520-range-copy-construct: $(OUT)/reriff-match $(OUT)/record520_range_copy_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record520-range-copy-construct $(OUT)/record520_range_copy_construct.bin $(OUT)/record520-range-copy-construct-comparison.json
+
+test-recovered: test-cycle-record520-range-copy-construct
+.PHONY: test-cycle-record520-range-copy-construct
