@@ -4662,3 +4662,16 @@ test-cycle-node-chain-terminal-vector: $(OUT)/reriff-match $(OUT)/node_chain_ter
 
 test-recovered: test-cycle-node-chain-terminal-vector
 .PHONY: test-cycle-node-chain-terminal-vector
+
+# Reviewed cycle reference: reference-slot-vector-remove-tail (assembly evidence only).
+$(OUT)/reference_slot_vector_remove_tail.bin: native/reference_slot_vector_remove_tail.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/reference_slot_vector_remove_tail.o
+	ld -m elf_i386 -Ttext=0x4580a0 -e original_reference_slot_vector_remove_tail $(OUT)/reference_slot_vector_remove_tail.o -o $(OUT)/reference_slot_vector_remove_tail.elf
+	objcopy -O binary --only-section=.text $(OUT)/reference_slot_vector_remove_tail.elf $@
+
+test-cycle-reference-slot-vector-remove-tail: $(OUT)/reriff-match $(OUT)/reference_slot_vector_remove_tail.bin
+	$(OUT)/reriff-match native-check "$(GAME)" reference-slot-vector-remove-tail $(OUT)/reference_slot_vector_remove_tail.bin $(OUT)/reference-slot-vector-remove-tail-comparison.json
+
+test-recovered: test-cycle-reference-slot-vector-remove-tail
+.PHONY: test-cycle-reference-slot-vector-remove-tail
