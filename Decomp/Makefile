@@ -5442,3 +5442,16 @@ test-cycle-script-table-cached-event-lookup: $(OUT)/reriff-match $(OUT)/script_t
 
 test-recovered: test-cycle-script-table-cached-event-lookup
 .PHONY: test-cycle-script-table-cached-event-lookup
+
+# Reviewed cycle reference: script-string-intern (assembly evidence only).
+$(OUT)/script_string_intern.bin: native/script_string_intern.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_string_intern.o
+	ld -m elf_i386 -Ttext=0x4f5e40 -e original_script_string_intern $(OUT)/script_string_intern.o -o $(OUT)/script_string_intern.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_string_intern.elf $@
+
+test-cycle-script-string-intern: $(OUT)/reriff-match $(OUT)/script_string_intern.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-string-intern $(OUT)/script_string_intern.bin $(OUT)/script-string-intern-comparison.json
+
+test-recovered: test-cycle-script-string-intern
+.PHONY: test-cycle-script-string-intern

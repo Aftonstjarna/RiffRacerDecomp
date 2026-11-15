@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"script-table-cached-event-lookup",0xf5ca0,81},
+  return {NativeBlock{"script-string-intern",0xf5e40,431},
+                     NativeBlock{"script-table-cached-event-lookup",0xf5ca0,81},
                      NativeBlock{"script-stream-refill",0xf5ff0,66},
                      NativeBlock{"script-source-name-format",0xeff60,338},
                      NativeBlock{"script-stack-push-terminated",0xefab0,95},
