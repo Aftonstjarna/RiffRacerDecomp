@@ -5637,3 +5637,16 @@ test-cycle-script-gc-separate-finalizable: $(OUT)/reriff-match $(OUT)/script_gc_
 
 test-recovered: test-cycle-script-gc-separate-finalizable
 .PHONY: test-cycle-script-gc-separate-finalizable
+
+# Reviewed cycle reference: script-call-with-depth-guard (assembly evidence only).
+$(OUT)/script_call_with_depth_guard.bin: native/script_call_with_depth_guard.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_call_with_depth_guard.o
+	ld -m elf_i386 -Ttext=0x4f5830 -e original_script_call_with_depth_guard $(OUT)/script_call_with_depth_guard.o -o $(OUT)/script_call_with_depth_guard.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_call_with_depth_guard.elf $@
+
+test-cycle-script-call-with-depth-guard: $(OUT)/reriff-match $(OUT)/script_call_with_depth_guard.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-call-with-depth-guard $(OUT)/script_call_with_depth_guard.bin $(OUT)/script-call-with-depth-guard-comparison.json
+
+test-recovered: test-cycle-script-call-with-depth-guard
+.PHONY: test-cycle-script-call-with-depth-guard

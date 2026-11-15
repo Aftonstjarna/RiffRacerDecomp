@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"script-gc-separate-finalizable",0xf1090,230},
+  return {NativeBlock{"script-call-with-depth-guard",0xf5830,132},
+                     NativeBlock{"script-gc-separate-finalizable",0xf1090,230},
                      NativeBlock{"script-gc-forward-barrier",0xf2560,41},
                      NativeBlock{"script-error-object-set",0xf4c90,92},
                      NativeBlock{"script-close-upvalues",0xf49b0,242},
