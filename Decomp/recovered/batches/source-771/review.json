@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Readable source agrees with the original control flow, 513-byte layout, null-destination skip, and return behavior within the documented contract. Tests genuinely invoke the original and check bytes, canaries, source preservation, and edge cases. Independent O0/O2 checks against bytes extracted from immutable Game.exe passed 4,464 range/alignment cases each. Native compilation records cover the actual implementation. Overlap, faults, and address-width limitations are disclosed; sampled validation does not establish all-input equivalence."
+}

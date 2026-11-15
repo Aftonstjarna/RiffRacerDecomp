@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Copy a range of opaque 513-byte records",
+  "summary": "Recovered VA 0x416aa0 through 0x416ad4 from accepted assembly and direct Game.exe disassembly. ECX is first, EDX is last, destination is caller-cleaned stack argument, EAX returns advanced destination. A direct caller at 0x4161f1 passes bounds from object offsets 0 and 4 and newly allocated storage. Each iteration copies 513 bytes unless current destination is zero, then advances both addresses by 513. Empty ranges perform no accesses. No field interpretation is inferred.",
+  "targets": ["record513-range-copy"],
+  "references": ["record513-range-copy"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding differential harness invokes the accepted original at 0x416aa0 using regparm(3) with unused EAX, last in EDX, first in ECX and caller-cleaned destination. Tests 0 through 5 records at four source offsets and four destination alignments; checks exact copied bytes, return addresses, all destination canaries, unchanged source, empty/null ranges, single-record null destination skip, and FS head restoration after original calls. Native local MSVC O2 compilation also checked.",
+  "known_limits": [
+    "Record field meanings and original template/type names remain unresolved; only 513-byte opaque records are established.",
+    "Requires a valid complete source range terminating exactly at last, accessible nonoverlapping destination, and original DF clear. Overlap, invalid ranges, address-wrap accesses and faults are outside tested behavior; original forward dword-copy overlap effects are not modeled.",
+    "Null destination for more than one record next attempts a write at address 513; this faulting path is documented but not executed.",
+    "Portable implementation uses host uintptr_t; original address arithmetic is 32-bit. Native Linux ports assume valid nonwrapping object addresses.",
+    "Behavioral recovery only; no matching-byte claim. No gameplay or caller allocation behavior recovered."
+  ]
+}
