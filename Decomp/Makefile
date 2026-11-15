@@ -4142,3 +4142,16 @@ test-cycle-collision-shape-deleting-destructor: $(OUT)/reriff-match $(OUT)/colli
 
 test-recovered: test-cycle-collision-shape-deleting-destructor
 .PHONY: test-cycle-collision-shape-deleting-destructor
+
+# Reviewed cycle reference: crt-purecall-import (assembly evidence only).
+$(OUT)/crt_purecall_import.bin: native/crt_purecall_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/crt_purecall_import.o
+	ld -m elf_i386 -Ttext=0x8f893a -e original_crt_purecall_import $(OUT)/crt_purecall_import.o -o $(OUT)/crt_purecall_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/crt_purecall_import.elf $@
+
+test-cycle-crt-purecall-import: $(OUT)/reriff-match $(OUT)/crt_purecall_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" crt-purecall-import $(OUT)/crt_purecall_import.bin $(OUT)/crt-purecall-import-comparison.json
+
+test-recovered: test-cycle-crt-purecall-import
+.PHONY: test-cycle-crt-purecall-import
