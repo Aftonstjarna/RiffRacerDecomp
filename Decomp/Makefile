@@ -3882,3 +3882,16 @@ test-cycle-box-plane-equation: $(OUT)/reriff-match $(OUT)/box_plane_equation.bin
 
 test-recovered: test-cycle-box-plane-equation
 .PHONY: test-cycle-box-plane-equation
+
+# Reviewed cycle reference: random-sign-float (assembly evidence only).
+$(OUT)/random_sign_float.bin: native/random_sign_float.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/random_sign_float.o
+	ld -m elf_i386 -Ttext=0x478810 -e original_random_sign_float $(OUT)/random_sign_float.o -o $(OUT)/random_sign_float.elf
+	objcopy -O binary --only-section=.text $(OUT)/random_sign_float.elf $@
+
+test-cycle-random-sign-float: $(OUT)/reriff-match $(OUT)/random_sign_float.bin
+	$(OUT)/reriff-match native-check "$(GAME)" random-sign-float $(OUT)/random_sign_float.bin $(OUT)/random-sign-float-comparison.json
+
+test-recovered: test-cycle-random-sign-float
+.PHONY: test-cycle-random-sign-float
