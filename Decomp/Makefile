@@ -5026,3 +5026,16 @@ test-cycle-script-table-get-integer: $(OUT)/reriff-match $(OUT)/script_table_get
 
 test-recovered: test-cycle-script-table-get-integer
 .PHONY: test-cycle-script-table-get-integer
+
+# Reviewed cycle reference: script-table-get-string (assembly evidence only).
+$(OUT)/script_table_get_string.bin: native/script_table_get_string.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_get_string.o
+	ld -m elf_i386 -Ttext=0x4f0b70 -e original_script_table_get_string $(OUT)/script_table_get_string.o -o $(OUT)/script_table_get_string.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_get_string.elf $@
+
+test-cycle-script-table-get-string: $(OUT)/reriff-match $(OUT)/script_table_get_string.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-get-string $(OUT)/script_table_get_string.bin $(OUT)/script-table-get-string-comparison.json
+
+test-recovered: test-cycle-script-table-get-string
+.PHONY: test-cycle-script-table-get-string
