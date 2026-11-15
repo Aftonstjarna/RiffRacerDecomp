@@ -5013,3 +5013,16 @@ test-cycle-record520-range-copy-construct: $(OUT)/reriff-match $(OUT)/record520_
 
 test-recovered: test-cycle-record520-range-copy-construct
 .PHONY: test-cycle-record520-range-copy-construct
+
+# Reviewed cycle reference: script-table-get-integer (assembly evidence only).
+$(OUT)/script_table_get_integer.bin: native/script_table_get_integer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_get_integer.o
+	ld -m elf_i386 -Ttext=0x4f0ae0 -e original_script_table_get_integer $(OUT)/script_table_get_integer.o -o $(OUT)/script_table_get_integer.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_get_integer.elf $@
+
+test-cycle-script-table-get-integer: $(OUT)/reriff-match $(OUT)/script_table_get_integer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-get-integer $(OUT)/script_table_get_integer.bin $(OUT)/script-table-get-integer-comparison.json
+
+test-recovered: test-cycle-script-table-get-integer
+.PHONY: test-cycle-script-table-get-integer
