@@ -4311,3 +4311,16 @@ test-cycle-convex-hull-vertex-edge-count: $(OUT)/reriff-match $(OUT)/convex_hull
 
 test-recovered: test-cycle-convex-hull-vertex-edge-count
 .PHONY: test-cycle-convex-hull-vertex-edge-count
+
+# Reviewed cycle reference: sphere-support-without-margin (assembly evidence only).
+$(OUT)/sphere_support_without_margin.bin: native/sphere_support_without_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sphere_support_without_margin.o
+	ld -m elf_i386 -Ttext=0x47d530 -e original_sphere_support_without_margin $(OUT)/sphere_support_without_margin.o -o $(OUT)/sphere_support_without_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/sphere_support_without_margin.elf $@
+
+test-cycle-sphere-support-without-margin: $(OUT)/reriff-match $(OUT)/sphere_support_without_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sphere-support-without-margin $(OUT)/sphere_support_without_margin.bin $(OUT)/sphere-support-without-margin-comparison.json
+
+test-recovered: test-cycle-sphere-support-without-margin
+.PHONY: test-cycle-sphere-support-without-margin
