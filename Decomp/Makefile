@@ -4038,3 +4038,16 @@ test-cycle-sse2-log-precise-import: $(OUT)/reriff-match $(OUT)/sse2_log_precise_
 
 test-recovered: test-cycle-sse2-log-precise-import
 .PHONY: test-cycle-sse2-log-precise-import
+
+# Reviewed cycle reference: convex-hull-shape-name (assembly evidence only).
+$(OUT)/convex_hull_shape_name.bin: native/convex_hull_shape_name.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_hull_shape_name.o
+	ld -m elf_i386 -Ttext=0x47cd20 -e original_convex_hull_shape_name $(OUT)/convex_hull_shape_name.o -o $(OUT)/convex_hull_shape_name.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_hull_shape_name.elf $@
+
+test-cycle-convex-hull-shape-name: $(OUT)/reriff-match $(OUT)/convex_hull_shape_name.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-hull-shape-name $(OUT)/convex_hull_shape_name.bin $(OUT)/convex-hull-shape-name-comparison.json
+
+test-recovered: test-cycle-convex-hull-shape-name
+.PHONY: test-cycle-convex-hull-shape-name
