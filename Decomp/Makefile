@@ -5403,3 +5403,16 @@ test-cycle-script-stack-push-terminated: $(OUT)/reriff-match $(OUT)/script_stack
 
 test-recovered: test-cycle-script-stack-push-terminated
 .PHONY: test-cycle-script-stack-push-terminated
+
+# Reviewed cycle reference: script-source-name-format (assembly evidence only).
+$(OUT)/script_source_name_format.bin: native/script_source_name_format.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_source_name_format.o
+	ld -m elf_i386 -Ttext=0x4eff60 -e original_script_source_name_format $(OUT)/script_source_name_format.o -o $(OUT)/script_source_name_format.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_source_name_format.elf $@
+
+test-cycle-script-source-name-format: $(OUT)/reriff-match $(OUT)/script_source_name_format.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-source-name-format $(OUT)/script_source_name_format.bin $(OUT)/script-source-name-format-comparison.json
+
+test-recovered: test-cycle-script-source-name-format
+.PHONY: test-cycle-script-source-name-format
