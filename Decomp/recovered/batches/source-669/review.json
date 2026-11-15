@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery metadata, validation, and original assembly. Control flow, i386 thiscall ABI, field offsets, callback order, vtable reloads, writes, and late type read agree. Independently verified reference bytes and return-string contents against Game.exe; all 144 paired original/source cases passed at O0 and O2. Tests exercise null results, extreme types, callback mutations, and output guards. The unchanged implementation also compiled with pinned MSVC2013. Documented string-storage and harness limitations remain; sampled validation does not establish all-input equivalence."
+}

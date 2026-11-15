@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Collision shape serialization header",
+  "summary": "Recovers VA 0x47c220 as a genuine thiscall member: find the shape name through serializer slot +0x24, resolve it through +0x18, publish the pointer, conditionally invoke +0x2c with the original name, then copy shape type from +4 and return btCollisionShapeData. Direct original disassembly and vtable/caller evidence establish the layout and call order.",
+  "targets": ["collision-shape-serialize"],
+  "references": ["collision-shape-serialize"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "144 paired source/original cases (288 calls): null, empty and nonempty name; null, low, all-bits-set and real unique pointers; zero, ordinary, negative and int32 extreme types; callbacks with and without shape mutation. Audited test callbacks validate this and arguments, order, vtable reload after each call, output publication before serializeName, and late type read. Both results are checked against identical expectations including untouched shape fields, serializer guard and output guards. Original type-name address is checked; portable string contents are checked separately.",
+  "known_limits": [
+    "Serializer implementations, allocation, name ownership and full Bullet object layouts are outside the assigned scope; callback names describe the observed serialization protocol.",
+    "Portable type-name string has different storage from original address 0x9fb09c.",
+    "Only valid aligned nonoverlapping output/shape/serializer fixtures and normal returning callbacks are tested. Invalid pointers and throwing callbacks are not supported by the freestanding oracle harness.",
+    "No matching-byte claim; no full-game or rendering validation."
+  ]
+}
