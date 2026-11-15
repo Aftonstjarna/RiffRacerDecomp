@@ -5234,3 +5234,16 @@ test-cycle-script-table-construct: $(OUT)/reriff-match $(OUT)/script_table_const
 
 test-recovered: test-cycle-script-table-construct
 .PHONY: test-cycle-script-table-construct
+
+# Reviewed cycle reference: script-table-ensure-integer-slot (assembly evidence only).
+$(OUT)/script_table_ensure_integer_slot.bin: native/script_table_ensure_integer_slot.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_ensure_integer_slot.o
+	ld -m elf_i386 -Ttext=0x4f0cc0 -e original_script_table_ensure_integer_slot $(OUT)/script_table_ensure_integer_slot.o -o $(OUT)/script_table_ensure_integer_slot.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_ensure_integer_slot.elf $@
+
+test-cycle-script-table-ensure-integer-slot: $(OUT)/reriff-match $(OUT)/script_table_ensure_integer_slot.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-ensure-integer-slot $(OUT)/script_table_ensure_integer_slot.bin $(OUT)/script-table-ensure-integer-slot-comparison.json
+
+test-recovered: test-cycle-script-table-ensure-integer-slot
+.PHONY: test-cycle-script-table-ensure-integer-slot
