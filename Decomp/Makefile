@@ -5247,3 +5247,16 @@ test-cycle-script-table-ensure-integer-slot: $(OUT)/reriff-match $(OUT)/script_t
 
 test-recovered: test-cycle-script-table-ensure-integer-slot
 .PHONY: test-cycle-script-table-ensure-integer-slot
+
+# Reviewed cycle reference: script-table-new-key (assembly evidence only).
+$(OUT)/script_table_new_key.bin: native/script_table_new_key.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_new_key.o
+	ld -m elf_i386 -Ttext=0x4f09e0 -e original_script_table_new_key $(OUT)/script_table_new_key.o -o $(OUT)/script_table_new_key.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_new_key.elf $@
+
+test-cycle-script-table-new-key: $(OUT)/reriff-match $(OUT)/script_table_new_key.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-new-key $(OUT)/script_table_new_key.bin $(OUT)/script-table-new-key-comparison.json
+
+test-recovered: test-cycle-script-table-new-key
+.PHONY: test-cycle-script-table-new-key
