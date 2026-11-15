@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "a3dc061ff41bcc9a2a82f081102d6b503d816ba4e1fb338641b7de15cbc97436",
+    "impl.hpp": "0a2b287a52a5e99d144ad9b70e5e9e32799c104b8618ed03e8ef76f9613e8eca",
+    "test.cpp": "8e32aeaac1bf2b35c28bd457fa1fe2e9bf76448d3e6dc17981785686a1444881"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 142,
+      "candidate_size": 142,
+      "candidate_sha256": "0cf172c02b0ceadbc2d43aa8af63bdc1792240dc188e7dd42f5a708619904f89",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "0cf172c02b0ceadbc2d43aa8af63bdc1792240dc188e7dd42f5a708619904f89",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "script-stack-relocate-pointers",
+      "rva": 1003104,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "4d5a39f2b34c014c0d2a1533df28c85a4dfa5d35",
+  "test_output": "relocation: 720 oracle comparisons passed\n",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "46a30b4bc536d5221f039be6ef0a3665d86531d69e7a6270bf9d4cc24534741d",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "4b03462752ec1b400ce6680209d1839b7377ef11adacf4e34d503479ba226c7f",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "0b7e253aced9399874ae2c983a917c62743c26258a7f96c7da13acdab6e5872c",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "script-stack-relocate-pointers",
+        "code_sections": 4,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "requires_function_linking"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "script-stack-relocate-pointers",
+        "code_sections": 4,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "requires_function_linking"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "script-stack-relocate-pointers",
+        "code_sections": 4,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "requires_function_linking"
+      }
+    ]
+  }
+}

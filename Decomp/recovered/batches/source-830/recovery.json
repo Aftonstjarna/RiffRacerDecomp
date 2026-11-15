@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script stack pointer relocation",
+  "summary": "Recover VA 0x4f4e60 (142 bytes) as a register-fastcall ScriptState member. Rebase top, linked open-upvalue values, three fields in each inclusive 24-byte frame, then base. Preserve 32-bit wraparound and offset rounding to eight bytes. Caller disassembly confirms the new stack is installed before this call; allocation and stack contents are outside this routine.",
+  "targets": ["script-stack-relocate-pointers"],
+  "references": ["script-stack-relocate-pointers"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "720 direct original-versus-source cases at identical fixture addresses; independently calculated expected values and whole-fixture comparisons. Empty through five-element frame/upvalue ranges, unequal counts, inclusive and non-frame-aligned end bounds, positive/negative/unaligned/extreme offsets, upward/downward/no-op moves, and modulo-32-bit wraparound. Checks all untouched state words, list links, unused nodes/frames and canaries. Installs test-owned FS backing and checks its head after every oracle call.",
+  "known_limits": [
+    "Names of Lua-like state/frame/upvalue fields are inferred from access and caller behavior; unknown fields remain explicit padding words.",
+    "Addresses are explicit 32-bit game addresses; a native 64-bit port must supply address translation or adapt layouts and arithmetic deliberately.",
+    "Valid readable/writable finite linked lists and frame ranges are required just as in the original; invalid pointers, cycles, wrapping frame iteration and overlapping structural storage are not tested.",
+    "No whole-game execution, allocator behavior, byte-match claim or recovery outside the assigned routine."
+  ]
+}

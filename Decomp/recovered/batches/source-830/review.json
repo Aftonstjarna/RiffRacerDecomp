@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Control flow, register ABI, layouts, arithmetic and writes agree with the original routine within the documented valid-storage limits. Independently verified the 142-byte reference against Game.exe, passed 720 original-versus-source comparisons in an optimized build, and compiled the unchanged implementation with pinned MSVC. Tests exercise meaningful edge cases and compare whole fixtures. Sampled validation does not establish all-input or whole-game equivalence."
+}
