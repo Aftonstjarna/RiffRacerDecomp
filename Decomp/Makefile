@@ -4376,3 +4376,16 @@ test-cycle-handle-record-flag10-present: $(OUT)/reriff-match $(OUT)/handle_recor
 
 test-recovered: test-cycle-handle-record-flag10-present
 .PHONY: test-cycle-handle-record-flag10-present
+
+# Reviewed cycle reference: compound-shape-margin (assembly evidence only).
+$(OUT)/compound_shape_margin.bin: native/compound_shape_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/compound_shape_margin.o
+	ld -m elf_i386 -Ttext=0x47d8e0 -e original_compound_shape_margin $(OUT)/compound_shape_margin.o -o $(OUT)/compound_shape_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/compound_shape_margin.elf $@
+
+test-cycle-compound-shape-margin: $(OUT)/reriff-match $(OUT)/compound_shape_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" compound-shape-margin $(OUT)/compound_shape_margin.bin $(OUT)/compound-shape-margin-comparison.json
+
+test-recovered: test-cycle-compound-shape-margin
+.PHONY: test-cycle-compound-shape-margin
