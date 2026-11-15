@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "fa09581e58e21ae40f0c9230cb4776bc2939f530fa0287859e242651065324af",
+    "impl.hpp": "b753de23b25b996eece3442530197682834ee7acc823baa65b17e9df22afa0a9",
+    "test.cpp": "b85424a63d0814d99707c07c26705a44c0163f6ec72b98f0a20c2a0c43c26435"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 75,
+      "candidate_size": 75,
+      "candidate_sha256": "c4b4222f324400b3e52746ad8cc203c807a28d1ef3d685500974d76b2783d2da",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "c4b4222f324400b3e52746ad8cc203c807a28d1ef3d685500974d76b2783d2da",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "pointer-range-has-state-six-or-seven",
+      "rva": 1296320,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "32f4f67a57119121148f2e45133dba1533e3f164",
+  "test_output": "",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "92343073223efeb4b64cfd826e1ca2d8b207c78d7a0918f4a78ae7ab16dc4237",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "0322313de617fdadcf4781e9e02a207d06133e0e70956d748514bb385d141c5b",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "7d15bd06372fb696650f49371b4c3a02ca7f6166384c91da387ab7f64e67ee97",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "pointer-range-has-state-six-or-seven",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "comparison": {
+          "schema": 1,
+          "byte_equal": false,
+          "different_bytes": 69,
+          "original_size": 75,
+          "candidate_size": 75,
+          "candidate_sha256": "a3901d1cf66554be7711de53794819c315363d65efd8028bf97499d7f2b0417e",
+          "masked_bytes": 0,
+          "source_rebuild_verified": false,
+          "note": "Binary equality alone does not prove reconstruction from source.",
+          "difference_ranges": [
+            {
+              "offset": 0,
+              "length": 34
+            },
+            {
+              "offset": 35,
+              "length": 5
+            },
+            {
+              "offset": 41,
+              "length": 2
+            },
+            {
+              "offset": 45,
+              "length": 1
+            },
+            {
+              "offset": 47,
+              "length": 1
+            },
+            {
+              "offset": 49,
+              "length": 26
+            }
+          ],
+          "reference_fragment_sha256": "c4b4222f324400b3e52746ad8cc203c807a28d1ef3d685500974d76b2783d2da",
+          "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+          "scope": "pointer-range-has-state-six-or-seven",
+          "rva": 1296320,
+          "whole_executable_compared": false
+        },
+        "status": "compared"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "pointer-range-has-state-six-or-seven",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 81,
+        "original_size": 75
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "pointer-range-has-state-six-or-seven",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 85,
+        "original_size": 75
+      }
+    ]
+  }
+}
