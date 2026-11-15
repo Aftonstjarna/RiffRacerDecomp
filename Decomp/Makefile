@@ -3960,3 +3960,16 @@ test-cycle-nested-resource44-count: $(OUT)/reriff-match $(OUT)/nested_resource44
 
 test-recovered: test-cycle-nested-resource44-count
 .PHONY: test-cycle-nested-resource44-count
+
+# Reviewed cycle reference: packed-double-floor-dispatch (assembly evidence only).
+$(OUT)/packed_double_floor_dispatch.bin: native/packed_double_floor_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/packed_double_floor_dispatch.o
+	ld -m elf_i386 -Ttext=0x8fc1b0 -e original_packed_double_floor_dispatch $(OUT)/packed_double_floor_dispatch.o -o $(OUT)/packed_double_floor_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/packed_double_floor_dispatch.elf $@
+
+test-cycle-packed-double-floor-dispatch: $(OUT)/reriff-match $(OUT)/packed_double_floor_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" packed-double-floor-dispatch $(OUT)/packed_double_floor_dispatch.bin $(OUT)/packed-double-floor-dispatch-comparison.json
+
+test-recovered: test-cycle-packed-double-floor-dispatch
+.PHONY: test-cycle-packed-double-floor-dispatch
