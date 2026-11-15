@@ -3973,3 +3973,16 @@ test-cycle-packed-double-floor-dispatch: $(OUT)/reriff-match $(OUT)/packed_doubl
 
 test-recovered: test-cycle-packed-double-floor-dispatch
 .PHONY: test-cycle-packed-double-floor-dispatch
+
+# Reviewed cycle reference: shared-zero-return (assembly evidence only).
+$(OUT)/shared_zero_return.bin: native/shared_zero_return.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shared_zero_return.o
+	ld -m elf_i386 -Ttext=0x4142f0 -e original_shared_zero_return $(OUT)/shared_zero_return.o -o $(OUT)/shared_zero_return.elf
+	objcopy -O binary --only-section=.text $(OUT)/shared_zero_return.elf $@
+
+test-cycle-shared-zero-return: $(OUT)/reriff-match $(OUT)/shared_zero_return.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shared-zero-return $(OUT)/shared_zero_return.bin $(OUT)/shared-zero-return-comparison.json
+
+test-recovered: test-cycle-shared-zero-return
+.PHONY: test-cycle-shared-zero-return

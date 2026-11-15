@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"packed-double-floor-dispatch",0x4fc1b0,18},
+  return {NativeBlock{"shared-zero-return",0x142f0,3},
+                     NativeBlock{"packed-double-floor-dispatch",0x4fc1b0,18},
                      NativeBlock{"nested-resource44-count",0x112c80,14},
                      NativeBlock{"ray-callback-filter-test",0x270e0,38},
                      NativeBlock{"packed-double-floor-sse41",0x4fc410,7},
