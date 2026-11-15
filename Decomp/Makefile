@@ -5325,3 +5325,16 @@ test-cycle-script-frame-current-line: $(OUT)/reriff-match $(OUT)/script_frame_cu
 
 test-recovered: test-cycle-script-frame-current-line
 .PHONY: test-cycle-script-frame-current-line
+
+# Reviewed cycle reference: script-error-dispatch (assembly evidence only).
+$(OUT)/script_error_dispatch.bin: native/script_error_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_error_dispatch.o
+	ld -m elf_i386 -Ttext=0x486a30 -e original_script_error_dispatch $(OUT)/script_error_dispatch.o -o $(OUT)/script_error_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_error_dispatch.elf $@
+
+test-cycle-script-error-dispatch: $(OUT)/reriff-match $(OUT)/script_error_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-error-dispatch $(OUT)/script_error_dispatch.bin $(OUT)/script-error-dispatch-comparison.json
+
+test-recovered: test-cycle-script-error-dispatch
+.PHONY: test-cycle-script-error-dispatch

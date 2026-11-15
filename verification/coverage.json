@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 98367,
-  "remaining_bytes": 8537025,
-  "verified_percent": 1.1391144721629314,
-  "registered_blocks": 451,
-  "exact_blocks": 451,
+  "verified_bytes": 98494,
+  "remaining_bytes": 8536898,
+  "verified_percent": 1.140585163939286,
+  "registered_blocks": 452,
+  "exact_blocks": 452,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1820,6 +1820,15 @@
       "byte_equal": true,
       "reference_sha256": "da08c003fda6d71552a6770eac4cec746303ebe125f49533f83d67855168888e",
       "candidate_sha256": "da08c003fda6d71552a6770eac4cec746303ebe125f49533f83d67855168888e"
+    },
+    {
+      "name": "script-error-dispatch",
+      "file_offset": 548400,
+      "size": 127,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "6843a1fd953be0e645c26281a41ea4a739e4d30f914d61a64c139a2b188f5b12",
+      "candidate_sha256": "6843a1fd953be0e645c26281a41ea4a739e4d30f914d61a64c139a2b188f5b12"
     },
     {
       "name": "script-runtime-error-variadic-bridge",
