@@ -4441,3 +4441,16 @@ test-cycle-compound-shape-set-margin: $(OUT)/reriff-match $(OUT)/compound_shape_
 
 test-recovered: test-cycle-compound-shape-set-margin
 .PHONY: test-cycle-compound-shape-set-margin
+
+# Reviewed cycle reference: matrix3-copy-storage (assembly evidence only).
+$(OUT)/matrix3_copy_storage.bin: native/matrix3_copy_storage.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix3_copy_storage.o
+	ld -m elf_i386 -Ttext=0x467e10 -e original_matrix3_copy_storage $(OUT)/matrix3_copy_storage.o -o $(OUT)/matrix3_copy_storage.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix3_copy_storage.elf $@
+
+test-cycle-matrix3-copy-storage: $(OUT)/reriff-match $(OUT)/matrix3_copy_storage.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix3-copy-storage $(OUT)/matrix3_copy_storage.bin $(OUT)/matrix3-copy-storage-comparison.json
+
+test-recovered: test-cycle-matrix3-copy-storage
+.PHONY: test-cycle-matrix3-copy-storage
