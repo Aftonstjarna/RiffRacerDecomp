@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script stack push of terminated text",
+  "summary": "Recover VA 0x4efab0 (95 bytes): capture destination, scan first NUL, intern exact byte length, publish pointer/tag 4, test signed wrapping free-byte difference, request signed-capacity-dependent growth, and advance the current relocated top. State member with explicit intern/resize service bindings preserves helper ordering without expanding dependency recovery.",
+  "targets": [
+    "script-stack-push-terminated"
+  ],
+  "references": [
+    "script-stack-push-terminated",
+    "script-string-intern",
+    "script-stack-resize",
+    "script-stack-relocate-pointers",
+    "script-reallocate"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "6336 direct original/source comparisons: lengths 0,1,2,3,4,5,31,32,33,63,127; signed free-byte gaps INT_MIN,-8,0,7,8,9,16,128,INT_MAX; capacities 0,1,2,16; 16 combinations of moving/in-place successful allocator, allocator mutation of top, and existing-string GC marks/current white. Collision chain forces length-mismatch traversal before an existing interned key. Assert publication before allocation, old/new allocator sizes, accounting, expected state and mark changes, input preservation, FS head restoration, and bytewise source/original equality for complete state/global/stack/node/bucket storage. Twelve source-only service-boundary probes cover signed capacity extremes and interner mutation of top/limit. Locally linked accepted references verified byte-for-byte against Game.exe; GCC test_main returns zero. MSVC2013 compiles implementation under O1, O2, O2 /Oy-.",
+  "known_limits": [
+    "Unmatched readable recovery; no original-code-generation or whole-game equivalence claim. Original ECX/EDX ABI is fastcall-compatible for the target; custom caller-cleaned interner ABI uses a GCC test-only regparm(3) adapter. Portable member takes an additional explicit service parameter.",
+    "Direct oracle tests deliberately use existing interned strings only. New-string allocation, hash-table growth, VM allocation failure/error paths, exceptions, and nonlocal transfer are dependencies outside this target and are not executed.",
+    "Successful allocation is a controlled callback with fixed backing arrays; it does not validate the CRT allocator. Zero/small capacity cases use synthetic metadata with physically writable stack backing, verifying instruction behavior rather than asserting valid VM initialization.",
+    "Signed extreme capacities are tested only at the source helper boundary; actually allocating extreme requests through original helpers would require VM error handling or enormous backing storage.",
+    "32-bit pointer layout is required. Unknown state fields remain opaque. Null/unterminated text and invalid or unwritable stack storage retain original invalid-input behavior and are not executed."
+  ]
+}

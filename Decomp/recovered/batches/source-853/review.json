@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit layout, helper ordering, publication and wrapping signed growth behavior agree with the original assembly. Independently verified all five reference fragments against Game.exe, rebuilt and passed the submitted differential tests at O2, and passed 91,584 expanded comparisons covering additional lengths, high-byte text, gaps and capacities. The actual implementation also compiled with pinned MSVC2013. Tests meaningfully compare state and dependency side effects. Explicit service bindings and untested allocation/error paths are documented limitations; sampled validation does not establish all-input equivalence."
+}
