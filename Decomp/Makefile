@@ -4129,3 +4129,16 @@ test-cycle-sse2-sin-precise-import: $(OUT)/reriff-match $(OUT)/sse2_sin_precise_
 
 test-recovered: test-cycle-sse2-sin-precise-import
 .PHONY: test-cycle-sse2-sin-precise-import
+
+# Reviewed cycle reference: collision-shape-deleting-destructor (assembly evidence only).
+$(OUT)/collision_shape_deleting_destructor.bin: native/collision_shape_deleting_destructor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_shape_deleting_destructor.o
+	ld -m elf_i386 -Ttext=0x47c2b0 -e original_collision_shape_deleting_destructor $(OUT)/collision_shape_deleting_destructor.o -o $(OUT)/collision_shape_deleting_destructor.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_shape_deleting_destructor.elf $@
+
+test-cycle-collision-shape-deleting-destructor: $(OUT)/reriff-match $(OUT)/collision_shape_deleting_destructor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-shape-deleting-destructor $(OUT)/collision_shape_deleting_destructor.bin $(OUT)/collision-shape-deleting-destructor-comparison.json
+
+test-recovered: test-cycle-collision-shape-deleting-destructor
+.PHONY: test-cycle-collision-shape-deleting-destructor

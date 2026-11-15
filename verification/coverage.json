@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 89781,
-  "remaining_bytes": 8545611,
-  "verified_percent": 1.039686443881181,
-  "registered_blocks": 359,
-  "exact_blocks": 359,
+  "verified_bytes": 89816,
+  "remaining_bytes": 8545576,
+  "verified_percent": 1.0400917526384441,
+  "registered_blocks": 360,
+  "exact_blocks": 360,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1388,6 +1388,15 @@
       "byte_equal": true,
       "reference_sha256": "9553bbeb770312151a88e781b7f983d2de6f6b02a6d6a859bafb254a774af6d4",
       "candidate_sha256": "9553bbeb770312151a88e781b7f983d2de6f6b02a6d6a859bafb254a774af6d4"
+    },
+    {
+      "name": "collision-shape-deleting-destructor",
+      "file_offset": 505520,
+      "size": 35,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "9e71a4b292777691a30c95bc52c77965a8d8dc6369b89d2e64d581ebc3903303",
+      "candidate_sha256": "9e71a4b292777691a30c95bc52c77965a8d8dc6369b89d2e64d581ebc3903303"
     },
     {
       "name": "convex-hull-shape-name",
