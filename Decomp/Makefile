@@ -4493,3 +4493,16 @@ test-cycle-request-buffers-ensure-capacity: $(OUT)/reriff-match $(OUT)/request_b
 
 test-recovered: test-cycle-request-buffers-ensure-capacity
 .PHONY: test-cycle-request-buffers-ensure-capacity
+
+# Reviewed cycle reference: record68-reallocate (assembly evidence only).
+$(OUT)/record68_reallocate.bin: native/record68_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record68_reallocate.o
+	ld -m elf_i386 -Ttext=0x509dc0 -e original_record68_reallocate $(OUT)/record68_reallocate.o -o $(OUT)/record68_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/record68_reallocate.elf $@
+
+test-cycle-record68-reallocate: $(OUT)/reriff-match $(OUT)/record68_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record68-reallocate $(OUT)/record68_reallocate.bin $(OUT)/record68-reallocate-comparison.json
+
+test-recovered: test-cycle-record68-reallocate
+.PHONY: test-cycle-record68-reallocate
