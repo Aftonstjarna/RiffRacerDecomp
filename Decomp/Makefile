@@ -4974,3 +4974,16 @@ test-cycle-pool32-chain-set-bitmap: $(OUT)/reriff-match $(OUT)/pool32_chain_set_
 
 test-recovered: test-cycle-pool32-chain-set-bitmap
 .PHONY: test-cycle-pool32-chain-set-bitmap
+
+# Reviewed cycle reference: record52-default-initialize (assembly evidence only).
+$(OUT)/record52_default_initialize.bin: native/record52_default_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record52_default_initialize.o
+	ld -m elf_i386 -Ttext=0x568200 -e original_record52_default_initialize $(OUT)/record52_default_initialize.o -o $(OUT)/record52_default_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/record52_default_initialize.elf $@
+
+test-cycle-record52-default-initialize: $(OUT)/reriff-match $(OUT)/record52_default_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record52-default-initialize $(OUT)/record52_default_initialize.bin $(OUT)/record52-default-initialize-comparison.json
+
+test-recovered: test-cycle-record52-default-initialize
+.PHONY: test-cycle-record52-default-initialize
