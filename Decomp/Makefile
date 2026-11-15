@@ -5130,3 +5130,16 @@ test-cycle-script-table-count-array-histogram: $(OUT)/reriff-match $(OUT)/script
 
 test-recovered: test-cycle-script-table-count-array-histogram
 .PHONY: test-cycle-script-table-count-array-histogram
+
+# Reviewed cycle reference: script-table-count-hash-histogram (assembly evidence only).
+$(OUT)/script_table_count_hash_histogram.bin: native/script_table_count_hash_histogram.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_count_hash_histogram.o
+	ld -m elf_i386 -Ttext=0x4f0460 -e original_script_table_count_hash_histogram $(OUT)/script_table_count_hash_histogram.o -o $(OUT)/script_table_count_hash_histogram.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_count_hash_histogram.elf $@
+
+test-cycle-script-table-count-hash-histogram: $(OUT)/reriff-match $(OUT)/script_table_count_hash_histogram.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-count-hash-histogram $(OUT)/script_table_count_hash_histogram.bin $(OUT)/script-table-count-hash-histogram-comparison.json
+
+test-recovered: test-cycle-script-table-count-hash-histogram
+.PHONY: test-cycle-script-table-count-hash-histogram
