@@ -4701,3 +4701,16 @@ test-cycle-reference-slot-assign-range: $(OUT)/reriff-match $(OUT)/reference_slo
 
 test-recovered: test-cycle-reference-slot-assign-range
 .PHONY: test-cycle-reference-slot-assign-range
+
+# Reviewed cycle reference: sse-raise-invalid (assembly evidence only).
+$(OUT)/sse_raise_invalid.bin: native/sse_raise_invalid.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sse_raise_invalid.o
+	ld -m elf_i386 -Ttext=0x8fc990 -e original_sse_raise_invalid $(OUT)/sse_raise_invalid.o -o $(OUT)/sse_raise_invalid.elf
+	objcopy -O binary --only-section=.text $(OUT)/sse_raise_invalid.elf $@
+
+test-cycle-sse-raise-invalid: $(OUT)/reriff-match $(OUT)/sse_raise_invalid.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sse-raise-invalid $(OUT)/sse_raise_invalid.bin $(OUT)/sse-raise-invalid-comparison.json
+
+test-recovered: test-cycle-sse-raise-invalid
+.PHONY: test-cycle-sse-raise-invalid
