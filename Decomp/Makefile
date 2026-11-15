@@ -4194,3 +4194,16 @@ test-cycle-object-field78-present: $(OUT)/reriff-match $(OUT)/object_field78_pre
 
 test-recovered: test-cycle-object-field78-present
 .PHONY: test-cycle-object-field78-present
+
+# Reviewed cycle reference: convex-hull-shape-set-scaling (assembly evidence only).
+$(OUT)/convex_hull_shape_set_scaling.bin: native/convex_hull_shape_set_scaling.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_hull_shape_set_scaling.o
+	ld -m elf_i386 -Ttext=0x47cfd0 -e original_convex_hull_shape_set_scaling $(OUT)/convex_hull_shape_set_scaling.o -o $(OUT)/convex_hull_shape_set_scaling.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_hull_shape_set_scaling.elf $@
+
+test-cycle-convex-hull-shape-set-scaling: $(OUT)/reriff-match $(OUT)/convex_hull_shape_set_scaling.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-hull-shape-set-scaling $(OUT)/convex_hull_shape_set_scaling.bin $(OUT)/convex-hull-shape-set-scaling-comparison.json
+
+test-recovered: test-cycle-convex-hull-shape-set-scaling
+.PHONY: test-cycle-convex-hull-shape-set-scaling
