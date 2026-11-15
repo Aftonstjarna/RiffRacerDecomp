@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table main hash bucket",
+  "summary": "Recovers VA 0x4f0110 (123 bytes) as a fastcall Table member (ECX=this, EDX=key). The original external jump table maps tag 1 to payload masking, tag 2 to the default unsigned remainder, tag 3 to numeric hashing, and tag 4 to string-header hash masking. All other tags use the default remainder. Reads the exponent byte at +7 and node base at +16; returns a 20-byte-stride node without writes or collision traversal. Direct callers at 0x4f01f0, 0x4f09f3, 0x4f0a55 and 0x4f0bec supply ECX/EDX and consume the returned node. Numeric dependency is inlined semantically, not recovered as an additional target.",
+  "targets": [
+    "script-table-main-bucket"
+  ],
+  "references": [
+    "script-table-main-bucket",
+    "script-table-numeric-bucket"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Local GCC i386 fixed-flags differential execution passed 118272 comparisons: 11 tags including all dispatch cases and unsigned tag extremes, 21 payload/hash patterns, every exponent byte 0..255, and MXCSR DAZ both off/on with exceptions masked. Numeric cases include signed zero, signed subnormals, finite numbers, infinities, quiet/signaling NaNs. Compares return address, complete MXCSR state, full guarded table and key, string header and every byte of node backing. Huge computed addresses are never dereferenced. Linked accepted references at original VAs and independently compared their full 123/70-byte spans against Game.exe. Local fixed data sections place the four original dispatch addresses at 0x4f018c and float zero at 0xa063ec. Submitted test detects missing fixture placement, explicitly reports reduced coverage, and still compares 75264 default-tag cases against the original plus independent expected results for all cases. Implementation also compiled using supplied pinned MSVC under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Full tag-1..4 oracle execution needs the external 16-byte dispatch data at 0x4f018c and 4-byte float-zero data at 0xa063ec. Those are outside the accepted code spans and not among the coordinator-guaranteed fixture mappings. Local validation supplies these mappings; an unmapped trusted run reports and skips only those original paths rather than pretending full differential coverage.",
+    "Original type names and unused fields remain unresolved. Tags and accessed offsets are evidenced, not a reconstruction of the entire VM. The genuine member uses fastcall, not thiscall: the key arrives in EDX rather than on the stack.",
+    "Exact original layouts and 32-bit wrapping are asserted/tested on i386. Wider-pointer ports use analogous native-pointer Value/Node/Table layouts and require integration with the surrounding VM; no 64-bit binary-layout compatibility is claimed.",
+    "Only masked floating-exception normal paths are tested. Floating traps, inaccessible pointers, invalid string pointers, concurrent mutation and fault dispatch are not tested. There is no FS/SEH registration in this target or its numeric helper.",
+    "Sampled behavior validation and MSVC compilation do not establish matching compiler bytes or whole-game equivalence. No matching credit claimed."
+  ]
+}
