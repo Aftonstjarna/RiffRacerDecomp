@@ -4480,3 +4480,16 @@ test-cycle-collision-shape-bounding-sphere: $(OUT)/reriff-match $(OUT)/collision
 
 test-recovered: test-cycle-collision-shape-bounding-sphere
 .PHONY: test-cycle-collision-shape-bounding-sphere
+
+# Reviewed cycle reference: request-buffers-ensure-capacity (assembly evidence only).
+$(OUT)/request_buffers_ensure_capacity.bin: native/request_buffers_ensure_capacity.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/request_buffers_ensure_capacity.o
+	ld -m elf_i386 -Ttext=0x509be0 -e original_request_buffers_ensure_capacity $(OUT)/request_buffers_ensure_capacity.o -o $(OUT)/request_buffers_ensure_capacity.elf
+	objcopy -O binary --only-section=.text $(OUT)/request_buffers_ensure_capacity.elf $@
+
+test-cycle-request-buffers-ensure-capacity: $(OUT)/reriff-match $(OUT)/request_buffers_ensure_capacity.bin
+	$(OUT)/reriff-match native-check "$(GAME)" request-buffers-ensure-capacity $(OUT)/request_buffers_ensure_capacity.bin $(OUT)/request-buffers-ensure-capacity-comparison.json
+
+test-recovered: test-cycle-request-buffers-ensure-capacity
+.PHONY: test-cycle-request-buffers-ensure-capacity
