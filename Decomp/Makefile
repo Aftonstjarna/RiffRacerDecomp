@@ -4428,3 +4428,16 @@ test-cycle-pointer-slot-range-zero-initialize: $(OUT)/reriff-match $(OUT)/pointe
 
 test-recovered: test-cycle-pointer-slot-range-zero-initialize
 .PHONY: test-cycle-pointer-slot-range-zero-initialize
+
+# Reviewed cycle reference: compound-shape-set-margin (assembly evidence only).
+$(OUT)/compound_shape_set_margin.bin: native/compound_shape_set_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/compound_shape_set_margin.o
+	ld -m elf_i386 -Ttext=0x47d8c0 -e original_compound_shape_set_margin $(OUT)/compound_shape_set_margin.o -o $(OUT)/compound_shape_set_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/compound_shape_set_margin.elf $@
+
+test-cycle-compound-shape-set-margin: $(OUT)/reriff-match $(OUT)/compound_shape_set_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" compound-shape-set-margin $(OUT)/compound_shape_set_margin.bin $(OUT)/compound-shape-set-margin-comparison.json
+
+test-recovered: test-cycle-compound-shape-set-margin
+.PHONY: test-cycle-compound-shape-set-margin
