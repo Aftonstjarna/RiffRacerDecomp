@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Readable source preserves the signed-count control flow, thiscall ABI, 16-byte output stride and four zero stores without reading object state or directions. Reference bytes independently matched Game.exe. Original differential tests and additional counts 3, 7, 255 and 260 passed, checking full buffers, guards, aliases and state preservation. Native Windows compilation records cover the actual implementation. Documented pointer, storage and integration limitations are reasonable; sampled validation does not establish all-input equivalence or exact source matching."
+}
