@@ -3895,3 +3895,16 @@ test-cycle-random-sign-float: $(OUT)/reriff-match $(OUT)/random_sign_float.bin
 
 test-recovered: test-cycle-random-sign-float
 .PHONY: test-cycle-random-sign-float
+
+# Reviewed cycle reference: random-unit-float (assembly evidence only).
+$(OUT)/random_unit_float.bin: native/random_unit_float.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/random_unit_float.o
+	ld -m elf_i386 -Ttext=0x4787b0 -e original_random_unit_float $(OUT)/random_unit_float.o -o $(OUT)/random_unit_float.elf
+	objcopy -O binary --only-section=.text $(OUT)/random_unit_float.elf $@
+
+test-cycle-random-unit-float: $(OUT)/reriff-match $(OUT)/random_unit_float.bin
+	$(OUT)/reriff-match native-check "$(GAME)" random-unit-float $(OUT)/random_unit_float.bin $(OUT)/random-unit-float-comparison.json
+
+test-recovered: test-cycle-random-unit-float
+.PHONY: test-cycle-random-unit-float
