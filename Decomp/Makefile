@@ -5468,3 +5468,16 @@ test-cycle-script-string-buckets-resize: $(OUT)/reriff-match $(OUT)/script_strin
 
 test-recovered: test-cycle-script-string-buckets-resize
 .PHONY: test-cycle-script-string-buckets-resize
+
+# Reviewed cycle reference: script-value-raw-equal (assembly evidence only).
+$(OUT)/script_value_raw_equal.bin: native/script_value_raw_equal.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_value_raw_equal.o
+	ld -m elf_i386 -Ttext=0x4ef9a0 -e original_script_value_raw_equal $(OUT)/script_value_raw_equal.o -o $(OUT)/script_value_raw_equal.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_value_raw_equal.elf $@
+
+test-cycle-script-value-raw-equal: $(OUT)/reriff-match $(OUT)/script_value_raw_equal.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-value-raw-equal $(OUT)/script_value_raw_equal.bin $(OUT)/script-value-raw-equal-comparison.json
+
+test-recovered: test-cycle-script-value-raw-equal
+.PHONY: test-cycle-script-value-raw-equal
