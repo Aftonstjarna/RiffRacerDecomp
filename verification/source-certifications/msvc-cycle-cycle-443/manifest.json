@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-443",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "four-record20-initialize",
+      "stem": "cycle_four_record20_initialize",
+      "source": "Decomp/recovered/msvc/cycle_four_record20_initialize.cpp",
+      "sha256": "a0116a8f4dd84a77fd8f4efabb398aceae83f8cbb580cfcd6f877ed8482f9a86"
+    }
+  ]
+}
