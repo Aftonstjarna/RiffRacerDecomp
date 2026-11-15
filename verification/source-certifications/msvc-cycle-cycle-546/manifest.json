@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-546",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "script-table-choose-array-capacity",
+      "stem": "cycle_script_table_choose_array_capacity",
+      "source": "Decomp/recovered/msvc/cycle_script_table_choose_array_capacity.cpp",
+      "sha256": "047c5db6604ef37809dc358b1914806884e2b6fe9ddb93769d577c6a9557270d"
+    }
+  ]
+}

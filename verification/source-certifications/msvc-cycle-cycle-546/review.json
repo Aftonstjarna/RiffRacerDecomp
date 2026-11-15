@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "996b551b64b3af042b5a878f251683b4ba2a5d375dd25ea599ce882c734680e4",
+  "behavior_sha256": "0e06f378089b019c424b757596edcbd6cbe060cb066362c9b3c8d4652086b8da",
+  "functions": [
+    {
+      "scope": "script-table-choose-array-capacity",
+      "source_sha256": "047c5db6604ef37809dc358b1914806884e2b6fe9ddb93769d577c6a9557270d",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild using /O2 /Oy- /GS- produced a complete, relocation-free compiler section identical to the original. Verified executable hash, function boundaries, fastcall ABI and source semantics. Independently executed both actual compiled code and extracted original code: all 12,176 differential cases passed, covering branches, return values, capacity writes, unchanged buckets and surrounding guards. Approval applies only to this routine."
+    }
+  ],
+  "review_receipt_sha256": "5dee76b8982cf47568fdf6de269891097deedd739758bebdbe8243198e15ba8d",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
