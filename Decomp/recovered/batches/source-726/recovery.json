@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Pointer slot copy and retain",
+  "summary": "Recovers the forward slot-copy loop at 0x44be60, including per-slot null output check, nullable pointees and wrapping reference count at offset +4. Caller at 0x44badf supplies a source range and allocated destination. No old destination release occurs.",
+  "targets": [
+    "pointer-slot-range-copy-retain"
+  ],
+  "references": [
+    "pointer-slot-range-copy-retain"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original comparisons for lengths 0 through 8, separate storage, self copy, both overlap directions, null slots, repeated pointees, and count overflow. Checks all object prefix words, counts, source slots and destination guards. Empty null range and one-slot null output with unmapped source verify skipped loads. Test-only frame adapter bridges original ECX/EDX plus caller-cleaned stack ABI. Local GCC i386 freestanding executable returned zero for 72 range comparisons plus two special cases. Accepted oracle bytes compared equal to all 44 original bytes. Implementation compiled with supplied VS2013 at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Object identity and fields beyond the observed two-word prefix remain unresolved.",
+    "Malformed nonterminating ranges, inaccessible non-null pointers and null destination with multiple slots can fault and are not executed.",
+    "Portable pointer slots scale with host pointer width; original slots are four bytes on i386.",
+    "Original custom register ABI is exposed through a portable free-function API; GCC oracle adapter relies on the documented O0 frame epilogue.",
+    "No byte-matching claim or full-game validation."
+  ]
+}
