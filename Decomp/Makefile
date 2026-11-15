@@ -5546,3 +5546,16 @@ test-cycle-script-stream-read-block: $(OUT)/reriff-match $(OUT)/script_stream_re
 
 test-recovered: test-cycle-script-stream-read-block
 .PHONY: test-cycle-script-stream-read-block
+
+# Reviewed cycle reference: script-number-to-string (assembly evidence only).
+$(OUT)/script_number_to_string.bin: native/script_number_to_string.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_number_to_string.o
+	ld -m elf_i386 -Ttext=0x4f25c0 -e original_script_number_to_string $(OUT)/script_number_to_string.o -o $(OUT)/script_number_to_string.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_number_to_string.elf $@
+
+test-cycle-script-number-to-string: $(OUT)/reriff-match $(OUT)/script_number_to_string.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-number-to-string $(OUT)/script_number_to_string.bin $(OUT)/script-number-to-string-comparison.json
+
+test-recovered: test-cycle-script-number-to-string
+.PHONY: test-cycle-script-number-to-string
