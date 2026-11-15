@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-387",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "nested-resource44-count",
+      "stem": "cycle_nested_resource44_count",
+      "source": "Decomp/recovered/msvc/cycle_nested_resource44_count.cpp",
+      "sha256": "c317a5503cdf14320186e78da3219aec8b3837fafa3b78dd0a425ab51a53be72"
+    }
+  ]
+}
