@@ -5208,3 +5208,16 @@ test-cycle-script-allocation-too-large: $(OUT)/reriff-match $(OUT)/script_alloca
 
 test-recovered: test-cycle-script-allocation-too-large
 .PHONY: test-cycle-script-allocation-too-large
+
+# Reviewed cycle reference: script-table-destroy (assembly evidence only).
+$(OUT)/script_table_destroy.bin: native/script_table_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_destroy.o
+	ld -m elf_i386 -Ttext=0x4f0980 -e original_script_table_destroy $(OUT)/script_table_destroy.o -o $(OUT)/script_table_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_destroy.elf $@
+
+test-cycle-script-table-destroy: $(OUT)/reriff-match $(OUT)/script_table_destroy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-destroy $(OUT)/script_table_destroy.bin $(OUT)/script-table-destroy-comparison.json
+
+test-recovered: test-cycle-script-table-destroy
+.PHONY: test-cycle-script-table-destroy
