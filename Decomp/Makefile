@@ -5273,3 +5273,16 @@ test-cycle-script-table-resize: $(OUT)/reriff-match $(OUT)/script_table_resize.b
 
 test-recovered: test-cycle-script-table-resize
 .PHONY: test-cycle-script-table-resize
+
+# Reviewed cycle reference: script-table-ensure-value-slot (assembly evidence only).
+$(OUT)/script_table_ensure_value_slot.bin: native/script_table_ensure_value_slot.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_ensure_value_slot.o
+	ld -m elf_i386 -Ttext=0x4f0c50 -e original_script_table_ensure_value_slot $(OUT)/script_table_ensure_value_slot.o -o $(OUT)/script_table_ensure_value_slot.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_ensure_value_slot.elf $@
+
+test-cycle-script-table-ensure-value-slot: $(OUT)/reriff-match $(OUT)/script_table_ensure_value_slot.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-ensure-value-slot $(OUT)/script_table_ensure_value_slot.bin $(OUT)/script-table-ensure-value-slot-comparison.json
+
+test-recovered: test-cycle-script-table-ensure-value-slot
+.PHONY: test-cycle-script-table-ensure-value-slot
