@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "96bede1fd755c7f77ced566f94f0e35561c7a4aa60568f3d9905c730b385523a",
+  "behavior_sha256": "c65ecb810f5b643a83d68547ce1b36394c56ee37650c20f5d7cd266cdcadf448",
+  "functions": [
+    {
+      "scope": "pe-section-lookup",
+      "source_sha256": "681d1e60d68d8205cb75d7ae5a38b079f1dcb81ca81a95f654b97f37b07f2f63",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified 67-byte function exactly, with no relocations. Original boundaries and x86 cdecl ABI agree. All 21,399 differential cases passed using actual compiled code and bytes extracted directly from Game.exe, covering lookup branches, boundaries, overlaps, overflow, empty tables, and unchanged input storage. Certification is limited to this function."
+    }
+  ],
+  "review_receipt_sha256": "75dba8caec8940835d32ca3f99e004455af7f5033b85b578a8771c9b14f0f0b6",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

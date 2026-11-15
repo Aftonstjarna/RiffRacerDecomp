@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-425",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "pe-section-lookup",
+      "stem": "cycle_pe_section_lookup",
+      "source": "Decomp/recovered/msvc/cycle_pe_section_lookup.cpp",
+      "sha256": "681d1e60d68d8205cb75d7ae5a38b079f1dcb81ca81a95f654b97f37b07f2f63"
+    }
+  ]
+}
