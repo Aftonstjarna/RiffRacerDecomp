@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source matches the reference dispatch flow, i386 layouts, callback arguments, vtable reloads, and unchecked pointer behavior. Independently verified reference bytes against Game.exe, passed O0/O2 behavioral tests and layout assertions, compiled the actual implementation with pinned MSVC, and confirmed a wrong-tag mutation fails. Tests exercise size extremes, null opaque values, callback effects, and guards. Return semantics and untested invalid-pointer, exception, and real-game paths are disclosed; sampled validation does not establish all-input equivalence."
+}

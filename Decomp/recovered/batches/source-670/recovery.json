@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Single collision shape serialization dispatch",
+  "summary": "Recover the thiscall member at VA 0x47c270 (61 bytes): query virtual slot +0x2c for size, allocate(size,1) through serializer slot +0x0c, serialize(chunk field +8,serializer) through shape slot +0x30, and finalize(chunk,type,0x50414853,this) through serializer slot +0x10. Reload vtables after callbacks. No direct writes or null checks. Original disassembly has no direct callers; numerous original vtables reference this member, including entries 0x9fb0ec and 0x9fb15c.",
+  "targets": ["collision-shape-serialize-single"],
+  "references": ["collision-shape-serialize-single"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 harness calls the original thiscall routine at 0x47c270 and recovered member for 21 combinations: sizes 0,1,16,4096,-1,INT_MIN,INT_MAX; normal, null type, and null data modes. Both must satisfy identical assertions for exact four-call order, receiver identities, argument values, SHAP tag, original object identity, callback writes, untouched chunk fields, guard words, and data words. Allocation changes the shape vtable and serialization changes the serializer vtable, proving later calls reload them. Accepted oracle assembly was linked at the original address and its 61 bytes compared with immutable Game.exe. GCC run passes; pinned MSVC2013 implementation compilation passes.",
+  "known_limits": [
+    "Only the assigned dispatch routine is recovered; virtual dependencies are controlled test callbacks, not recovered allocation or serialization internals.",
+    "Semantic names and the void source return are inferred from the serialization protocol. The original leaves the final callback EAX untouched, but no meaningful return contract is established.",
+    "Chunk prefix field names code and length are descriptive; only the pointer at byte offset 8 is read by this routine. Complete object and chunk layouts remain outside scope.",
+    "Invalid object, serializer, vtable, or chunk pointers have no checked error path and are not executed in tests. Null data and type pointers are tested as forwarded opaque values.",
+    "No exception paths, real game serialization output, matching-byte claim, or recovery of callers is included. Native Linux pointer-width adaptation is source-level; original ABI tests use i386."
+  ]
+}
