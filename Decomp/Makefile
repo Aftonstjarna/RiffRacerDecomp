@@ -3921,3 +3921,16 @@ test-cycle-packed-double-floor-sse2: $(OUT)/reriff-match $(OUT)/packed_double_fl
 
 test-recovered: test-cycle-packed-double-floor-sse2
 .PHONY: test-cycle-packed-double-floor-sse2
+
+# Reviewed cycle reference: packed-double-floor-sse41 (assembly evidence only).
+$(OUT)/packed_double_floor_sse41.bin: native/packed_double_floor_sse41.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/packed_double_floor_sse41.o
+	ld -m elf_i386 -Ttext=0x8fc410 -e original_packed_double_floor_sse41 $(OUT)/packed_double_floor_sse41.o -o $(OUT)/packed_double_floor_sse41.elf
+	objcopy -O binary --only-section=.text $(OUT)/packed_double_floor_sse41.elf $@
+
+test-cycle-packed-double-floor-sse41: $(OUT)/reriff-match $(OUT)/packed_double_floor_sse41.bin
+	$(OUT)/reriff-match native-check "$(GAME)" packed-double-floor-sse41 $(OUT)/packed_double_floor_sse41.bin $(OUT)/packed-double-floor-sse41-comparison.json
+
+test-recovered: test-cycle-packed-double-floor-sse41
+.PHONY: test-cycle-packed-double-floor-sse41
