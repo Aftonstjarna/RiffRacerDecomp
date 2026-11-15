@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-431",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "dispatcher-manifold-array-pointer",
+      "stem": "cycle_dispatcher_manifold_array_pointer",
+      "source": "Decomp/recovered/msvc/cycle_dispatcher_manifold_array_pointer.cpp",
+      "sha256": "db0839ccbd402c9a066624e7238259e46c54a4660e9a9856623a0d2aa96793de"
+    }
+  ]
+}
