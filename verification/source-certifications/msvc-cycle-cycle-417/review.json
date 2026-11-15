@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "b9c1a117f6fd8e079d98efd08cb3d4afc9b30d6cd340ae8239cc5eaf56d48320",
+  "behavior_sha256": "ec85f14b227d0a78bf093b2db921994f8f958e9ccc7ce9869d1ca198c6d7b96d",
+  "functions": [
+    {
+      "scope": "byte-widen-terminated",
+      "source_sha256": "a7487ef829a64b3869e93795bdd4deb620e3031b9472f7b7f22f6922f040db3c",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation matched the entire original span at VA 0x425C40–0x425C7B exactly, including both returns. Verified caller-cleaned x86 ABI and boundaries against original instructions. Executed actual compiler output and independently extracted original bytes across 133,632 cases covering branches, truncation, unsigned size extremes, source preservation, and untouched destination state. Certification is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "758f385b8dc90b95fd136ca517e0cfc623c2727c7b95d2719d752c14d7ad7ceb",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

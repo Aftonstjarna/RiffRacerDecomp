@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-417",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "byte-widen-terminated",
+      "stem": "cycle_byte_widen_terminated",
+      "source": "Decomp/recovered/msvc/cycle_byte_widen_terminated.cpp",
+      "sha256": "a7487ef829a64b3869e93795bdd4deb620e3031b9472f7b7f22f6922f040db3c"
+    }
+  ]
+}
