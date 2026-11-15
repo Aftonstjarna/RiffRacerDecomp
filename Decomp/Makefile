@@ -5039,3 +5039,16 @@ test-cycle-script-table-get-string: $(OUT)/reriff-match $(OUT)/script_table_get_
 
 test-recovered: test-cycle-script-table-get-string
 .PHONY: test-cycle-script-table-get-string
+
+# Reviewed cycle reference: script-table-numeric-bucket (assembly evidence only).
+$(OUT)/script_table_numeric_bucket.bin: native/script_table_numeric_bucket.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_numeric_bucket.o
+	ld -m elf_i386 -Ttext=0x4f00c0 -e original_script_table_numeric_bucket $(OUT)/script_table_numeric_bucket.o -o $(OUT)/script_table_numeric_bucket.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_numeric_bucket.elf $@
+
+test-cycle-script-table-numeric-bucket: $(OUT)/reriff-match $(OUT)/script_table_numeric_bucket.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-numeric-bucket $(OUT)/script_table_numeric_bucket.bin $(OUT)/script-table-numeric-bucket-comparison.json
+
+test-recovered: test-cycle-script-table-numeric-bucket
+.PHONY: test-cycle-script-table-numeric-bucket
