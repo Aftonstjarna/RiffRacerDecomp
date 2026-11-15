@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"convex-hull-batched-support-without-margin",0x7d0c0,249},
+  return {NativeBlock{"convex-hull-edge-without-margin",0x7d1d0,171},
+                     NativeBlock{"convex-hull-batched-support-without-margin",0x7d0c0,249},
                      NativeBlock{"convex-hull-vertex-without-margin",0x7d280,84},
                      NativeBlock{"narrow-append-substring",0x420b0,178},
                      NativeBlock{"convex-hull-support-without-margin",0x7cff0,206},

@@ -4285,3 +4285,16 @@ test-cycle-convex-hull-batched-support-without-margin: $(OUT)/reriff-match $(OUT
 
 test-recovered: test-cycle-convex-hull-batched-support-without-margin
 .PHONY: test-cycle-convex-hull-batched-support-without-margin
+
+# Reviewed cycle reference: convex-hull-edge-without-margin (assembly evidence only).
+$(OUT)/convex_hull_edge_without_margin.bin: native/convex_hull_edge_without_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_hull_edge_without_margin.o
+	ld -m elf_i386 -Ttext=0x47d1d0 -e original_convex_hull_edge_without_margin $(OUT)/convex_hull_edge_without_margin.o -o $(OUT)/convex_hull_edge_without_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_hull_edge_without_margin.elf $@
+
+test-cycle-convex-hull-edge-without-margin: $(OUT)/reriff-match $(OUT)/convex_hull_edge_without_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-hull-edge-without-margin $(OUT)/convex_hull_edge_without_margin.bin $(OUT)/convex-hull-edge-without-margin-comparison.json
+
+test-recovered: test-cycle-convex-hull-edge-without-margin
+.PHONY: test-cycle-convex-hull-edge-without-margin
