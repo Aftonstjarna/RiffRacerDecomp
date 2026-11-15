@@ -5533,3 +5533,16 @@ test-cycle-script-buffer-ensure-capacity: $(OUT)/reriff-match $(OUT)/script_buff
 
 test-recovered: test-cycle-script-buffer-ensure-capacity
 .PHONY: test-cycle-script-buffer-ensure-capacity
+
+# Reviewed cycle reference: script-stream-read-block (assembly evidence only).
+$(OUT)/script_stream_read_block.bin: native/script_stream_read_block.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_stream_read_block.o
+	ld -m elf_i386 -Ttext=0x4f60a0 -e original_script_stream_read_block $(OUT)/script_stream_read_block.o -o $(OUT)/script_stream_read_block.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_stream_read_block.elf $@
+
+test-cycle-script-stream-read-block: $(OUT)/reriff-match $(OUT)/script_stream_read_block.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-stream-read-block $(OUT)/script_stream_read_block.bin $(OUT)/script-stream-read-block-comparison.json
+
+test-recovered: test-cycle-script-stream-read-block
+.PHONY: test-cycle-script-stream-read-block
