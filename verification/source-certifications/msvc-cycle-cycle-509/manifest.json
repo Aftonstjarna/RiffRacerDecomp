@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-509",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "record40-copy-assign",
+      "stem": "cycle_record40_copy_assign",
+      "source": "Decomp/recovered/msvc/cycle_record40_copy_assign.cpp",
+      "sha256": "9c8a28ca58f790c1c13209037afd5d0c801e1d302fe9c0188101d1b6d1e03e78"
+    }
+  ]
+}

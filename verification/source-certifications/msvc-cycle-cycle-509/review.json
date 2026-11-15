@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "0533cd0530b441b43e2c5bd784dc31505b9a4b76e3470b44ed190ebe91bc9ae2",
+  "behavior_sha256": "a22420bbd95a7f00c72fac5a8be39e33fedc02a1d3415d86afe0dd47400b3ec3",
+  "functions": [
+    {
+      "scope": "record40-copy-assign",
+      "source_sha256": "9c8a28ca58f790c1c13209037afd5d0c801e1d302fe9c0188101d1b6d1e03e78",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified code section exactly, with no relocations. Original instructions and caller confirm the 40-byte layout and thiscall ABI. Executing actual compiled and original fragments passed 13,448 differential cases covering self-assignment, both overlap directions, return values, and untouched memory. The routine has no conditional branches. Approval is limited to this function."
+    }
+  ],
+  "review_receipt_sha256": "6289e88ae00aac53fbfd71b86ab6608b50170369d927f8271e35b35c621d645e",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
