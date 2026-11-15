@@ -5455,3 +5455,16 @@ test-cycle-script-string-intern: $(OUT)/reriff-match $(OUT)/script_string_intern
 
 test-recovered: test-cycle-script-string-intern
 .PHONY: test-cycle-script-string-intern
+
+# Reviewed cycle reference: script-string-buckets-resize (assembly evidence only).
+$(OUT)/script_string_buckets_resize.bin: native/script_string_buckets_resize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_string_buckets_resize.o
+	ld -m elf_i386 -Ttext=0x4f5d70 -e original_script_string_buckets_resize $(OUT)/script_string_buckets_resize.o -o $(OUT)/script_string_buckets_resize.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_string_buckets_resize.elf $@
+
+test-cycle-script-string-buckets-resize: $(OUT)/reriff-match $(OUT)/script_string_buckets_resize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-string-buckets-resize $(OUT)/script_string_buckets_resize.bin $(OUT)/script-string-buckets-resize-comparison.json
+
+test-recovered: test-cycle-script-string-buckets-resize
+.PHONY: test-cycle-script-string-buckets-resize
