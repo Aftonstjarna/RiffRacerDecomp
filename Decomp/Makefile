@@ -5351,3 +5351,16 @@ test-cycle-script-stack-relocate-pointers: $(OUT)/reriff-match $(OUT)/script_sta
 
 test-recovered: test-cycle-script-stack-relocate-pointers
 .PHONY: test-cycle-script-stack-relocate-pointers
+
+# Reviewed cycle reference: script-throw-status (assembly evidence only).
+$(OUT)/script_throw_status.bin: native/script_throw_status.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_throw_status.o
+	ld -m elf_i386 -Ttext=0x4f4d80 -e original_script_throw_status $(OUT)/script_throw_status.o -o $(OUT)/script_throw_status.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_throw_status.elf $@
+
+test-cycle-script-throw-status: $(OUT)/reriff-match $(OUT)/script_throw_status.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-throw-status $(OUT)/script_throw_status.bin $(OUT)/script-throw-status-comparison.json
+
+test-recovered: test-cycle-script-throw-status
+.PHONY: test-cycle-script-throw-status
