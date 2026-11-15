@@ -5299,3 +5299,16 @@ test-cycle-script-table-rehash: $(OUT)/reriff-match $(OUT)/script_table_rehash.b
 
 test-recovered: test-cycle-script-table-rehash
 .PHONY: test-cycle-script-table-rehash
+
+# Reviewed cycle reference: script-runtime-error-variadic-bridge (assembly evidence only).
+$(OUT)/script_runtime_error_variadic_bridge.bin: native/script_runtime_error_variadic_bridge.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_runtime_error_variadic_bridge.o
+	ld -m elf_i386 -Ttext=0x486ab0 -e original_script_runtime_error_variadic_bridge $(OUT)/script_runtime_error_variadic_bridge.o -o $(OUT)/script_runtime_error_variadic_bridge.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_runtime_error_variadic_bridge.elf $@
+
+test-cycle-script-runtime-error-variadic-bridge: $(OUT)/reriff-match $(OUT)/script_runtime_error_variadic_bridge.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-runtime-error-variadic-bridge $(OUT)/script_runtime_error_variadic_bridge.bin $(OUT)/script-runtime-error-variadic-bridge-comparison.json
+
+test-recovered: test-cycle-script-runtime-error-variadic-bridge
+.PHONY: test-cycle-script-runtime-error-variadic-bridge
