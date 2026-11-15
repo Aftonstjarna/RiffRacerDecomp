@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behaviorally supported unmatched source; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, and original reference routine. The implementation preserves the 52-byte layout, thirteen stores, returned pointer, and native x86 member ABI. Independently rebuilt and ran tests against bytes extracted from immutable Game.exe: output bytes, guards, repeated initialization, pointer identity, and four MXCSR rounding modes passed. Pinned MSVC also compiled the actual implementation. No instruction blobs, inline assembly, disabled checks, or unsupported recovery claims found. Unknown field meanings and invalid-pointer, concurrency, and partial-fault limitations are disclosed. Sampled validation does not establish all-input equivalence."
+}
