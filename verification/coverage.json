@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 90983,
-  "remaining_bytes": 8544409,
-  "verified_percent": 1.0536059046306179,
-  "registered_blocks": 376,
-  "exact_blocks": 376,
+  "verified_bytes": 91188,
+  "remaining_bytes": 8544204,
+  "verified_percent": 1.055979855923159,
+  "registered_blocks": 377,
+  "exact_blocks": 377,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1523,6 +1523,15 @@
       "byte_equal": true,
       "reference_sha256": "660472ffc1a42041fb883c7fa0f7297e20eefcf69d430073002ca0f0cfe34bf0",
       "candidate_sha256": "660472ffc1a42041fb883c7fa0f7297e20eefcf69d430073002ca0f0cfe34bf0"
+    },
+    {
+      "name": "sphere-aabb",
+      "file_offset": 510736,
+      "size": 205,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "27148de6e40538acbebbe096f6838a22c9905cc432a84aba91fb7f6c18f0d9b4",
+      "candidate_sha256": "27148de6e40538acbebbe096f6838a22c9905cc432a84aba91fb7f6c18f0d9b4"
     },
     {
       "name": "sphere-local-inertia",

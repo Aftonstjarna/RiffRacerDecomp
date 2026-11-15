@@ -4350,3 +4350,16 @@ test-cycle-sphere-local-inertia: $(OUT)/reriff-match $(OUT)/sphere_local_inertia
 
 test-recovered: test-cycle-sphere-local-inertia
 .PHONY: test-cycle-sphere-local-inertia
+
+# Reviewed cycle reference: sphere-aabb (assembly evidence only).
+$(OUT)/sphere_aabb.bin: native/sphere_aabb.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sphere_aabb.o
+	ld -m elf_i386 -Ttext=0x47d710 -e original_sphere_aabb $(OUT)/sphere_aabb.o -o $(OUT)/sphere_aabb.elf
+	objcopy -O binary --only-section=.text $(OUT)/sphere_aabb.elf $@
+
+test-cycle-sphere-aabb: $(OUT)/reriff-match $(OUT)/sphere_aabb.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sphere-aabb $(OUT)/sphere_aabb.bin $(OUT)/sphere-aabb-comparison.json
+
+test-recovered: test-cycle-sphere-aabb
+.PHONY: test-cycle-sphere-aabb
