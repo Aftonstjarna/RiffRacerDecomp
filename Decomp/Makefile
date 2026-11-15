@@ -4415,3 +4415,16 @@ test-cycle-transform64-serialize-copy: $(OUT)/reriff-match $(OUT)/transform64_se
 
 test-recovered: test-cycle-transform64-serialize-copy
 .PHONY: test-cycle-transform64-serialize-copy
+
+# Reviewed cycle reference: pointer-slot-range-zero-initialize (assembly evidence only).
+$(OUT)/pointer_slot_range_zero_initialize.bin: native/pointer_slot_range_zero_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pointer_slot_range_zero_initialize.o
+	ld -m elf_i386 -Ttext=0x458100 -e original_pointer_slot_range_zero_initialize $(OUT)/pointer_slot_range_zero_initialize.o -o $(OUT)/pointer_slot_range_zero_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/pointer_slot_range_zero_initialize.elf $@
+
+test-cycle-pointer-slot-range-zero-initialize: $(OUT)/reriff-match $(OUT)/pointer_slot_range_zero_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pointer-slot-range-zero-initialize $(OUT)/pointer_slot_range_zero_initialize.bin $(OUT)/pointer-slot-range-zero-initialize-comparison.json
+
+test-recovered: test-cycle-pointer-slot-range-zero-initialize
+.PHONY: test-cycle-pointer-slot-range-zero-initialize
