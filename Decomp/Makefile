@@ -5221,3 +5221,16 @@ test-cycle-script-table-destroy: $(OUT)/reriff-match $(OUT)/script_table_destroy
 
 test-recovered: test-cycle-script-table-destroy
 .PHONY: test-cycle-script-table-destroy
+
+# Reviewed cycle reference: script-table-construct (assembly evidence only).
+$(OUT)/script_table_construct.bin: native/script_table_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_construct.o
+	ld -m elf_i386 -Ttext=0x4f0900 -e original_script_table_construct $(OUT)/script_table_construct.o -o $(OUT)/script_table_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_construct.elf $@
+
+test-cycle-script-table-construct: $(OUT)/reriff-match $(OUT)/script_table_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-construct $(OUT)/script_table_construct.bin $(OUT)/script-table-construct-comparison.json
+
+test-recovered: test-cycle-script-table-construct
+.PHONY: test-cycle-script-table-construct
