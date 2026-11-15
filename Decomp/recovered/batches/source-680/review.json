@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ source, with zero matching-source byte credit.",
+  "reason": "Readable implementation agrees with the original routine’s control flow, 32-bit ABI/layout, multiplication order, alias-safe staging, and output effects. Independently verified the reference against Game.exe; GCC O0/O2 passed 8,192 comparisons each, and 131,072 additional randomized comparisons passed. Actual implementation also compiled with pinned MSVC2013. Tests call the original and compare output bytes, surrounding storage, and MXCSR. Documented portability, unchecked-input, and exception-trapping limitations remain; sampled validation does not establish all-input equivalence."
+}

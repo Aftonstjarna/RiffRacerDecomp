@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Convex hull vertex scaling without margin",
+  "summary": "Recover VA 0x47d280 as a const thiscall member: index into 16-byte vertex records via object +0x64, multiply XYZ by scale at +0x0c/+0x10/+0x14, stage result then write 16 bytes with positive-zero W. No count, bounds check or margin. Scalar SSE preserves operand order and MXCSR behavior. Original full 84-byte reference checked against Game.exe. Vtable entry at 0x9fb184; no direct E8 callers found.",
+  "targets": [
+    "convex-hull-vertex-without-margin"
+  ],
+  "references": [
+    "convex-hull-vertex-without-margin"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "8192 differential calls to original_convex_hull_vertex_without_margin linked at 0x47d280: 256 value combinations, 8 MXCSR modes (all rounding directions with DAZ/FTZ off/on), 4 output placements. Index -1 through 3 backed by a five-element array. Signed zeros, finite scales, negatives, rounding-sensitive values, extrema, subnormals, infinities, quiet and signaling NaNs. Bitwise output and whole-object/vertex/guard comparison after pointer normalization, explicit untouched-byte checks, positive-zero W, MXCSR flags and controls compared and environment restored. Includes output aliasing selected vertex, scale vector, and another vertex. GCC freestanding i386 harness passes; supplied MSVC2013 compilation checked.",
+  "known_limits": [
+    "Original class hierarchy and names of opaque fields are unresolved; only the required 32-bit layout is modeled. Vtable entry is evidence of virtual dispatch, but indirect callers are not enumerated.",
+    "Invalid/null pointers and indices outside accessible backing storage are unchecked in the original and are not executed by tests; wrapping 32-bit address arithmetic is not a portable C++ contract.",
+    "No byte-matching source claim. Incidental EAX return value is not modeled; recovered interface is void with output reference.",
+    "Non-SSE fallback uses ordinary float multiplication; NaN payload selection and floating-point environment parity on non-SSE platforms remain unverified. Exception-trapping FP modes are not exercised.",
+    "MSVC compilation is compatibility evidence; behavioral comparisons run GCC i386 implementation against original, not a native Windows execution test."
+  ]
+}
