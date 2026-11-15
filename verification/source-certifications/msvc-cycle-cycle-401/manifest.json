@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-401",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "pe32-image-validate",
+      "stem": "cycle_pe32_image_validate",
+      "source": "Decomp/recovered/msvc/cycle_pe32_image_validate.cpp",
+      "sha256": "82e6d9a1f535d754fa9e2f423cb1157721fd2e0823c4d9e5d03d28afda6e47c8"
+    }
+  ]
+}
