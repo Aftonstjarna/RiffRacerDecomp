@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as bounded, unmatched C++ recovery with zero matching-source byte credit.",
+  "reason": "Readable implementation agrees with original constructor control flow, 32-bit layouts, initialization, global reload, preserved fields and helper ordering. Independently verified all four reference spans against Game.exe and rebuilt/reran 6144 original/source comparisons plus 36 dependency-boundary cases successfully. The unchanged implementation also compiled with pinned MSVC2013. Custom ABI adaptation, positive-hash oracle coverage and allocation/error-path limitations are explicitly documented. Sampled validation does not establish all-input equivalence."
+}
