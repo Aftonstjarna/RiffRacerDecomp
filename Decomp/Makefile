@@ -4025,3 +4025,16 @@ test-cycle-convex-hull-shape-serialized-size: $(OUT)/reriff-match $(OUT)/convex_
 
 test-recovered: test-cycle-convex-hull-shape-serialized-size
 .PHONY: test-cycle-convex-hull-shape-serialized-size
+
+# Reviewed cycle reference: sse2-log-precise-import (assembly evidence only).
+$(OUT)/sse2_log_precise_import.bin: native/sse2_log_precise_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sse2_log_precise_import.o
+	ld -m elf_i386 -Ttext=0x8f8f28 -e original_sse2_log_precise_import $(OUT)/sse2_log_precise_import.o -o $(OUT)/sse2_log_precise_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/sse2_log_precise_import.elf $@
+
+test-cycle-sse2-log-precise-import: $(OUT)/reriff-match $(OUT)/sse2_log_precise_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sse2-log-precise-import $(OUT)/sse2_log_precise_import.bin $(OUT)/sse2-log-precise-import-comparison.json
+
+test-recovered: test-cycle-sse2-log-precise-import
+.PHONY: test-cycle-sse2-log-precise-import
