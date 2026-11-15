@@ -5663,3 +5663,16 @@ test-cycle-float-pow-precise-bridge: $(OUT)/reriff-match $(OUT)/float_pow_precis
 
 test-recovered: test-cycle-float-pow-precise-bridge
 .PHONY: test-cycle-float-pow-precise-bridge
+
+# Reviewed cycle reference: script-table-ensure-string-slot (assembly evidence only).
+$(OUT)/script_table_ensure_string_slot.bin: native/script_table_ensure_string_slot.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_ensure_string_slot.o
+	ld -m elf_i386 -Ttext=0x4f0d10 -e original_script_table_ensure_string_slot $(OUT)/script_table_ensure_string_slot.o -o $(OUT)/script_table_ensure_string_slot.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_ensure_string_slot.elf $@
+
+test-cycle-script-table-ensure-string-slot: $(OUT)/reriff-match $(OUT)/script_table_ensure_string_slot.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-ensure-string-slot $(OUT)/script_table_ensure_string_slot.bin $(OUT)/script-table-ensure-string-slot-comparison.json
+
+test-recovered: test-cycle-script-table-ensure-string-slot
+.PHONY: test-cycle-script-table-ensure-string-slot
