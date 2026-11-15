@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-459",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "compound-shape-scaling-pointer",
+      "stem": "cycle_compound_shape_scaling_pointer",
+      "source": "Decomp/recovered/msvc/cycle_compound_shape_scaling_pointer.cpp",
+      "sha256": "b5591103711f678704fd459a52a2ffabeea53e2609694463fbf6391b0b98bc87"
+    }
+  ]
+}

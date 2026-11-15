@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "a159326a480063b6a7ff9e3455dd499e7c8a37b4a9776a7ecf8547fffbc21d48",
+  "behavior_sha256": "854b5a60441bb0c3f1f45c9602c6277cf976371677a2885d3e30fe91675d55ee",
+  "functions": [
+    {
+      "scope": "compound-shape-scaling-pointer",
+      "source_sha256": "b5591103711f678704fd459a52a2ffabeea53e2609694463fbf6391b0b98bc87",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation produced the complete, unmodified four-byte code section matching the original. Verified original hash, function boundaries, vtable slot and thiscall ABI. Executed compiled and original fragments across 8192 cases, checking returned offset, aliasing and untouched memory. The routine has no branches. Approval covers this fragment only."
+    }
+  ],
+  "review_receipt_sha256": "4d8672675f409653b40be6f1c5b9a081aba5e3e6fa9af8f17346a9fa4f0b9b69",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
