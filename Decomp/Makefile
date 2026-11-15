@@ -4623,3 +4623,16 @@ test-cycle-crt-controlfp-s-import: $(OUT)/reriff-match $(OUT)/crt_controlfp_s_im
 
 test-recovered: test-cycle-crt-controlfp-s-import
 .PHONY: test-cycle-crt-controlfp-s-import
+
+# Reviewed cycle reference: array-reverse-destroy-with-cleanup (assembly evidence only).
+$(OUT)/array_reverse_destroy_with_cleanup.bin: native/array_reverse_destroy_with_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/array_reverse_destroy_with_cleanup.o
+	ld -m elf_i386 -Ttext=0x8f93f2 -e original_array_reverse_destroy_with_cleanup $(OUT)/array_reverse_destroy_with_cleanup.o -o $(OUT)/array_reverse_destroy_with_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/array_reverse_destroy_with_cleanup.elf $@
+
+test-cycle-array-reverse-destroy-with-cleanup: $(OUT)/reriff-match $(OUT)/array_reverse_destroy_with_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" array-reverse-destroy-with-cleanup $(OUT)/array_reverse_destroy_with_cleanup.bin $(OUT)/array-reverse-destroy-with-cleanup-comparison.json
+
+test-recovered: test-cycle-array-reverse-destroy-with-cleanup
+.PHONY: test-cycle-array-reverse-destroy-with-cleanup
