@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table storage destruction",
+  "summary": "Recovered 0x4f0980..0x4f09d4 as a State member: skip the shared empty hash token, free 20-byte hash nodes, free 8-byte array values, then free the 32-byte table. Preserves callback order, post-callback accounting, delayed array field loads, unsigned overflow and masked x86 shifts. Original ABI is ECX state and EDX table; the test-only regparm adapter supplies those registers. Caller 0x4f1ad3 is in GC object-type cleanup dispatch. No assembly or executable bytes are embedded in submitted source.",
+  "targets": ["script-table-destroy"],
+  "references": ["script-table-destroy", "script-reallocate"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 differential harness passes 1440 cases against accepted original destroy and reallocate code, locally byte-checked against Game.exe (84 and 133 bytes). Cases cross empty sentinel, allocated or null hash, null/non-null arrays, ten hash exponents including 31/32/255, six array counts including overflowing byte sizes, and callback mutation of state global plus table array fields. Assertions independently check every callback pointer, user pointer, old/new size, ordering, callback count, modulo accounting, all table/state/global bytes and untouched backing buffers. Allocator alternates null/non-null returns. Pinned MSVC2013 O2 compilation of implementation also succeeds.",
+  "known_limits": [
+    "No matching-byte credit claimed; readable C++ uses a conventional member ABI rather than the original custom ECX/EDX ABI.",
+    "Only the zero-new-size branch of accepted reallocate is needed; allocation failure, VM errors, longjmp and panic are outside scope and are not implemented.",
+    "Controlled allocator callbacks log releases without freeing buffers; real allocator internals and invalid/dangling input pointers are not validated.",
+    "Layouts require 32-bit pointers. The fixed original empty-hash identity token must be mapped to the port's shared sentinel during broader integration; it is never dereferenced here.",
+    "Unidentified table/state fields remain opaque. Return EAX is incidental allocator output; the caller ignores it and this recovery exposes void."
+  ]
+}

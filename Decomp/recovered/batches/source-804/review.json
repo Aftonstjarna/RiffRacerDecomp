@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit layouts, callback order, delayed field loads, wrapping sizes and post-callback accounting agree with the reference routines. Independently verified reference bytes against Game.exe, passed 1,440 differential cases at O0 and O2, and compiled the unchanged implementation with pinned MSVC2013 O2. Tests call original code and check callback events and memory changes. ABI adaptation, sentinel integration and excluded allocation-error paths are explicitly documented. Sampled validation does not establish all-input equivalence."
+}
