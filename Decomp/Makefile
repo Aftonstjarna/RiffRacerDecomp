@@ -3986,3 +3986,16 @@ test-cycle-shared-zero-return: $(OUT)/reriff-match $(OUT)/shared_zero_return.bin
 
 test-recovered: test-cycle-shared-zero-return
 .PHONY: test-cycle-shared-zero-return
+
+# Reviewed cycle reference: collision-shape-angular-motion-disc (assembly evidence only).
+$(OUT)/collision_shape_angular_motion_disc.bin: native/collision_shape_angular_motion_disc.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_shape_angular_motion_disc.o
+	ld -m elf_i386 -Ttext=0x47c1b0 -e original_collision_shape_angular_motion_disc $(OUT)/collision_shape_angular_motion_disc.o -o $(OUT)/collision_shape_angular_motion_disc.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_shape_angular_motion_disc.elf $@
+
+test-cycle-collision-shape-angular-motion-disc: $(OUT)/reriff-match $(OUT)/collision_shape_angular_motion_disc.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-shape-angular-motion-disc $(OUT)/collision_shape_angular_motion_disc.bin $(OUT)/collision-shape-angular-motion-disc-comparison.json
+
+test-recovered: test-cycle-collision-shape-angular-motion-disc
+.PHONY: test-cycle-collision-shape-angular-motion-disc
