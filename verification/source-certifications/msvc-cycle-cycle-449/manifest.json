@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-449",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "sphere-batched-support-without-margin",
+      "stem": "cycle_sphere_batched_support_without_margin",
+      "source": "Decomp/recovered/msvc/cycle_sphere_batched_support_without_margin.cpp",
+      "sha256": "363fd1c6d43260e2f97e606d92c71d123525e848ed465e42191bb01443a07d29"
+    }
+  ]
+}

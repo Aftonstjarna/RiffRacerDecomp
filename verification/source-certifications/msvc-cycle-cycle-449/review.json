@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "864ddaa85bbdf41c6ddf82e643319dbf53a9e70fe19f00dc2e8d29526d079101",
+  "behavior_sha256": "4e11b3cb1c2d056606513a97c7ffc736e7f88b0007a13b86f40ddfcf80e5727a",
+  "functions": [
+    {
+      "scope": "sphere-batched-support-without-margin",
+      "source_sha256": "363fd1c6d43260e2f97e606d92c71d123525e848ed465e42191bb01443a07d29",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild exactly matches the original Game.exe span. Verified original hash, vtable entry, function boundaries and thiscall ABI. Executed compiled code and original bytes through 1,599 passing cases covering loop branches, null pointers for nonpositive counts, aliasing, output guards and untouched input/object state. Certification is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "685a488f630f1fab71311aeaba48967fba25d95fe980feb0f36a09b73d5d593b",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
