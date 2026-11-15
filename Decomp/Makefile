@@ -5065,3 +5065,16 @@ test-cycle-script-table-length: $(OUT)/reriff-match $(OUT)/script_table_length.b
 
 test-recovered: test-cycle-script-table-length
 .PHONY: test-cycle-script-table-length
+
+# Reviewed cycle reference: script-table-hash-boundary (assembly evidence only).
+$(OUT)/script_table_hash_boundary.bin: native/script_table_hash_boundary.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_hash_boundary.o
+	ld -m elf_i386 -Ttext=0x4f0d80 -e original_script_table_hash_boundary $(OUT)/script_table_hash_boundary.o -o $(OUT)/script_table_hash_boundary.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_hash_boundary.elf $@
+
+test-cycle-script-table-hash-boundary: $(OUT)/reriff-match $(OUT)/script_table_hash_boundary.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-hash-boundary $(OUT)/script_table_hash_boundary.bin $(OUT)/script-table-hash-boundary-comparison.json
+
+test-recovered: test-cycle-script-table-hash-boundary
+.PHONY: test-cycle-script-table-hash-boundary
