@@ -4558,3 +4558,16 @@ test-cycle-array-destroy-with-exception-filter: $(OUT)/reriff-match $(OUT)/array
 
 test-recovered: test-cycle-array-destroy-with-exception-filter
 .PHONY: test-cycle-array-destroy-with-exception-filter
+
+# Reviewed cycle reference: stream-append-u16-be (assembly evidence only).
+$(OUT)/stream_append_u16_be.bin: native/stream_append_u16_be.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/stream_append_u16_be.o
+	ld -m elf_i386 -Ttext=0x5cc7a0 -e original_stream_append_u16_be $(OUT)/stream_append_u16_be.o -o $(OUT)/stream_append_u16_be.elf
+	objcopy -O binary --only-section=.text $(OUT)/stream_append_u16_be.elf $@
+
+test-cycle-stream-append-u16-be: $(OUT)/reriff-match $(OUT)/stream_append_u16_be.bin
+	$(OUT)/reriff-match native-check "$(GAME)" stream-append-u16-be $(OUT)/stream_append_u16_be.bin $(OUT)/stream-append-u16-be-comparison.json
+
+test-recovered: test-cycle-stream-append-u16-be
+.PHONY: test-cycle-stream-append-u16-be
