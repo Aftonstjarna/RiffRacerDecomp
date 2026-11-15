@@ -5624,3 +5624,16 @@ test-cycle-script-gc-forward-barrier: $(OUT)/reriff-match $(OUT)/script_gc_forwa
 
 test-recovered: test-cycle-script-gc-forward-barrier
 .PHONY: test-cycle-script-gc-forward-barrier
+
+# Reviewed cycle reference: script-gc-separate-finalizable (assembly evidence only).
+$(OUT)/script_gc_separate_finalizable.bin: native/script_gc_separate_finalizable.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_separate_finalizable.o
+	ld -m elf_i386 -Ttext=0x4f1090 -e original_script_gc_separate_finalizable $(OUT)/script_gc_separate_finalizable.o -o $(OUT)/script_gc_separate_finalizable.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_separate_finalizable.elf $@
+
+test-cycle-script-gc-separate-finalizable: $(OUT)/reriff-match $(OUT)/script_gc_separate_finalizable.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-separate-finalizable $(OUT)/script_gc_separate_finalizable.bin $(OUT)/script-gc-separate-finalizable-comparison.json
+
+test-recovered: test-cycle-script-gc-separate-finalizable
+.PHONY: test-cycle-script-gc-separate-finalizable
