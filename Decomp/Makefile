@@ -4883,3 +4883,16 @@ test-cycle-u32-vector-cleanup-element: $(OUT)/reriff-match $(OUT)/u32_vector_cle
 
 test-recovered: test-cycle-u32-vector-cleanup-element
 .PHONY: test-cycle-u32-vector-cleanup-element
+
+# Reviewed cycle reference: u32-vector-range-cleanup (assembly evidence only).
+$(OUT)/u32_vector_range_cleanup.bin: native/u32_vector_range_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u32_vector_range_cleanup.o
+	ld -m elf_i386 -Ttext=0x43e800 -e original_u32_vector_range_cleanup $(OUT)/u32_vector_range_cleanup.o -o $(OUT)/u32_vector_range_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/u32_vector_range_cleanup.elf $@
+
+test-cycle-u32-vector-range-cleanup: $(OUT)/reriff-match $(OUT)/u32_vector_range_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u32-vector-range-cleanup $(OUT)/u32_vector_range_cleanup.bin $(OUT)/u32-vector-range-cleanup-comparison.json
+
+test-recovered: test-cycle-u32-vector-range-cleanup
+.PHONY: test-cycle-u32-vector-range-cleanup
