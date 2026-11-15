@@ -4324,3 +4324,16 @@ test-cycle-sphere-support-without-margin: $(OUT)/reriff-match $(OUT)/sphere_supp
 
 test-recovered: test-cycle-sphere-support-without-margin
 .PHONY: test-cycle-sphere-support-without-margin
+
+# Reviewed cycle reference: sphere-batched-support-without-margin (assembly evidence only).
+$(OUT)/sphere_batched_support_without_margin.bin: native/sphere_batched_support_without_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sphere_batched_support_without_margin.o
+	ld -m elf_i386 -Ttext=0x47d560 -e original_sphere_batched_support_without_margin $(OUT)/sphere_batched_support_without_margin.o -o $(OUT)/sphere_batched_support_without_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/sphere_batched_support_without_margin.elf $@
+
+test-cycle-sphere-batched-support-without-margin: $(OUT)/reriff-match $(OUT)/sphere_batched_support_without_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sphere-batched-support-without-margin $(OUT)/sphere_batched_support_without_margin.bin $(OUT)/sphere-batched-support-without-margin-comparison.json
+
+test-recovered: test-cycle-sphere-batched-support-without-margin
+.PHONY: test-cycle-sphere-batched-support-without-margin
