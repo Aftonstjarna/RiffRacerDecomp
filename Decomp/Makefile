@@ -4597,3 +4597,16 @@ test-cycle-crt-except-handler4-common-import: $(OUT)/reriff-match $(OUT)/crt_exc
 
 test-recovered: test-cycle-crt-except-handler4-common-import
 .PHONY: test-cycle-crt-except-handler4-common-import
+
+# Reviewed cycle reference: array-copy-construct-with-cleanup (assembly evidence only).
+$(OUT)/array_copy_construct_with_cleanup.bin: native/array_copy_construct_with_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/array_copy_construct_with_cleanup.o
+	ld -m elf_i386 -Ttext=0x8f977e -e original_array_copy_construct_with_cleanup $(OUT)/array_copy_construct_with_cleanup.o -o $(OUT)/array_copy_construct_with_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/array_copy_construct_with_cleanup.elf $@
+
+test-cycle-array-copy-construct-with-cleanup: $(OUT)/reriff-match $(OUT)/array_copy_construct_with_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" array-copy-construct-with-cleanup $(OUT)/array_copy_construct_with_cleanup.bin $(OUT)/array-copy-construct-with-cleanup-comparison.json
+
+test-recovered: test-cycle-array-copy-construct-with-cleanup
+.PHONY: test-cycle-array-copy-construct-with-cleanup
