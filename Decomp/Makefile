@@ -4792,3 +4792,16 @@ test-cycle-record88-copy-construct: $(OUT)/reriff-match $(OUT)/record88_copy_con
 
 test-recovered: test-cycle-record88-copy-construct
 .PHONY: test-cycle-record88-copy-construct
+
+# Reviewed cycle reference: record32-copy-construct-range (assembly evidence only).
+$(OUT)/record32_copy_construct_range.bin: native/record32_copy_construct_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record32_copy_construct_range.o
+	ld -m elf_i386 -Ttext=0x520c40 -e original_record32_copy_construct_range $(OUT)/record32_copy_construct_range.o -o $(OUT)/record32_copy_construct_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/record32_copy_construct_range.elf $@
+
+test-cycle-record32-copy-construct-range: $(OUT)/reriff-match $(OUT)/record32_copy_construct_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record32-copy-construct-range $(OUT)/record32_copy_construct_range.bin $(OUT)/record32-copy-construct-range-comparison.json
+
+test-recovered: test-cycle-record32-copy-construct-range
+.PHONY: test-cycle-record32-copy-construct-range
