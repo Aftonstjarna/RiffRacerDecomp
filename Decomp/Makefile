@@ -5286,3 +5286,16 @@ test-cycle-script-table-ensure-value-slot: $(OUT)/reriff-match $(OUT)/script_tab
 
 test-recovered: test-cycle-script-table-ensure-value-slot
 .PHONY: test-cycle-script-table-ensure-value-slot
+
+# Reviewed cycle reference: script-table-rehash (assembly evidence only).
+$(OUT)/script_table_rehash.bin: native/script_table_rehash.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_rehash.o
+	ld -m elf_i386 -Ttext=0x4f0800 -e original_script_table_rehash $(OUT)/script_table_rehash.o -o $(OUT)/script_table_rehash.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_rehash.elf $@
+
+test-cycle-script-table-rehash: $(OUT)/reriff-match $(OUT)/script_table_rehash.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-rehash $(OUT)/script_table_rehash.bin $(OUT)/script-table-rehash-comparison.json
+
+test-recovered: test-cycle-script-table-rehash
+.PHONY: test-cycle-script-table-rehash
