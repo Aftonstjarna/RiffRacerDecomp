@@ -5377,3 +5377,16 @@ test-cycle-script-error-add-location: $(OUT)/reriff-match $(OUT)/script_error_ad
 
 test-recovered: test-cycle-script-error-add-location
 .PHONY: test-cycle-script-error-add-location
+
+# Reviewed cycle reference: script-stack-resize (assembly evidence only).
+$(OUT)/script_stack_resize.bin: native/script_stack_resize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_stack_resize.o
+	ld -m elf_i386 -Ttext=0x4f4ef0 -e original_script_stack_resize $(OUT)/script_stack_resize.o -o $(OUT)/script_stack_resize.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_stack_resize.elf $@
+
+test-cycle-script-stack-resize: $(OUT)/reriff-match $(OUT)/script_stack_resize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-stack-resize $(OUT)/script_stack_resize.bin $(OUT)/script-stack-resize-comparison.json
+
+test-recovered: test-cycle-script-stack-resize
+.PHONY: test-cycle-script-stack-resize
