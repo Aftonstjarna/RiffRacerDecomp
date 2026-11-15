@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit layouts, ordered copies, growth arithmetic, and dependency contracts agree with the original reference. Independent optimized compilation and runtime checks passed 256 original no-handler comparisons and three handler-alias cases. Native compilation records cover the actual implementation. Handler execution, nonlocal errors, panic behavior, and native VM-call binding remain explicitly unvalidated; sampled checks do not establish all-input equivalence."
+}

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script error dispatch",
+  "summary": "Recovered VA 0x486a30..0x486aaf as a genuine thiscall ScriptState member. Optional byte-offset handler must have tag 6 or status 5 is dispatched. Moves the current error up one eight-byte slot, replaces its previous slot with the handler using ordered word copies, grows when signed remaining bytes are at most eight, reloads top after growth, calls the handler for one result, then dispatches status 2. Direct original disassembly and callers agree with accepted assembly. All 127 assigned reference bytes and 69 throw-status reference bytes were checked against immutable Game.exe. Readable source is unmatched, with zero matching-byte credit.",
+  "targets": ["script-error-dispatch"],
+  "references": ["script-error-dispatch", "script-throw-status"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "1024 direct original/recovered comparisons on the no-handler path with varied full object bytes, status bytes, poisoned unused stack fields and guarded global storage. Checks entire state including canaries against both original and independently expected one-byte status change, unchanged global storage, successful FS setup and FS head restoration after each original call. Additional 21 source-only dependency-contract cases cover valid/invalid handler tags, growth versus no growth, signed capacity extremes and wrapping doubling, slot preparation, relocation/reloading top, result count one, status ordering and preservation of handler callback mutation. These source-only callbacks are not substitutes for original helpers. GCC freestanding i386 test passed; pinned MSVC2013 implementation compilation passed O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Original handler execution remains unvalidated: stack-growth helper 0x4f4ef0 and VM-call helper 0x4f5830 are not accepted callable references. Dependencies remain explicit; no helper behavior is recovered or invented here.",
+    "callHandler is a portable adapter boundary. Original 0x4f5830 uses ECX state, EDX function slot and a caller-cleaned stack result count, which is not standard three-argument fastcall. A native binding must implement that contract separately.",
+    "Original differential coverage uses null errorJump and null global panic only. Nonlocal jump, panic preparation, Windows exception dispatch/unwind, real VM execution and allocation are not tested.",
+    "Layouts describe the original 32-bit ABI. A 64-bit Linux port must adapt pointer layouts and dependencies explicitly. Unknown fields and complete class identity remain unresolved.",
+    "Malformed pointers, asynchronous mutation, and adversarial aliasing of state metadata are outside the tested contract. Source preserves the observed word-copy order, but handler/stack alias cases were not differentially exercised.",
+    "No compiler-built byte matching claim."
+  ]
+}
