@@ -4,10 +4,10 @@
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
   "text_size": 5421056,
-  "certified_bytes": 2751,
-  "certified_percent": 0.031857268320882245,
-  "certified_text_bytes": 2751,
-  "certified_text_percent": 0.050746570409897995,
+  "certified_bytes": 2786,
+  "certified_percent": 0.03226257707814538,
+  "certified_text_bytes": 2786,
+  "certified_text_percent": 0.05139220107669059,
   "whole_executable_compared": false,
   "note": "Exact compiler-built function spans only. Assembly reference overlaps are not added. This is not a complete rebuilt EXE or port-completion percentage.",
   "entries": [
@@ -564,6 +564,21 @@
       "isolated_object_sha256": "fad2435312816975d12502945ffeef420720357924a5a06b36e99877791beef8",
       "classification": "compiler_built_matching_source",
       "evidence": "verification/source-certifications/msvc-wide-length-v1",
+      "source_rebuild_verified": true
+    },
+    {
+      "scope": "node-chain-terminal-vector",
+      "source": "Decomp/recovered/msvc/cycle_node_chain_terminal_vector.cpp",
+      "source_sha256": "4f4c72063dabcec0dff5b200e173c00e909864e6f4879b74c8e3e61c2facda90",
+      "rva": 360304,
+      "file_offset": 357232,
+      "size": 35,
+      "section": ".text",
+      "code_sha256": "3c75097213de0a5b5acc45f726a6aa5f007e5854ad0491d725e8bb54a0a5b74a",
+      "native_object_sha256": "56cba5b52e70eb9606d5503f3b6814af3ec1c763301e40881e4abc54c4c9a4c3",
+      "isolated_object_sha256": "b981d8d566c42af2b70275e1046e1eb32dde9b7de5d80a56eb1b4fe548c94a8e",
+      "classification": "compiler_built_matching_source",
+      "evidence": "verification/source-certifications/msvc-cycle-cycle-493",
       "source_rebuild_verified": true
     },
     {

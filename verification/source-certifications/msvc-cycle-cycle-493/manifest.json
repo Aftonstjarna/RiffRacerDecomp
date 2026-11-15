@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-493",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "node-chain-terminal-vector",
+      "stem": "cycle_node_chain_terminal_vector",
+      "source": "Decomp/recovered/msvc/cycle_node_chain_terminal_vector.cpp",
+      "sha256": "4f4c72063dabcec0dff5b200e173c00e909864e6f4879b74c8e3e61c2facda90"
+    }
+  ]
+}

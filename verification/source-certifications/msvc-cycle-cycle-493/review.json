@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "823d6f4c61a89433bb60f92275b4947e17c40dce7f42a35579b7b5d29381d8e5",
+  "behavior_sha256": "41d679f12057faeba86d0b43158fcc1bfc31e06dc6acae3985756dd7e058dce4",
+  "functions": [
+    {
+      "scope": "node-chain-terminal-vector",
+      "source_sha256": "4f4c72063dabcec0dff5b200e173c00e909864e6f4879b74c8e3e61c2facda90",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild matched the complete, unmodified compiler code section to Game.exe with zero code relocations. Verified original hash, function boundaries, 32-bit ABI and field offsets. Executed actual compiled bytes and original bytes across 1,040 cases covering both branches, repeated traversal, both chain directions and unchanged arena/guard state. No substituted implementation or embedded instruction data found in the proposed source."
+    }
+  ],
+  "review_receipt_sha256": "5f8d879930fecf1944f4f358a462e79f32a937a045e9d485e1a25b3d8f876dab",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
