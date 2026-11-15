@@ -4740,3 +4740,16 @@ test-cycle-page-header-stream-id-le32: $(OUT)/reriff-match $(OUT)/page_header_st
 
 test-recovered: test-cycle-page-header-stream-id-le32
 .PHONY: test-cycle-page-header-stream-id-le32
+
+# Reviewed cycle reference: random-range-float (assembly evidence only).
+$(OUT)/random_range_float.bin: native/random_range_float.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/random_range_float.o
+	ld -m elf_i386 -Ttext=0x478890 -e original_random_range_float $(OUT)/random_range_float.o -o $(OUT)/random_range_float.elf
+	objcopy -O binary --only-section=.text $(OUT)/random_range_float.elf $@
+
+test-cycle-random-range-float: $(OUT)/reriff-match $(OUT)/random_range_float.bin
+	$(OUT)/reriff-match native-check "$(GAME)" random-range-float $(OUT)/random_range_float.bin $(OUT)/random-range-float-comparison.json
+
+test-recovered: test-cycle-random-range-float
+.PHONY: test-cycle-random-range-float
