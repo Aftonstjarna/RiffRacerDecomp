@@ -4519,3 +4519,16 @@ test-cycle-lua-constant-string-name: $(OUT)/reriff-match $(OUT)/lua_constant_str
 
 test-recovered: test-cycle-lua-constant-string-name
 .PHONY: test-cycle-lua-constant-string-name
+
+# Reviewed cycle reference: array-construct-with-cleanup (assembly evidence only).
+$(OUT)/array_construct_with_cleanup.bin: native/array_construct_with_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/array_construct_with_cleanup.o
+	ld -m elf_i386 -Ttext=0x8f94bf -e original_array_construct_with_cleanup $(OUT)/array_construct_with_cleanup.o -o $(OUT)/array_construct_with_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/array_construct_with_cleanup.elf $@
+
+test-cycle-array-construct-with-cleanup: $(OUT)/reriff-match $(OUT)/array_construct_with_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" array-construct-with-cleanup $(OUT)/array_construct_with_cleanup.bin $(OUT)/array-construct-with-cleanup-comparison.json
+
+test-recovered: test-cycle-array-construct-with-cleanup
+.PHONY: test-cycle-array-construct-with-cleanup
