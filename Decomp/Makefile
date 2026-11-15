@@ -4935,3 +4935,16 @@ test-cycle-virtual-base-reference-slot-release: $(OUT)/reriff-match $(OUT)/virtu
 
 test-recovered: test-cycle-virtual-base-reference-slot-release
 .PHONY: test-cycle-virtual-base-reference-slot-release
+
+# Reviewed cycle reference: record520-range-copy (assembly evidence only).
+$(OUT)/record520_range_copy.bin: native/record520_range_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record520_range_copy.o
+	ld -m elf_i386 -Ttext=0x416a20 -e original_record520_range_copy $(OUT)/record520_range_copy.o -o $(OUT)/record520_range_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/record520_range_copy.elf $@
+
+test-cycle-record520-range-copy: $(OUT)/reriff-match $(OUT)/record520_range_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record520-range-copy $(OUT)/record520_range_copy.bin $(OUT)/record520-range-copy-comparison.json
+
+test-recovered: test-cycle-record520-range-copy
+.PHONY: test-cycle-record520-range-copy
