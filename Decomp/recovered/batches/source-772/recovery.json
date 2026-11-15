@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "520-byte record range copy construction",
+  "summary": "Recover 0x416a60 as a forward copy of 130 four-byte units per opaque record, with a per-record null destination check and returned destination end. Direct original disassembly and callers at 0x415ea4 and 0x4163a1 confirm ECX/EDX inputs, stack destination, caller cleanup and EAX result.",
+  "targets": ["record520-range-copy-construct"],
+  "references": ["record520-range-copy-construct"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct GCC regparm(3) oracle calls model the custom ABI. Compare complete 4096-byte buffers and return ends for empty, one and multiple records, unaligned addresses, identical ranges and overlap in both directions including subword offsets. Assert guards and all bytes outside destination unchanged. Test empty null range and single null destination with inaccessible source; install test FS backing and check its head after every oracle call.",
+  "known_limits": ["Record field meanings and ownership are unresolved; all 520 bytes are opaque copied storage.", "Malformed ranges, inaccessible non-null storage and address-space wrap are outside valid storage preconditions. A null destination with multiple records advances to address 520 and may fault on the next copy; no safe no-op extension is introduced.", "Original assumes forward direction flag under normal ABI. Exception dispatch and fault behavior are not reproduced. No matching-byte claim."]
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow preserves 520-byte stepping, forward four-byte copy semantics, per-record null checks and returned end. Original disassembly and callers support the documented ABI. Native Windows compilation covers the actual implementation. Independently verified all 52 oracle bytes against Game.exe and passed expanded differential tests covering alignment, overlap, empty ranges, null destinations, complete buffers and return values. Storage, direction-flag and fault limitations are stated; sampled validation does not establish all-input equivalence."
+}
