@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table array capacity selection",
+  "summary": "Recovered the fastcall histogram helper at VA 0x4f0370 (104 bytes). Chooses the latest capacity whose cumulative positive bucket count is strictly above half capacity, returns its entry count, and replaces the input total with that capacity. Original instructions and caller 0x4f08cc corroborate the ABI and usage; unsigned arithmetic explicitly preserves x86 wrapping.",
+  "targets": [
+    "script-table-choose-array-capacity"
+  ],
+  "references": [
+    "script-table-choose-array-capacity"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct GCC i386 fastcall comparison with the accepted original at its original address: nonpositive totals, isolated buckets, threshold equality, ignored negative buckets, 2000 deterministic distributions and inconsistent totals, occupied-count and capacity overflow, total/histogram aliasing. Checks return values, capacity writes, all histogram words and adjacent total canaries; independently asserts a simple known result. Local checks passed with the reference byte-verified against Game.exe; implementation compiled with pinned VS2013 at O1, O2, and O2 /Oy-.",
+  "known_limits": [
+    "No byte-matching claim; high-level source only.",
+    "Caller must provide enough readable histogram buckets and a writable total. Malformed inputs can cause unbounded scanning, as in the original; no new bounds check is introduced.",
+    "The caller and downstream table resizing are evidence only and are not recovered in this scope."
+  ]
+}
