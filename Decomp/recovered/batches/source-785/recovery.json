@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table hash boundary",
+  "summary": "Recover VA 0x4f0d80 as a read-only fastcall member (ECX table, EDX lower endpoint, EAX result). Original instructions and the length caller at 0x4f0edd establish array/hash layouts and ABI. Probe lower+1, double while occupied, then bisect; doubling above 0x7ffffffd restarts a linear scan from one. Inline numeric hash lookup preserves signed integer-to-float conversion, float-bit modulo, x86 shift masking, collision chaining and nonzero value tags. Accepted integer lookup remains an external dependency for bisection and fallback.",
+  "targets": ["script-table-hash-boundary"],
+  "references": ["script-table-hash-boundary", "script-table-get-integer"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 differential calls against byte-checked original references: 1024 hole patterns, every lower endpoint of every contiguous prefix through 63, typed/NaN/unequal collision chain, six hash shift counts and modulo buckets, signed and wrapped indices including zero and 2^24 rounding, 16 overflow fallback prefixes, and hash-only growth from zero to one. Known prefix/boundary answers asserted. Every call checks every table byte, 128 array values and all 64 hash nodes for unchanged contents. Local freestanding executable returns zero. Supplied MSVC compiles implementation with O2.",
+  "known_limits": [
+    "Integer lookup at 0x4f0ae0 is an accepted external dependency, forwarded to the original only in test.cpp; its internal behavior is outside this recovery scope.",
+    "Missing-key lookup is modeled as nil (tag zero). Tests use explicit nil-valued keys because the original shared nil at 0x99a41c is not mapped by this harness. Hash lookups inside the external helper, which also require float-zero data at 0xa063ec, are not exercised.",
+    "Original 32-bit pointer layout is required. Invalid pointers, corrupt sizes, cyclic chains, nontermination and exception paths receive no safety guarantees. No FS registration occurs in this target or its lookup helper.",
+    "Default floating-point rounding was tested; other MXCSR modes, signaling NaN status effects, and full-game integration are unvalidated. No matching-source credit is claimed."
+  ]
+}
