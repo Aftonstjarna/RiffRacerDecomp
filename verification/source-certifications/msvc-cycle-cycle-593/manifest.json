@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-593",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "record56-float44-less",
+      "stem": "cycle_record56_float44_less",
+      "source": "Decomp/recovered/msvc/cycle_record56_float44_less.cpp",
+      "sha256": "07cd4e0020fb22393b4ea063d68a473b18e62de15c6f87dcb412ed4f61239517"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "3dfd36e1fecae28e5669121e61f726141cf6a564cd72aa3cc46e3486cf334f11",
+  "behavior_sha256": "f20ab0752f4a9b85bbd66b48958a36e5014cd323b4d1876c77b487ea36213ace",
+  "functions": [
+    {
+      "scope": "record56-float44-less",
+      "source_sha256": "07cd4e0020fb22393b4ea063d68a473b18e62de15c6f87dcb412ed4f61239517",
+      "approved": true,
+      "reason": "Independently rebuilt with pinned MSVC and verified the entire unmodified, relocation-free code section equals Game.exe at 0x426ee0–0x426ef9. Confirmed original boundaries, cdecl ABI, float offset, and source hashes. Executed 10,380 differential cases against actual compiled and original bytes, covering comparison outcomes, NaNs, infinities, signed zero, subnormals, aliasing, and unchanged records and guards. Approval is limited to this function."
+    }
+  ],
+  "review_receipt_sha256": "1554e9829e6a8688a129e2790ef5690a81e5878298d2863bcfdb44dd342c3298",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
