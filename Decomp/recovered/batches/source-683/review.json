@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Independent inspection of Game.exe confirms four zero stores, returned output pointer, thiscall stack cleanup, and unused object/direction. The source preserves this behavior within its documented valid-storage contract. Independently rebuilt differential tests passed, covering special float patterns, rounding modes, aliasing, null direction, guards, and state preservation. Native Windows compilation records cover the actual implementation. Opaque object layout and invalid-storage limitations are explicit; sampled validation does not establish all-input equivalence or exact matching."
+}
