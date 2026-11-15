@@ -4805,3 +4805,16 @@ test-cycle-record32-copy-construct-range: $(OUT)/reriff-match $(OUT)/record32_co
 
 test-recovered: test-cycle-record32-copy-construct-range
 .PHONY: test-cycle-record32-copy-construct-range
+
+# Reviewed cycle reference: shape-serialization-size24 (assembly evidence only).
+$(OUT)/shape_serialization_size24.bin: native/shape_serialization_size24.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shape_serialization_size24.o
+	ld -m elf_i386 -Ttext=0x415c10 -e original_shape_serialization_size24 $(OUT)/shape_serialization_size24.o -o $(OUT)/shape_serialization_size24.elf
+	objcopy -O binary --only-section=.text $(OUT)/shape_serialization_size24.elf $@
+
+test-cycle-shape-serialization-size24: $(OUT)/reriff-match $(OUT)/shape_serialization_size24.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shape-serialization-size24 $(OUT)/shape_serialization_size24.bin $(OUT)/shape-serialization-size24-comparison.json
+
+test-recovered: test-cycle-shape-serialization-size24
+.PHONY: test-cycle-shape-serialization-size24
