@@ -4844,3 +4844,16 @@ test-cycle-u32-vector-copy-assign: $(OUT)/reriff-match $(OUT)/u32_vector_copy_as
 
 test-recovered: test-cycle-u32-vector-copy-assign
 .PHONY: test-cycle-u32-vector-copy-assign
+
+# Reviewed cycle reference: u32-range-memmove-end (assembly evidence only).
+$(OUT)/u32_range_memmove_end.bin: native/u32_range_memmove_end.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u32_range_memmove_end.o
+	ld -m elf_i386 -Ttext=0x43e770 -e original_u32_range_memmove_end $(OUT)/u32_range_memmove_end.o -o $(OUT)/u32_range_memmove_end.elf
+	objcopy -O binary --only-section=.text $(OUT)/u32_range_memmove_end.elf $@
+
+test-cycle-u32-range-memmove-end: $(OUT)/reriff-match $(OUT)/u32_range_memmove_end.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u32-range-memmove-end $(OUT)/u32_range_memmove_end.bin $(OUT)/u32-range-memmove-end-comparison.json
+
+test-recovered: test-cycle-u32-range-memmove-end
+.PHONY: test-cycle-u32-range-memmove-end
