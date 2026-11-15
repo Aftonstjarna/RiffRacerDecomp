@@ -5052,3 +5052,16 @@ test-cycle-script-table-numeric-bucket: $(OUT)/reriff-match $(OUT)/script_table_
 
 test-recovered: test-cycle-script-table-numeric-bucket
 .PHONY: test-cycle-script-table-numeric-bucket
+
+# Reviewed cycle reference: script-table-length (assembly evidence only).
+$(OUT)/script_table_length.bin: native/script_table_length.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_length.o
+	ld -m elf_i386 -Ttext=0x4f0e90 -e original_script_table_length $(OUT)/script_table_length.o -o $(OUT)/script_table_length.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_length.elf $@
+
+test-cycle-script-table-length: $(OUT)/reriff-match $(OUT)/script_table_length.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-length $(OUT)/script_table_length.bin $(OUT)/script-table-length-comparison.json
+
+test-recovered: test-cycle-script-table-length
+.PHONY: test-cycle-script-table-length
