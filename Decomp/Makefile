@@ -4922,3 +4922,16 @@ test-cycle-matrix3-identity-initialize: $(OUT)/reriff-match $(OUT)/matrix3_ident
 
 test-recovered: test-cycle-matrix3-identity-initialize
 .PHONY: test-cycle-matrix3-identity-initialize
+
+# Reviewed cycle reference: virtual-base-reference-slot-release (assembly evidence only).
+$(OUT)/virtual_base_reference_slot_release.bin: native/virtual_base_reference_slot_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/virtual_base_reference_slot_release.o
+	ld -m elf_i386 -Ttext=0x41d590 -e original_virtual_base_reference_slot_release $(OUT)/virtual_base_reference_slot_release.o -o $(OUT)/virtual_base_reference_slot_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/virtual_base_reference_slot_release.elf $@
+
+test-cycle-virtual-base-reference-slot-release: $(OUT)/reriff-match $(OUT)/virtual_base_reference_slot_release.bin
+	$(OUT)/reriff-match native-check "$(GAME)" virtual-base-reference-slot-release $(OUT)/virtual_base_reference_slot_release.bin $(OUT)/virtual-base-reference-slot-release-comparison.json
+
+test-recovered: test-cycle-virtual-base-reference-slot-release
+.PHONY: test-cycle-virtual-base-reference-slot-release
