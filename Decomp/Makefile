@@ -5169,3 +5169,16 @@ test-cycle-script-table-resize-array: $(OUT)/reriff-match $(OUT)/script_table_re
 
 test-recovered: test-cycle-script-table-resize-array
 .PHONY: test-cycle-script-table-resize-array
+
+# Reviewed cycle reference: script-reallocate (assembly evidence only).
+$(OUT)/script_reallocate.bin: native/script_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_reallocate.o
+	ld -m elf_i386 -Ttext=0x4f7d10 -e original_script_reallocate $(OUT)/script_reallocate.o -o $(OUT)/script_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_reallocate.elf $@
+
+test-cycle-script-reallocate: $(OUT)/reriff-match $(OUT)/script_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-reallocate $(OUT)/script_reallocate.bin $(OUT)/script-reallocate-comparison.json
+
+test-recovered: test-cycle-script-reallocate
+.PHONY: test-cycle-script-reallocate
