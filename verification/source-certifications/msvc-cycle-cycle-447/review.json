@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "1bbaa6c1db2f5f6e109f3fdb4583d130e0b3ec2c17571dc0497b90b70bbb3b06",
+  "behavior_sha256": "1e8633d4ea21f96b45eb88ba9dcce713d491acd64935895b774e7ecda6eb5474",
+  "functions": [
+    {
+      "scope": "sphere-support-without-margin",
+      "source_sha256": "ef417cbd2b700a9a50fe6dfe214bc55b9b0bf8adbec5c661f12cbba2235ac2fd",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the full unmodified code section byte-for-byte against Game.exe at 0x47d530. Verified function boundaries, vtable binding, thiscall ABI, and absence of relocations. All 4096 differential cases passed using actual compiler output and original executable bytes, checking return pointers, four zeroed words, surrounding memory, and untouched object/direction state. The original routine has no branches. Approval covers this fragment only."
+    }
+  ],
+  "review_receipt_sha256": "080698e4e7de7eab7a0e29fa2658e9c86bb65d046fd0ba67682d44db76ff17a0",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

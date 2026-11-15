@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-447",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "sphere-support-without-margin",
+      "stem": "cycle_sphere_support_without_margin",
+      "source": "Decomp/recovered/msvc/cycle_sphere_support_without_margin.cpp",
+      "sha256": "ef417cbd2b700a9a50fe6dfe214bc55b9b0bf8adbec5c661f12cbba2235ac2fd"
+    }
+  ]
+}
