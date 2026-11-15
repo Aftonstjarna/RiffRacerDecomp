@@ -4727,3 +4727,16 @@ test-cycle-pointer-slot-range-copy-retain: $(OUT)/reriff-match $(OUT)/pointer_sl
 
 test-recovered: test-cycle-pointer-slot-range-copy-retain
 .PHONY: test-cycle-pointer-slot-range-copy-retain
+
+# Reviewed cycle reference: page-header-stream-id-le32 (assembly evidence only).
+$(OUT)/page_header_stream_id_le32.bin: native/page_header_stream_id_le32.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/page_header_stream_id_le32.o
+	ld -m elf_i386 -Ttext=0x59b370 -e original_page_header_stream_id_le32 $(OUT)/page_header_stream_id_le32.o -o $(OUT)/page_header_stream_id_le32.elf
+	objcopy -O binary --only-section=.text $(OUT)/page_header_stream_id_le32.elf $@
+
+test-cycle-page-header-stream-id-le32: $(OUT)/reriff-match $(OUT)/page_header_stream_id_le32.bin
+	$(OUT)/reriff-match native-check "$(GAME)" page-header-stream-id-le32 $(OUT)/page_header_stream_id_le32.bin $(OUT)/page-header-stream-id-le32-comparison.json
+
+test-recovered: test-cycle-page-header-stream-id-le32
+.PHONY: test-cycle-page-header-stream-id-le32
