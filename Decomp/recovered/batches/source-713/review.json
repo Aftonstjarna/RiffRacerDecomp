@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source preserves the observed ECX/EDX ABI, field offsets, byte-write order, cursor updates and overlap behavior. Independently verified reference bytes against Game.exe and rebuilt differential tests at GCC O0 and O2; both passed. Tests call the original routine and compare buffers and object state across exhaustive low words, boundary positions, repeated writes and object overlap. Native Windows compilation records cover the actual implementation. Invalid-storage, fault and address-wrap behavior remain explicitly untested; sampled validation does not establish all-input equivalence."
+}

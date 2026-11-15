@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Stream big-endian 16-bit append",
+  "summary": "Recovered VA 0x5cc7a0: fastcall member with ECX stream and EDX value writes bits 8..15 then 0..7 to buffer +0x08 at unsigned cursor +0x14, incrementing the cursor after each write. No calls, bounds checks, or defined return value. Separate field accesses preserve object-overlap behavior. Original direct callers at 0x5ccada, 0x5ccaeb, 0x5ccaf6, 0x5ccf36 and 0x5ccf41 confirm the register convention.",
+  "targets": [
+    "stream-append-u16-be"
+  ],
+  "references": [
+    "stream-append-u16-be"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC i386 differential calls to accepted original: all 65536 low words with nonzero upper bits, cursors 0..78 including final valid pair, zero and all-one values, repeated appends, and writable object overlap including cursor mutation. Compares all buffer bytes and all object bytes after pointer normalization; verifies unchanged buffer pointer and exact big-endian bytes. No imports or FS registration are used by this leaf routine. Local execution passed; oracle assembly was independently compared against all 36 bytes from Game.exe. Supplied MSVC2013 helper compiled implementation under O1, O2 and O2 /Oy-; this is compatibility evidence only.",
+  "known_limits": [
+    "No matching-byte claim. Complete stream type and ownership/capacity policy remain unresolved; only accessed fields are named.",
+    "Original binary layout and oracle ABI require 32-bit pointers; the portable method also builds with native pointer widths but that layout is not the original ABI.",
+    "Null, invalid or insufficient backing storage is unchecked in the original and is not executed. Fault behavior and 32-bit address-space/cursor wrapping requiring specially mapped storage are not tested.",
+    "Compiler flags may affect generated register allocation; fastcall member source models observed ECX/EDX inputs, not a claimed original source declaration."
+  ]
+}
