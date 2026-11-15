@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "1a817a981c8593ac7f3aa1a7079ae3e533b75fb7104782909f1927d1885a7651",
+  "behavior_sha256": "721aefea2a664ba192ba5b0c89d8b21053c2d88426d568215acca89e4bb7a512",
+  "functions": [
+    {
+      "scope": "matrix64-copy",
+      "source_sha256": "bfebbcdfba46a86d638d9442b7c06f855359c011d0a542a24649031d4b18687c",
+      "approved": true,
+      "reason": "Readable C++ independently rebuilt with pinned MSVC. The complete unmodified code section matches Game.exe exactly; boundaries and thiscall ABI were verified. Actual compiled and original code passed 12,800 differential cases and 20,000 independent oracle cases covering overlap, alignment, return values and untouched memory. Certification is limited to this routine and compiler configuration."
+    }
+  ],
+  "review_receipt_sha256": "ddc953e1a43ad49d16cd82df2b1df01cb60c89391e1b7748d487022b1bd20364",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

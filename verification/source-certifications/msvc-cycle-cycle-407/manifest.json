@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-407",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "matrix64-copy",
+      "stem": "cycle_matrix64_copy",
+      "source": "Decomp/recovered/msvc/cycle_matrix64_copy.cpp",
+      "sha256": "bfebbcdfba46a86d638d9442b7c06f855359c011d0a542a24649031d4b18687c"
+    }
+  ]
+}
