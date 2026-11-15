@@ -4532,3 +4532,16 @@ test-cycle-array-construct-with-cleanup: $(OUT)/reriff-match $(OUT)/array_constr
 
 test-recovered: test-cycle-array-construct-with-cleanup
 .PHONY: test-cycle-array-construct-with-cleanup
+
+# Reviewed cycle reference: crt-terminate-import (assembly evidence only).
+$(OUT)/crt_terminate_import.bin: native/crt_terminate_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/crt_terminate_import.o
+	ld -m elf_i386 -Ttext=0x8f9522 -e original_crt_terminate_import $(OUT)/crt_terminate_import.o -o $(OUT)/crt_terminate_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/crt_terminate_import.elf $@
+
+test-cycle-crt-terminate-import: $(OUT)/reriff-match $(OUT)/crt_terminate_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" crt-terminate-import $(OUT)/crt_terminate_import.bin $(OUT)/crt-terminate-import-comparison.json
+
+test-recovered: test-cycle-crt-terminate-import
+.PHONY: test-cycle-crt-terminate-import
