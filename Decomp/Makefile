@@ -5364,3 +5364,16 @@ test-cycle-script-throw-status: $(OUT)/reriff-match $(OUT)/script_throw_status.b
 
 test-recovered: test-cycle-script-throw-status
 .PHONY: test-cycle-script-throw-status
+
+# Reviewed cycle reference: script-error-add-location (assembly evidence only).
+$(OUT)/script_error_add_location.bin: native/script_error_add_location.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_error_add_location.o
+	ld -m elf_i386 -Ttext=0x4869a0 -e original_script_error_add_location $(OUT)/script_error_add_location.o -o $(OUT)/script_error_add_location.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_error_add_location.elf $@
+
+test-cycle-script-error-add-location: $(OUT)/reriff-match $(OUT)/script_error_add_location.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-error-add-location $(OUT)/script_error_add_location.bin $(OUT)/script-error-add-location-comparison.json
+
+test-recovered: test-cycle-script-error-add-location
+.PHONY: test-cycle-script-error-add-location
