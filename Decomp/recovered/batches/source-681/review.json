@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ source, with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, metadata, validation, and original assembly. Control flow, thiscall ABI, layout, sentinel, tie/NaN handling, and tested side effects agree. Independently confirmed all 249 reference bytes against Game.exe, compiled the actual implementation with VS2013, and passed expanded differential checks including signaling NaNs and DAZ/FTZ modes. Tests call the original and compare output guards, storage, and MXCSR. Documented aliasing, exception, and platform limitations remain; sampled validation does not establish all-input equivalence."
+}
