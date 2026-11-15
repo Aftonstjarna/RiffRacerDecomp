@@ -5429,3 +5429,16 @@ test-cycle-script-stream-refill: $(OUT)/reriff-match $(OUT)/script_stream_refill
 
 test-recovered: test-cycle-script-stream-refill
 .PHONY: test-cycle-script-stream-refill
+
+# Reviewed cycle reference: script-table-cached-event-lookup (assembly evidence only).
+$(OUT)/script_table_cached_event_lookup.bin: native/script_table_cached_event_lookup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_cached_event_lookup.o
+	ld -m elf_i386 -Ttext=0x4f5ca0 -e original_script_table_cached_event_lookup $(OUT)/script_table_cached_event_lookup.o -o $(OUT)/script_table_cached_event_lookup.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_cached_event_lookup.elf $@
+
+test-cycle-script-table-cached-event-lookup: $(OUT)/reriff-match $(OUT)/script_table_cached_event_lookup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-cached-event-lookup $(OUT)/script_table_cached_event_lookup.bin $(OUT)/script-table-cached-event-lookup-comparison.json
+
+test-recovered: test-cycle-script-table-cached-event-lookup
+.PHONY: test-cycle-script-table-cached-event-lookup
