@@ -4636,3 +4636,16 @@ test-cycle-array-reverse-destroy-with-cleanup: $(OUT)/reriff-match $(OUT)/array_
 
 test-recovered: test-cycle-array-reverse-destroy-with-cleanup
 .PHONY: test-cycle-array-reverse-destroy-with-cleanup
+
+# Reviewed cycle reference: crt-callback-storage-validate (assembly evidence only).
+$(OUT)/crt_callback_storage_validate.bin: native/crt_callback_storage_validate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/crt_callback_storage_validate.o
+	ld -m elf_i386 -Ttext=0x8f9a80 -e original_crt_callback_storage_validate $(OUT)/crt_callback_storage_validate.o -o $(OUT)/crt_callback_storage_validate.elf
+	objcopy -O binary --only-section=.text $(OUT)/crt_callback_storage_validate.elf $@
+
+test-cycle-crt-callback-storage-validate: $(OUT)/reriff-match $(OUT)/crt_callback_storage_validate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" crt-callback-storage-validate $(OUT)/crt_callback_storage_validate.bin $(OUT)/crt-callback-storage-validate-comparison.json
+
+test-recovered: test-cycle-crt-callback-storage-validate
+.PHONY: test-cycle-crt-callback-storage-validate

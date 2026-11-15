@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"array-reverse-destroy-with-cleanup",0x4f93f2,111},
+  return {NativeBlock{"crt-callback-storage-validate",0x4f9a80,186},
+                     NativeBlock{"array-reverse-destroy-with-cleanup",0x4f93f2,111},
                      NativeBlock{"crt-controlfp-s-import",0x4f9eee,6},
                      NativeBlock{"array-copy-construct-with-cleanup",0x4f977e,104},
                      NativeBlock{"crt-except-handler4-common-import",0x4f9ef4,6},
