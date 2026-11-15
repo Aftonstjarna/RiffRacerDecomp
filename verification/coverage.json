@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 93883,
-  "remaining_bytes": 8541509,
-  "verified_percent": 1.0871886302324203,
-  "registered_blocks": 409,
-  "exact_blocks": 409,
+  "verified_bytes": 94025,
+  "remaining_bytes": 8541367,
+  "verified_percent": 1.088833025761888,
+  "registered_blocks": 410,
+  "exact_blocks": 410,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2738,6 +2738,15 @@
       "byte_equal": true,
       "reference_sha256": "f67e17ae6a901f591ff926b82a9db64d3f937f3dcd4e1c4e85595e948e9be4e4",
       "candidate_sha256": "f67e17ae6a901f591ff926b82a9db64d3f937f3dcd4e1c4e85595e948e9be4e4"
+    },
+    {
+      "name": "record88-copy-construct",
+      "file_offset": 1316128,
+      "size": 142,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "8764d84766782aa96ff545db78d0cad4b7f26cb4548265fd233a7b4f20923993",
+      "candidate_sha256": "8764d84766782aa96ff545db78d0cad4b7f26cb4548265fd233a7b4f20923993"
     },
     {
       "name": "shader-base-ctor",

@@ -4779,3 +4779,16 @@ test-cycle-record40-copy-assign: $(OUT)/reriff-match $(OUT)/record40_copy_assign
 
 test-recovered: test-cycle-record40-copy-assign
 .PHONY: test-cycle-record40-copy-assign
+
+# Reviewed cycle reference: record88-copy-construct (assembly evidence only).
+$(OUT)/record88_copy_construct.bin: native/record88_copy_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record88_copy_construct.o
+	ld -m elf_i386 -Ttext=0x542120 -e original_record88_copy_construct $(OUT)/record88_copy_construct.o -o $(OUT)/record88_copy_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/record88_copy_construct.elf $@
+
+test-cycle-record88-copy-construct: $(OUT)/reriff-match $(OUT)/record88_copy_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record88-copy-construct $(OUT)/record88_copy_construct.bin $(OUT)/record88-copy-construct-comparison.json
+
+test-recovered: test-cycle-record88-copy-construct
+.PHONY: test-cycle-record88-copy-construct
