@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Lua diagnostic constant string lookup",
+  "summary": "Recovered 0x486650 (37 bytes) as a readable internal fastcall helper. ECX supplies a partial 32-bit Lua prototype with constant-table address at +8; EDX supplies an RK operand. Without bit 8 it returns the unknown-name literal. Otherwise it clears only bit 8, indexes eight-byte tagged values, requires exact tag 4, and returns the value address plus 16. There are no writes, bounds checks, allocations, calls, or string reads. The two direct callers at 0x486770 and 0x4867c8 mask operands to nine bits. Original literal at 0x9f99d0 is question-mark followed by NUL; recovered source relocates it.",
+  "targets": ["lua-constant-string-name"],
+  "references": ["lua-constant-string-name"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding differential harness calls the accepted original through its ECX/EDX fastcall ABI. Exhausts all 512 caller-domain operands for tags 0,1,2,3,4,5,6,0xffffffff,0x104. Also tests retained operand bit 9, scaled-index wrap, null prototype on register paths, null/noncanonical/wrapping string addresses without dereferencing the result. String results require exact pointer equality; fallback requires original address 0x9f99d0 and recovered literal contents. Every comparison checks all prototype fields, all 512 constant entries, and the complete string object for unintended changes. Local linked oracle is placed at 0x486650 and test.elf passes.",
+  "known_limits": [
+    "The fixed layouts and stored addresses model the original 32-bit address space. A 64-bit port needs a separately designed pointer-layout adaptation.",
+    "Unknown-name literal is relocated; its absolute address and identity relative to other game literals are not preserved.",
+    "Invalid table pointers and out-of-range indices retain unchecked original behavior and are not exercised as memory faults. Extreme operands are tested only when modulo-32-bit arithmetic resolves to valid owned storage.",
+    "Full Lua prototype and string header layouts, garbage collection, and diagnostic callers are outside the assigned scope.",
+    "Behavior validation is bounded and does not claim matching machine code or full-game equivalence."
+  ]
+}

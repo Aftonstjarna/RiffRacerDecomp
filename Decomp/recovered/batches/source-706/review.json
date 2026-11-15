@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source; zero matching-source byte credit.",
+  "reason": "Source control flow, fastcall ABI, layouts, tag checks and wrapping address arithmetic agree with independently byte-checked original evidence. Documented literal relocation and scope limits are appropriate; native Windows compilation covers the actual implementation. The submitted test has a layout dependency: operand 0x300 accesses entry 512 beyond its table, causing an independent O2 run to fail. A private fixture expanded to 513 initialized entries passed against the original routine without implementation changes. Sampled validation does not establish all-input equivalence."
+}
