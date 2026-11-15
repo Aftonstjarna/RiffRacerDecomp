@@ -5416,3 +5416,16 @@ test-cycle-script-source-name-format: $(OUT)/reriff-match $(OUT)/script_source_n
 
 test-recovered: test-cycle-script-source-name-format
 .PHONY: test-cycle-script-source-name-format
+
+# Reviewed cycle reference: script-stream-refill (assembly evidence only).
+$(OUT)/script_stream_refill.bin: native/script_stream_refill.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_stream_refill.o
+	ld -m elf_i386 -Ttext=0x4f5ff0 -e original_script_stream_refill $(OUT)/script_stream_refill.o -o $(OUT)/script_stream_refill.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_stream_refill.elf $@
+
+test-cycle-script-stream-refill: $(OUT)/reriff-match $(OUT)/script_stream_refill.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-stream-refill $(OUT)/script_stream_refill.bin $(OUT)/script-stream-refill-comparison.json
+
+test-recovered: test-cycle-script-stream-refill
+.PHONY: test-cycle-script-stream-refill
