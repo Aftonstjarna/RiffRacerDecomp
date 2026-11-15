@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-467",
+  "classification": "source_match_pending_review",
+  "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "original_size": 8635392,
+  "sections": [
+    {
+      "name": ".text",
+      "rva": 4096,
+      "size": 5421056,
+      "offset": 1024
+    },
+    {
+      "name": ".rdata",
+      "rva": 5427200,
+      "size": 2574848,
+      "offset": 5422080
+    },
+    {
+      "name": ".data",
+      "rva": 8003584,
+      "size": 160256,
+      "offset": 7996928
+    },
+    {
+      "name": "_RDATA",
+      "rva": 8450048,
+      "size": 2560,
+      "offset": 8157184
+    },
+    {
+      "name": ".rsrc",
+      "rva": 8454144,
+      "size": 274944,
+      "offset": 8159744
+    },
+    {
+      "name": ".reloc",
+      "rva": 8732672,
+      "size": 200704,
+      "offset": 8434688
+    }
+  ],
+  "source_commit": "956961107fcf3bf23f0f9305f5e70637ec03b601",
+  "manifest_sha256": "a73ff8883c03b8a080bfdfec28ac9b7743ad0a8c84a5805407e5d21cb2a8f742",
+  "compiler": "18.00.40629.0 built by: REL",
+  "profile": "O2-frame",
+  "flags": "/O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise",
+  "native_toolchain_manifest": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+  "isolated_toolchain_manifest": "663a537894a7ad9d0698931863c652acbd86406b07905f637c7dad96fcc69c41",
+  "checker_sha256": "f1a4c852ae61a2a305e03ffd9cfee4b0438937f78e7dc31eaf108ad49bdce720",
+  "whole_executable_compared": false,
+  "certified_matching_credit": 0,
+  "functions": [
+    {
+      "scope": "matrix3-copy-storage",
+      "source": "Decomp/recovered/msvc/cycle_matrix3_copy_storage.cpp",
+      "source_sha256": "783788ae1a07048cc4dde7e76b6f94f09bb649af46e269b5d8032d9c7017b8e7",
+      "rva": 425488,
+      "file_offset": 422416,
+      "size": 61,
+      "section": ".text",
+      "code_sha256": "c1fff5099af121c01c07eed4d9f0172ad0c7d5e0c6d5bd7e856487c25617bbcc",
+      "native_object_sha256": "73aec95aea1552f9e1000b0696551c3bbb32312cee1f51a2b6dd8e4659ec79bc",
+      "isolated_object_sha256": "552b052a69489eb1cc7e2c44d6c7aa0a96ce3ece55d5d101519585d2854f2386",
+      "comparison": {
+        "schema": 1,
+        "byte_equal": true,
+        "different_bytes": 0,
+        "original_size": 61,
+        "candidate_size": 61,
+        "candidate_sha256": "c1fff5099af121c01c07eed4d9f0172ad0c7d5e0c6d5bd7e856487c25617bbcc",
+        "masked_bytes": 0,
+        "source_rebuild_verified": false,
+        "note": "Binary equality alone does not prove reconstruction from source.",
+        "difference_ranges": [],
+        "reference_fragment_sha256": "c1fff5099af121c01c07eed4d9f0172ad0c7d5e0c6d5bd7e856487c25617bbcc",
+        "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "scope": "matrix3-copy-storage",
+        "rva": 425488,
+        "whole_executable_compared": false
+      }
+    }
+  ]
+}

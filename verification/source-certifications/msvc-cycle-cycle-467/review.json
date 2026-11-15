@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "55ed1037d29c93cd5e348e5ba3222bdef44dbee40829d22231e13037d5262775",
+  "behavior_sha256": "cba0328a04da0133ec9143994fde3978447d81ced1002930cbaa49bd69999a95",
+  "functions": [
+    {
+      "scope": "matrix3-copy-storage",
+      "source_sha256": "783788ae1a07048cc4dde7e76b6f94f09bb649af46e269b5d8032d9c7017b8e7",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the full unmodified code section exactly against Game.exe. Actual compiled and original code passed 61,642 differential cases covering overlap, bit patterns, loop branches, and untouched memory. An additional 3,657 cases verified unaligned accesses and ABI register preservation. Approval is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "d67636df8b9a426df4104411771a65fc64562c1c9f59622e9ce11fd86aecd528",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

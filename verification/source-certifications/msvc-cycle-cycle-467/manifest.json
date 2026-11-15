@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-467",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "matrix3-copy-storage",
+      "stem": "cycle_matrix3_copy_storage",
+      "source": "Decomp/recovered/msvc/cycle_matrix3_copy_storage.cpp",
+      "sha256": "783788ae1a07048cc4dde7e76b6f94f09bb649af46e269b5d8032d9c7017b8e7"
+    }
+  ]
+}
