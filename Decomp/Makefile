@@ -4012,3 +4012,16 @@ test-cycle-convex-callback-filter-test: $(OUT)/reriff-match $(OUT)/convex_callba
 
 test-recovered: test-cycle-convex-callback-filter-test
 .PHONY: test-cycle-convex-callback-filter-test
+
+# Reviewed cycle reference: convex-hull-shape-serialized-size (assembly evidence only).
+$(OUT)/convex_hull_shape_serialized_size.bin: native/convex_hull_shape_serialized_size.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/convex_hull_shape_serialized_size.o
+	ld -m elf_i386 -Ttext=0x47cd30 -e original_convex_hull_shape_serialized_size $(OUT)/convex_hull_shape_serialized_size.o -o $(OUT)/convex_hull_shape_serialized_size.elf
+	objcopy -O binary --only-section=.text $(OUT)/convex_hull_shape_serialized_size.elf $@
+
+test-cycle-convex-hull-shape-serialized-size: $(OUT)/reriff-match $(OUT)/convex_hull_shape_serialized_size.bin
+	$(OUT)/reriff-match native-check "$(GAME)" convex-hull-shape-serialized-size $(OUT)/convex_hull_shape_serialized_size.bin $(OUT)/convex-hull-shape-serialized-size-comparison.json
+
+test-recovered: test-cycle-convex-hull-shape-serialized-size
+.PHONY: test-cycle-convex-hull-shape-serialized-size
