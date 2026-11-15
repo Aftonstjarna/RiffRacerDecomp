@@ -4246,3 +4246,16 @@ test-cycle-convex-hull-support-without-margin: $(OUT)/reriff-match $(OUT)/convex
 
 test-recovered: test-cycle-convex-hull-support-without-margin
 .PHONY: test-cycle-convex-hull-support-without-margin
+
+# Reviewed cycle reference: narrow-append-substring (assembly evidence only).
+$(OUT)/narrow_append_substring.bin: native/narrow_append_substring.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_append_substring.o
+	ld -m elf_i386 -Ttext=0x4420b0 -e original_narrow_append_substring $(OUT)/narrow_append_substring.o -o $(OUT)/narrow_append_substring.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_append_substring.elf $@
+
+test-cycle-narrow-append-substring: $(OUT)/reriff-match $(OUT)/narrow_append_substring.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-append-substring $(OUT)/narrow_append_substring.bin $(OUT)/narrow-append-substring-comparison.json
+
+test-recovered: test-cycle-narrow-append-substring
+.PHONY: test-cycle-narrow-append-substring
