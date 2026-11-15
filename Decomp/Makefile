@@ -4051,3 +4051,16 @@ test-cycle-convex-hull-shape-name: $(OUT)/reriff-match $(OUT)/convex_hull_shape_
 
 test-recovered: test-cycle-convex-hull-shape-name
 .PHONY: test-cycle-convex-hull-shape-name
+
+# Reviewed cycle reference: dispatcher-manifold-index (assembly evidence only).
+$(OUT)/dispatcher_manifold_index.bin: native/dispatcher_manifold_index.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/dispatcher_manifold_index.o
+	ld -m elf_i386 -Ttext=0x4270a0 -e original_dispatcher_manifold_index $(OUT)/dispatcher_manifold_index.o -o $(OUT)/dispatcher_manifold_index.elf
+	objcopy -O binary --only-section=.text $(OUT)/dispatcher_manifold_index.elf $@
+
+test-cycle-dispatcher-manifold-index: $(OUT)/reriff-match $(OUT)/dispatcher_manifold_index.bin
+	$(OUT)/reriff-match native-check "$(GAME)" dispatcher-manifold-index $(OUT)/dispatcher_manifold_index.bin $(OUT)/dispatcher-manifold-index-comparison.json
+
+test-recovered: test-cycle-dispatcher-manifold-index
+.PHONY: test-cycle-dispatcher-manifold-index
