@@ -5390,3 +5390,16 @@ test-cycle-script-stack-resize: $(OUT)/reriff-match $(OUT)/script_stack_resize.b
 
 test-recovered: test-cycle-script-stack-resize
 .PHONY: test-cycle-script-stack-resize
+
+# Reviewed cycle reference: script-stack-push-terminated (assembly evidence only).
+$(OUT)/script_stack_push_terminated.bin: native/script_stack_push_terminated.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_stack_push_terminated.o
+	ld -m elf_i386 -Ttext=0x4efab0 -e original_script_stack_push_terminated $(OUT)/script_stack_push_terminated.o -o $(OUT)/script_stack_push_terminated.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_stack_push_terminated.elf $@
+
+test-cycle-script-stack-push-terminated: $(OUT)/reriff-match $(OUT)/script_stack_push_terminated.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-stack-push-terminated $(OUT)/script_stack_push_terminated.bin $(OUT)/script-stack-push-terminated-comparison.json
+
+test-recovered: test-cycle-script-stack-push-terminated
+.PHONY: test-cycle-script-stack-push-terminated

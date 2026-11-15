@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"script-stack-resize",0xf4ef0,95},
+  return {NativeBlock{"script-stack-push-terminated",0xefab0,95},
+                     NativeBlock{"script-stack-resize",0xf4ef0,95},
                      NativeBlock{"script-error-add-location",0x869a0,130},
                      NativeBlock{"script-throw-status",0xf4d80,69},
                      NativeBlock{"script-stack-relocate-pointers",0xf4e60,142},
