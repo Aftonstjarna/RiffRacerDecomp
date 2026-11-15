@@ -4766,3 +4766,16 @@ test-cycle-convex-hull-shape-serialize: $(OUT)/reriff-match $(OUT)/convex_hull_s
 
 test-recovered: test-cycle-convex-hull-shape-serialize
 .PHONY: test-cycle-convex-hull-shape-serialize
+
+# Reviewed cycle reference: record40-copy-assign (assembly evidence only).
+$(OUT)/record40_copy_assign.bin: native/record40_copy_assign.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record40_copy_assign.o
+	ld -m elf_i386 -Ttext=0x434320 -e original_record40_copy_assign $(OUT)/record40_copy_assign.o -o $(OUT)/record40_copy_assign.elf
+	objcopy -O binary --only-section=.text $(OUT)/record40_copy_assign.elf $@
+
+test-cycle-record40-copy-assign: $(OUT)/reriff-match $(OUT)/record40_copy_assign.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record40-copy-assign $(OUT)/record40_copy_assign.bin $(OUT)/record40-copy-assign-comparison.json
+
+test-recovered: test-cycle-record40-copy-assign
+.PHONY: test-cycle-record40-copy-assign
