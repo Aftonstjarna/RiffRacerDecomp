@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 100984,
-  "remaining_bytes": 8534408,
-  "verified_percent": 1.1694199869560062,
-  "registered_blocks": 469,
-  "exact_blocks": 469,
+  "verified_bytes": 101104,
+  "remaining_bytes": 8534288,
+  "verified_percent": 1.1708096169809084,
+  "registered_blocks": 470,
+  "exact_blocks": 470,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2756,6 +2756,15 @@
       "byte_equal": true,
       "reference_sha256": "75f9fa765b8cae722cc872f1a2bff590ea2ec78bd1b69d4be3ff7d771dfa3340",
       "candidate_sha256": "75f9fa765b8cae722cc872f1a2bff590ea2ec78bd1b69d4be3ff7d771dfa3340"
+    },
+    {
+      "name": "script-error-reset-state",
+      "file_offset": 999680,
+      "size": 120,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "dfef2903d01c3dbdf15939099835167262cef778d52c9ea13e566330723e0ea5",
+      "candidate_sha256": "dfef2903d01c3dbdf15939099835167262cef778d52c9ea13e566330723e0ea5"
     },
     {
       "name": "script-throw-status",

@@ -5559,3 +5559,16 @@ test-cycle-script-number-to-string: $(OUT)/reriff-match $(OUT)/script_number_to_
 
 test-recovered: test-cycle-script-number-to-string
 .PHONY: test-cycle-script-number-to-string
+
+# Reviewed cycle reference: script-error-reset-state (assembly evidence only).
+$(OUT)/script_error_reset_state.bin: native/script_error_reset_state.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_error_reset_state.o
+	ld -m elf_i386 -Ttext=0x4f4d00 -e original_script_error_reset_state $(OUT)/script_error_reset_state.o -o $(OUT)/script_error_reset_state.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_error_reset_state.elf $@
+
+test-cycle-script-error-reset-state: $(OUT)/reriff-match $(OUT)/script_error_reset_state.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-error-reset-state $(OUT)/script_error_reset_state.bin $(OUT)/script-error-reset-state-comparison.json
+
+test-recovered: test-cycle-script-error-reset-state
+.PHONY: test-cycle-script-error-reset-state
