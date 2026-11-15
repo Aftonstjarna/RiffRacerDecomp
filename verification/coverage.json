@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 94107,
-  "remaining_bytes": 8541285,
-  "verified_percent": 1.0897826062789042,
-  "registered_blocks": 412,
-  "exact_blocks": 412,
+  "verified_bytes": 94149,
+  "remaining_bytes": 8541243,
+  "verified_percent": 1.0902689767876201,
+  "registered_blocks": 413,
+  "exact_blocks": 413,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -956,6 +956,15 @@
       "byte_equal": true,
       "reference_sha256": "991b3f9161bc24655a312ccf59623e886cdaf966d4fa2d6d8556ea7445fa677a",
       "candidate_sha256": "991b3f9161bc24655a312ccf59623e886cdaf966d4fa2d6d8556ea7445fa677a"
+    },
+    {
+      "name": "nested-vector12-range-assign",
+      "file_offset": 252880,
+      "size": 42,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "2e9e86aa177029986b752733a913bbad459be2968491ba918355c8df538027ea",
+      "candidate_sha256": "2e9e86aa177029986b752733a913bbad459be2968491ba918355c8df538027ea"
     },
     {
       "name": "reference-slot-assign-range",

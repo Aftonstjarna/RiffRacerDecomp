@@ -4818,3 +4818,16 @@ test-cycle-shape-serialization-size24: $(OUT)/reriff-match $(OUT)/shape_serializ
 
 test-recovered: test-cycle-shape-serialization-size24
 .PHONY: test-cycle-shape-serialization-size24
+
+# Reviewed cycle reference: nested-vector12-range-assign (assembly evidence only).
+$(OUT)/nested_vector12_range_assign.bin: native/nested_vector12_range_assign.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/nested_vector12_range_assign.o
+	ld -m elf_i386 -Ttext=0x43e7d0 -e original_nested_vector12_range_assign $(OUT)/nested_vector12_range_assign.o -o $(OUT)/nested_vector12_range_assign.elf
+	objcopy -O binary --only-section=.text $(OUT)/nested_vector12_range_assign.elf $@
+
+test-cycle-nested-vector12-range-assign: $(OUT)/reriff-match $(OUT)/nested_vector12_range_assign.bin
+	$(OUT)/reriff-match native-check "$(GAME)" nested-vector12-range-assign $(OUT)/nested_vector12_range_assign.bin $(OUT)/nested-vector12-range-assign-comparison.json
+
+test-recovered: test-cycle-nested-vector12-range-assign
+.PHONY: test-cycle-nested-vector12-range-assign
