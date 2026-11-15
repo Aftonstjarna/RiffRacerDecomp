@@ -5312,3 +5312,16 @@ test-cycle-script-runtime-error-variadic-bridge: $(OUT)/reriff-match $(OUT)/scri
 
 test-recovered: test-cycle-script-runtime-error-variadic-bridge
 .PHONY: test-cycle-script-runtime-error-variadic-bridge
+
+# Reviewed cycle reference: script-frame-current-line (assembly evidence only).
+$(OUT)/script_frame_current_line.bin: native/script_frame_current_line.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_frame_current_line.o
+	ld -m elf_i386 -Ttext=0x485cd0 -e original_script_frame_current_line $(OUT)/script_frame_current_line.o -o $(OUT)/script_frame_current_line.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_frame_current_line.elf $@
+
+test-cycle-script-frame-current-line: $(OUT)/reriff-match $(OUT)/script_frame_current_line.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-frame-current-line $(OUT)/script_frame_current_line.bin $(OUT)/script-frame-current-line-comparison.json
+
+test-recovered: test-cycle-script-frame-current-line
+.PHONY: test-cycle-script-frame-current-line
