@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Narrow substring append",
+  "summary": "Recovered 0x4420b0 (178 bytes) as a genuine thiscall member on the 24-byte narrow string: unsigned position check, clipped count, strict maximum-length check, optional capacity preparation, post-preparation storage resolution, memcpy append, length and terminator update. Direct immutable PE disassembly agrees with accepted evidence. Callers 0x4421b4 and 0x4421ca route self interior pointers through this method; 0x4b2e18 passes position zero and UINT_MAX count. Capacity, copy and error services remain explicit external bindings.",
+  "targets": [
+    "narrow-append-substring"
+  ],
+  "references": [
+    "narrow-append-substring",
+    "narrow-prepare-capacity",
+    "memcpy-import"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "GCC freestanding i386 differential tests call the original assigned method directly with all inline/heap source-destination combinations, inline lengths 0..15 and heap lengths 0..30 in steps of 3, plus exact heap capacity 63, every valid source position, counts 0,1,3,15,UINT_MAX, and self-subranges. Cases stay within existing capacity. Recovered preparation adapter invokes accepted original preparation; original copy thunk uses the exact four-byte test IAT memcpy callback. Full guarded object and backing comparisons verify length, capacity, terminator, unchanged storage bytes, source immutability and return identity; preparation invocation count and arguments checked. Explicit FS setup must succeed and head restoration is checked after original calls. Local differential run passed; linked reference spans (178,174,6 bytes) compared exactly with immutable Game.exe. Implementation compiled with supplied VS2013 under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Growth/allocation, exception dispatch and error throwing are external dependencies and are not executed in these normal-path tests.",
+    "False preparation return is retained in source but unreachable for valid nonempty no-growth test inputs.",
+    "Copy uses the original memcpy contract; malformed objects and overlapping distinct heap views are not given invented semantics.",
+    "This is readable semantic recovery, with no claim of matching compiled bytes."
+  ]
+}

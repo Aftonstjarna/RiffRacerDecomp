@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable unmatched C++ recovery with zero matching-source byte credit.",
+  "reason": "Source control flow, 24-byte layout, thiscall ABI, storage selection and updates agree with original disassembly. Independently byte-checked reference routines, rebuilt and passed differential tests, expanded length coverage, and compiled the actual implementation with VS2013. Growth, allocation and exception paths remain explicitly untested external dependencies. The submitted claim of every inline length overstates its step-three sampling; expanded independent tests passed. Sampled validation does not establish all-input equivalence."
+}
