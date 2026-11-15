@@ -4688,3 +4688,16 @@ test-cycle-render-target-dimensions-initialize: $(OUT)/reriff-match $(OUT)/rende
 
 test-recovered: test-cycle-render-target-dimensions-initialize
 .PHONY: test-cycle-render-target-dimensions-initialize
+
+# Reviewed cycle reference: reference-slot-assign-range (assembly evidence only).
+$(OUT)/reference_slot_assign_range.bin: native/reference_slot_assign_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/reference_slot_assign_range.o
+	ld -m elf_i386 -Ttext=0x43efd0 -e original_reference_slot_assign_range $(OUT)/reference_slot_assign_range.o -o $(OUT)/reference_slot_assign_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/reference_slot_assign_range.elf $@
+
+test-cycle-reference-slot-assign-range: $(OUT)/reriff-match $(OUT)/reference_slot_assign_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" reference-slot-assign-range $(OUT)/reference_slot_assign_range.bin $(OUT)/reference-slot-assign-range-comparison.json
+
+test-recovered: test-cycle-reference-slot-assign-range
+.PHONY: test-cycle-reference-slot-assign-range
