@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table resize and redistribution",
+  "summary": "Recovered Game.exe 0x4f0660 (416 bytes) as a readable State member with explicit accepted VM service boundaries. Preserves signed array-size comparisons, grow-before-hash initialization, ascending truncated-array migration with one-based integer keys, post-migration shrink allocation, descending old-node reinsertion, nil-sentinel identity, conditional flag clearing, error selection, x86 shift masking and final old-hash release. Original ECX=state, EDX=table and two caller-popped stack arguments are modeled by test-only GCC regparm(3) declarations with an unused EAX argument. Callers at 0x4f08dd and 0x4f43b1 confirm argument order and cleanup. Ten linked accepted references were byte-checked against immutable Game.exe. GCC behavioral runs passed and pinned MSVC2013 compiled implementation with O1, O2 and O2 /Oy-. Zero matching-source credit claimed.",
+  "targets": [
+    "script-table-resize"
+  ],
+  "references": [
+    "script-table-resize",
+    "script-table-resize-array",
+    "script-table-initialize-hash-storage",
+    "script-table-ensure-integer-slot",
+    "script-table-get-value",
+    "script-table-new-key",
+    "script-table-get-integer",
+    "script-table-main-bucket",
+    "script-table-numeric-bucket",
+    "script-reallocate"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "test_main directly compares recovered member with original_script_table_resize. 680 core comparisons cover old/new sizes 0..12, old hash exponents 0..3, shift-masked exponents 32..35, empty nodes and numeric hash values redistributed into retained/new array slots. 3385 additional locally mapped cases cover hash requests 16/17/31/32/33, nil and high-bit nonnil tags, truncated-array migration, hash collisions and empty-hash sentinel ownership. Each comparison checks entire table/state/global/old-array/old-node/allocator-arena/event snapshots, MXCSR, surrounding guards, exact allocator pointer/size/order, untouched fields and independent byte accounting. Additional independent lookups assert retained and migrated values. Full local data-only fixtures at 0x99a41c (284 bytes nil/dummy/log table), 0x4f018c (16-byte dispatch) and 0xa063ec (4-byte zero) were checked against original evidence. Core-only link with unmapped fixture sections also passed; harness explicitly reports when full mapped comparisons are skipped.",
+  "known_limits": [
+    "Only resize is recovered. VM allocation, initialization, lookup, insertion, garbage-collector behavior and error dispatch are explicit external Services dependencies, bound to accepted originals in test.cpp.",
+    "The genuine C++ member exposes portable service parameters and is not a drop-in replacement for the custom original register ABI. Original absolute nil/dummy identity tokens remain in the header and require translation in a Linux VM port.",
+    "Trusted linkers without the three fixed data mappings execute the 680 core differential cases and explicitly skip full hash comparisons. All 4065 comparisons passed locally with mapped original data fixtures.",
+    "Allocation failure, too-large allocation errors, nil/NaN error dispatch and nested rehash are not exercised. The accepted original error formatter and VM longjmp environment are not provided by these controlled tests; source preserves the observed branches without claiming exceptional-path validation.",
+    "Tests use numeric keys and ample new hash capacity; string/collectable-key GC barriers, nonnumeric equality and real VM integration are not validated here.",
+    "Negative sizes, enormous exponents/capacities, corrupted pointers and concurrent or adversarial callback mutation are outside test fixtures. The original signed comparisons and shift masking are retained rather than sanitized.",
+    "No byte-identical compiler output, matching credit or whole-game equivalence is claimed."
+  ]
+}

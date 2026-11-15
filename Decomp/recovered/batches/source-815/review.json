@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source credit.",
+  "reason": "Source control flow, i386 layouts, ABI adapters, migration order, sentinel identity, side effects and error branches agree with the accepted assembly within documented limits. Independently byte-checked all ten reference fragments against Game.exe and rebuilt and ran all 4,065 mapped differential cases successfully, including complete fixture and allocator-event comparisons. Native Windows evidence compiles the actual implementation. Exceptional paths, GC keys, nested rehash and VM integration remain explicitly unvalidated; sampled success does not establish all-input equivalence."
+}
