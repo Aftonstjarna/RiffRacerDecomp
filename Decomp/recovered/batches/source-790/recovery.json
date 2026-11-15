@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table value lookup",
+  "summary": "Recover 0x4f0bb0..0x4f0c36 as an ECX/EDX fastcall member lookup. Nil returns the shared sentinel, strings delegate to string lookup, exactly integral floats delegate to integer lookup, and remaining keys probe the main bucket chain by tag and ordered numeric or payload equality. Return values alias table storage; no table writes occur. SSE truncation and round-back retain the original out-of-range and NaN behavior.",
+  "targets": ["script-table-get-value"],
+  "references": ["script-table-get-value", "script-table-get-string", "script-table-get-integer", "script-table-main-bucket", "script-table-numeric-bucket"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "15,488 original-versus-C++ calls with external data dispatch tables mapped at evidenced VAs: 11 tags, 22 payloads, hash exponents 0..3, four collision/miss scenarios, and four MXCSR modes (nearest/toward-zero, DAZ off/on). Covers nil, string identity, array lookup, integral hash lookup, fractional floats, signed zeros, signed-int limits, infinities, quiet/signaling NaNs, subnormals, and opaque identity tags. Compares exact result pointers, MXCSR status, and unchanged bytes of table, key, string header, array and all nodes. Independent assertions cover nil, array index one, and generic identity matches/misses. Local full mapped oracle tests pass; fallback trusted links without fixed data mappings explicitly test only nil, strings, positive array indices and generic tags above four. Oracle dependencies use actual original register ABI through test-only member adapters. Implementation also compiled with pinned MSVC2013 /O2.",
+  "known_limits": [
+    "High-level unmatched source: no matching-byte claim. Original type names and full VM structures are unresolved; only observed offsets are modeled.",
+    "Specialized lookup and bucket algorithms remain accepted reference dependencies, not recovered implementations in this bounded task. Their member declarations need platform implementations or bindings in a port.",
+    "Full float and boolean original paths require data-only fixtures .get_dispatch at 0x4f0c38 (16 bytes), .bucket_dispatch at 0x4f018c (16 bytes), and .float_zero at 0xa063ec (4 bytes). test_main reports reduced coverage if those mappings are absent.",
+    "Tests use valid acyclic node chains and valid pointers; malformed tables, concurrent mutation, unmasked floating exceptions and exception dispatch are outside scope. No routine in this dependency set accesses FS or requires SEH setup.",
+    "The nil sentinel retains its original identity address 0x99a41c and is not dereferenced by this routine or tests. A native port must bind it to the VM's shared nil value.",
+    "SSE2 behavior is retained for GCC i386 and MSVC2013 x86; other architectures require equivalent float-to-integer conversion and ordered comparison semantics. Tests cover nearest and toward-zero rounding with DAZ enabled and disabled, not all MXCSR configurations."
+  ]
+}
