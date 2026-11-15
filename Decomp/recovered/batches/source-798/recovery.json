@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table array resize",
+  "summary": "Readable recovery of Game.exe 0x4f0520..0x4f0577: unsigned wrapping allocation guard, runtime reallocation, nil-tag initialization of newly added 8-byte values, and final signed array size store. External runtime services remain explicit dependencies. Callers at 0x4f0690 and 0x4f0956 establish the custom ECX state / EDX table / caller-cleaned stack count ABI; GCC regparm(3) adapters use a discarded EAX argument to express it without assembly.",
+  "targets": ["script-table-resize-array"],
+  "references": ["script-table-resize-array", "script-reallocate"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding differential test returns zero: 144 combinations of old/new counts 0,1,2,7,16,31, in-place versus relocated allocation, and null versus nonnull zero-size results; plus count -1 wrapping guard. Both source and original call the accepted original reallocation helper with a controlled allocator. Assert allocator pointer and byte sizes, call count, memory accounting, all payload/tag words and guards, complete table bytes, complete state bytes and other global fields. Additional source-only guard checks cover 0x1fffffff, 0x20000000, INT_MAX, INT_MIN and -2; these are explicitly not original error-path comparisons. Local MSVC2013 implementation compilation passes O1, O2, O2 /Oy-.",
+  "known_limits": [
+    "Oversized allocation helper 0x4f7cf0 is not an accepted reference. Direct disassembly shows it calls 0x486ab0 with state and message address 0x9fdb34, then returns zero if that call returns. Error reporting, exceptional control flow and its table side effects cannot be differentially tested here; source delegates this service without inventing it.",
+    "Allocator failure with nonzero requested size, longjmp and script error dispatch are outside normal-path tests. The reallocator remains an external dependency, not additional recovered scope.",
+    "The original unsigned guard admits -1 and converts it to 0xfffffff8 bytes; this is tested with a controlled allocator only. No enormous real allocation is attempted. Invalid negative old sizes and invalid storage are outside the supported object invariants.",
+    "Original field layout is x86 (array pointer +12, signed size +28). Native 64-bit port layout naturally differs; other table fields are opaque. No matching-byte or full-game equivalence claim."
+  ]
+}
