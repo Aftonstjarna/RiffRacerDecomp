@@ -4649,3 +4649,16 @@ test-cycle-crt-callback-storage-validate: $(OUT)/reriff-match $(OUT)/crt_callbac
 
 test-recovered: test-cycle-crt-callback-storage-validate
 .PHONY: test-cycle-crt-callback-storage-validate
+
+# Reviewed cycle reference: node-chain-terminal-vector (assembly evidence only).
+$(OUT)/node_chain_terminal_vector.bin: native/node_chain_terminal_vector.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/node_chain_terminal_vector.o
+	ld -m elf_i386 -Ttext=0x457f70 -e original_node_chain_terminal_vector $(OUT)/node_chain_terminal_vector.o -o $(OUT)/node_chain_terminal_vector.elf
+	objcopy -O binary --only-section=.text $(OUT)/node_chain_terminal_vector.elf $@
+
+test-cycle-node-chain-terminal-vector: $(OUT)/reriff-match $(OUT)/node_chain_terminal_vector.bin
+	$(OUT)/reriff-match native-check "$(GAME)" node-chain-terminal-vector $(OUT)/node_chain_terminal_vector.bin $(OUT)/node-chain-terminal-vector-comparison.json
+
+test-recovered: test-cycle-node-chain-terminal-vector
+.PHONY: test-cycle-node-chain-terminal-vector
