@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 91415,
-  "remaining_bytes": 8543977,
-  "verified_percent": 1.0586085727202657,
-  "registered_blocks": 384,
-  "exact_blocks": 384,
+  "verified_bytes": 91776,
+  "remaining_bytes": 8543616,
+  "verified_percent": 1.0627890430451796,
+  "registered_blocks": 385,
+  "exact_blocks": 385,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1541,6 +1541,15 @@
       "byte_equal": true,
       "reference_sha256": "660472ffc1a42041fb883c7fa0f7297e20eefcf69d430073002ca0f0cfe34bf0",
       "candidate_sha256": "660472ffc1a42041fb883c7fa0f7297e20eefcf69d430073002ca0f0cfe34bf0"
+    },
+    {
+      "name": "sphere-support-with-margin",
+      "file_offset": 510368,
+      "size": 361,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "4aaeff2ffaa380c30136390559fdd57c199b337c55f8a597a72cdd54fac8c94c",
+      "candidate_sha256": "4aaeff2ffaa380c30136390559fdd57c199b337c55f8a597a72cdd54fac8c94c"
     },
     {
       "name": "sphere-aabb",

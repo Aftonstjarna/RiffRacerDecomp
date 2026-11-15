@@ -4454,3 +4454,16 @@ test-cycle-matrix3-copy-storage: $(OUT)/reriff-match $(OUT)/matrix3_copy_storage
 
 test-recovered: test-cycle-matrix3-copy-storage
 .PHONY: test-cycle-matrix3-copy-storage
+
+# Reviewed cycle reference: sphere-support-with-margin (assembly evidence only).
+$(OUT)/sphere_support_with_margin.bin: native/sphere_support_with_margin.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sphere_support_with_margin.o
+	ld -m elf_i386 -Ttext=0x47d5a0 -e original_sphere_support_with_margin $(OUT)/sphere_support_with_margin.o -o $(OUT)/sphere_support_with_margin.elf
+	objcopy -O binary --only-section=.text $(OUT)/sphere_support_with_margin.elf $@
+
+test-cycle-sphere-support-with-margin: $(OUT)/reriff-match $(OUT)/sphere_support_with_margin.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sphere-support-with-margin $(OUT)/sphere_support_with_margin.bin $(OUT)/sphere-support-with-margin-comparison.json
+
+test-recovered: test-cycle-sphere-support-with-margin
+.PHONY: test-cycle-sphere-support-with-margin
