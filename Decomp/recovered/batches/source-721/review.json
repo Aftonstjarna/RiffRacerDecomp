@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Readable source preserves the original i386 ABI, control flow, reference-count wraparound, callback dispatch and side effects. Reference assembly independently matched bytes extracted from Game.exe. Independent optimized differential execution passed, including 132 expanded cases covering all high-bit count combinations, null slots, duplicate references and callback mutations. Native Windows compilation records cover the actual implementation. Layout, callback and invalid-input limitations are documented; sampled validation does not establish all-input equivalence."
+}

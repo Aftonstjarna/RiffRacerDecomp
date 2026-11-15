@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Reference slot vector tail release",
+  "summary": "Recovered the thiscall method at VA 0x4580a0 (90 bytes). It captures the tail bounds, traverses forward, skips null slots, finds the reference base through signed offset table entry 1, decrements the 32-bit count, and invokes base virtual method 0 with argument 1 when the new count is zero. It finally publishes the shortened end without clearing slots. Direct caller at 0x458012 passes old_size minus new_size. Implementation is readable C++ with a genuine member method; GCC differential execution passed and optional pinned MSVC compilation succeeded. No matching-source claim.",
+  "targets": ["reference-slot-vector-remove-tail"],
+  "references": ["reference-slot-vector-remove-tail"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding harness directly compares the original thiscall routine with the recovered member over 30 cases: zero, one, partial and full removals; high-bit count truncation; null end with zero effective removal; all-null and mixed slots; duplicate references; zero reference count wrapping; positive and negative reference-base offsets; destructor callbacks that modify end and a later slot. Compares every byte of the complete fixture, including untouched begin/capacity, slot contents, guards, both candidate reference bases, callback order, flags and observed end. Accepted oracle was linked at 0x4580a0 and all 90 bytes compared directly with Game.exe. Original has no FS registration or imports. Local GCC tests passed; optional VS2013 /O2 compile passed.",
+  "known_limits": [
+    "The concrete original class names, full offset-table layout and full virtual-method signature are unresolved. Only the used offset, count and callback ABI are modeled; callback return is ignored by the original.",
+    "Invalid ranges, inaccessible pointers, corrupt offset tables and callback exceptions are not supported test inputs. The original performs no bounds checks or exception registration in this routine.",
+    "Callbacks are controlled test implementations rather than original object destructors. Tests verify dispatch, adjusted this, flag, order and observable mutations, not allocator or destructor internals.",
+    "The original uses four-byte pointers. Native wider-pointer builds scale the recovered slot count to host pointer width and require adapted host layouts; differential validation covers the original i386 layout only.",
+    "Optional Wine-hosted pinned MSVC compilation is supplementary evidence; native Windows coordinator compilation and matching credit are separate."
+  ]
+}
