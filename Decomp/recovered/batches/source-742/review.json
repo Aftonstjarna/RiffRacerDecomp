@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-supported unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow, assignment order, return value and i386 layout agree with the original routines. Submitted tests genuinely call the original; native Windows compilation records cover the actual implementation. An independent differential countercheck passed nonempty overlapping ranges with sufficient capacity, checking record fields and all backing words against byte-verified original routines. External assignment dependency, portable ABI differences, allocation/error paths and pointer-width limitations are disclosed. Sampled validation does not establish all-input equivalence."
+}
