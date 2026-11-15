@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-427",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "object-field78-present",
+      "stem": "cycle_object_field78_present",
+      "source": "Decomp/recovered/msvc/cycle_object_field78_present.cpp",
+      "sha256": "79a45f0dd9e1bdfa572948816cd62d7f5876ddb50509ffd208475b4d80a57c84"
+    }
+  ]
+}
