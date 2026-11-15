@@ -4948,3 +4948,16 @@ test-cycle-record520-range-copy: $(OUT)/reriff-match $(OUT)/record520_range_copy
 
 test-recovered: test-cycle-record520-range-copy
 .PHONY: test-cycle-record520-range-copy
+
+# Reviewed cycle reference: pointer-slot-zero-construct (assembly evidence only).
+$(OUT)/pointer_slot_zero_construct.bin: native/pointer_slot_zero_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pointer_slot_zero_construct.o
+	ld -m elf_i386 -Ttext=0x4223a0 -e original_pointer_slot_zero_construct $(OUT)/pointer_slot_zero_construct.o -o $(OUT)/pointer_slot_zero_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/pointer_slot_zero_construct.elf $@
+
+test-cycle-pointer-slot-zero-construct: $(OUT)/reriff-match $(OUT)/pointer_slot_zero_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pointer-slot-zero-construct $(OUT)/pointer_slot_zero_construct.bin $(OUT)/pointer-slot-zero-construct-comparison.json
+
+test-recovered: test-cycle-pointer-slot-zero-construct
+.PHONY: test-cycle-pointer-slot-zero-construct
