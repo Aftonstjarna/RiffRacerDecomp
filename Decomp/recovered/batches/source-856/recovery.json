@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script string bucket resizing",
+  "summary": "Recover Game.exe VA 0x4f5d70, size 208: skip GC state 2, check unsigned wrapped allocation size, allocate and clear buckets, reload global state after allocation, prepend/reverse chains by stored hash mask, free old buckets, then publish captured-global pointer and capacity. Original ECX=state, EDX=count, plain RET; readable member method uses explicit portable dependency services. Original callers initialize 32 buckets, halve during GC, and double on intern growth. Only assigned routine is recovered; allocator remains an accepted reference dependency.",
+  "targets": ["script-string-buckets-resize"],
+  "references": ["script-string-buckets-resize", "script-reallocate"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 harness directly compares original target against member implementation using accepted original reallocate and controlled cdecl allocator. 240 combinations cover new counts 1,2,3,4,7,8,16,31,32,64; old counts 0,1,2,7,16,32; and independent allocation/free callback changes to state.global. Six safe empty-table cases cover new 0 and UINT32_MAX with old 0, INT32_MIN and UINT32_MAX. Seven GC-state-2 cases include allocation guard thresholds and high-bit counts; states 1 and 255 also resize. Full snapshots compare state, three globals, old/alternate/new arrays including guard slots, every node byte, accounting wraparound and ordered allocator events. Independent expected snapshots check reversal/collision order and untouched memory. Free callback verifies relinking before publication. FS setup must succeed and FS head must remain restored. Local strict GCC build and execution pass; VS2013 /O1, /O2 and /O2 /Oy- implementation builds pass. Accepted target reference matches all 208 immutable original bytes; this is oracle validation, not recovered-source matching credit.",
+  "known_limits": [
+    "Allocation-too-large reporting at 0x4f7cf0, allocation failure, longjmp, exception dispatch and nonreturning VM error paths are not executed. The explicit service preserves the observed returned pointer continuation if the size-error dependency returns.",
+    "Huge-size allocator requests use controlled backing only when signed initialization and traversal counts skip all memory access; no real huge allocation is validated.",
+    "Original does not enforce powers of two, positive sizes, valid bucket indices or acyclic chains. Tests cover safe non-power-of-two counts; malformed graphs, zero new count with live nodes, and undersized buffers can fault as in the original and are not executed.",
+    "Layouts intentionally target the original 32-bit ABI. A 64-bit port must adapt pointer-sized layouts explicitly. The member service parameter is a portable dependency adapter rather than an original argument or field.",
+    "Readable behavioral recovery only; no matching-code claim. OS/CRT allocator internals and complete VM GC behavior remain outside the assigned scope."
+  ]
+}
