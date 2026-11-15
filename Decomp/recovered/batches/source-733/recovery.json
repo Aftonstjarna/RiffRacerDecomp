@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Convex hull shape serialization",
+  "summary": "Recovers Game.exe 0x47d2e0 (163 bytes) as a genuine thiscall member: accepted base serialization, latched signed point count, pointer translation, 16-byte raw point copying and ARRAY chunk finalization. Documents 32-bit source/output layouts and serializer dispatch slots.",
+  "targets": [
+    "convex-hull-shape-serialize"
+  ],
+  "references": [
+    "convex-hull-shape-serialize",
+    "convex-internal-shape-serialize"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "384 differential calls against byte-checked original target and accepted base helper under stipulated GCC i386 flags; counts 0,1,2,8,-1,INT_MIN; null/non-null names and nonpositive-count point pointers; zero/nonzero unique tokens; pointer/count mutations during lookup and allocation; callback order, sizes, count, chunk identity, ARRAY code, type address/text, returned type, complete source/output records and allocation buffer, raw NaN/high-bit words, untouched output words and buffer guards. GCC -Wall -Wextra -Werror compilation and test execution pass. Implementation also compiles with pinned MSVC2013 at O1, O2, and O2 /Oy-.",
+  "known_limits": [
+    "Serializer allocation, pointer mapping, name management and finalization internals are controlled callbacks, not recovered implementations. Accepted base helper source is included only as a dependency.",
+    "Negative counts are tested using a callback allocator that accepts them; real allocator behavior for malformed counts remains outside scope.",
+    "Positive-count null points, invalid buffers, partial overlap, allocation failures, throwing callbacks and exception dispatch are outside the tested valid-memory contract.",
+    "Original return and type-name addresses are checked numerically; portable source returns matching literal text with compiler-selected addresses.",
+    "Source layout models the 32-bit original and is not a complete recovered Bullet class or a native 64-bit layout.",
+    "No matching-byte credit or full-game integration claim; only reference oracle bytes were checked against Game.exe."
+  ]
+}
