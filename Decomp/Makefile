@@ -5520,3 +5520,16 @@ test-cycle-script-value-metamethod-lookup: $(OUT)/reriff-match $(OUT)/script_val
 
 test-recovered: test-cycle-script-value-metamethod-lookup
 .PHONY: test-cycle-script-value-metamethod-lookup
+
+# Reviewed cycle reference: script-buffer-ensure-capacity (assembly evidence only).
+$(OUT)/script_buffer_ensure_capacity.bin: native/script_buffer_ensure_capacity.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_buffer_ensure_capacity.o
+	ld -m elf_i386 -Ttext=0x4f6140 -e original_script_buffer_ensure_capacity $(OUT)/script_buffer_ensure_capacity.o -o $(OUT)/script_buffer_ensure_capacity.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_buffer_ensure_capacity.elf $@
+
+test-cycle-script-buffer-ensure-capacity: $(OUT)/reriff-match $(OUT)/script_buffer_ensure_capacity.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-buffer-ensure-capacity $(OUT)/script_buffer_ensure_capacity.bin $(OUT)/script-buffer-ensure-capacity-comparison.json
+
+test-recovered: test-cycle-script-buffer-ensure-capacity
+.PHONY: test-cycle-script-buffer-ensure-capacity
