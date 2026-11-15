@@ -4961,3 +4961,16 @@ test-cycle-pointer-slot-zero-construct: $(OUT)/reriff-match $(OUT)/pointer_slot_
 
 test-recovered: test-cycle-pointer-slot-zero-construct
 .PHONY: test-cycle-pointer-slot-zero-construct
+
+# Reviewed cycle reference: pool32-chain-set-bitmap (assembly evidence only).
+$(OUT)/pool32_chain_set_bitmap.bin: native/pool32_chain_set_bitmap.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pool32_chain_set_bitmap.o
+	ld -m elf_i386 -Ttext=0x453580 -e original_pool32_chain_set_bitmap $(OUT)/pool32_chain_set_bitmap.o -o $(OUT)/pool32_chain_set_bitmap.elf
+	objcopy -O binary --only-section=.text $(OUT)/pool32_chain_set_bitmap.elf $@
+
+test-cycle-pool32-chain-set-bitmap: $(OUT)/reriff-match $(OUT)/pool32_chain_set_bitmap.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pool32-chain-set-bitmap $(OUT)/pool32_chain_set_bitmap.bin $(OUT)/pool32-chain-set-bitmap-comparison.json
+
+test-recovered: test-cycle-pool32-chain-set-bitmap
+.PHONY: test-cycle-pool32-chain-set-bitmap
