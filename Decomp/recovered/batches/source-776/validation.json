@@ -1,0 +1,165 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "832e842cd56f62ecfcbf55aaf787a12a92b05663e96ff0a787e0f2b154a1b0d4",
+    "impl.hpp": "34d219a9c5ee8ba241797c9831cde0fa87583a099b0dbbe2b6cec92ef540e585",
+    "test.cpp": "4c922ab2bd97876563d97eeb61f8f29dd0ae31e9765e1a1cf21274ec032cac10"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 56,
+      "candidate_size": 56,
+      "candidate_sha256": "2358539f60e997e2c454f469df35ecd69df19895c75b853cc00622a07c6598a5",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "2358539f60e997e2c454f469df35ecd69df19895c75b853cc00622a07c6598a5",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "script-table-get-string",
+      "rva": 985968,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "4de305f69e5b4ce023e0ef06b66bee43df70c731",
+  "test_output": "script-table-get-string: passed\n",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "9dd4020f5d7cf631921a35d2079940cfbea18daf399e51ef60e5fb8ee11a0170",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "d2b4dbb768a6e33136aa37df251fbe3ba4c278de9204437c4827531b8b507ba7",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "85d96a064e3f099032653d15e314aeb9474dfd2d64a5bd16bceadcc6954ded5f",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "script-table-get-string",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 50,
+        "original_size": 56
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "script-table-get-string",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "comparison": {
+          "schema": 1,
+          "byte_equal": false,
+          "different_bytes": 28,
+          "original_size": 56,
+          "candidate_size": 56,
+          "candidate_sha256": "29daa938c3165e8aa92f995d6cdfb9898074e8d2b6d90b5e9c838c23eb36b5cb",
+          "masked_bytes": 0,
+          "source_rebuild_verified": false,
+          "note": "Binary equality alone does not prove reconstruction from source.",
+          "difference_ranges": [
+            {
+              "offset": 1,
+              "length": 5
+            },
+            {
+              "offset": 8,
+              "length": 3
+            },
+            {
+              "offset": 12,
+              "length": 20
+            }
+          ],
+          "reference_fragment_sha256": "2358539f60e997e2c454f469df35ecd69df19895c75b853cc00622a07c6598a5",
+          "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+          "scope": "script-table-get-string",
+          "rva": 985968,
+          "whole_executable_compared": false
+        },
+        "status": "compared"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "script-table-get-string",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "comparison": {
+          "schema": 1,
+          "byte_equal": false,
+          "different_bytes": 28,
+          "original_size": 56,
+          "candidate_size": 56,
+          "candidate_sha256": "29daa938c3165e8aa92f995d6cdfb9898074e8d2b6d90b5e9c838c23eb36b5cb",
+          "masked_bytes": 0,
+          "source_rebuild_verified": false,
+          "note": "Binary equality alone does not prove reconstruction from source.",
+          "difference_ranges": [
+            {
+              "offset": 1,
+              "length": 5
+            },
+            {
+              "offset": 8,
+              "length": 3
+            },
+            {
+              "offset": 12,
+              "length": 20
+            }
+          ],
+          "reference_fragment_sha256": "2358539f60e997e2c454f469df35ecd69df19895c75b853cc00622a07c6598a5",
+          "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+          "scope": "script-table-get-string",
+          "rva": 985968,
+          "whole_executable_compared": false
+        },
+        "status": "compared"
+      }
+    ]
+  }
+}

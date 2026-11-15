@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table interned-string lookup",
+  "summary": "Recovered VA 0x4f0b70 as a fastcall table member: mask the string hash using table byte +7, select a 20-byte node from table +16, compare type 4 and string pointer identity, traverse +16 links, and return the node or fixed nil address 0x99a41c. Direct original disassembly and the type-4 tail caller at 0x4f0bc6 establish ECX/EDX arguments. No fields are written.",
+  "targets": ["script-table-get-string"],
+  "references": ["script-table-get-string"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 test directly compares original and recovered results across 14336 cases: all 256 count bytes, eight hash values, head/first-chain/last-chain hits, misses, wrong types, distinct string objects with identical hashes, null nonmatching keys, duplicate matching nodes and shift-count wrapping. Independent expected pointers verify first-match and fixed nil results. Byte snapshots verify every table, node, chain and string byte remains untouched after each call. Accepted reference was checked against all 56 immutable original bytes; local linked oracle tests passed.",
+  "known_limits": [
+    "32-bit original layouts and addresses are retained; a 64-bit port must explicitly adapt layouts and the nil singleton address.",
+    "String interning, string content layout beyond the observed hash, allocation and nil object contents are outside the assigned routine.",
+    "Valid readable table, string and bucket storage and finite valid chains are caller preconditions. Original behavior on invalid pointers or cyclic chains is not made safe.",
+    "No matching machine-code claim is made. Large bucket indices and malformed pointer arithmetic are not exercised; valid tests use eight allocated buckets.",
+    "Leaf routine does not use FS, imports, exceptions or external helpers."
+  ]
+}
