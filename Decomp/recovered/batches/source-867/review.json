@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source review agrees with the original routine’s control flow, 32-bit layout, callback ABI, persistent refill-size slot, copying, state changes, and short-read returns. Independent testing against bytes extracted from immutable Game.exe passed 5,125 differential cases, checking outputs, guards, stream state, and callback history. The unchanged implementation also compiled with pinned MSVC2013 /O2. Native compilation evidence makes no matching claim. The portable member ABI difference and untested fault, overlap, exception, and reentrancy behavior are disclosed; sampled validation does not establish all-input equivalence."
+}
