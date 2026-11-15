@@ -5078,3 +5078,16 @@ test-cycle-script-table-hash-boundary: $(OUT)/reriff-match $(OUT)/script_table_h
 
 test-recovered: test-cycle-script-table-hash-boundary
 .PHONY: test-cycle-script-table-hash-boundary
+
+# Reviewed cycle reference: script-table-choose-array-capacity (assembly evidence only).
+$(OUT)/script_table_choose_array_capacity.bin: native/script_table_choose_array_capacity.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_table_choose_array_capacity.o
+	ld -m elf_i386 -Ttext=0x4f0370 -e original_script_table_choose_array_capacity $(OUT)/script_table_choose_array_capacity.o -o $(OUT)/script_table_choose_array_capacity.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_table_choose_array_capacity.elf $@
+
+test-cycle-script-table-choose-array-capacity: $(OUT)/reriff-match $(OUT)/script_table_choose_array_capacity.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-table-choose-array-capacity $(OUT)/script_table_choose_array_capacity.bin $(OUT)/script-table-choose-array-capacity-comparison.json
+
+test-recovered: test-cycle-script-table-choose-array-capacity
+.PHONY: test-cycle-script-table-choose-array-capacity
