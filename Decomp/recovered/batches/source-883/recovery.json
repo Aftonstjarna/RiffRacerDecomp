@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Close script upvalues",
+  "summary": "Readable recovery of 0x4f49b0: unsigned threshold walk of the descending open-upvalue chain, dead-node freeing, open-list unlinking, inline two-word value closure, root insertion and GC mark/barrier decisions. State is ECX and level is EDX, represented as a fastcall member. Original allocator and GC barrier remain integration dependencies.",
+  "targets": [
+    "script-close-upvalues"
+  ],
+  "references": [
+    "script-close-upvalues",
+    "script-reallocate"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "57,606 differential fixture comparisons against original_script_close_upvalues, using byte-verified accepted references at original addresses: empty and 1-4-node chains; no/all/partial closure with exact equality thresholds and unsigned maximum threshold; marks 0-31 and selected upper-bit marks; white bits 0-3; phases 0-2; signed tags -1,0,3,4,5; mixed live/dead nodes; dead already-closed node. Whole-fixture equality verifies untouched state/global bytes, union contents, neighbor links, root order, allocator call arguments/order and totalbytes. Original allocator uses a test-owned nonfreeing recording callback. Independent semantic assertions check partial root order and free accounting. FS setup must succeed and FS head is checked after every original call. GCC i386 harness passes; implementation also compiles with supplied VS2013 /O2.",
+  "known_limits": [
+    "No accepted reference exists for GC_BARRIER at 0x4f2560 (which calls 0x4f0ef0 in phase 1). Original barrier-taking path cannot be linked and compared from accepted references. Tests use collectable children with zero white bits to exercise the decision without invoking it; the recovered barrier dependency remains explicit and its child-marking effects are not claimed as recovered or tested.",
+    "Original script_reallocate at 0x4f7d10 is a reference dependency only; the free callback records rather than releasing fixture storage. Error/longjmp paths, real allocation, GC traversal and full VM execution are outside this task.",
+    "Data layouts describe only observed fields and require original 32-bit pointers for in-place ABI compatibility. Unobserved fields retain opaque padding. Inputs assume valid descending open lists and well-formed double links; malformed structures and concurrent mutation are not validated.",
+    "No byte-matching source claim. Native Windows execution is deferred to trusted validation; local supplied MSVC2013 compile succeeds."
+  ]
+}
