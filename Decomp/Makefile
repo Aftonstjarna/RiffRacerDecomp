@@ -5585,3 +5585,16 @@ test-cycle-script-callinfo-resize: $(OUT)/reriff-match $(OUT)/script_callinfo_re
 
 test-recovered: test-cycle-script-callinfo-resize
 .PHONY: test-cycle-script-callinfo-resize
+
+# Reviewed cycle reference: script-close-upvalues (assembly evidence only).
+$(OUT)/script_close_upvalues.bin: native/script_close_upvalues.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_close_upvalues.o
+	ld -m elf_i386 -Ttext=0x4f49b0 -e original_script_close_upvalues $(OUT)/script_close_upvalues.o -o $(OUT)/script_close_upvalues.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_close_upvalues.elf $@
+
+test-cycle-script-close-upvalues: $(OUT)/reriff-match $(OUT)/script_close_upvalues.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-close-upvalues $(OUT)/script_close_upvalues.bin $(OUT)/script-close-upvalues-comparison.json
+
+test-recovered: test-cycle-script-close-upvalues
+.PHONY: test-cycle-script-close-upvalues
