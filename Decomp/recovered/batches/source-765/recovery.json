@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Matrix identity reset",
+  "summary": "Recovered 0x422700 (84 bytes) as a thiscall member resetting twelve contiguous floats: a packed nine-float identity basis followed by three positive zeros. Direct original disassembly agrees with accepted reference. Four direct callers pass ECX storage and ignore return registers. No reads, dependencies, allocation, FS access or floating-point arithmetic occur.",
+  "targets": ["matrix3-identity-initialize"],
+  "references": ["matrix3-identity-initialize"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 original thiscall oracle versus member implementation, checking all 48 output bytes against explicit expected bits and all surrounding 32 guard bytes. Twenty initial patterns include signed zeros, infinities, quiet/signaling NaNs, subnormals and varied words. Thirty-two MXCSR combinations cover rounding, DAZ, FTZ and sticky flags, with two consecutive calls per case. Require FS installation success, unchanged FS head after each oracle call, unchanged MXCSR and idempotence.",
+  "known_limits": ["Row versus column convention and semantic purpose of the final three floats are not determined by this initializer.", "Requires valid writable storage for the entire 48-byte object; invalid pointers, fault ordering and concurrent observation of partial writes are outside the portable C++ contract.", "No matching-byte claim; volatile register preservation is not part of the recovered C++ interface."]
+}
