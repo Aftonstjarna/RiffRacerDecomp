@@ -4714,3 +4714,16 @@ test-cycle-sse-raise-invalid: $(OUT)/reriff-match $(OUT)/sse_raise_invalid.bin
 
 test-recovered: test-cycle-sse-raise-invalid
 .PHONY: test-cycle-sse-raise-invalid
+
+# Reviewed cycle reference: pointer-slot-range-copy-retain (assembly evidence only).
+$(OUT)/pointer_slot_range_copy_retain.bin: native/pointer_slot_range_copy_retain.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pointer_slot_range_copy_retain.o
+	ld -m elf_i386 -Ttext=0x44be60 -e original_pointer_slot_range_copy_retain $(OUT)/pointer_slot_range_copy_retain.o -o $(OUT)/pointer_slot_range_copy_retain.elf
+	objcopy -O binary --only-section=.text $(OUT)/pointer_slot_range_copy_retain.elf $@
+
+test-cycle-pointer-slot-range-copy-retain: $(OUT)/reriff-match $(OUT)/pointer_slot_range_copy_retain.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pointer-slot-range-copy-retain $(OUT)/pointer_slot_range_copy_retain.bin $(OUT)/pointer-slot-range-copy-retain-comparison.json
+
+test-recovered: test-cycle-pointer-slot-range-copy-retain
+.PHONY: test-cycle-pointer-slot-range-copy-retain
