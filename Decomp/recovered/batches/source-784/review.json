@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit layouts, thiscall ABI, sentinel handling and helper delegation agree with original evidence. Independently verified all three reference spans against Game.exe and rebuilt differential tests: 131,071 occupancy patterns plus prefix, hash and null-array cases passed, including memory-preservation checks. Native Windows compilation records cover the actual implementation. External helper dependencies and untested paths are explicitly documented; sampled validation does not establish all-input equivalence."
+}
