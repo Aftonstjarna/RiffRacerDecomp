@@ -4,10 +4,10 @@
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
   "text_size": 5421056,
-  "certified_bytes": 2715,
-  "certified_percent": 0.0314403793134116,
-  "certified_text_bytes": 2715,
-  "certified_text_percent": 0.05008249315262561,
+  "certified_bytes": 2751,
+  "certified_percent": 0.031857268320882245,
+  "certified_text_bytes": 2751,
+  "certified_text_percent": 0.050746570409897995,
   "whole_executable_compared": false,
   "note": "Exact compiler-built function spans only. Assembly reference overlaps are not added. This is not a complete rebuilt EXE or port-completion percentage.",
   "entries": [
@@ -909,6 +909,21 @@
       "isolated_object_sha256": "86780724251e9b52f3fab466de788f66d2ce1fb30549419e26d89ab4ac46f149",
       "classification": "compiler_built_matching_source",
       "evidence": "verification/source-certifications/msvc-cycle-cycle-335",
+      "source_rebuild_verified": true
+    },
+    {
+      "scope": "stream-append-u16-be",
+      "source": "Decomp/recovered/msvc/cycle_stream_append_u16_be.cpp",
+      "source_sha256": "8af426d635235a3edb8445e287347ba4f32b43c0ec740d78bee947290e908317",
+      "rva": 1886112,
+      "file_offset": 1883040,
+      "size": 36,
+      "section": ".text",
+      "code_sha256": "964eea5884068e0e2d2bb972c45576a6d4b5a49df2abc31d368f3bb6dca1ce66",
+      "native_object_sha256": "3ded2339f7bd111194e0b522bc3e1b5602d4129d13a384538b11de7039cdb241",
+      "isolated_object_sha256": "9b492971a96c38a8a232808029183b71b0002890546ed7acf59ba9c23b340b75",
+      "classification": "compiler_built_matching_source",
+      "evidence": "verification/source-certifications/msvc-cycle-cycle-485",
       "source_rebuild_verified": true
     },
     {

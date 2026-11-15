@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "267bce4dd39846d2d99758b8396e869cfec78da40993a3a65cf4f55ad4ac0d2b",
+  "behavior_sha256": "e86c8eac2208e981a56aacefcd179be951fd11f67bb649c2a957ebbe741ed305",
+  "functions": [
+    {
+      "scope": "stream-append-u16-be",
+      "source_sha256": "8af426d635235a3edb8445e287347ba4f32b43c0ec740d78bee947290e908317",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified code section at original VA 0x5cc7a0–0x5cc7c4, with no code relocations. Original instructions confirm the ABI, field offsets, and complete function boundary. Independently executed compiled and original bytes passed 262,144 differential cases covering every 16-bit value, high-bit variants, four positions, buffer guards, and untouched object state. The routine has no conditional branches. Certification is limited to this function span."
+    }
+  ],
+  "review_receipt_sha256": "832a2f59c8d8be2d34aa554adf5239f438bbdd23f2d027e5bcd50ef1580a2c17",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

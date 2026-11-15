@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-485",
+  "classification": "source_match_pending_review",
+  "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "original_size": 8635392,
+  "sections": [
+    {
+      "name": ".text",
+      "rva": 4096,
+      "size": 5421056,
+      "offset": 1024
+    },
+    {
+      "name": ".rdata",
+      "rva": 5427200,
+      "size": 2574848,
+      "offset": 5422080
+    },
+    {
+      "name": ".data",
+      "rva": 8003584,
+      "size": 160256,
+      "offset": 7996928
+    },
+    {
+      "name": "_RDATA",
+      "rva": 8450048,
+      "size": 2560,
+      "offset": 8157184
+    },
+    {
+      "name": ".rsrc",
+      "rva": 8454144,
+      "size": 274944,
+      "offset": 8159744
+    },
+    {
+      "name": ".reloc",
+      "rva": 8732672,
+      "size": 200704,
+      "offset": 8434688
+    }
+  ],
+  "source_commit": "8d2bd9be06e7c6df74f0265e51dc8f3b78361ac1",
+  "manifest_sha256": "2af2abb53871793597fa95d36364fddac05f7bb0e8946d3b50a36c9f221bc22f",
+  "compiler": "18.00.40629.0 built by: REL",
+  "profile": "O2-frame",
+  "flags": "/O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise",
+  "native_toolchain_manifest": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+  "isolated_toolchain_manifest": "663a537894a7ad9d0698931863c652acbd86406b07905f637c7dad96fcc69c41",
+  "checker_sha256": "c53d725d12d0c84bc36e31052ba8fc7bfd8a36d26c7676194186f34270e4ea98",
+  "whole_executable_compared": false,
+  "certified_matching_credit": 0,
+  "functions": [
+    {
+      "scope": "stream-append-u16-be",
+      "source": "Decomp/recovered/msvc/cycle_stream_append_u16_be.cpp",
+      "source_sha256": "8af426d635235a3edb8445e287347ba4f32b43c0ec740d78bee947290e908317",
+      "rva": 1886112,
+      "file_offset": 1883040,
+      "size": 36,
+      "section": ".text",
+      "code_sha256": "964eea5884068e0e2d2bb972c45576a6d4b5a49df2abc31d368f3bb6dca1ce66",
+      "native_object_sha256": "3ded2339f7bd111194e0b522bc3e1b5602d4129d13a384538b11de7039cdb241",
+      "isolated_object_sha256": "9b492971a96c38a8a232808029183b71b0002890546ed7acf59ba9c23b340b75",
+      "comparison": {
+        "schema": 1,
+        "byte_equal": true,
+        "different_bytes": 0,
+        "original_size": 36,
+        "candidate_size": 36,
+        "candidate_sha256": "964eea5884068e0e2d2bb972c45576a6d4b5a49df2abc31d368f3bb6dca1ce66",
+        "masked_bytes": 0,
+        "source_rebuild_verified": false,
+        "note": "Binary equality alone does not prove reconstruction from source.",
+        "difference_ranges": [],
+        "reference_fragment_sha256": "964eea5884068e0e2d2bb972c45576a6d4b5a49df2abc31d368f3bb6dca1ce66",
+        "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "scope": "stream-append-u16-be",
+        "rva": 1886112,
+        "whole_executable_compared": false
+      }
+    }
+  ]
+}

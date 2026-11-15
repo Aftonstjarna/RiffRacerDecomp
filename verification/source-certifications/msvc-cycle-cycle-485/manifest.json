@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-485",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "stream-append-u16-be",
+      "stem": "cycle_stream_append_u16_be",
+      "source": "Decomp/recovered/msvc/cycle_stream_append_u16_be.cpp",
+      "sha256": "8af426d635235a3edb8445e287347ba4f32b43c0ec740d78bee947290e908317"
+    }
+  ]
+}
