@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Forward 32-byte record copy construction",
+  "summary": "Recovered VA 0x520c40, size 76 from accepted assembly and direct Game.exe disassembly. Copies a 16-byte snapshot followed by four sequential 4-byte snapshots per record, skips stores for a zero destination cursor, advances both cursors 32 bytes, and returns the destination cursor. Callers use ECX begin, EDX end, stack destination and caller cleanup; portable implementation exposes an ordinary C++ function. Fields remain opaque.",
+  "targets": [
+    "record32-copy-construct-range"
+  ],
+  "references": [
+    "record32-copy-construct-range"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original comparison using a GCC regparm(3) adapter for the custom register ABI. Tests zero through six records, unaligned disjoint buffers, self copies, forward/backward overlaps at offsets 1..36, five byte patterns, empty null range and null destination for a singleton. Checks returned pointers and every buffer byte, including untouched regions. Local GCC i386 oracle execution returned zero; oracle section compared equal to all 76 original bytes. Implementation compiled with pinned MSVC2013 under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Record field types and owning container identity are unresolved; callers indicate allocation/insertion range copies.",
+    "Invalid or unreachable end pointers, inaccessible memory and null destination with multiple records can fault or fail to terminate in the original and are not executed.",
+    "Portable function does not reproduce the original custom register ABI. Integer cursors model the original 32-bit address arithmetic on the target platform; 64-bit native ports use native pointer width.",
+    "No byte matching claim; overlap behavior checked on bounded accessible buffers. No exceptions or OS dependencies occur in this routine."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Source preserves the original loop, ordered copy snapshots, null-destination guard, cursor advances and return value. ABI and platform differences are explicitly documented. Tests call the byte-verified original and check whole-buffer effects and returned pointers. Independent expanded overlap, alignment, pattern and range checks passed at GCC O0 and O2. Native Windows compilation records cover the actual implementation. Invalid-memory paths remain untested; sampled validation does not establish all-input equivalence."
+}
