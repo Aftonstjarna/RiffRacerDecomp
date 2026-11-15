@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Readable source agrees with reference control flow, 32-bit layouts, marking, cache updates, modular totals and queue operations. Independently verified all 230 oracle bytes against Game.exe and reran 18,432 full-fixture comparisons successfully. An additional true lookup-miss countercheck passed using the verified original nil tag. Actual implementation also compiled with pinned VS2013 /O2. Portable ABI/layout differences and invalid-input exclusions are disclosed; sampled validation does not establish all-input equivalence."
+}

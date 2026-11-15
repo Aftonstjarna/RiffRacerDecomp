@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Separate script userdata requiring finalization",
+  "summary": "Recovered VA 0x4f1090 (230 bytes) from accepted assembly and direct immutable Game.exe disassembly. Original fastcall uses ECX=state, EDX=force and EAX=32-bit byte total; callers at 0x48556f and 0x4f21e7 pass force 1 and 0 respectively. State +0x10 selects global state; global +0x64 points to the root-list head link, +0x30 is the circular finalization queue tail, and +0xa8 is the interned finalizer event name. Eligible unprocessed objects with nonnil finalizers are unlinked and appended, counting payload +24 modulo 2^32. All eligible objects gain mark bit 8, including those without finalizers. Metatable byte +6 caches absent finalizers with bit 4. Hash lookup uses pointer identity and tag 4, 20-byte nodes, +16 collision links and x86-masked shifts. Portable genuine member method models semantics without fixed-address nil dereferencing. Accepted oracle bytes matched the original exactly; recovered source makes no matching-byte claim. GCC behavioral tests and VS2013 Update 5 O1, O2 and O2 /Oy- compilation passed.",
+  "targets": ["script-gc-separate-finalizable"],
+  "references": ["script-gc-separate-finalizable"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "18432 directly compared scenarios: every initial mark byte 0..255 with per-object variation, force 0/1/0x80000000, empty/single/two-element existing finalizer rings, empty root list, six-object mixed lists, null metatables, cached absence, explicit nil values, nonnil tags including high bit, direct and collision-chain identity matches preceded by a wrong-tag same-pointer node, hash exponents 0/1/2/32/33/34, and sizes 0/1/4096/17/0xffffffe8/0xffffffff. Test snapshots the entire state/global/string/object/table/node fixture before and after original and recovered calls at identical addresses, comparing every byte including untouched opaque fields. Independent assertions verify returned modular byte total, remaining root order and finalizer queue order. A repeated original call must return zero and leave every fixture byte unchanged. Successful explicit test_install_fs setup and FS-head restoration are required. Local freestanding GCC harness passes; accepted assembly is linked at original VA and byte-checked against the immutable executable.",
+  "known_limits": [
+    "True missing-key oracle calls are excluded because they dereference the unmapped shared nil TValue at 0x99a41c; explicit matching nil entries exercise the same cache-and-mark branch. The implementation models the original shared nil tag as zero on misses.",
+    "Tests cover valid acyclic root lists and valid circular finalization queues. Corrupt pointers, invalid tables and cyclic collision chains remain outside the contract; no defensive behavior is invented.",
+    "Opaque fields and semantic type names are inferred from accesses and Lua-style layout; no dependency routines or broader collector behavior are recovered.",
+    "Original data offsets are asserted for 32-bit builds. Native 64-bit ports use the semantic structure model and must integrate it with their VM layouts. The portable member method does not expose the original fastcall entry convention; only the test oracle declaration does.",
+    "No exceptions, OS services or allocation are involved in this routine. Compilation success and behavioral agreement do not establish original code generation."
+  ]
+}
