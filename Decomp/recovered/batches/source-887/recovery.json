@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script error state reset",
+  "summary": "Readable original-register-ABI member recovery of Game.exe 0x4f4d00..0x4f4d78. Restores the base call frame and stack base, closes upvalues, forwards status and destination to the accepted error-object helper, restores nesting and hook permission, shrinks oversized call-info storage when fewer than 20000 frames are in use, then clears error-function and jump-buffer fields. Original throw-status and reallocator failure callers establish its role before a panic callback. Dependency behavior remains in external integration adapters, not expanded recovery. GCC direct original comparisons pass; VS2013 O1, O2 and O2 /Oy- implementation compilations pass. No matching-byte claim.",
+  "targets": ["script-error-reset-state"],
+  "references": ["script-error-reset-state", "script-error-object-set", "script-close-upvalues", "script-callinfo-resize", "script-reallocate"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "2100 GCC i386 direct comparisons against original_script_error_reset_state at its original VA, using accepted original helper code through correct ECX/EDX and caller-popped-stack adapters. Independently checked all five linked reference spans against immutable Game.exe bytes. Inputs cross seven default-path statuses (0,1,6,7,-1,INT_MIN,INT_MAX), ten signed capacities including 19999/20000/20001 and INT_MAX, empty/closable/below-threshold open-upvalue chains, five 16-bit nesting values and two initial stack-top positions. Reinitialize the same address-stable fixture before each execution and compare every byte, including unknown state bytes, stack values, call-info records, upvalue links, GC root, and allocator bookkeeping. Independent assertions check field reset, signed capacity threshold, relocation, capacity and end-frame updates, allocator size/accounting, helper order observed at allocation, live upvalue payload copying, and untouched below-threshold upvalues. Explicit initialized FS installation must succeed; verify FS head restoration after originals and dependency calls. The test does not claim coverage of statuses 2 through 5.",
+  "known_limits": [
+    "Statuses 2..5 are not directly exercised: accepted script-error-object-set ends at 0x4f4cec, immediately before its external four-entry jump table at 0x4f4cec..0x4f4cfc. Direct original evidence gives destinations 0x4f4cd4, 0x4f4cd4, 0x4f4ca9, 0x4f4ccb, but no audited test fixture binding for that address is supplied. Statuses 4/5 additionally require original fixed-address strings and string interning state. No invented code or substitute jump destinations are used.",
+    "Tests cover normal return and a successful relocating allocator, not allocation failure, longjmp, panic callbacks, exception dispatch, or GC-barrier and dead-upvalue freeing paths inside dependencies.",
+    "The call-info used-count guard is retained literally. Normal helper behavior leaves currentCall equal to baseCall before the guard, so tests exercise one used frame; helper-induced abnormal frame pointer changes are not manufactured.",
+    "State field names reflect instruction use and Lua-style layouts, not recovered debug symbols. Unknown bytes retain explicit padding. Layout and register ABI describe the original 32-bit process; a 64-bit port requires deliberate pointer-layout adaptation.",
+    "Only this reset routine is recovered. Helper integration adapters in test.cpp invoke accepted original routines; a standalone native Linux integration must supply their separately recovered implementations.",
+    "MSVC2013 compilation and sampled behavior validation establish neither byte matching nor full-game equivalence."
+  ]
+}

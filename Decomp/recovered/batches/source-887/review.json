@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as bounded, unmatched C++ recovery with zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit ABI/layouts, helper ordering and side effects agree with the original assembly. Independently verified all five reference spans against Game.exe, reproduced 2100 differential cases, and passed 2700 cases after adding original jump-table coverage for statuses 2–3. The actual implementation also compiled with pinned VS2013 /O2. Statuses 4–5, allocation failure and exceptional dependency paths remain explicitly unvalidated; sampled checks do not establish all-input equivalence."
+}
