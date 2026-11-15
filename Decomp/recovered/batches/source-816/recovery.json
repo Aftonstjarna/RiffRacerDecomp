@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script table value-slot setter",
+  "summary": "Recovered Game.exe VA 0x4f0c50, 97 bytes, as a readable State member. Performs accepted value lookup, unconditionally clears table cache byte +6, preserves existing slots by pointer identity, rejects missing nil/NaN keys through the VM error boundary, and delegates insertion to the accepted new-key helper. Original custom ABI uses ECX=state, EDX=table, one caller-popped key pointer and EAX return; test-only GCC regparm(3) uses a dummy EAX parameter to model it. Caller 0x4f0a3d retries through this routine after rehash and pops its pending arguments. All seven linked accepted reference fragments were byte-checked against immutable Game.exe. GCC behavioral validation passed; pinned MSVC2013 compiled impl.cpp under O1, O2 and O2 /Oy-. No matching-source credit claimed.",
+  "targets": ["script-table-ensure-value-slot"],
+  "references": [
+    "script-table-ensure-value-slot",
+    "script-table-get-value",
+    "script-table-get-integer",
+    "script-table-get-string",
+    "script-table-new-key",
+    "script-table-main-bucket",
+    "script-table-numeric-bucket"
+  ],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "test_main directly compares the recovered member with original_script_table_ensure_value_slot in 584 cases. Includes numeric array slots and existing string slots with value tags 0..8 under all four MXCSR rounding modes; existing nil-valued identity-key hash slots; vacant insertion; same-bucket collision linking; displaced-node relocation; key tags 5..8; black/nonblack tables and all four key white-bit combinations. Checks exact returned pointers, MXCSR, and byte-for-byte entire fixture snapshots covering table, key, array, nodes, state, GC global data, key objects and guards. Independent assertions check cache invalidation, key copy, nil value preservation and conditional grayagain barrier updates. Another 270 dependency-boundary cases verify exact pointer forwarding, call counts/order, nil-sentinel identity versus an existing slot or null return, error text selection, returning-error continuation and untouched fixture bytes. Keys include signed zeros, finite values, a subnormal, infinities and quiet/signaling NaNs. Local build assembled only accepted oracle sources, linked them at original addresses, verified their bytes against Game.exe and ran the freestanding i386 harness successfully. No special fixed data sections or OS callbacks are needed by exercised paths.",
+  "known_limits": [
+    "Only the assigned ensure-value-slot routine is recovered. Lookup, allocation/rehash, GC insertion and VM error dispatch remain explicit Services dependencies, with accepted originals used for normal-path comparison.",
+    "Original nil/NaN error dispatch at 0x486ab0 requires unavailable VM error/longjmp context; these branches are checked through controlled returning callbacks, not by executing the original error handler. Exception dispatch and unwinding are not claimed.",
+    "Hash growth, allocator failure, numeric hash insertion, primitive-tag hash equality and GC/runtime integration beyond the controlled fixtures are not exercised. No original error handler or allocator behavior is invented.",
+    "The portable member has an explicit Services parameter and does not replace the original custom register ABI directly. The original absolute nil sentinel identity must be translated when integrating a Linux VM port.",
+    "This target and exercised helpers do not register Windows SEH frames or access FS; no TLS emulation is needed for these tests.",
+    "No byte-identical C++ rebuild, matching credit or whole-game equivalence is claimed. Original behavior assumes valid single-threaded VM objects; corrupted pointers, adversarial callback mutations and concurrent access are outside validation."
+  ]
+}

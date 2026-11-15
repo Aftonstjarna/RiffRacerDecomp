@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow, layouts, dependency boundaries, side effects and stated ABI limitations agree with the reference. Tests call original routines and check meaningful cases, returned pointers and fixture changes. Independently verified the 97-byte reference against Game.exe and passed 240 original/candidate boundary comparisons. Native compilation records cover the actual implementation. VM error dispatch, allocation/rehash and broader runtime integration remain explicitly unvalidated; sampled validation does not establish all-input equivalence."
+}
