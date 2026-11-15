@@ -5338,3 +5338,16 @@ test-cycle-script-error-dispatch: $(OUT)/reriff-match $(OUT)/script_error_dispat
 
 test-recovered: test-cycle-script-error-dispatch
 .PHONY: test-cycle-script-error-dispatch
+
+# Reviewed cycle reference: script-stack-relocate-pointers (assembly evidence only).
+$(OUT)/script_stack_relocate_pointers.bin: native/script_stack_relocate_pointers.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_stack_relocate_pointers.o
+	ld -m elf_i386 -Ttext=0x4f4e60 -e original_script_stack_relocate_pointers $(OUT)/script_stack_relocate_pointers.o -o $(OUT)/script_stack_relocate_pointers.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_stack_relocate_pointers.elf $@
+
+test-cycle-script-stack-relocate-pointers: $(OUT)/reriff-match $(OUT)/script_stack_relocate_pointers.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-stack-relocate-pointers $(OUT)/script_stack_relocate_pointers.bin $(OUT)/script-stack-relocate-pointers-comparison.json
+
+test-recovered: test-cycle-script-stack-relocate-pointers
+.PHONY: test-cycle-script-stack-relocate-pointers
