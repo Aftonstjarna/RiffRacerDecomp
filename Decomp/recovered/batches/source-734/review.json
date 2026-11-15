@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as bounded, behavior-validated unmatched source; zero matching-source byte credit.",
+  "reason": "Readable C++ preserves the reviewed layout, thiscall ABI, scalar assignments and destination return. Source hashes match validation; native Windows compilation records cover the actual implementation. Independently verified reference bytes against Game.exe and reran all 800 differential cases successfully under the declared configuration. Tests call the original and compare the entire buffer and return pointer. GCC -O2 fails overlapping cases, consistent with the documented C++ object-lifetime limitation; approval does not certify optimized overlap behavior or all-input equivalence."
+}

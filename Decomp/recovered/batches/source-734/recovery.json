@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Ordered 40-byte record assignment",
+  "summary": "Recovered VA 0x434320: thiscall assignment copies ten DWORDs in ascending order, returns the destination in EAX, and pops the source argument. No calls, global accesses, allocation, floating-point operations, or conditional paths. Direct caller 0x432d69 uses 40-byte indexing and reads the first nine copied words as float triples.",
+  "targets": [
+    "record40-copy-assign"
+  ],
+  "references": [
+    "record40-copy-assign"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "800 direct original-versus-C++ comparisons covering distinct, adjacent, identical and every DWORD-aligned overlapping range in both directions. Twenty patterns include zero, all ones, signed zero, infinities, NaNs, subnormal and mixed integer bits. Assert destination return pointer and every word of a 256-byte enclosing buffer against both the oracle and an independent forward-copy model, including untouched source and guard words. Install initialized test-owned FS backing, require successful setup, and check FS:[0] after every original call.",
+  "known_limits": [
+    "Record semantic names and final DWORD type remain unresolved; words are preserved as opaque uint32_t bits.",
+    "Tests cover writable DWORD-aligned storage. Invalid pointers, inaccessible memory and byte-misaligned overlap are not exercised; original has no validation.",
+    "Partially overlapping record views model original machine storage behavior; portable C++ callers should use live, properly aligned Record40 objects. Such partial object overlap is outside the ordinary C++ object-lifetime model.",
+    "No byte-matching claim; native Windows compilation is validated separately by the coordinator."
+  ]
+}
