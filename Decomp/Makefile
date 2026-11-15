@@ -3947,3 +3947,16 @@ test-cycle-ray-callback-filter-test: $(OUT)/reriff-match $(OUT)/ray_callback_fil
 
 test-recovered: test-cycle-ray-callback-filter-test
 .PHONY: test-cycle-ray-callback-filter-test
+
+# Reviewed cycle reference: nested-resource44-count (assembly evidence only).
+$(OUT)/nested_resource44_count.bin: native/nested_resource44_count.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/nested_resource44_count.o
+	ld -m elf_i386 -Ttext=0x512c80 -e original_nested_resource44_count $(OUT)/nested_resource44_count.o -o $(OUT)/nested_resource44_count.elf
+	objcopy -O binary --only-section=.text $(OUT)/nested_resource44_count.elf $@
+
+test-cycle-nested-resource44-count: $(OUT)/reriff-match $(OUT)/nested_resource44_count.bin
+	$(OUT)/reriff-match native-check "$(GAME)" nested-resource44-count $(OUT)/nested_resource44_count.bin $(OUT)/nested-resource44-count-comparison.json
+
+test-recovered: test-cycle-nested-resource44-count
+.PHONY: test-cycle-nested-resource44-count
