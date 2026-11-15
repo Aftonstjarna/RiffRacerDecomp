@@ -4103,3 +4103,16 @@ test-cycle-sse2-pow-precise-import: $(OUT)/reriff-match $(OUT)/sse2_pow_precise_
 
 test-recovered: test-cycle-sse2-pow-precise-import
 .PHONY: test-cycle-sse2-pow-precise-import
+
+# Reviewed cycle reference: collision-shape-serialize-single (assembly evidence only).
+$(OUT)/collision_shape_serialize_single.bin: native/collision_shape_serialize_single.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_shape_serialize_single.o
+	ld -m elf_i386 -Ttext=0x47c270 -e original_collision_shape_serialize_single $(OUT)/collision_shape_serialize_single.o -o $(OUT)/collision_shape_serialize_single.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_shape_serialize_single.elf $@
+
+test-cycle-collision-shape-serialize-single: $(OUT)/reriff-match $(OUT)/collision_shape_serialize_single.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-shape-serialize-single $(OUT)/collision_shape_serialize_single.bin $(OUT)/collision-shape-serialize-single-comparison.json
+
+test-recovered: test-cycle-collision-shape-serialize-single
+.PHONY: test-cycle-collision-shape-serialize-single
