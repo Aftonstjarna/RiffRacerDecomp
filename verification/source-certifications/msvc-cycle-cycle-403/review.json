@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "937462d4b42b7c14f57196150f39702a1693625d25d0c3156505031ea2259f51",
+  "behavior_sha256": "ea9ef96d11104012ebda163d2083685d01b1c76ce87a31d9471f20bab46df71b",
+  "functions": [
+    {
+      "scope": "dispatcher-manifold-index",
+      "source_sha256": "e991ed5e4305c0f4d934dd6e351e3be46549d3ba7a379ff607221643299e082f",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild produced a full, unmodified 16-byte section identical to Game.exe. Original instructions confirm boundaries, offset 20, and thiscall ABI. Executing both actual fragments passed 396 comparisons covering signed indices, shifted tables, null/repeated pointers, and untouched object, table, and target state. The routine has no conditional branches. Approval covers this function only."
+    }
+  ],
+  "review_receipt_sha256": "e70fa8a04b349f77ec84f28a39feae93a50ef7b1c51cd871a23d41b0cb61f81b",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

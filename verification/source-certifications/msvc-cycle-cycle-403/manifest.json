@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-403",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "dispatcher-manifold-index",
+      "stem": "cycle_dispatcher_manifold_index",
+      "source": "Decomp/recovered/msvc/cycle_dispatcher_manifold_index.cpp",
+      "sha256": "e991ed5e4305c0f4d934dd6e351e3be46549d3ba7a379ff607221643299e082f"
+    }
+  ]
+}
