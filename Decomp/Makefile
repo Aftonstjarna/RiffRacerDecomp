@@ -5143,3 +5143,16 @@ test-cycle-script-table-count-hash-histogram: $(OUT)/reriff-match $(OUT)/script_
 
 test-recovered: test-cycle-script-table-count-hash-histogram
 .PHONY: test-cycle-script-table-count-hash-histogram
+
+# Reviewed cycle reference: script-format-variadic-bridge (assembly evidence only).
+$(OUT)/script_format_variadic_bridge.bin: native/script_format_variadic_bridge.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_format_variadic_bridge.o
+	ld -m elf_i386 -Ttext=0x4eff40 -e original_script_format_variadic_bridge $(OUT)/script_format_variadic_bridge.o -o $(OUT)/script_format_variadic_bridge.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_format_variadic_bridge.elf $@
+
+test-cycle-script-format-variadic-bridge: $(OUT)/reriff-match $(OUT)/script_format_variadic_bridge.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-format-variadic-bridge $(OUT)/script_format_variadic_bridge.bin $(OUT)/script-format-variadic-bridge-comparison.json
+
+test-recovered: test-cycle-script-format-variadic-bridge
+.PHONY: test-cycle-script-format-variadic-bridge
