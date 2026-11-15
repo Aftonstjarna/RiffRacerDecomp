@@ -4545,3 +4545,16 @@ test-cycle-crt-terminate-import: $(OUT)/reriff-match $(OUT)/crt_terminate_import
 
 test-recovered: test-cycle-crt-terminate-import
 .PHONY: test-cycle-crt-terminate-import
+
+# Reviewed cycle reference: array-destroy-with-exception-filter (assembly evidence only).
+$(OUT)/array_destroy_with_exception_filter.bin: native/array_destroy_with_exception_filter.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/array_destroy_with_exception_filter.o
+	ld -m elf_i386 -Ttext=0x8f9461 -e original_array_destroy_with_exception_filter $(OUT)/array_destroy_with_exception_filter.o -o $(OUT)/array_destroy_with_exception_filter.elf
+	objcopy -O binary --only-section=.text $(OUT)/array_destroy_with_exception_filter.elf $@
+
+test-cycle-array-destroy-with-exception-filter: $(OUT)/reriff-match $(OUT)/array_destroy_with_exception_filter.bin
+	$(OUT)/reriff-match native-check "$(GAME)" array-destroy-with-exception-filter $(OUT)/array_destroy_with_exception_filter.bin $(OUT)/array-destroy-with-exception-filter-comparison.json
+
+test-recovered: test-cycle-array-destroy-with-exception-filter
+.PHONY: test-cycle-array-destroy-with-exception-filter
