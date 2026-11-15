@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-437",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "matrix48-initialize-basis",
+      "stem": "cycle_matrix48_initialize_basis",
+      "source": "Decomp/recovered/msvc/cycle_matrix48_initialize_basis.cpp",
+      "sha256": "fa5dd3132debd0a18030e04a4d5e53fbb39260802250014f29f2045f3402e383"
+    }
+  ]
+}
