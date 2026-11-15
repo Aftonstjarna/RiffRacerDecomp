@@ -4571,3 +4571,16 @@ test-cycle-stream-append-u16-be: $(OUT)/reriff-match $(OUT)/stream_append_u16_be
 
 test-recovered: test-cycle-stream-append-u16-be
 .PHONY: test-cycle-stream-append-u16-be
+
+# Reviewed cycle reference: crt-seh-dispatch (assembly evidence only).
+$(OUT)/crt_seh_dispatch.bin: native/crt_seh_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/crt_seh_dispatch.o
+	ld -m elf_i386 -Ttext=0x8f9ce9 -e original_crt_seh_dispatch $(OUT)/crt_seh_dispatch.o -o $(OUT)/crt_seh_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/crt_seh_dispatch.elf $@
+
+test-cycle-crt-seh-dispatch: $(OUT)/reriff-match $(OUT)/crt_seh_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" crt-seh-dispatch $(OUT)/crt_seh_dispatch.bin $(OUT)/crt-seh-dispatch-comparison.json
+
+test-recovered: test-cycle-crt-seh-dispatch
+.PHONY: test-cycle-crt-seh-dispatch
