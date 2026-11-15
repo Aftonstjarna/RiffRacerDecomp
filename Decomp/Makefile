@@ -4987,3 +4987,16 @@ test-cycle-record52-default-initialize: $(OUT)/reriff-match $(OUT)/record52_defa
 
 test-recovered: test-cycle-record52-default-initialize
 .PHONY: test-cycle-record52-default-initialize
+
+# Reviewed cycle reference: record513-range-copy (assembly evidence only).
+$(OUT)/record513_range_copy.bin: native/record513_range_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record513_range_copy.o
+	ld -m elf_i386 -Ttext=0x416aa0 -e original_record513_range_copy $(OUT)/record513_range_copy.o -o $(OUT)/record513_range_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/record513_range_copy.elf $@
+
+test-cycle-record513-range-copy: $(OUT)/reriff-match $(OUT)/record513_range_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record513-range-copy $(OUT)/record513_range_copy.bin $(OUT)/record513-range-copy-comparison.json
+
+test-recovered: test-cycle-record513-range-copy
+.PHONY: test-cycle-record513-range-copy
