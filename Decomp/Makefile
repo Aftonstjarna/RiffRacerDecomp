@@ -5650,3 +5650,16 @@ test-cycle-script-call-with-depth-guard: $(OUT)/reriff-match $(OUT)/script_call_
 
 test-recovered: test-cycle-script-call-with-depth-guard
 .PHONY: test-cycle-script-call-with-depth-guard
+
+# Reviewed cycle reference: float-pow-precise-bridge (assembly evidence only).
+$(OUT)/float_pow_precise_bridge.bin: native/float_pow_precise_bridge.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/float_pow_precise_bridge.o
+	ld -m elf_i386 -Ttext=0x4f2590 -e original_float_pow_precise_bridge $(OUT)/float_pow_precise_bridge.o -o $(OUT)/float_pow_precise_bridge.elf
+	objcopy -O binary --only-section=.text $(OUT)/float_pow_precise_bridge.elf $@
+
+test-cycle-float-pow-precise-bridge: $(OUT)/reriff-match $(OUT)/float_pow_precise_bridge.bin
+	$(OUT)/reriff-match native-check "$(GAME)" float-pow-precise-bridge $(OUT)/float_pow_precise_bridge.bin $(OUT)/float-pow-precise-bridge-comparison.json
+
+test-recovered: test-cycle-float-pow-precise-bridge
+.PHONY: test-cycle-float-pow-precise-bridge
