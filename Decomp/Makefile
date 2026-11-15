@@ -4831,3 +4831,16 @@ test-cycle-nested-vector12-range-assign: $(OUT)/reriff-match $(OUT)/nested_vecto
 
 test-recovered: test-cycle-nested-vector12-range-assign
 .PHONY: test-cycle-nested-vector12-range-assign
+
+# Reviewed cycle reference: u32-vector-copy-assign (assembly evidence only).
+$(OUT)/u32_vector_copy_assign.bin: native/u32_vector_copy_assign.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/u32_vector_copy_assign.o
+	ld -m elf_i386 -Ttext=0x43e240 -e original_u32_vector_copy_assign $(OUT)/u32_vector_copy_assign.o -o $(OUT)/u32_vector_copy_assign.elf
+	objcopy -O binary --only-section=.text $(OUT)/u32_vector_copy_assign.elf $@
+
+test-cycle-u32-vector-copy-assign: $(OUT)/reriff-match $(OUT)/u32_vector_copy_assign.bin
+	$(OUT)/reriff-match native-check "$(GAME)" u32-vector-copy-assign $(OUT)/u32_vector_copy_assign.bin $(OUT)/u32-vector-copy-assign-comparison.json
+
+test-recovered: test-cycle-u32-vector-copy-assign
+.PHONY: test-cycle-u32-vector-copy-assign
