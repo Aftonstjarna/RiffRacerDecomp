@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "f8751c2b482b790cc94a5b3bfb41d1ef5c43aae3000b2393c3ee0fb5e8a596dd",
+    "impl.hpp": "c6399e7d27aee7ffe0d9934d7bcd7090ffaf91965a53e43b123ecaae63858282",
+    "test.cpp": "52d9dd63638bb25ac4d486e470e092df13780bc56b6af9a1813fd0940d08904c"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 38,
+      "candidate_size": 38,
+      "candidate_sha256": "28663dfd6d7b32963f0b0a47caa020a3b182bb4ca4c5adf52b580c002c7d9221",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "28663dfd6d7b32963f0b0a47caa020a3b182bb4ca4c5adf52b580c002c7d9221",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "ray-callback-filter-test",
+      "rva": 159968,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "4846369a28a57f761ba59f81d9311c3324582c01",
+  "test_output": "",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "fec7ad736ad28a4bbf5afce4b161e72ef7eaacab346e872df247f6d533bb121f",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "8f30f48662a09933cd1828b99f7feb9cc8c46eba82611e697de7f6ecbbf40307",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "e7628f9bea475dcb53d54ea204e54a0ad69b4050dd5d1762412750d9d7bd5c27",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "ray-callback-filter-test",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 35,
+        "original_size": 38
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "ray-callback-filter-test",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "comparison": {
+          "schema": 1,
+          "byte_equal": false,
+          "different_bytes": 34,
+          "original_size": 38,
+          "candidate_size": 38,
+          "candidate_sha256": "86dd0b0894e4b03d1a37bda613e333c9c3e93d70c82d2193b29666d492dd249d",
+          "masked_bytes": 0,
+          "source_rebuild_verified": false,
+          "note": "Binary equality alone does not prove reconstruction from source.",
+          "difference_ranges": [
+            {
+              "offset": 0,
+              "length": 31
+            },
+            {
+              "offset": 32,
+              "length": 3
+            }
+          ],
+          "reference_fragment_sha256": "28663dfd6d7b32963f0b0a47caa020a3b182bb4ca4c5adf52b580c002c7d9221",
+          "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+          "scope": "ray-callback-filter-test",
+          "rva": 159968,
+          "whole_executable_compared": false
+        },
+        "status": "compared"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "ray-callback-filter-test",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 42,
+        "original_size": 38
+      }
+    ]
+  }
+}
