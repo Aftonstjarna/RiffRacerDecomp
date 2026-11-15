@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Convex hull edge without margin",
+  "summary": "Recovered VA 0x47d1d0 (171 bytes) as an original-layout thiscall member: signed remainder selects consecutive stored vertices, each XYZ is multiplied by local scaling, and both W lanes are positive zero. First output is committed before the second vertex/scaling reads; count is cached. The original constructor installs vtable 0x9fb128 and slot +0x58 points to this routine; no direct call sites were found. Explicit scalar SSE multiplication preserves original NaN operand ordering and MXCSR behavior.",
+  "targets": [
+    "convex-hull-edge-without-margin"
+  ],
+  "references": [
+    "convex-hull-edge-without-margin"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "4608 direct original-reference comparisons with counts -5,-1,1,2,5; signed indices including INT_MIN and INT_MAX, wraparound and singleton cases; padded backing for negative remainders; finite values, signed zeros, subnormals, infinity, quiet/signaling NaNs; four rounding modes with DAZ/FTZ off/on. Tests compare the entire object, vertices, output vectors and guard bytes after normalizing the fixture pointer, plus MXCSR flags/control and restored FS head after each original call. Aliases cover identical outputs, outputs overlapping input points, and outputs overlapping scaling. GCC fixed freestanding flags pass. Optional pinned MSVC2013 compilation passes O1, O2 and O2 /Oy-. Oracle assembly bytes checked against immutable PE.",
+  "known_limits": [
+    "Behavior-validated unmatched source; no matching-byte claim or native Windows execution claim.",
+    "Zero count and INT_MIN divided by -1 trap in original IDIV; these fault paths are documented but not executed. Invalid pointers, inaccessible storage and arbitrary overlaps corrupting count/pointer metadata are outside tested normal paths.",
+    "Only fields accessed by this routine are modeled. Negative counts/indices are machine-level behavior, not evidence that game callers intentionally use them.",
+    "Scalar SSE is used to retain x86 NaN payload and MXCSR semantics; other Linux architectures require an equivalent arithmetic adapter. Original ABI/layout assertions apply to i386; native pointer size changes the partial layout on 64-bit builds.",
+    "Virtual dispatch is evidenced by the constructor/vtable; dynamic caller identities and full hull topology are not recovered."
+  ]
+}

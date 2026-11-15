@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Readable source preserves the reviewed routine’s ABI/layout, signed indexing, wraparound, alias-sensitive store order and scalar SSE behavior. Independently verified reference bytes against Game.exe, rebuilt and passed the original differential test plus expanded count cases, and compiled the unchanged implementation with pinned MSVC2013. Tests compare full fixture state and MXCSR across meaningful numerical and aliasing cases. Fault paths and platform limitations are disclosed; sampled validation does not establish all-input equivalence."
+}
