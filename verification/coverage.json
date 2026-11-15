@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 96940,
-  "remaining_bytes": 8538452,
-  "verified_percent": 1.122589455116803,
-  "registered_blocks": 441,
-  "exact_blocks": 441,
+  "verified_bytes": 96966,
+  "remaining_bytes": 8538426,
+  "verified_percent": 1.1228905416221986,
+  "registered_blocks": 442,
+  "exact_blocks": 442,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2612,6 +2612,15 @@
       "byte_equal": true,
       "reference_sha256": "60ff5733876f3f0b291e020e0ef241156ad7b1fd89c4075f7de1f63e8906df50",
       "candidate_sha256": "60ff5733876f3f0b291e020e0ef241156ad7b1fd89c4075f7de1f63e8906df50"
+    },
+    {
+      "name": "script-allocation-too-large",
+      "file_offset": 1011952,
+      "size": 26,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "0a5eb31f6a098b2874e951c1f1633bebda83b0e1a7f9c1e79832f94b9835f1da",
+      "candidate_sha256": "0a5eb31f6a098b2874e951c1f1633bebda83b0e1a7f9c1e79832f94b9835f1da"
     },
     {
       "name": "script-reallocate",

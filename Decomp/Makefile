@@ -5195,3 +5195,16 @@ test-cycle-script-table-initialize-hash-storage: $(OUT)/reriff-match $(OUT)/scri
 
 test-recovered: test-cycle-script-table-initialize-hash-storage
 .PHONY: test-cycle-script-table-initialize-hash-storage
+
+# Reviewed cycle reference: script-allocation-too-large (assembly evidence only).
+$(OUT)/script_allocation_too_large.bin: native/script_allocation_too_large.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_allocation_too_large.o
+	ld -m elf_i386 -Ttext=0x4f7cf0 -e original_script_allocation_too_large $(OUT)/script_allocation_too_large.o -o $(OUT)/script_allocation_too_large.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_allocation_too_large.elf $@
+
+test-cycle-script-allocation-too-large: $(OUT)/reriff-match $(OUT)/script_allocation_too_large.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-allocation-too-large $(OUT)/script_allocation_too_large.bin $(OUT)/script-allocation-too-large-comparison.json
+
+test-recovered: test-cycle-script-allocation-too-large
+.PHONY: test-cycle-script-allocation-too-large
