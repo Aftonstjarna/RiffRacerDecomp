@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Ensure an integer script-table slot",
+  "summary": "Recovered Game.exe 0x4f0cc0 (77 bytes): look up a signed integer, return any existing slot by sentinel-pointer comparison, otherwise construct an eight-byte numeric key (single-precision payload, tag 3) and delegate insertion. No value assignment or table flag clearing is performed by this wrapper. Original ECX=state, EDX=table, stack integer with caller cleanup; the portable member exposes accepted dependencies through Services. Callers at 0x420103 and 0x420178 assign the returned value afterward. Original and dependency reference bytes were checked directly against immutable Game.exe. GCC full mapped differential run passed; pinned MSVC2013 compiled implementation under O1, O2, and O2 /Oy-. No matching-source credit claimed.",
+  "targets": [
+    "script-table-ensure-integer-slot"
+  ],
+  "references": [
+    "script-table-ensure-integer-slot",
+    "script-table-get-integer",
+    "script-table-new-key",
+    "script-table-main-bucket",
+    "script-table-numeric-bucket"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "test_main compares recovered C++ directly to original_script_table_ensure_integer_slot. Covers array indices 1..5 with tags 0..7; existing nil-valued hash slots; vacant hash insertion; occupied main-bucket collision linking; keys 0, -1, 6, 17, -17, 16777215, 16777216, 16777217, -16777217, INT_MAX, INT_MIN; all four MXCSR rounding modes. Compares exact return pointers, MXCSR flags, complete table/array/node/state snapshots and outer guards, plus independent key/value and state assertions. Source dependency-boundary tests also check exact signed input/state forwarding, sentinel identity, null passthrough, call counts and unchanged fixture memory. Local full run links data-only .oracle_dispatch (16 bytes) at 0x4f018c and .oracle_zero (4 bytes) at 0xa063ec; all five accepted reference fragments were byte-checked against Game.exe. Without these mappings, the harness explicitly reports array-only original coverage and still executes dependency-boundary checks.",
+  "known_limits": [
+    "Only the assigned wrapper is recovered. Integer lookup, insertion, allocation, rehash and GC remain accepted external VM dependencies.",
+    "Rehash/allocation/error paths are not executed: insertion tests provide free nodes. Full VM integration and exceptional paths remain outside scope.",
+    "The custom original register/caller-cleanup ABI is represented by test-only GCC regparm adapters with an unused EAX argument; the portable implementation uses a genuine State member with explicit Services, not a binary drop-in ABI replacement.",
+    "Numeric conversion assumes SSE2 single-precision behavior and current MXCSR rounding as tested on i386; other native targets require validation of floating-environment behavior.",
+    "Trusted linkers that do not map .oracle_dispatch and .oracle_zero at their original addresses run only original array-path comparisons; full hash and insertion comparisons passed with the local mapped linker.",
+    "Null/invalid table pointers and corrupted VM structures are outside valid input assumptions. The opaque state layout is intentionally not reconstructed."
+  ]
+}
