@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script buffer capacity growth",
+  "summary": "Recovered VA 0x4f6140..0x4f61a0: unsigned capacity reuse, minimum 32-byte growth, allocator delegation, and exact wrapping overflow check. Original custom ABI uses ECX state, EDX buffer, and one caller-cleaned stack argument. Buffer fields are pointer +0, opaque untouched word +4, capacity +8. Caller 0x55602f requests a serialized string byte count before reading into the returned buffer. Allocation and VM error policy remain explicit integration dependencies.",
+  "targets": ["script-buffer-ensure-capacity"],
+  "references": ["script-buffer-ensure-capacity", "script-reallocate", "script-runtime-error-variadic-bridge"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct original/recovered comparisons over 18 boundary sizes cross-product and 8 flags: null/non-null input, allocation success/failure, callback buffer mutation. Checks return, all buffer/state/global bytes, allocator arguments/count, modulo accounting, unchanged payload bytes, and FS head restoration. Includes UINT32_MAX wrapping allocation and error-sized requests already covered by sufficient capacity. Source-only returning error-service checks for 0xfffffffd and 0xfffffffe assert exact message, null pointer, stored capacity, and untouched +4.",
+  "known_limits": ["No byte matching claim; implementation uses a portable member and explicit dependency services instead of the original custom register ABI.", "Overflow error calls are not executed against the oracle: original 0x486ab0 requires VM formatting, location annotation, and raise/error-transfer state not provided by this bounded fixture. Returning-error continuation is verified only in recovered source and by original disassembly.", "Allocator tests use accepted script-reallocate with controlled cdecl callbacks; real allocation, protected longjmp, panic callbacks, and VM exceptions are outside scope.", "The opaque buffer word at +4 has no proven semantic name. Original layout and tests require a 32-bit target."]
+}
