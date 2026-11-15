@@ -4207,3 +4207,16 @@ test-cycle-convex-hull-shape-set-scaling: $(OUT)/reriff-match $(OUT)/convex_hull
 
 test-recovered: test-cycle-convex-hull-shape-set-scaling
 .PHONY: test-cycle-convex-hull-shape-set-scaling
+
+# Reviewed cycle reference: dispatcher-manifold-array-pointer (assembly evidence only).
+$(OUT)/dispatcher_manifold_array_pointer.bin: native/dispatcher_manifold_array_pointer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/dispatcher_manifold_array_pointer.o
+	ld -m elf_i386 -Ttext=0x427090 -e original_dispatcher_manifold_array_pointer $(OUT)/dispatcher_manifold_array_pointer.o -o $(OUT)/dispatcher_manifold_array_pointer.elf
+	objcopy -O binary --only-section=.text $(OUT)/dispatcher_manifold_array_pointer.elf $@
+
+test-cycle-dispatcher-manifold-array-pointer: $(OUT)/reriff-match $(OUT)/dispatcher_manifold_array_pointer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" dispatcher-manifold-array-pointer $(OUT)/dispatcher_manifold_array_pointer.bin $(OUT)/dispatcher-manifold-array-pointer-comparison.json
+
+test-recovered: test-cycle-dispatcher-manifold-array-pointer
+.PHONY: test-cycle-dispatcher-manifold-array-pointer
