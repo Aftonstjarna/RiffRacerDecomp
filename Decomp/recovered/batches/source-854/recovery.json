@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script byte-string interning",
+  "summary": "Recover 0x4f5e40 as a readable State member: sampled unsigned hash, length-and-byte chain lookup, GC white-bit revival, header/data initialization, head insertion, wrapping count update and signed guarded growth request. Explicit services preserve original allocator, resize and size-error dependencies. The current global is reread after allocation; header byte +7 remains untouched. Original instructions and callers were inspected directly; accepted oracle fragments were compared byte-for-byte with Game.exe. No compiler-built matching-byte claim.",
+  "targets": ["script-string-intern"],
+  "references": ["script-string-intern", "script-reallocate", "memcpy-import"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "83,968 direct original/source comparisons: lengths 0,1,2,3,4,5,7,8,9,31,32,33,63,64,65,127,255,511; empty buckets, length mismatches, same-length byte mismatches and chained hits; binary bytes including embedded NUL and high bytes; stored-hash and terminator independence; all 65,536 mark/white byte combinations; allocator replacement of state.global. Verify return identity, allocator arguments and count, wrapped accounting, full state/global/bucket/node/input/allocation images, insertion linkage, initialized fields, terminator and untouched byte +7 and trailing storage. Explicit FS setup must succeed and FS head restoration is checked after original calls. Another 21 source-only boundary probes check publication-before-resize, count wrap, doubled request and signed capacity guard. GCC fixed-flags test executable prints PASS. Pinned MSVC2013 compilation succeeds at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Bucket resizing at 0x4f5d70 has no accepted reference in this snapshot. It remains an explicit dependency; growth requests are source-only boundary tests, not direct oracle validation of resize behavior.",
+    "Size-error dispatch at 0x486ab0, allocator failure, protected nonlocal VM transfer and CRT internals are not exercised. Huge lengths cannot be safely hashed from bounded test storage; the unsigned allocation-size check is preserved from instructions.",
+    "Original custom ECX/EDX/caller-cleaned stack ABI uses GCC test-only regparm adapters. Implementation is a portable member with explicit services, not a binary-compatible replacement entry point.",
+    "Layouts require 32-bit pointers and valid VM table invariants, including available bucket storage. Unknown fields are retained without invented semantics. Oracle allocation and memcpy imports use controlled test callbacks; no OS or full-game claim."
+  ]
+}
