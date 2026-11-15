@@ -4077,3 +4077,16 @@ test-cycle-collision-shape-serialize: $(OUT)/reriff-match $(OUT)/collision_shape
 
 test-recovered: test-cycle-collision-shape-serialize
 .PHONY: test-cycle-collision-shape-serialize
+
+# Reviewed cycle reference: motion-state-base-destruct (assembly evidence only).
+$(OUT)/motion_state_base_destruct.bin: native/motion_state_base_destruct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/motion_state_base_destruct.o
+	ld -m elf_i386 -Ttext=0x4384f0 -e original_motion_state_base_destruct $(OUT)/motion_state_base_destruct.o -o $(OUT)/motion_state_base_destruct.elf
+	objcopy -O binary --only-section=.text $(OUT)/motion_state_base_destruct.elf $@
+
+test-cycle-motion-state-base-destruct: $(OUT)/reriff-match $(OUT)/motion_state_base_destruct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" motion-state-base-destruct $(OUT)/motion_state_base_destruct.bin $(OUT)/motion-state-base-destruct-comparison.json
+
+test-recovered: test-cycle-motion-state-base-destruct
+.PHONY: test-cycle-motion-state-base-destruct
