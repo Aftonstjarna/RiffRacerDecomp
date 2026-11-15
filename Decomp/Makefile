@@ -4220,3 +4220,16 @@ test-cycle-dispatcher-manifold-array-pointer: $(OUT)/reriff-match $(OUT)/dispatc
 
 test-recovered: test-cycle-dispatcher-manifold-array-pointer
 .PHONY: test-cycle-dispatcher-manifold-array-pointer
+
+# Reviewed cycle reference: object-flags-channel-enabled (assembly evidence only).
+$(OUT)/object_flags_channel_enabled.bin: native/object_flags_channel_enabled.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/object_flags_channel_enabled.o
+	ld -m elf_i386 -Ttext=0x443110 -e original_object_flags_channel_enabled $(OUT)/object_flags_channel_enabled.o -o $(OUT)/object_flags_channel_enabled.elf
+	objcopy -O binary --only-section=.text $(OUT)/object_flags_channel_enabled.elf $@
+
+test-cycle-object-flags-channel-enabled: $(OUT)/reriff-match $(OUT)/object_flags_channel_enabled.bin
+	$(OUT)/reriff-match native-check "$(GAME)" object-flags-channel-enabled $(OUT)/object_flags_channel_enabled.bin $(OUT)/object-flags-channel-enabled-comparison.json
+
+test-recovered: test-cycle-object-flags-channel-enabled
+.PHONY: test-cycle-object-flags-channel-enabled
