@@ -4337,3 +4337,16 @@ test-cycle-sphere-batched-support-without-margin: $(OUT)/reriff-match $(OUT)/sph
 
 test-recovered: test-cycle-sphere-batched-support-without-margin
 .PHONY: test-cycle-sphere-batched-support-without-margin
+
+# Reviewed cycle reference: sphere-local-inertia (assembly evidence only).
+$(OUT)/sphere_local_inertia.bin: native/sphere_local_inertia.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sphere_local_inertia.o
+	ld -m elf_i386 -Ttext=0x47d7e0 -e original_sphere_local_inertia $(OUT)/sphere_local_inertia.o -o $(OUT)/sphere_local_inertia.elf
+	objcopy -O binary --only-section=.text $(OUT)/sphere_local_inertia.elf $@
+
+test-cycle-sphere-local-inertia: $(OUT)/reriff-match $(OUT)/sphere_local_inertia.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sphere-local-inertia $(OUT)/sphere_local_inertia.bin $(OUT)/sphere-local-inertia-comparison.json
+
+test-recovered: test-cycle-sphere-local-inertia
+.PHONY: test-cycle-sphere-local-inertia

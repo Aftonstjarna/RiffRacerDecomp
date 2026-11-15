@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 90897,
-  "remaining_bytes": 8544495,
-  "verified_percent": 1.0526100031127712,
-  "registered_blocks": 375,
-  "exact_blocks": 375,
+  "verified_bytes": 90983,
+  "remaining_bytes": 8544409,
+  "verified_percent": 1.0536059046306179,
+  "registered_blocks": 376,
+  "exact_blocks": 376,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1523,6 +1523,15 @@
       "byte_equal": true,
       "reference_sha256": "660472ffc1a42041fb883c7fa0f7297e20eefcf69d430073002ca0f0cfe34bf0",
       "candidate_sha256": "660472ffc1a42041fb883c7fa0f7297e20eefcf69d430073002ca0f0cfe34bf0"
+    },
+    {
+      "name": "sphere-local-inertia",
+      "file_offset": 510944,
+      "size": 86,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "5b7b8eef789a0328c6bdf9d777eb39269c37f0b861fd916f26381af992332cdf",
+      "candidate_sha256": "5b7b8eef789a0328c6bdf9d777eb39269c37f0b861fd916f26381af992332cdf"
     },
     {
       "name": "window-handles-cleanup",
