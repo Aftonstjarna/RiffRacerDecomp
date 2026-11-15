@@ -5481,3 +5481,16 @@ test-cycle-script-value-raw-equal: $(OUT)/reriff-match $(OUT)/script_value_raw_e
 
 test-recovered: test-cycle-script-value-raw-equal
 .PHONY: test-cycle-script-value-raw-equal
+
+# Reviewed cycle reference: script-string-parse-number (assembly evidence only).
+$(OUT)/script_string_parse_number.bin: native/script_string_parse_number.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_string_parse_number.o
+	ld -m elf_i386 -Ttext=0x4ef9f0 -e original_script_string_parse_number $(OUT)/script_string_parse_number.o -o $(OUT)/script_string_parse_number.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_string_parse_number.elf $@
+
+test-cycle-script-string-parse-number: $(OUT)/reriff-match $(OUT)/script_string_parse_number.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-string-parse-number $(OUT)/script_string_parse_number.bin $(OUT)/script-string-parse-number-comparison.json
+
+test-recovered: test-cycle-script-string-parse-number
+.PHONY: test-cycle-script-string-parse-number
