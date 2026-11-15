@@ -4389,3 +4389,16 @@ test-cycle-compound-shape-margin: $(OUT)/reriff-match $(OUT)/compound_shape_marg
 
 test-recovered: test-cycle-compound-shape-margin
 .PHONY: test-cycle-compound-shape-margin
+
+# Reviewed cycle reference: compound-shape-scaling-pointer (assembly evidence only).
+$(OUT)/compound_shape_scaling_pointer.bin: native/compound_shape_scaling_pointer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/compound_shape_scaling_pointer.o
+	ld -m elf_i386 -Ttext=0x47d8b0 -e original_compound_shape_scaling_pointer $(OUT)/compound_shape_scaling_pointer.o -o $(OUT)/compound_shape_scaling_pointer.elf
+	objcopy -O binary --only-section=.text $(OUT)/compound_shape_scaling_pointer.elf $@
+
+test-cycle-compound-shape-scaling-pointer: $(OUT)/reriff-match $(OUT)/compound_shape_scaling_pointer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" compound-shape-scaling-pointer $(OUT)/compound_shape_scaling_pointer.bin $(OUT)/compound-shape-scaling-pointer-comparison.json
+
+test-recovered: test-cycle-compound-shape-scaling-pointer
+.PHONY: test-cycle-compound-shape-scaling-pointer

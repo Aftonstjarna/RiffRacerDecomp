@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"compound-shape-margin",0x7d8e0,4},
+  return {NativeBlock{"compound-shape-scaling-pointer",0x7d8b0,4},
+                     NativeBlock{"compound-shape-margin",0x7d8e0,4},
                      NativeBlock{"handle-record-flag10-present",0x99e40,18},
                      NativeBlock{"sphere-aabb",0x7d710,205},
                      NativeBlock{"sphere-local-inertia",0x7d7e0,86},
