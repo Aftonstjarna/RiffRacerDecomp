@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, thiscall ABI, layouts, bit-preserving copies and side effects agree with the original routine within documented limits. Tests meaningfully cover masks, counts, aliases, guards and MXCSR. Independent O0/O2 rebuilds passed against bytes extracted directly from Game.exe; those bytes also match the accepted assembly. Native Windows compilation records cover the actual implementation and claim compatibility only. Sampled validation does not establish all-input equivalence."
+}

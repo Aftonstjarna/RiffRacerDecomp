@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Simplex vertex reduction",
+  "summary": "Recovered VA 0x546130 (269 bytes), a void i386 thiscall member with one mask-pointer argument and ret 4. Signed count at +0; three five-entry arrays of 16-byte vectors at +4, +0x54 and +0xa4. Descending conditional removals replace an unused index with the last active entry in each array, decrementing count first. The mask low byte is reread at each eligible index. No calls, floating arithmetic, imports, allocation or FS access. Direct Game.exe disassembly confirms the accepted reference. Closest-point update calls at 0x5465af and 0x5467d2 use the result mask at solver+0x14c and a count dispatch over 0..4. GCC differential tests passed; supplied VS2013 compiles implementation under O1, O2 and O2 /Oy-. No matching-source credit claimed.",
+  "targets": [
+    "simplex-solver-reduce-vertices"
+  ],
+  "references": [
+    "simplex-solver-reduce-vertices"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "39808 full-fixture differential comparisons with original_simplex_solver_reduce_vertices linked at 0x546130: all 256 mask bytes for counts INT_MIN,-1,0,1,2,3,4,5 under normal and FTZ/DAZ MXCSR modes; 35712 additional alias cases spanning count bytes, all vector bytes and following fields for counts 0..5 and 16 low masks. Distinct seeded bit patterns include signaling NaN, negative zero and subnormal representations. Compare every byte of count, all three arrays, following 128 bytes and before/after guards; independently verify count and permitted write locations for external masks, external mask unchanged, MXCSR unchanged after each implementation and oracle call. Two further null-mask short-circuit tests at counts -1 and 0. The assembled oracle was compared byte-for-byte to the immutable original (269 bytes). Native MSVC compilation is a compatibility check, not native behavioral validation.",
+  "known_limits": [
+    "Only the assigned reduction routine and required object prefix are recovered; complete class layout and caller algorithms remain outside scope. Vector-role names are inferred from surrounding support-point arithmetic.",
+    "Normal caller counts are 0..4. Count 5 is also tested because each array has five storage slots. Counts above 5 can read beyond declared arrays and are not supported or validated. No bounds clamp is invented.",
+    "A positive eligible count requires a readable mask byte. Invalid pointers, hardware faults, concurrent mutation and exception behavior are outside these tests.",
+    "Tests exercise GCC i386 implementation behavior. VS2013 builds establish compiler compatibility only; this is high-level unmatched recovery, not a byte-matching certification."
+  ]
+}
