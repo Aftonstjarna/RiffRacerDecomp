@@ -5949,3 +5949,16 @@ test-cycle-audio-frame-headers-compatible: $(OUT)/reriff-match $(OUT)/audio_fram
 
 test-recovered: test-cycle-audio-frame-headers-compatible
 .PHONY: test-cycle-audio-frame-headers-compatible
+
+# Reviewed cycle reference: audio-frame-reuse-buffered (assembly evidence only).
+$(OUT)/audio_frame_reuse_buffered.bin: native/audio_frame_reuse_buffered.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_frame_reuse_buffered.o
+	ld -m elf_i386 -Ttext=0x58f4a0 -e original_audio_frame_reuse_buffered $(OUT)/audio_frame_reuse_buffered.o -o $(OUT)/audio_frame_reuse_buffered.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_frame_reuse_buffered.elf $@
+
+test-cycle-audio-frame-reuse-buffered: $(OUT)/reriff-match $(OUT)/audio_frame_reuse_buffered.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-frame-reuse-buffered $(OUT)/audio_frame_reuse_buffered.bin $(OUT)/audio-frame-reuse-buffered-comparison.json
+
+test-recovered: test-cycle-audio-frame-reuse-buffered
+.PHONY: test-cycle-audio-frame-reuse-buffered
