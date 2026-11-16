@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-669",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "pointer-slot-range-zero-initialize",
+      "stem": "cycle_pointer_slot_range_zero_initialize",
+      "source": "Decomp/recovered/msvc/cycle_pointer_slot_range_zero_initialize.cpp",
+      "sha256": "63317ae65115ccf2a1f49ce7282aba0417ca0272bbd75e50fe8d336a21fb2760"
+    }
+  ]
+}
