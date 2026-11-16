@@ -5702,3 +5702,16 @@ test-cycle-script-callinfo-grow: $(OUT)/reriff-match $(OUT)/script_callinfo_grow
 
 test-recovered: test-cycle-script-callinfo-grow
 .PHONY: test-cycle-script-callinfo-grow
+
+# Reviewed cycle reference: script-prototype-dispose (assembly evidence only).
+$(OUT)/script_prototype_dispose.bin: native/script_prototype_dispose.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_prototype_dispose.o
+	ld -m elf_i386 -Ttext=0x4f4bb0 -e original_script_prototype_dispose $(OUT)/script_prototype_dispose.o -o $(OUT)/script_prototype_dispose.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_prototype_dispose.elf $@
+
+test-cycle-script-prototype-dispose: $(OUT)/reriff-match $(OUT)/script_prototype_dispose.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-prototype-dispose $(OUT)/script_prototype_dispose.bin $(OUT)/script-prototype-dispose-comparison.json
+
+test-recovered: test-cycle-script-prototype-dispose
+.PHONY: test-cycle-script-prototype-dispose

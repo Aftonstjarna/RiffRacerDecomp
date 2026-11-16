@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"script-callinfo-grow",0xf4fd0,76},
+  return {NativeBlock{"script-prototype-dispose",0xf4bb0,140},
+                     NativeBlock{"script-callinfo-grow",0xf4fd0,76},
                      NativeBlock{"script-prototype-local-name",0xf4c40,67},
                      NativeBlock{"script-table-ensure-string-slot",0xf0d10,99},
                      NativeBlock{"float-pow-precise-bridge",0xf2590,48},
