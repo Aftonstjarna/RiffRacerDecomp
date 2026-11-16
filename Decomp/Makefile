@@ -6261,3 +6261,16 @@ test-cycle-audio-buffer-append: $(OUT)/reriff-match $(OUT)/audio_buffer_append.b
 
 test-recovered: test-cycle-audio-buffer-append
 .PHONY: test-cycle-audio-buffer-append
+
+# Reviewed cycle reference: record12-copy-range (assembly evidence only).
+$(OUT)/record12_copy_range.bin: native/record12_copy_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_copy_range.o
+	ld -m elf_i386 -Ttext=0x42bb40 -e original_record12_copy_range $(OUT)/record12_copy_range.o -o $(OUT)/record12_copy_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_copy_range.elf $@
+
+test-cycle-record12-copy-range: $(OUT)/reriff-match $(OUT)/record12_copy_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-copy-range $(OUT)/record12_copy_range.bin $(OUT)/record12-copy-range-comparison.json
+
+test-recovered: test-cycle-record12-copy-range
+.PHONY: test-cycle-record12-copy-range
