@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio input read callback dispatch",
+  "summary": "Recovered 0x58d830 as a three-argument cdecl dispatcher. Flag bit 0x40 selects alternate context/callback (+0x6d4c/+0x6d64), with -1 on missing alternate callback; otherwise default context/callback (+0x6d48/+0x6d70) is called unconditionally. Callback return bits pass through and no fields are directly modified. Original setup at 0x58e5d9 installs the dispatcher in +0x6d58, called indirectly by the accumulating reader at 0x58d89d. Oracle's complete 74-byte section was compared with Game.exe at RVA 0x18d830.",
+  "targets": ["audio-input-read-dispatch"],
+  "references": ["audio-input-read-dispatch"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "12,288 original-versus-recovered comparisons at the original virtual address: all 256 low flag bytes, alternate callback present/absent, six count values (0, 1, -1, 17, INT_MIN, INT_MAX), varied callback results, null/non-null buffer and contexts, and callback mutation. Assert exact callback selection, argument identity, count, result, call count, context side effects, all buffer bytes and all object bytes. Verify no object changes for non-mutating/missing callbacks. Test-owned FS head is installed successfully and checked after every original call. GCC freestanding i386 tests passed; pinned MSVC2013 implementation compilation passed.",
+  "known_limits": [
+    "High-level unmatched recovery; no matching-source credit claimed.",
+    "Callback internals, actual audio IO and OS/CRT behavior are outside scope; tests use controlled callbacks.",
+    "Null input and a null default callback on the default path are unchecked original crash preconditions, not executed by the harness.",
+    "Context and buffer pointee types remain unresolved; count is forwarded unchanged, with signed interpretation supported by the caller.",
+    "Documented field offsets are for 32-bit original ABI. Native pointer layout is used when compiling a 64-bit port.",
+    "Exception dispatch and callback unwinding are not tested. Dispatcher has no SEH registration."
+  ]
+}
