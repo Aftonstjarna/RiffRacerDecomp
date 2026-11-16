@@ -6300,3 +6300,16 @@ test-cycle-audio-coefficient-row-generate: $(OUT)/reriff-match $(OUT)/audio_coef
 
 test-recovered: test-cycle-audio-coefficient-row-generate
 .PHONY: test-cycle-audio-coefficient-row-generate
+
+# Reviewed cycle reference: audio-index-compact-even (assembly evidence only).
+$(OUT)/audio_index_compact_even.bin: native/audio_index_compact_even.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_index_compact_even.o
+	ld -m elf_i386 -Ttext=0x5960b0 -e original_audio_index_compact_even $(OUT)/audio_index_compact_even.o -o $(OUT)/audio_index_compact_even.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_index_compact_even.elf $@
+
+test-cycle-audio-index-compact-even: $(OUT)/reriff-match $(OUT)/audio_index_compact_even.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-index-compact-even $(OUT)/audio_index_compact_even.bin $(OUT)/audio-index-compact-even-comparison.json
+
+test-recovered: test-cycle-audio-index-compact-even
+.PHONY: test-cycle-audio-index-compact-even
