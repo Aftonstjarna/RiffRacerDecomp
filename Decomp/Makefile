@@ -6534,3 +6534,16 @@ test-cycle-audio-record32-append: $(OUT)/reriff-match $(OUT)/audio_record32_appe
 
 test-recovered: test-cycle-audio-record32-append
 .PHONY: test-cycle-audio-record32-append
+
+# Reviewed cycle reference: audio-record36-append (assembly evidence only).
+$(OUT)/audio_record36_append.bin: native/audio_record36_append.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_record36_append.o
+	ld -m elf_i386 -Ttext=0x58b5a0 -e original_audio_record36_append $(OUT)/audio_record36_append.o -o $(OUT)/audio_record36_append.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_record36_append.elf $@
+
+test-cycle-audio-record36-append: $(OUT)/reriff-match $(OUT)/audio_record36_append.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-record36-append $(OUT)/audio_record36_append.bin $(OUT)/audio-record36-append-comparison.json
+
+test-recovered: test-cycle-audio-record36-append
+.PHONY: test-cycle-audio-record36-append

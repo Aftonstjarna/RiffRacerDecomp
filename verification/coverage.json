@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 108883,
-  "remaining_bytes": 8526509,
-  "verified_percent": 1.2608923833451915,
-  "registered_blocks": 544,
-  "exact_blocks": 544,
+  "verified_bytes": 109029,
+  "remaining_bytes": 8526363,
+  "verified_percent": 1.2625830998754892,
+  "registered_blocks": 545,
+  "exact_blocks": 545,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3863,6 +3863,15 @@
       "byte_equal": true,
       "reference_sha256": "82a913bac7baf67d9c7c24dbd579c6b3d0f92e9b24c4b17c6fb5ebd99377b541",
       "candidate_sha256": "82a913bac7baf67d9c7c24dbd579c6b3d0f92e9b24c4b17c6fb5ebd99377b541"
+    },
+    {
+      "name": "audio-record36-append",
+      "file_offset": 1616288,
+      "size": 146,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "6e82f2d50bf8fcda6fd98f8e8d12255d98c6e200bd3f864179d151455b54e77c",
+      "candidate_sha256": "6e82f2d50bf8fcda6fd98f8e8d12255d98c6e200bd3f864179d151455b54e77c"
     },
     {
       "name": "audio-input-read-dispatch",
