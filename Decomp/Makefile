@@ -6131,3 +6131,16 @@ test-cycle-audio-stream-read-exact: $(OUT)/reriff-match $(OUT)/audio_stream_read
 
 test-recovered: test-cycle-audio-stream-read-exact
 .PHONY: test-cycle-audio-stream-read-exact
+
+# Reviewed cycle reference: audio-unity-arrays-initialize (assembly evidence only).
+$(OUT)/audio_unity_arrays_initialize.bin: native/audio_unity_arrays_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_unity_arrays_initialize.o
+	ld -m elf_i386 -Ttext=0x58a120 -e original_audio_unity_arrays_initialize $(OUT)/audio_unity_arrays_initialize.o -o $(OUT)/audio_unity_arrays_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_unity_arrays_initialize.elf $@
+
+test-cycle-audio-unity-arrays-initialize: $(OUT)/reriff-match $(OUT)/audio_unity_arrays_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-unity-arrays-initialize $(OUT)/audio_unity_arrays_initialize.bin $(OUT)/audio-unity-arrays-initialize-comparison.json
+
+test-recovered: test-cycle-audio-unity-arrays-initialize
+.PHONY: test-cycle-audio-unity-arrays-initialize
