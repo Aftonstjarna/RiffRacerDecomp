@@ -5923,3 +5923,16 @@ test-cycle-audio-bitstream-read16: $(OUT)/reriff-match $(OUT)/audio_bitstream_re
 
 test-recovered: test-cycle-audio-bitstream-read16
 .PHONY: test-cycle-audio-bitstream-read16
+
+# Reviewed cycle reference: audio-frame-header-plausible (assembly evidence only).
+$(OUT)/audio_frame_header_plausible.bin: native/audio_frame_header_plausible.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_frame_header_plausible.o
+	ld -m elf_i386 -Ttext=0x58eb00 -e original_audio_frame_header_plausible $(OUT)/audio_frame_header_plausible.o -o $(OUT)/audio_frame_header_plausible.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_frame_header_plausible.elf $@
+
+test-cycle-audio-frame-header-plausible: $(OUT)/reriff-match $(OUT)/audio_frame_header_plausible.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-frame-header-plausible $(OUT)/audio_frame_header_plausible.bin $(OUT)/audio-frame-header-plausible-comparison.json
+
+test-recovered: test-cycle-audio-frame-header-plausible
+.PHONY: test-cycle-audio-frame-header-plausible
