@@ -6430,3 +6430,16 @@ test-cycle-audio-record32-array-clear: $(OUT)/reriff-match $(OUT)/audio_record32
 
 test-recovered: test-cycle-audio-record32-array-clear
 .PHONY: test-cycle-audio-record32-array-clear
+
+# Reviewed cycle reference: audio-decoder-metadata-clear (assembly evidence only).
+$(OUT)/audio_decoder_metadata_clear.bin: native/audio_decoder_metadata_clear.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_decoder_metadata_clear.o
+	ld -m elf_i386 -Ttext=0x58b220 -e original_audio_decoder_metadata_clear $(OUT)/audio_decoder_metadata_clear.o -o $(OUT)/audio_decoder_metadata_clear.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_decoder_metadata_clear.elf $@
+
+test-cycle-audio-decoder-metadata-clear: $(OUT)/reriff-match $(OUT)/audio_decoder_metadata_clear.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-decoder-metadata-clear $(OUT)/audio_decoder_metadata_clear.bin $(OUT)/audio-decoder-metadata-clear-comparison.json
+
+test-recovered: test-cycle-audio-decoder-metadata-clear
+.PHONY: test-cycle-audio-decoder-metadata-clear
