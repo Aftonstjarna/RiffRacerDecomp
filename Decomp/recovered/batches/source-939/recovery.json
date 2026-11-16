@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio stream position commit",
+  "summary": "Recover the cdecl callback at VA 0x58e3d0 (RVA 0x18e3d0, 39 bytes): invoke the thiscall buffer commit dependency at stream+0x6d7c, then store the modulo-2^32 sum of updated fields +0x6d90 and +0x6d88 at +0x6d44. Preserve that sum as the observed EAX result. Direct original disassembly confirms the accepted assembly. Dispatch tables at 0xbaf500, 0xbaf530 and 0xbaf560 place this callback at +0x2c; callers at 0x58f59e, 0x58f8f0, 0x58fa60 and 0x58fab5 use caller stack cleanup and ignore EAX. No matching source credit claimed.",
+  "targets": ["audio-stream-commit-position"],
+  "references": ["audio-stream-commit-position", "audio-buffer-commit-consumed"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding test_main passes 144 cases: six bases (zero, ordinary, signed boundary, high bit, near wrap and all bits set), eleven offsets (zero, partial, exact block boundaries, beyond all blocks, signed extremes), empty queues, and zero-length blocks. Compare the recovered callback directly with original_audio_stream_commit_position linked at its original VA. The test-only member binding executes original_audio_buffer_commit_consumed with GCC thiscall ABI for the recovered path too. Reset and reuse identical fixture addresses to compare every byte, including opaque stream fields, guards, nodes and payloads; independently assert return word, stored position, remaining offset, checkpoint, base, size, head/tail and recycling links/count. Repeat recovered calls to check idempotence. Install initialized test-owned FS storage and check its head after each original call. Original target and helper section bytes were checked against Game.exe (39 and 110 bytes). Test exits zero. Implementation compiled locally with pinned VS2013 at O1, O2 and O2 /Oy-; no source byte-match claim.",
+  "known_limits": [
+    "AudioBuffer::commitConsumed is an external member dependency, not an additional recovered implementation. test.cpp binds it to the accepted original helper; port integration must supply the corresponding helper.",
+    "Tests keep enough recycling capacity to avoid the helper's original CRT free import at 0x92d3a4. Heap-release and allocator internals are outside the controlled validation.",
+    "Layouts intentionally describe the original 32-bit address space and require a 32-bit target. A 64-bit native port needs an explicit layout adaptation.",
+    "The original EAX sum is preserved, but observed callers ignore it, so the original source return type remains unresolved.",
+    "Semantic field names are inferred from accounting instructions. Complete stream type, opaque fields and position units are not recovered here.",
+    "Null stream pointers, invalid or cyclic block lists, exception dispatch and concurrent mutation are outside these tests; no new checks or synchronization have been invented."
+  ]
+}
