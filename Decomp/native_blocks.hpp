@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"audio-coefficient-rows-initialize",0x196390,49},
+  return {NativeBlock{"audio-coefficient-row-generate",0x1963d0,97},
+                     NativeBlock{"audio-coefficient-rows-initialize",0x196390,49},
                      NativeBlock{"record12-copy-range",0x2bb40,47},
                      NativeBlock{"audio-buffer-append",0x18dfc0,268},
                      NativeBlock{"audio-metadata-state-initialize",0x18b2c0,59},

@@ -6287,3 +6287,16 @@ test-cycle-audio-coefficient-rows-initialize: $(OUT)/reriff-match $(OUT)/audio_c
 
 test-recovered: test-cycle-audio-coefficient-rows-initialize
 .PHONY: test-cycle-audio-coefficient-rows-initialize
+
+# Reviewed cycle reference: audio-coefficient-row-generate (assembly evidence only).
+$(OUT)/audio_coefficient_row_generate.bin: native/audio_coefficient_row_generate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_coefficient_row_generate.o
+	ld -m elf_i386 -Ttext=0x5963d0 -e original_audio_coefficient_row_generate $(OUT)/audio_coefficient_row_generate.o -o $(OUT)/audio_coefficient_row_generate.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_coefficient_row_generate.elf $@
+
+test-cycle-audio-coefficient-row-generate: $(OUT)/reriff-match $(OUT)/audio_coefficient_row_generate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-coefficient-row-generate $(OUT)/audio_coefficient_row_generate.bin $(OUT)/audio-coefficient-row-generate-comparison.json
+
+test-recovered: test-cycle-audio-coefficient-row-generate
+.PHONY: test-cycle-audio-coefficient-row-generate
