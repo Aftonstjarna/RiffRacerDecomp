@@ -5975,3 +5975,16 @@ test-cycle-audio-buffer-adjust-position: $(OUT)/reriff-match $(OUT)/audio_buffer
 
 test-recovered: test-cycle-audio-buffer-adjust-position
 .PHONY: test-cycle-audio-buffer-adjust-position
+
+# Reviewed cycle reference: audio-buffer-advance-position (assembly evidence only).
+$(OUT)/audio_buffer_advance_position.bin: native/audio_buffer_advance_position.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffer_advance_position.o
+	ld -m elf_i386 -Ttext=0x58e2d0 -e original_audio_buffer_advance_position $(OUT)/audio_buffer_advance_position.o -o $(OUT)/audio_buffer_advance_position.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffer_advance_position.elf $@
+
+test-cycle-audio-buffer-advance-position: $(OUT)/reriff-match $(OUT)/audio_buffer_advance_position.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffer-advance-position $(OUT)/audio_buffer_advance_position.bin $(OUT)/audio-buffer-advance-position-comparison.json
+
+test-recovered: test-cycle-audio-buffer-advance-position
+.PHONY: test-cycle-audio-buffer-advance-position
