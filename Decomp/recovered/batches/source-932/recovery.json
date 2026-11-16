@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script call result finalization",
+  "summary": "Recover 0x4f57a0 as a fastcall ScriptState member: optional external return-hook processing, pop the 24-byte call-info frame, restore base and saved PC, forward-copy tagged results, nil-pad tags only, update top, return requested count plus one modulo 32 bits. Original callers at 0x4f4721, 0x4f5666 and 0x4f58fd establish ECX/EDX arguments; the latter tests the zero return for variable results.",
+  "targets": [
+    "script-call-result-finish"
+  ],
+  "references": [
+    "script-call-result-finish"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "5019 direct original/recovered comparisons passed using the oracle linked at original VA 0x4f57a0; its 140 bytes were independently compared against Game.exe. Same restored fixture addresses, comparing every byte of state, three frames, 64 value slots and guards. Covers counts 0..12, available results 0..12, seven destinations including exact alias and both overlap directions, four hook-disabled masks, negative counts -1/-2/-16, first result past top, and INT_MIN with no available values. Explicit return, restored frame/base/PC, top and nil-payload checks; FS setup must succeed and head restoration is checked after every original call. GCC fixed-flags behavioral executable passed. Implementation compiled using pinned VS2013 at O1, O2 and O2 /Oy-; this compilation does not establish matching bytes.",
+  "known_limits": [
+    "Return-hook helper at 0x4f5680 has no accepted reference. Implementation requires external script_return_hook with its actual fastcall contract; hook-enabled original execution, stack relocation and callbacks are not validated. Test supplies only an unreachable link stub, never a substitute oracle.",
+    "Invalid pointers, exhausted frame arrays and enormous counts needing inaccessible storage are outside controlled tests. Negative counts other than -1 retain observed modulo countdown semantics but their gameplay validity is unknown.",
+    "Layouts model the original 32-bit process; pointer fields need a deliberate layout adaptation for a 64-bit port. Unknown fields remain unnamed and untouched.",
+    "No matching-byte claim. Full Lua VM, exceptions, unwind, allocation and rendering remain outside this bounded recovery."
+  ]
+}
