@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-671",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "compound-shape-set-margin",
+      "stem": "cycle_compound_shape_set_margin",
+      "source": "Decomp/recovered/msvc/cycle_compound_shape_set_margin.cpp",
+      "sha256": "5f280c006a214cabd88512f2e1cb3bfa3c44edd9d52af5e65959c5958e9bf0df"
+    }
+  ]
+}
