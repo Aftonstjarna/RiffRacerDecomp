@@ -6079,3 +6079,16 @@ test-cycle-audio-backend-reset: $(OUT)/reriff-match $(OUT)/audio_backend_reset.b
 
 test-recovered: test-cycle-audio-backend-reset
 .PHONY: test-cycle-audio-backend-reset
+
+# Reviewed cycle reference: audio-stream-commit-position (assembly evidence only).
+$(OUT)/audio_stream_commit_position.bin: native/audio_stream_commit_position.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_stream_commit_position.o
+	ld -m elf_i386 -Ttext=0x58e3d0 -e original_audio_stream_commit_position $(OUT)/audio_stream_commit_position.o -o $(OUT)/audio_stream_commit_position.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_stream_commit_position.elf $@
+
+test-cycle-audio-stream-commit-position: $(OUT)/reriff-match $(OUT)/audio_stream_commit_position.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-stream-commit-position $(OUT)/audio_stream_commit_position.bin $(OUT)/audio-stream-commit-position-comparison.json
+
+test-recovered: test-cycle-audio-stream-commit-position
+.PHONY: test-cycle-audio-stream-commit-position
