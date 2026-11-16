@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-627",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "device-indexed-handle-select",
+      "stem": "cycle_device_indexed_handle_select",
+      "source": "Decomp/recovered/msvc/cycle_device_indexed_handle_select.cpp",
+      "sha256": "c974a2196254a5efff0dad8385153bc55e75d8745b9235bb89515889031f2edc"
+    }
+  ]
+}
