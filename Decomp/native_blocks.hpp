@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"audio-resample-output-count",0x1909e0,113},
+  return {NativeBlock{"audio-storage-resize",0x1ae020,114},
+                     NativeBlock{"audio-resample-output-count",0x1909e0,113},
                      NativeBlock{"record12-capacity-growth",0x1a95f0,72},
                      NativeBlock{"audio-record36-remove-last",0x18b6b0,112},
                      NativeBlock{"audio-record32-remove-last",0x18b640,104},

@@ -6599,3 +6599,16 @@ test-cycle-audio-resample-output-count: $(OUT)/reriff-match $(OUT)/audio_resampl
 
 test-recovered: test-cycle-audio-resample-output-count
 .PHONY: test-cycle-audio-resample-output-count
+
+# Reviewed cycle reference: audio-storage-resize (assembly evidence only).
+$(OUT)/audio_storage_resize.bin: native/audio_storage_resize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_storage_resize.o
+	ld -m elf_i386 -Ttext=0x5ae020 -e original_audio_storage_resize $(OUT)/audio_storage_resize.o -o $(OUT)/audio_storage_resize.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_storage_resize.elf $@
+
+test-cycle-audio-storage-resize: $(OUT)/reriff-match $(OUT)/audio_storage_resize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-storage-resize $(OUT)/audio_storage_resize.bin $(OUT)/audio-storage-resize-comparison.json
+
+test-recovered: test-cycle-audio-storage-resize
+.PHONY: test-cycle-audio-storage-resize

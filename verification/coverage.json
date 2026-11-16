@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 109430,
-  "remaining_bytes": 8525962,
-  "verified_percent": 1.2672267802087038,
-  "registered_blocks": 549,
-  "exact_blocks": 549,
+  "verified_bytes": 109544,
+  "remaining_bytes": 8525848,
+  "verified_percent": 1.268546928732361,
+  "registered_blocks": 550,
+  "exact_blocks": 550,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4205,6 +4205,15 @@
       "byte_equal": true,
       "reference_sha256": "fe83631638b63ff85e381f2de05d757a4b933adaacbcc470e4bff3e54e1525bd",
       "candidate_sha256": "fe83631638b63ff85e381f2de05d757a4b933adaacbcc470e4bff3e54e1525bd"
+    },
+    {
+      "name": "audio-storage-resize",
+      "file_offset": 1758240,
+      "size": 114,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "357cb62bd3e9e2f7fd1b3241485ab46c2a01b34db0514fdccd369f9d95ab602b",
+      "candidate_sha256": "357cb62bd3e9e2f7fd1b3241485ab46c2a01b34db0514fdccd369f9d95ab602b"
     },
     {
       "name": "byte-range-transform-callback",
