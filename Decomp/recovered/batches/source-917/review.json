@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, fastcall ABI, 48-byte layout, partial writes and null skip agree with independently byte-checked original assembly and caller evidence. Submitted tests call the original and check all buffer bytes. An independent optimized i386 countercheck passed 21,845 cases plus null and zero-count checks. Source hashes match validation, and native Windows compilation records concern the actual implementation. Fault behavior, large-count wraparound and native-width port differences are explicitly limited; sampled validation does not establish all-input equivalence or exact matching."
+}

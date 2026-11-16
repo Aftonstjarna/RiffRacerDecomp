@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Partial default initialization of 48-byte records",
+  "summary": "Recovered VA 0x541f40 (RVA 0x141f40), 94 bytes, as a fastcall range helper: ECX is the first record address and EDX is an unsigned count. Each non-null element address receives nine zero DWORDs at offsets 0 through 32, a zero DWORD at 40, and a zero byte at 44; offsets 36 through 39 and 45 through 47 remain untouched. The sole direct call found at 0x541bc3 belongs to vector-like growth at 0x541b50, passing old end and requested growth count. The caller manages allocation and end updates. Original instructions were inspected directly and all 94 oracle bytes compared with immutable Game.exe. Implementation is readable unmatched C++, with no matching-source claim.",
+  "targets": ["record48-default-construct-range"],
+  "references": ["record48-default-construct-range"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding test_main passed against the accepted original at VA 0x541f40. Eight initial byte patterns, four starting record positions and counts 0 through 64 yield 2080 differential cases. Every byte of both 68-record buffers is checked against an independent expected write mask, including preserved fields, prefix and suffix guards. Additional calls test invalid address with zero count, null with zero count, and null with one count. Test-owned FS backing is initialized and installed successfully, and its head is checked after every original call. The implementation also compiled with supplied VS2013 using O1, O2, and O2 /Oy-.",
+  "known_limits": [
+    "Original record type and field meanings are unresolved; field names state observed writes only.",
+    "No exception, invalid non-null storage, or deliberate access-fault behavior is exercised. Null with count greater than one skips address zero then attempts to write low memory, as dictated by the loop; it is not a safe empty range.",
+    "Very large counts and address-space wraparound are not executed. Integer addressing wraps at native uintptr_t width; a 64-bit port intentionally uses native pointer width rather than reproducing 32-bit address truncation.",
+    "Only memory side effects and the normal call ABI are contractual here; incidental volatile-register results are not modeled. No allocation, OS services, or full container behavior is recovered.",
+    "Sampled behavioral validation and compiler compatibility do not establish matching code generation or full-game equivalence."
+  ]
+}
