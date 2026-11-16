@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Flag-selected 32-bit product",
+  "summary": "Recover the 36-byte routine at VA 0x55d190 (RVA 0x15d190) as a const member method with ECX object, EDX multiplier and EAX result. It reads flags at +0x6cec and common factor at +0x6cf4. With bit 0x4000 set it returns common*multiplier*4; otherwise it also multiplies by the field at +0x6cf0. All arithmetic wraps modulo 2^32. It writes no memory and calls no dependencies. Direct original disassembly and the direct caller at 0x55bfdb establish the register ABI; the caller stores the result at +0x6d00 outside this routine. GCC differential execution passed; pinned MSVC2013 compilation succeeded with O1, O2 and O2 /Oy-. No matching-source credit is claimed.",
+  "targets": ["flag-selected-product"],
+  "references": ["flag-selected-product"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "The accepted assembly oracle was verified against all 36 original PE bytes and linked at VA 0x55d190. Freestanding GCC i386 test_main returned zero. It compares the original fastcall reference directly with the recovered member for 12096 Cartesian cases (7 flag patterns and 12 values each for ordinary factor, common factor and multiplier) plus 1024 deterministic generated cases. Cases cover zero, small products, shift truncation, high-bit/signed-looking operands, multiplication overflow, isolated flag bit, unrelated flags and all flags. Every call checks the complete partial-object view and surrounding guards against a saved snapshot for unintended writes. Two explicit known-result assertions check 3*5*7=105 and 4*5*7=140. Test-owned FS backing is initialized and installed with required success checking; FS head restoration is checked after every original call. No import bindings are needed.",
+  "known_limits": [
+    "Original class identity, total object size and domain meanings of the three fields remain unresolved; names describe only observed arithmetic roles.",
+    "Tests use valid aligned objects; null or inaccessible pointers are outside the valid input contract and would fault in the original.",
+    "ABI preservation applies to 32-bit x86; other platforms use the portable member interface and require integration-specific calling conventions.",
+    "Only the assigned routine is recovered. Its caller and the broader game subsystem are evidence, not recovered implementations.",
+    "Differential samples are not exhaustive over all possible 32-bit inputs; unsigned arithmetic models the directly observed low-32-bit operations. No full-game or matching-source certification is claimed."
+  ]
+}
