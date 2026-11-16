@@ -6326,3 +6326,16 @@ test-cycle-audio-buffered-read-exact-callback: $(OUT)/reriff-match $(OUT)/audio_
 
 test-recovered: test-cycle-audio-buffered-read-exact-callback
 .PHONY: test-cycle-audio-buffered-read-exact-callback
+
+# Reviewed cycle reference: audio-buffered-backend-initialize (assembly evidence only).
+$(OUT)/audio_buffered_backend_initialize.bin: native/audio_buffered_backend_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffered_backend_initialize.o
+	ld -m elf_i386 -Ttext=0x58e1f0 -e original_audio_buffered_backend_initialize $(OUT)/audio_buffered_backend_initialize.o -o $(OUT)/audio_buffered_backend_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffered_backend_initialize.elf $@
+
+test-cycle-audio-buffered-backend-initialize: $(OUT)/reriff-match $(OUT)/audio_buffered_backend_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffered-backend-initialize $(OUT)/audio_buffered_backend_initialize.bin $(OUT)/audio-buffered-backend-initialize-comparison.json
+
+test-recovered: test-cycle-audio-buffered-backend-initialize
+.PHONY: test-cycle-audio-buffered-backend-initialize
