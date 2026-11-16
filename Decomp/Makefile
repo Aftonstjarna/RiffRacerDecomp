@@ -5910,3 +5910,16 @@ test-cycle-audio-configuration-select: $(OUT)/reriff-match $(OUT)/audio_configur
 
 test-recovered: test-cycle-audio-configuration-select
 .PHONY: test-cycle-audio-configuration-select
+
+# Reviewed cycle reference: audio-bitstream-read16 (assembly evidence only).
+$(OUT)/audio_bitstream_read16.bin: native/audio_bitstream_read16.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_bitstream_read16.o
+	ld -m elf_i386 -Ttext=0x58eab0 -e original_audio_bitstream_read16 $(OUT)/audio_bitstream_read16.o -o $(OUT)/audio_bitstream_read16.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_bitstream_read16.elf $@
+
+test-cycle-audio-bitstream-read16: $(OUT)/reriff-match $(OUT)/audio_bitstream_read16.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-bitstream-read16 $(OUT)/audio_bitstream_read16.bin $(OUT)/audio-bitstream-read16-comparison.json
+
+test-recovered: test-cycle-audio-bitstream-read16
+.PHONY: test-cycle-audio-bitstream-read16
