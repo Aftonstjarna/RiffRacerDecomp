@@ -6144,3 +6144,16 @@ test-cycle-audio-unity-arrays-initialize: $(OUT)/reriff-match $(OUT)/audio_unity
 
 test-recovered: test-cycle-audio-unity-arrays-initialize
 .PHONY: test-cycle-audio-unity-arrays-initialize
+
+# Reviewed cycle reference: audio-buffer-read-range (assembly evidence only).
+$(OUT)/audio_buffer_read_range.bin: native/audio_buffer_read_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffer_read_range.o
+	ld -m elf_i386 -Ttext=0x58e0d0 -e original_audio_buffer_read_range $(OUT)/audio_buffer_read_range.o -o $(OUT)/audio_buffer_read_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffer_read_range.elf $@
+
+test-cycle-audio-buffer-read-range: $(OUT)/reriff-match $(OUT)/audio_buffer_read_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffer-read-range $(OUT)/audio_buffer_read_range.bin $(OUT)/audio-buffer-read-range-comparison.json
+
+test-recovered: test-cycle-audio-buffer-read-range
+.PHONY: test-cycle-audio-buffer-read-range
