@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Forward copy of 12-byte records",
+  "summary": "Recovered 0x42bb40: forward 12-byte stride, ordered eight-byte then four-byte transfers, per-iteration null destination guard, and advanced destination return. Direct original disassembly and callers 0x429b91/0x43e45f establish custom caller-cleaned ECX/EDX/stack ABI and vector-like bounds; field meaning remains unknown.",
+  "targets": [
+    "record12-copy-range"
+  ],
+  "references": [
+    "record12-copy-range"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original reference comparison: zero through eight records, self-copy, disjoint buffers, forward and backward overlap offsets 1 through 25 including unaligned addresses. Compare returned pointer and all 256 buffer bytes to verify untouched regions. Empty invalid/null bounds and one null-destination iteration verify skipped reads and numeric destination advance. GCC regparm(3) adapter supplies ECX/EDX with caller-cleaned destination stack argument. Local oracle tests passed at GCC O0 and O2; accepted reference bytes verified against all 47 original bytes. Supplied VS2013 compilation passed at O1, O2, and O2 /Oy- (compilation only).",
+  "known_limits": [
+    "Record field types and original template identity are unresolved; only raw 12-byte layout is established.",
+    "Malformed bounds, inaccessible memory, multi-record null destination and address wraparound are outside valid tested storage; original has no validation and may fault or fail to terminate.",
+    "No byte-matching claim; portable byte snapshots preserve the original ordered 8+4 copy behavior on ordinary memory, not concurrent or volatile memory semantics."
+  ]
+}

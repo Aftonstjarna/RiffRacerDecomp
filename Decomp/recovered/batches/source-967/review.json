@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source preserves the original loop, ordered 8+4 transfers, overlap effects, null-destination guard and advanced return. Caller disassembly supports the documented custom ABI; tests genuinely call the original through an adapter and compare complete buffers. Independently verified all 47 reference bytes against Game.exe and passed expanded differential checks at GCC O0/O2/O3. Native Windows evidence records compilation of the actual implementation only. Storage, concurrency and malformed-input limitations are explicit; sampled validation does not establish all-input equivalence or binary ABI compatibility."
+}
