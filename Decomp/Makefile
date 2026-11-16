@@ -6183,3 +6183,16 @@ test-cycle-audio-synthesis-window-initialize: $(OUT)/reriff-match $(OUT)/audio_s
 
 test-recovered: test-cycle-audio-synthesis-window-initialize
 .PHONY: test-cycle-audio-synthesis-window-initialize
+
+# Reviewed cycle reference: audio-input-read-loop (assembly evidence only).
+$(OUT)/audio_input_read_loop.bin: native/audio_input_read_loop.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_input_read_loop.o
+	ld -m elf_i386 -Ttext=0x58d880 -e original_audio_input_read_loop $(OUT)/audio_input_read_loop.o -o $(OUT)/audio_input_read_loop.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_input_read_loop.elf $@
+
+test-cycle-audio-input-read-loop: $(OUT)/reriff-match $(OUT)/audio_input_read_loop.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-input-read-loop $(OUT)/audio_input_read_loop.bin $(OUT)/audio-input-read-loop-comparison.json
+
+test-recovered: test-cycle-audio-input-read-loop
+.PHONY: test-cycle-audio-input-read-loop
