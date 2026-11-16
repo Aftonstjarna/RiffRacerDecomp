@@ -5780,3 +5780,16 @@ test-cycle-collision-face-list-unlink: $(OUT)/reriff-match $(OUT)/collision_face
 
 test-recovered: test-cycle-collision-face-list-unlink
 .PHONY: test-cycle-collision-face-list-unlink
+
+# Reviewed cycle reference: simplex-result-reset (assembly evidence only).
+$(OUT)/simplex_result_reset.bin: native/simplex_result_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/simplex_result_reset.o
+	ld -m elf_i386 -Ttext=0x546100 -e original_simplex_result_reset $(OUT)/simplex_result_reset.o -o $(OUT)/simplex_result_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/simplex_result_reset.elf $@
+
+test-cycle-simplex-result-reset: $(OUT)/reriff-match $(OUT)/simplex_result_reset.bin
+	$(OUT)/reriff-match native-check "$(GAME)" simplex-result-reset $(OUT)/simplex_result_reset.bin $(OUT)/simplex-result-reset-comparison.json
+
+test-recovered: test-cycle-simplex-result-reset
+.PHONY: test-cycle-simplex-result-reset

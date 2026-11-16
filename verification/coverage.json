@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 103086,
-  "remaining_bytes": 8532306,
-  "verified_percent": 1.1937616728922091,
-  "registered_blocks": 486,
-  "exact_blocks": 486,
+  "verified_bytes": 103128,
+  "remaining_bytes": 8532264,
+  "verified_percent": 1.1942480434009248,
+  "registered_blocks": 487,
+  "exact_blocks": 487,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3485,6 +3485,15 @@
       "byte_equal": true,
       "reference_sha256": "1c9ec06130a2ca7ee7c4c90e17145077ee87eba6de2253f24e37144cbebd6370",
       "candidate_sha256": "1c9ec06130a2ca7ee7c4c90e17145077ee87eba6de2253f24e37144cbebd6370"
+    },
+    {
+      "name": "simplex-result-reset",
+      "file_offset": 1332480,
+      "size": 42,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "e307328f60a513c48cec9aa4101b077613feb236380238b036f9dd089b2d48ea",
+      "candidate_sha256": "e307328f60a513c48cec9aa4101b077613feb236380238b036f9dd089b2d48ea"
     },
     {
       "name": "simplex-solver-reduce-vertices",
