@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Lua closure allocation and GC linking",
+  "summary": "Recover Game.exe 0x4f4800..0x4f4864 as State::allocate_lua_closure: request 20+4*count bytes, reload the global after allocation, prepend the closure to its GC root, initialize type/white/is-C/count/environment, and clear upvalue pointers in descending order. GC-list and prototype fields remain untouched. Direct caller evidence at 0x4f44bb and 0x4f5b82 supplies byte-sized prototype counts and initializes the prototype afterward. Original ECX-state/EDX-count/caller-cleaned environment ABI is represented by a GCC test-only adapter. Accepted allocator behavior stays an explicit reference dependency, outside recovered scope.",
+  "targets": ["script-lua-closure-allocate"],
+  "references": ["script-lua-closure-allocate", "script-reallocate"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "1,408 original/source comparisons: counts 0,1,2,3,7,31,254,255,256,257,1024; eight current-white patterns covering all low-bit combinations and high bits; null/non-null environment and initial root; allocator mutation of state.global and root/color. Assert returned pointer, one allocator callback with null input and old size zero, exact new size, captured-global accounting with unsigned wrap, GC links, header bytes, low-byte count truncation, every cleared upvalue, unchanged prototype/GC-list fields, full state/global images and front/rear storage guards. Explicit test_install_fs success and head restoration checks accompany original calls. GCC fixed-flag freestanding harness returns zero. Linked reference sections were byte-compared against immutable Game.exe (100 target bytes and 133 allocator bytes). Pinned MSVC2013 compilation succeeds for implementation at O1, O2 and O2 /Oy-; this is compatibility evidence, not a byte-match claim.",
+  "known_limits": [
+    "Only the assigned closure allocator is recovered. The portable reallocate integration boundary must be supplied by the port; tests bind it to accepted original script-reallocate with a controlled successful allocation callback.",
+    "Allocation failure, longjmp, panic, exception dispatch and real allocator/GC internals are not exercised. The target assumes a usable allocation and adds no null-result recovery.",
+    "Layouts require 32-bit pointers. Caller evidence normally limits count to 0..255; larger bounded counts test the original full-width loop and truncated stored count. Extreme counts with wrapped allocation size or insufficient backing are not executed; no safety checks are invented.",
+    "GC-list and prototype names follow Lua layout and caller use; this routine does not initialize them. Full VM execution, GC traversal and environment/prototype ownership are outside scope.",
+    "Readable source remains high-level unmatched, with zero matching-source credit. Successful MSVC builds and exact reference-assembly comparisons do not establish matching generated implementation bytes."
+  ]
+}
