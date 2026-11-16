@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-633",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "flag-selected-product",
+      "stem": "cycle_flag_selected_product",
+      "source": "Decomp/recovered/msvc/cycle_flag_selected_product.cpp",
+      "sha256": "7c751920b4e24d76e3467b69b9754842f58e6acea803d6bd434e9b45d0d6cd61"
+    }
+  ]
+}

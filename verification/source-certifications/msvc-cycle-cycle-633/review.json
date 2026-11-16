@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "226cd5d1f60fa40b1251f7c116cf827952ba11e937c171f1917a9dae949eb809",
+  "behavior_sha256": "207bf2471b82e7e9b2f8e886cd570806e182e6e9bef693f8708493c326eddf55",
+  "functions": [
+    {
+      "scope": "flag-selected-product",
+      "source_sha256": "7c751920b4e24d76e3467b69b9754842f58e6acea803d6bd434e9b45d0d6cd61",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified code section byte-for-byte against Game.exe. Original instructions confirm boundaries, field offsets, register ABI and both branches. Executing actual compiled and original bytes passed 10,648 differential cases covering overflow, flag combinations and unchanged guarded state. Approval covers this routine only."
+    }
+  ],
+  "review_receipt_sha256": "71d17ed2814726d2b27f5d8d3396f602ff0d7e5678c3651eba0fd597b0444576",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
