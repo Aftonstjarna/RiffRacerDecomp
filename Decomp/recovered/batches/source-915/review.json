@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Readable implementation agrees with original control flow, x86 fastcall ABI, field offsets and side effects. Source hashes match validation, including actual-implementation native compilation records. Independently verified reference bytes against Game.exe and passed 5,376 differential cases spanning every byte count, boundary targets, high/duplicate indices and changed/unchanged storage. Negative targets and invalid or overlapping storage remain documented limitations; sampled validation does not establish all-input equivalence."
+}
