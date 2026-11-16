@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "7fcf28d9ccf86c84ea93890da45d7e3e8f90a3391890b4d0f17e28cb136dd311",
+  "behavior_sha256": "a4013f1a9dcc6b62b05cdbb0170db803ac7bb56a8be6eaa0ad348e00380cea65",
+  "functions": [
+    {
+      "scope": "simplex-result-reset",
+      "source_sha256": "4959051829e853a92b0deb37a0aa51c4b56436edd0117afc76acfd8476f6b1a0",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the full unmodified compiler section exactly, with no relocations. Original instructions confirm the ABI, field offsets and preserved status bits. Executing actual compiled bytes against bytes extracted from the verified original passed 262,144 cases covering every status value, four memory patterns, untouched state, guards and idempotence. No substituted implementation or embedded instruction data appears in the proposed source."
+    }
+  ],
+  "review_receipt_sha256": "0ac7c91dc31d3e199092779c174f8006ad705f6cb6bfcabe2ac6ece0bebdc6e9",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

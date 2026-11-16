@@ -64,7 +64,7 @@ the actual native fragments pass differential behavior tests and controller
 source review. The [source ledger](verification/source-coverage.json) and
 [certification evidence](verification/source-certifications/msvc-render-helpers-v1/) record that scope.
 The [UTF-16 length setter](Decomp/recovered/msvc/wide_length.cpp) adds another
-37 certified source bytes, bringing the total to 3270. Its separate
+37 certified source bytes, bringing the total to 3312. Its separate
 [certification](verification/source-certifications/msvc-wide-length-v1/) includes
 native Windows and isolated MSVC rebuilds plus 1,256 comparisons of the actual
 compiled function with the original, covering inline/heap storage and guards.
@@ -93,7 +93,7 @@ completion. They describe the accepted recovery on the
 
 | Evidence | Whole executable | `.text` section |
 |---|---:|---:|
-| Compiler-built matching high-level source | 3,270 / 8,635,392 bytes (0.03787%) | 3,270 / 5,421,056 bytes (0.06032%) |
+| Compiler-built matching high-level source | 3,312 / 8,635,392 bytes (0.03835%) | 3,312 / 5,421,056 bytes (0.06110%) |
 | Existing assembly-level byte matches | 103,128 / 8,635,392 bytes (1.19425%) | 103,100 / 5,421,056 bytes (1.90184%) |
 
 The [legacy assembly byte-comparison ledger](verification/coverage.json)

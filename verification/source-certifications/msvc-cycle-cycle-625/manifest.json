@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-625",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "simplex-result-reset",
+      "stem": "cycle_simplex_result_reset",
+      "source": "Decomp/recovered/msvc/cycle_simplex_result_reset.cpp",
+      "sha256": "4959051829e853a92b0deb37a0aa51c4b56436edd0117afc76acfd8476f6b1a0"
+    }
+  ]
+}
