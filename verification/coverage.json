@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 103153,
-  "remaining_bytes": 8532239,
-  "verified_percent": 1.1945375496561128,
-  "registered_blocks": 488,
-  "exact_blocks": 488,
+  "verified_bytes": 103250,
+  "remaining_bytes": 8532142,
+  "verified_percent": 1.1956608339262422,
+  "registered_blocks": 489,
+  "exact_blocks": 489,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3548,6 +3548,15 @@
       "byte_equal": true,
       "reference_sha256": "530683dede7dda28230fef6fc5a47a8be9c0e1a9b961ee60f946d2c97d53fa51",
       "candidate_sha256": "530683dede7dda28230fef6fc5a47a8be9c0e1a9b961ee60f946d2c97d53fa51"
+    },
+    {
+      "name": "collision-workspace-link-free-records",
+      "file_offset": 1346480,
+      "size": 97,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "4b12f464a21aa5515cf8d807ac78fef16227cbd70bfea3ce759c7a740e351b47",
+      "candidate_sha256": "4b12f464a21aa5515cf8d807ac78fef16227cbd70bfea3ce759c7a740e351b47"
     },
     {
       "name": "shader-drawprim-ctor",

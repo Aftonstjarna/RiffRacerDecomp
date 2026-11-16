@@ -5806,3 +5806,16 @@ test-cycle-device-indexed-handle-select: $(OUT)/reriff-match $(OUT)/device_index
 
 test-recovered: test-cycle-device-indexed-handle-select
 .PHONY: test-cycle-device-indexed-handle-select
+
+# Reviewed cycle reference: collision-workspace-link-free-records (assembly evidence only).
+$(OUT)/collision_workspace_link_free_records.bin: native/collision_workspace_link_free_records.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_workspace_link_free_records.o
+	ld -m elf_i386 -Ttext=0x5497b0 -e original_collision_workspace_link_free_records $(OUT)/collision_workspace_link_free_records.o -o $(OUT)/collision_workspace_link_free_records.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_workspace_link_free_records.elf $@
+
+test-cycle-collision-workspace-link-free-records: $(OUT)/reriff-match $(OUT)/collision_workspace_link_free_records.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-workspace-link-free-records $(OUT)/collision_workspace_link_free_records.bin $(OUT)/collision-workspace-link-free-records-comparison.json
+
+test-recovered: test-cycle-collision-workspace-link-free-records
+.PHONY: test-cycle-collision-workspace-link-free-records
