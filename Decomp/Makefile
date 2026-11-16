@@ -5676,3 +5676,16 @@ test-cycle-script-table-ensure-string-slot: $(OUT)/reriff-match $(OUT)/script_ta
 
 test-recovered: test-cycle-script-table-ensure-string-slot
 .PHONY: test-cycle-script-table-ensure-string-slot
+
+# Reviewed cycle reference: script-prototype-local-name (assembly evidence only).
+$(OUT)/script_prototype_local_name.bin: native/script_prototype_local_name.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_prototype_local_name.o
+	ld -m elf_i386 -Ttext=0x4f4c40 -e original_script_prototype_local_name $(OUT)/script_prototype_local_name.o -o $(OUT)/script_prototype_local_name.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_prototype_local_name.elf $@
+
+test-cycle-script-prototype-local-name: $(OUT)/reriff-match $(OUT)/script_prototype_local_name.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-prototype-local-name $(OUT)/script_prototype_local_name.bin $(OUT)/script-prototype-local-name-comparison.json
+
+test-recovered: test-cycle-script-prototype-local-name
+.PHONY: test-cycle-script-prototype-local-name
