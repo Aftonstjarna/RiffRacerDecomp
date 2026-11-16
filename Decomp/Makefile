@@ -6001,3 +6001,16 @@ test-cycle-audio-unavailable-callback: $(OUT)/reriff-match $(OUT)/audio_unavaila
 
 test-recovered: test-cycle-audio-unavailable-callback
 .PHONY: test-cycle-audio-unavailable-callback
+
+# Reviewed cycle reference: audio-input-read-dispatch (assembly evidence only).
+$(OUT)/audio_input_read_dispatch.bin: native/audio_input_read_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_input_read_dispatch.o
+	ld -m elf_i386 -Ttext=0x58d830 -e original_audio_input_read_dispatch $(OUT)/audio_input_read_dispatch.o -o $(OUT)/audio_input_read_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_input_read_dispatch.elf $@
+
+test-cycle-audio-input-read-dispatch: $(OUT)/reriff-match $(OUT)/audio_input_read_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-input-read-dispatch $(OUT)/audio_input_read_dispatch.bin $(OUT)/audio-input-read-dispatch-comparison.json
+
+test-recovered: test-cycle-audio-input-read-dispatch
+.PHONY: test-cycle-audio-input-read-dispatch
