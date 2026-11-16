@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source preserves the original cdecl ABI, 32-bit field offsets, unsigned bounds arithmetic, unconditional memcpy and post-copy cursor update. Reference bytes independently matched Game.exe. Optimized differential tests and additional whole-state alias counterchecks passed against original instructions; unchanged implementation also compiled with VS2013. Documented pointer and platform limitations are appropriate. Sampled validation does not establish all-input equivalence."
+}

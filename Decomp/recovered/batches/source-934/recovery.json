@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio memory read callback",
+  "summary": "Recovered cdecl callback at 0x55dd50: unsigned bounded memcpy from audio owner data plus cursor, then post-copy cursor increment. Original registration and adjacent seek code establish the partial layout.",
+  "targets": [
+    "audio-memory-read-callback"
+  ],
+  "references": [
+    "audio-memory-read-callback",
+    "memcpy-import"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Differential original-reference tests over lengths 0..128, every in-range cursor and eleven requests including unsigned maxima; safe out-of-range and wraparound cursors; zero copies and cursor-alias destinations. Check return counts, original memcpy call arguments, complete state, destination guards and copied bytes. GCC i386 harness passed 92,235 in-range cases, three safe wrap/out-of-range cases and five cursor-alias cases; original 50-byte span checked directly against Game.exe. Implementation compiled with supplied MSVC2013 at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "No matching-byte claim; original CRT memcpy is represented by an audited test-only copy callback.",
+    "Invalid pointers and overlapping source/destination remain outside memcpy's contract; no validation is added.",
+    "Only the assigned callback is recovered; decoder internals and opaque owner fields remain unresolved.",
+    "Original ABI and offsets apply to 32-bit targets; native pointer fields expand naturally on 64-bit ports."
+  ]
+}
