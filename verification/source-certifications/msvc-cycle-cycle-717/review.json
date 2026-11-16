@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "54e05d2bb046e16f9f932241b9b613fa6c178f1a560f9dce1a2417b9a843bab9",
+  "behavior_sha256": "ec9a38e558b5e8b21b7b1ba0bb834cb9f805c6b03f532af190f52bccc54c18ac",
+  "functions": [
+    {
+      "scope": "convex-hull-edge-without-margin",
+      "source_sha256": "56fa6895fcba8dd2efee916fca8ee7736575cdfa77601e9e4afaa700dc5681eb",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild matched the entire original function byte-for-byte, with zero relocations. Original instructions confirm boundaries, field layouts and x86 thiscall ABI. Executing fresh compiler output against extracted original code passed all 17,640 supplied cases and 25,578 extended cases, covering signed indices, floating-point extremes, aliasing, overlapping outputs and untouched state. Source and test hashes match the receipt; no embedded instruction data or substituted implementation was found."
+    }
+  ],
+  "review_receipt_sha256": "28fe5250d135fd6f2fb4e8963c7c17303238ed994864f8b4e78ffdb9b6b55901",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
