@@ -6365,3 +6365,16 @@ test-cycle-audio-stream-shift-byte: $(OUT)/reriff-match $(OUT)/audio_stream_shif
 
 test-recovered: test-cycle-audio-stream-shift-byte
 .PHONY: test-cycle-audio-stream-shift-byte
+
+# Reviewed cycle reference: audio-stream-append-buffer (assembly evidence only).
+$(OUT)/audio_stream_append_buffer.bin: native/audio_stream_append_buffer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_stream_append_buffer.o
+	ld -m elf_i386 -Ttext=0x58e250 -e original_audio_stream_append_buffer $(OUT)/audio_stream_append_buffer.o -o $(OUT)/audio_stream_append_buffer.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_stream_append_buffer.elf $@
+
+test-cycle-audio-stream-append-buffer: $(OUT)/reriff-match $(OUT)/audio_stream_append_buffer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-stream-append-buffer $(OUT)/audio_stream_append_buffer.bin $(OUT)/audio-stream-append-buffer-comparison.json
+
+test-recovered: test-cycle-audio-stream-append-buffer
+.PHONY: test-cycle-audio-stream-append-buffer
