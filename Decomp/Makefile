@@ -6612,3 +6612,16 @@ test-cycle-audio-storage-resize: $(OUT)/reriff-match $(OUT)/audio_storage_resize
 
 test-recovered: test-cycle-audio-storage-resize
 .PHONY: test-cycle-audio-storage-resize
+
+# Reviewed cycle reference: record6-capacity-growth (assembly evidence only).
+$(OUT)/record6_capacity_growth.bin: native/record6_capacity_growth.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record6_capacity_growth.o
+	ld -m elf_i386 -Ttext=0x5a9680 -e original_record6_capacity_growth $(OUT)/record6_capacity_growth.o -o $(OUT)/record6_capacity_growth.elf
+	objcopy -O binary --only-section=.text $(OUT)/record6_capacity_growth.elf $@
+
+test-cycle-record6-capacity-growth: $(OUT)/reriff-match $(OUT)/record6_capacity_growth.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record6-capacity-growth $(OUT)/record6_capacity_growth.bin $(OUT)/record6-capacity-growth-comparison.json
+
+test-recovered: test-cycle-record6-capacity-growth
+.PHONY: test-cycle-record6-capacity-growth
