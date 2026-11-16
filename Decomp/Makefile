@@ -6118,3 +6118,16 @@ test-cycle-audio-stream-query-position: $(OUT)/reriff-match $(OUT)/audio_stream_
 
 test-recovered: test-cycle-audio-stream-query-position
 .PHONY: test-cycle-audio-stream-query-position
+
+# Reviewed cycle reference: audio-stream-read-exact (assembly evidence only).
+$(OUT)/audio_stream_read_exact.bin: native/audio_stream_read_exact.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_stream_read_exact.o
+	ld -m elf_i386 -Ttext=0x58dc60 -e original_audio_stream_read_exact $(OUT)/audio_stream_read_exact.o -o $(OUT)/audio_stream_read_exact.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_stream_read_exact.elf $@
+
+test-cycle-audio-stream-read-exact: $(OUT)/reriff-match $(OUT)/audio_stream_read_exact.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-stream-read-exact $(OUT)/audio_stream_read_exact.bin $(OUT)/audio-stream-read-exact-comparison.json
+
+test-recovered: test-cycle-audio-stream-read-exact
+.PHONY: test-cycle-audio-stream-read-exact
