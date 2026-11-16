@@ -6378,3 +6378,16 @@ test-cycle-audio-stream-append-buffer: $(OUT)/reriff-match $(OUT)/audio_stream_a
 
 test-recovered: test-cycle-audio-stream-append-buffer
 .PHONY: test-cycle-audio-stream-append-buffer
+
+# Reviewed cycle reference: audio-decoder-close-reset (assembly evidence only).
+$(OUT)/audio_decoder_close_reset.bin: native/audio_decoder_close_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_decoder_close_reset.o
+	ld -m elf_i386 -Ttext=0x55c990 -e original_audio_decoder_close_reset $(OUT)/audio_decoder_close_reset.o -o $(OUT)/audio_decoder_close_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_decoder_close_reset.elf $@
+
+test-cycle-audio-decoder-close-reset: $(OUT)/reriff-match $(OUT)/audio_decoder_close_reset.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-decoder-close-reset $(OUT)/audio_decoder_close_reset.bin $(OUT)/audio-decoder-close-reset-comparison.json
+
+test-recovered: test-cycle-audio-decoder-close-reset
+.PHONY: test-cycle-audio-decoder-close-reset
