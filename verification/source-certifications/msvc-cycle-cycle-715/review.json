@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "66c7bba9ac101b6ac0e0db384aacd2988d086aa7191187d6b5b45f7666c34aa2",
+  "behavior_sha256": "b7659ad7a6822ae36e5e2521a1ba7a4e2a5987955817f5df2b97a26df3948d2a",
+  "functions": [
+    {
+      "scope": "audio-index-compact-even",
+      "source_sha256": "88320bffd4138d161158d1c0d711b61cb41c0f8d6a84a05cfa41999923f9af65",
+      "approved": true,
+      "reason": "Independently rebuilt readable C++ with pinned MSVC; its entire unmodified code section exactly matches Game.exe at 0x5960B0–0x5960EA. Verified boundaries, 32-bit thiscall ABI, and semantics. Independently executed compiled and original bytes across 1,806 differential cases covering branches, overflow, buffer guards, and untouched state. Approval is limited to this fragment."
+    }
+  ],
+  "review_receipt_sha256": "7f0367c57e8078c85ebe108036de9cfc04565960b3833bce84ab2c027b4e0ea7",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

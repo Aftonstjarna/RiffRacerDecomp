@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-715",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "audio-index-compact-even",
+      "stem": "cycle_audio_index_compact_even",
+      "source": "Decomp/recovered/msvc/cycle_audio_index_compact_even.cpp",
+      "sha256": "88320bffd4138d161158d1c0d711b61cb41c0f8d6a84a05cfa41999923f9af65"
+    }
+  ]
+}
