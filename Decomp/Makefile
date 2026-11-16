@@ -6469,3 +6469,16 @@ test-cycle-audio-decoder-reset-stream: $(OUT)/reriff-match $(OUT)/audio_decoder_
 
 test-recovered: test-cycle-audio-decoder-reset-stream
 .PHONY: test-cycle-audio-decoder-reset-stream
+
+# Reviewed cycle reference: audio-record36-array-clear (assembly evidence only).
+$(OUT)/audio_record36_array_clear.bin: native/audio_record36_array_clear.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_record36_array_clear.o
+	ld -m elf_i386 -Ttext=0x58b460 -e original_audio_record36_array_clear $(OUT)/audio_record36_array_clear.o -o $(OUT)/audio_record36_array_clear.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_record36_array_clear.elf $@
+
+test-cycle-audio-record36-array-clear: $(OUT)/reriff-match $(OUT)/audio_record36_array_clear.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-record36-array-clear $(OUT)/audio_record36_array_clear.bin $(OUT)/audio-record36-array-clear-comparison.json
+
+test-recovered: test-cycle-audio-record36-array-clear
+.PHONY: test-cycle-audio-record36-array-clear
