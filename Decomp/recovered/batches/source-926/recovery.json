@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Packed audio frame header plausibility",
+  "summary": "Recovered the pure ECX scalar predicate at VA 0x58eb00: eleven sync bits, nonzero layer, bitrate index other than 15, and sample-rate index other than 3. Returns exactly 0 or 1 with no memory side effects. Direct caller 0x59018b uses a local header and gates further parsing at 0x58f460. Portable scalar API models the data rather than inventing an object.",
+  "targets": [
+    "audio-frame-header-plausible"
+  ],
+  "references": [
+    "audio-frame-header-plausible"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original reference comparison using GCC i386 thiscall scalar ECX ABI. Exhaust all 524288 combinations of inspected bits with ignored bits clear, set and pseudorandom; exhaust all 8192 ignored-bit combinations for accepted and four independently rejected headers. Assert exact 0/1, unchanged local/global canaries and TLS backing, and FS head restoration after every original invocation; fail on FS setup failure. Local GCC freestanding harness passed 1,613,824 original comparisons; linked oracle bytes verified 59/59 against immutable Game.exe. Supplied MSVC wrapper compiled implementation with O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "No matching-byte claim; implementation exposes a portable scalar calling convention.",
+    "Full decoder and downstream parser behavior are outside this bounded predicate recovery.",
+    "MPEG field names are semantic interpretation of masks; original type and source names are unknown."
+  ]
+}

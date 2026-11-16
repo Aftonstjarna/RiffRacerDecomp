@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source control flow matches all four original mask checks, exact 0/1 returns, and absence of memory side effects. The portable ABI difference is explicitly documented. Independently rebuilt and ran 1,613,824 comparisons calling the original reference, and verified its 59 bytes against immutable Game.exe. Tests cover every inspected-bit combination and meaningful ignored-bit cases. Native Windows compilation records concern the actual implementation and claim no matching credit. Sampled validation does not establish all-input equivalence; downstream parsing remains outside scope."
+}
