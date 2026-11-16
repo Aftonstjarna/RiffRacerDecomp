@@ -6482,3 +6482,16 @@ test-cycle-audio-record36-array-clear: $(OUT)/reriff-match $(OUT)/audio_record36
 
 test-recovered: test-cycle-audio-record36-array-clear
 .PHONY: test-cycle-audio-record36-array-clear
+
+# Reviewed cycle reference: audio-stereo-callback-bridge (assembly evidence only).
+$(OUT)/audio_stereo_callback_bridge.bin: native/audio_stereo_callback_bridge.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_stereo_callback_bridge.o
+	ld -m elf_i386 -Ttext=0x58e7a0 -e original_audio_stereo_callback_bridge $(OUT)/audio_stereo_callback_bridge.o -o $(OUT)/audio_stereo_callback_bridge.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_stereo_callback_bridge.elf $@
+
+test-cycle-audio-stereo-callback-bridge: $(OUT)/reriff-match $(OUT)/audio_stereo_callback_bridge.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-stereo-callback-bridge $(OUT)/audio_stereo_callback_bridge.bin $(OUT)/audio-stereo-callback-bridge-comparison.json
+
+test-recovered: test-cycle-audio-stereo-callback-bridge
+.PHONY: test-cycle-audio-stereo-callback-bridge
