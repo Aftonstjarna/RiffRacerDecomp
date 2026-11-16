@@ -6014,3 +6014,16 @@ test-cycle-audio-input-read-dispatch: $(OUT)/reriff-match $(OUT)/audio_input_rea
 
 test-recovered: test-cycle-audio-input-read-dispatch
 .PHONY: test-cycle-audio-input-read-dispatch
+
+# Reviewed cycle reference: script-call-result-finish (assembly evidence only).
+$(OUT)/script_call_result_finish.bin: native/script_call_result_finish.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_call_result_finish.o
+	ld -m elf_i386 -Ttext=0x4f57a0 -e original_script_call_result_finish $(OUT)/script_call_result_finish.o -o $(OUT)/script_call_result_finish.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_call_result_finish.elf $@
+
+test-cycle-script-call-result-finish: $(OUT)/reriff-match $(OUT)/script_call_result_finish.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-call-result-finish $(OUT)/script_call_result_finish.bin $(OUT)/script-call-result-finish-comparison.json
+
+test-recovered: test-cycle-script-call-result-finish
+.PHONY: test-cycle-script-call-result-finish
