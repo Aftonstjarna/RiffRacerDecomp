@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Readable C++ agrees with original control flow, i386 layouts, helper side effects, error normalization and diagnostic suppression. Independent full-fixture execution passed 4,608 original comparisons and 1,280 dependency-contract checks; linked reference routines matched immutable Game.exe bytes. Native compilation records cover the actual implementation. ABI, external dependencies and untested paths are disclosed; sampled validation does not establish all-input equivalence."
+}
