@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, 32-bit thiscall ABI, layouts, writes and unsigned count wrapping agree with the original reference. Submitted tests exercise original code and compare complete arenas. Independently verified the 97-byte oracle against Game.exe and passed 1,560 optimized differential cases covering every internal head, external/null heads, wraparound and repeated calls. Native Windows compilation records concern the actual implementation. Wider-pointer ABI and valid-layout limitations are disclosed. Sampled validation does not establish all-input equivalence."
+}

@@ -1,0 +1,213 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "74e691a1fb28e66ad2327bd7ee8f2badc83f303fb4df2776be305648ae0ad00d",
+    "impl.hpp": "026be90c6ac9b738061981d4d51a8921abb4d3fa5d998a0f66e3f302dc93c648",
+    "test.cpp": "f3a5307ee4573579148405af70b61bfb3fd00e0485d84ef1779635100f4fe537"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 97,
+      "candidate_size": 97,
+      "candidate_sha256": "4b12f464a21aa5515cf8d807ac78fef16227cbd70bfea3ce759c7a740e351b47",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "4b12f464a21aa5515cf8d807ac78fef16227cbd70bfea3ce759c7a740e351b47",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "collision-workspace-link-free-records",
+      "rva": 1349552,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "570bb8b453ace16f36e94b396f6d9b8f148ba2e8",
+  "test_output": "collision workspace: 648 differential cases passed\n",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "2eeaa1da6052fb999a841dda5aae3511df0df9f418b3ddbeeed4c2a4d1b7da93",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "7ba5d400a82b1360c9a027cc06df5d705dae0c343c37964fc30edd1f7b5e945f",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "9fa591345f94c3c10b7648855d19cc965c266a23e75581c52163fe0531c7022b",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "collision-workspace-link-free-records",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "size_differs",
+        "candidate_size": 85,
+        "original_size": 97
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "collision-workspace-link-free-records",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "comparison": {
+          "schema": 1,
+          "byte_equal": false,
+          "different_bytes": 9,
+          "original_size": 97,
+          "candidate_size": 97,
+          "candidate_sha256": "695f881133eb13dd5567abd13da3c041e8281ce51c5f4913dd069c840bc2d720",
+          "masked_bytes": 0,
+          "source_rebuild_verified": false,
+          "note": "Binary equality alone does not prove reconstruction from source.",
+          "difference_ranges": [
+            {
+              "offset": 18,
+              "length": 1
+            },
+            {
+              "offset": 49,
+              "length": 1
+            },
+            {
+              "offset": 56,
+              "length": 1
+            },
+            {
+              "offset": 62,
+              "length": 1
+            },
+            {
+              "offset": 65,
+              "length": 1
+            },
+            {
+              "offset": 71,
+              "length": 1
+            },
+            {
+              "offset": 75,
+              "length": 1
+            },
+            {
+              "offset": 84,
+              "length": 1
+            },
+            {
+              "offset": 90,
+              "length": 1
+            }
+          ],
+          "reference_fragment_sha256": "4b12f464a21aa5515cf8d807ac78fef16227cbd70bfea3ce759c7a740e351b47",
+          "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+          "scope": "collision-workspace-link-free-records",
+          "rva": 1349552,
+          "whole_executable_compared": false
+        },
+        "status": "compared"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "collision-workspace-link-free-records",
+        "code_sections": 1,
+        "relocations": 0,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "comparison": {
+          "schema": 1,
+          "byte_equal": false,
+          "different_bytes": 9,
+          "original_size": 97,
+          "candidate_size": 97,
+          "candidate_sha256": "695f881133eb13dd5567abd13da3c041e8281ce51c5f4913dd069c840bc2d720",
+          "masked_bytes": 0,
+          "source_rebuild_verified": false,
+          "note": "Binary equality alone does not prove reconstruction from source.",
+          "difference_ranges": [
+            {
+              "offset": 18,
+              "length": 1
+            },
+            {
+              "offset": 49,
+              "length": 1
+            },
+            {
+              "offset": 56,
+              "length": 1
+            },
+            {
+              "offset": 62,
+              "length": 1
+            },
+            {
+              "offset": 65,
+              "length": 1
+            },
+            {
+              "offset": 71,
+              "length": 1
+            },
+            {
+              "offset": 75,
+              "length": 1
+            },
+            {
+              "offset": 84,
+              "length": 1
+            },
+            {
+              "offset": 90,
+              "length": 1
+            }
+          ],
+          "reference_fragment_sha256": "4b12f464a21aa5515cf8d807ac78fef16227cbd70bfea3ce759c7a740e351b47",
+          "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+          "scope": "collision-workspace-link-free-records",
+          "rva": 1349552,
+          "whole_executable_compared": false
+        },
+        "status": "compared"
+      }
+    ]
+  }
+}

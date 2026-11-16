@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Collision workspace free-record linking",
+  "summary": "Recover ECX member routine at VA 0x5497b0 (97 bytes): set mode 9, clear five header words and +0x263c, then prepend 128 records of stride 0x3c in descending address order to the existing doubly linked free list. Preserve incoming head/count and increment count modulo 2^32. Direct caller 0x54b115 initializes head/count separately. Original reference bytes were checked against Game.exe; GCC differential tests and MSVC2013 O2 compilation passed.",
+  "targets": ["collision-workspace-link-free-records"],
+  "references": ["collision-workspace-link-free-records"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "648 fixed-address original-vs-C++ comparisons: three byte-pattern seeds, six initial heads (null, two external records, first/middle/last internal record), six initial counts including wrap boundaries, and one or two consecutive calls. Compare every byte of the full workspace, external records and guards at identical addresses; additionally assert mode, cleared fields, final head/count and normal-case forward/back links. Install test-owned FS backing and check its head after every original invocation. Oracle linked at 0x5497b0 and its entire 97-byte span verified against immutable Game.exe.",
+  "known_limits": [
+    "Payload semantics, mode value meaning, and opaque workspace fields remain unresolved; field names describe observed accesses only.",
+    "Inputs require writable workspace and a null or writable record head. Invalid pointers, concurrent mutation and arbitrary overlaps with workspace control fields are outside tested valid object layouts.",
+    "Reinitializing without clearing the list can create cycles; original behavior is intentionally retained.",
+    "Exact original layout is asserted for 32-bit pointers. Native wider-pointer builds adapt pointer-bearing layout and are not binary-compatible with the original game.",
+    "Return value is unused by the observed caller; routine is modeled as void. No matching-code claim or gameplay integration is made."
+  ]
+}
