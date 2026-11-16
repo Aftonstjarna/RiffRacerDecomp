@@ -5845,3 +5845,16 @@ test-cycle-script-remove-active-locals: $(OUT)/reriff-match $(OUT)/script_remove
 
 test-recovered: test-cycle-script-remove-active-locals
 .PHONY: test-cycle-script-remove-active-locals
+
+# Reviewed cycle reference: buffer-pack-high-three-bytes (assembly evidence only).
+$(OUT)/buffer_pack_high_three_bytes.bin: native/buffer_pack_high_three_bytes.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/buffer_pack_high_three_bytes.o
+	ld -m elf_i386 -Ttext=0x55d1c0 -e original_buffer_pack_high_three_bytes $(OUT)/buffer_pack_high_three_bytes.o -o $(OUT)/buffer_pack_high_three_bytes.elf
+	objcopy -O binary --only-section=.text $(OUT)/buffer_pack_high_three_bytes.elf $@
+
+test-cycle-buffer-pack-high-three-bytes: $(OUT)/reriff-match $(OUT)/buffer_pack_high_three_bytes.bin
+	$(OUT)/reriff-match native-check "$(GAME)" buffer-pack-high-three-bytes $(OUT)/buffer_pack_high_three_bytes.bin $(OUT)/buffer-pack-high-three-bytes-comparison.json
+
+test-recovered: test-cycle-buffer-pack-high-three-bytes
+.PHONY: test-cycle-buffer-pack-high-three-bytes
