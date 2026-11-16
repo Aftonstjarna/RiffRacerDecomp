@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"flag-selected-product",0x15d190,36},
+  return {NativeBlock{"script-remove-active-locals",0x157510,57},
+                     NativeBlock{"flag-selected-product",0x15d190,36},
                      NativeBlock{"collision-workspace-link-free-records",0x1497b0,97},
                      NativeBlock{"device-indexed-handle-select",0x136320,25},
                      NativeBlock{"simplex-result-reset",0x146100,42},

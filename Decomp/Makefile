@@ -5832,3 +5832,16 @@ test-cycle-flag-selected-product: $(OUT)/reriff-match $(OUT)/flag_selected_produ
 
 test-recovered: test-cycle-flag-selected-product
 .PHONY: test-cycle-flag-selected-product
+
+# Reviewed cycle reference: script-remove-active-locals (assembly evidence only).
+$(OUT)/script_remove_active_locals.bin: native/script_remove_active_locals.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_remove_active_locals.o
+	ld -m elf_i386 -Ttext=0x557510 -e original_script_remove_active_locals $(OUT)/script_remove_active_locals.o -o $(OUT)/script_remove_active_locals.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_remove_active_locals.elf $@
+
+test-cycle-script-remove-active-locals: $(OUT)/reriff-match $(OUT)/script_remove_active_locals.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-remove-active-locals $(OUT)/script_remove_active_locals.bin $(OUT)/script-remove-active-locals-comparison.json
+
+test-recovered: test-cycle-script-remove-active-locals
+.PHONY: test-cycle-script-remove-active-locals
