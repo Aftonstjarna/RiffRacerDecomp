@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 108567,
-  "remaining_bytes": 8526825,
-  "verified_percent": 1.2572330242796157,
-  "registered_blocks": 541,
-  "exact_blocks": 541,
+  "verified_bytes": 108648,
+  "remaining_bytes": 8526744,
+  "verified_percent": 1.2581710245464248,
+  "registered_blocks": 542,
+  "exact_blocks": 542,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3818,6 +3818,15 @@
       "byte_equal": true,
       "reference_sha256": "209a2241b2eee6f12c2363b9862b015500f522fde795c5113366c34c323651d0",
       "candidate_sha256": "209a2241b2eee6f12c2363b9862b015500f522fde795c5113366c34c323651d0"
+    },
+    {
+      "name": "audio-record32-dispose-buffers",
+      "file_offset": 1615616,
+      "size": 81,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "9566755eff1283409764866935a56a502c17d94cf50a76f1ec0ea7b1025346cc",
+      "candidate_sha256": "9566755eff1283409764866935a56a502c17d94cf50a76f1ec0ea7b1025346cc"
     },
     {
       "name": "audio-record32-array-clear",

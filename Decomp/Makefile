@@ -6495,3 +6495,16 @@ test-cycle-audio-stereo-callback-bridge: $(OUT)/reriff-match $(OUT)/audio_stereo
 
 test-recovered: test-cycle-audio-stereo-callback-bridge
 .PHONY: test-cycle-audio-stereo-callback-bridge
+
+# Reviewed cycle reference: audio-record32-dispose-buffers (assembly evidence only).
+$(OUT)/audio_record32_dispose_buffers.bin: native/audio_record32_dispose_buffers.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_record32_dispose_buffers.o
+	ld -m elf_i386 -Ttext=0x58b300 -e original_audio_record32_dispose_buffers $(OUT)/audio_record32_dispose_buffers.o -o $(OUT)/audio_record32_dispose_buffers.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_record32_dispose_buffers.elf $@
+
+test-cycle-audio-record32-dispose-buffers: $(OUT)/reriff-match $(OUT)/audio_record32_dispose_buffers.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-record32-dispose-buffers $(OUT)/audio_record32_dispose_buffers.bin $(OUT)/audio-record32-dispose-buffers-comparison.json
+
+test-recovered: test-cycle-audio-record32-dispose-buffers
+.PHONY: test-cycle-audio-record32-dispose-buffers
