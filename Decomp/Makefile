@@ -6586,3 +6586,16 @@ test-cycle-record12-capacity-growth: $(OUT)/reriff-match $(OUT)/record12_capacit
 
 test-recovered: test-cycle-record12-capacity-growth
 .PHONY: test-cycle-record12-capacity-growth
+
+# Reviewed cycle reference: audio-resample-output-count (assembly evidence only).
+$(OUT)/audio_resample_output_count.bin: native/audio_resample_output_count.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_resample_output_count.o
+	ld -m elf_i386 -Ttext=0x5909e0 -e original_audio_resample_output_count $(OUT)/audio_resample_output_count.o -o $(OUT)/audio_resample_output_count.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_resample_output_count.elf $@
+
+test-cycle-audio-resample-output-count: $(OUT)/reriff-match $(OUT)/audio_resample_output_count.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-resample-output-count $(OUT)/audio_resample_output_count.bin $(OUT)/audio-resample-output-count-comparison.json
+
+test-recovered: test-cycle-audio-resample-output-count
+.PHONY: test-cycle-audio-resample-output-count
