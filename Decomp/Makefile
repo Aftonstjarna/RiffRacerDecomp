@@ -6170,3 +6170,16 @@ test-cycle-audio-selected-callback-validate: $(OUT)/reriff-match $(OUT)/audio_se
 
 test-recovered: test-cycle-audio-selected-callback-validate
 .PHONY: test-cycle-audio-selected-callback-validate
+
+# Reviewed cycle reference: audio-synthesis-window-initialize (assembly evidence only).
+$(OUT)/audio_synthesis_window_initialize.bin: native/audio_synthesis_window_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_synthesis_window_initialize.o
+	ld -m elf_i386 -Ttext=0x590c40 -e original_audio_synthesis_window_initialize $(OUT)/audio_synthesis_window_initialize.o -o $(OUT)/audio_synthesis_window_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_synthesis_window_initialize.elf $@
+
+test-cycle-audio-synthesis-window-initialize: $(OUT)/reriff-match $(OUT)/audio_synthesis_window_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-synthesis-window-initialize $(OUT)/audio_synthesis_window_initialize.bin $(OUT)/audio-synthesis-window-initialize-comparison.json
+
+test-recovered: test-cycle-audio-synthesis-window-initialize
+.PHONY: test-cycle-audio-synthesis-window-initialize
