@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-supported unmatched source with zero matching-source byte credit.",
+  "reason": "Source control flow, cdecl callback ABI, buffer layout, error handling and retained reader side effects agree with original assembly. Submitted tests exercise meaningful boundaries and compare outputs and state. An independent 81-case countercheck passed against a byte-verified original callback, including extreme and additional negative dependency results. Native Windows compilation records cover the actual implementation. The external reader ABI integration and other limitations are disclosed; sampled validation does not establish all-input equivalence."
+}

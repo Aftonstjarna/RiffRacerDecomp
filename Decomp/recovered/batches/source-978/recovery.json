@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Buffered audio exact-read callback",
+  "summary": "Recover cdecl callback at VA 0x58e2a0 (40 bytes). Invoke the reader on the embedded buffer at stream+0x6d7c, preserve negative results and exact counts, otherwise return -1 without undoing reader side effects. Original data stores its pointer at 0xbaf508, slot +8 in callback table 0xbaf500; setup sites 0x4f882b and 0x55dcc7 install that table at stream+0x6d3c. Direct original disassembly agrees with accepted assembly. The reader remains an external member dependency; its custom ECX/EDX/caller-cleaned-stack ABI is adapted only in test.cpp.",
+  "targets": ["audio-buffered-read-exact-callback"],
+  "references": ["audio-buffered-read-exact-callback", "audio-buffer-read-range", "memcpy-import"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding harness directly compares recovered callback with original callback using the accepted original reader for both. 1296 combinations cover three chain shapes, cursors 0..17 and counts -3..20; three additional cases cover INT_MAX, INT_MIN and empty zero read. Compare return values, entire destination including guards, full stream object, chunk metadata, source data, memcpy call counts and sizes. Independent expectations check -10 and saved-cursor restoration, negative-count -1, exact counts, and short-read -1 with retained cursor advancement. Install test-owned FS storage and check its head after every call. Local test exits zero. Accepted callback, reader and memcpy thunk bytes were compared directly against Game.exe. Implementation also compiles using supplied VS2013 O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Only the assigned callback is recovered. AudioBuffer::read_range is a declared reference dependency; the test supplies an original-routine adapter, not a port implementation.",
+    "Internal original reader ABI is not ordinary thiscall; the portable member dependency interface requires integration when porting.",
+    "Tests use valid 32-bit objects and nonoverlapping copy regions. Invalid pointers, corrupt cyclic chains and unsafe signed-wrap data layouts are not exercised.",
+    "Negative dependency results other than the reachable reader error -10 are preserved by the source condition but are not independently injected.",
+    "No exception dispatch, real audio backend, full callback-table consumer recovery, or matching-byte claim is included. Stream prefix and unused buffer words remain opaque."
+  ]
+}
