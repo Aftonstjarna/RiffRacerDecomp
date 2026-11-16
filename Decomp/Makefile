@@ -6157,3 +6157,16 @@ test-cycle-audio-buffer-read-range: $(OUT)/reriff-match $(OUT)/audio_buffer_read
 
 test-recovered: test-cycle-audio-buffer-read-range
 .PHONY: test-cycle-audio-buffer-read-range
+
+# Reviewed cycle reference: audio-selected-callback-validate (assembly evidence only).
+$(OUT)/audio_selected_callback_validate.bin: native/audio_selected_callback_validate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_selected_callback_validate.o
+	ld -m elf_i386 -Ttext=0x58e820 -e original_audio_selected_callback_validate $(OUT)/audio_selected_callback_validate.o -o $(OUT)/audio_selected_callback_validate.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_selected_callback_validate.elf $@
+
+test-cycle-audio-selected-callback-validate: $(OUT)/reriff-match $(OUT)/audio_selected_callback_validate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-selected-callback-validate $(OUT)/audio_selected_callback_validate.bin $(OUT)/audio-selected-callback-validate-comparison.json
+
+test-recovered: test-cycle-audio-selected-callback-validate
+.PHONY: test-cycle-audio-selected-callback-validate
