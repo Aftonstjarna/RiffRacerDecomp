@@ -6313,3 +6313,16 @@ test-cycle-audio-index-compact-even: $(OUT)/reriff-match $(OUT)/audio_index_comp
 
 test-recovered: test-cycle-audio-index-compact-even
 .PHONY: test-cycle-audio-index-compact-even
+
+# Reviewed cycle reference: audio-buffered-read-exact-callback (assembly evidence only).
+$(OUT)/audio_buffered_read_exact_callback.bin: native/audio_buffered_read_exact_callback.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffered_read_exact_callback.o
+	ld -m elf_i386 -Ttext=0x58e2a0 -e original_audio_buffered_read_exact_callback $(OUT)/audio_buffered_read_exact_callback.o -o $(OUT)/audio_buffered_read_exact_callback.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffered_read_exact_callback.elf $@
+
+test-cycle-audio-buffered-read-exact-callback: $(OUT)/reriff-match $(OUT)/audio_buffered_read_exact_callback.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffered-read-exact-callback $(OUT)/audio_buffered_read_exact_callback.bin $(OUT)/audio-buffered-read-exact-callback-comparison.json
+
+test-recovered: test-cycle-audio-buffered-read-exact-callback
+.PHONY: test-cycle-audio-buffered-read-exact-callback
