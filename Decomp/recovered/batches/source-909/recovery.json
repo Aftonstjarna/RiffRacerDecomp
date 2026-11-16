@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Simplex vertex membership",
+  "summary": "Recovered Game.exe RVA 0x146a30 / VA 0x546a30 (188 bytes) as a const thiscall member. Scans active XYZ vectors with inclusive squared-distance threshold, continuing after hits, then checks ordered exact cached XYZW equality in W/Z/Y/X order. No memory writes or calls; scalar SSE arithmetic and COMISS preserve observed masked floating-point status behavior. Direct original disassembly and callers at 0x4c27dc and 0x54c368 establish pointer argument, ret 4 and AL Boolean result. Existing interrupted source was inspected and continued. Accepted assembly was verified byte-for-byte against the immutable executable and executed at its original address. GCC behavioral harness passes; pinned VS2013 compilation passes O1, O2 and O2 /Oy-. No compiler-byte matching is claimed.",
+  "targets": [
+    "simplex-solver-contains-vertex"
+  ],
+  "references": [
+    "simplex-solver-contains-vertex"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Freestanding GCC i386 harness directly compares member and original thiscall routine, including exact MXCSR status/control and full solver/input/guard snapshots. Cases cover negative and zero counts, each active slot in counts 1..4, inclusive threshold and neighboring float, negative and infinite/NaN thresholds, ignored vertex W, cached component mismatches, quiet/signaling NaNs and cached short-circuiting, signed zero, infinity subtraction, aliasing, sticky flags, all rounding modes, DAZ/FTZ and 1200 deterministic bit-pattern cases. Installs initialized test-owned FS storage, requires installation success and checks FS head after every oracle invocation. All checks pass with oracle linked at 0x546a30; all 188 accepted reference bytes independently compared to Game.exe.",
+  "known_limits": [
+    "Only the assigned membership method is recovered. Full solver type, field ownership and surrounding collision algorithm remain unresolved; field names express inferred roles.",
+    "Partial typed layout models four valid simplex entries. The original has no count or pointer validation; corrupt positive counts above four, inaccessible pointers and out-of-bounds accesses are outside the recovered interface contract.",
+    "Floating-point parity is validated for masked SSE exceptions under the specified GCC flags. Unmasked exception traps, exception delivery/order and asynchronous mutation are not modeled or tested.",
+    "Native Windows compiler compatibility was checked through the supplied pinned MSVC helper; behavioral execution uses the GCC i386 harness. No native code-byte equality or complete-game equivalence is claimed."
+  ]
+}
