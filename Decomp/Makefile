@@ -6391,3 +6391,16 @@ test-cycle-audio-decoder-close-reset: $(OUT)/reriff-match $(OUT)/audio_decoder_c
 
 test-recovered: test-cycle-audio-decoder-close-reset
 .PHONY: test-cycle-audio-decoder-close-reset
+
+# Reviewed cycle reference: audio-decoder-reset-state (assembly evidence only).
+$(OUT)/audio_decoder_reset_state.bin: native/audio_decoder_reset_state.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_decoder_reset_state.o
+	ld -m elf_i386 -Ttext=0x58a500 -e original_audio_decoder_reset_state $(OUT)/audio_decoder_reset_state.o -o $(OUT)/audio_decoder_reset_state.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_decoder_reset_state.elf $@
+
+test-cycle-audio-decoder-reset-state: $(OUT)/reriff-match $(OUT)/audio_decoder_reset_state.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-decoder-reset-state $(OUT)/audio_decoder_reset_state.bin $(OUT)/audio-decoder-reset-state-comparison.json
+
+test-recovered: test-cycle-audio-decoder-reset-state
+.PHONY: test-cycle-audio-decoder-reset-state
