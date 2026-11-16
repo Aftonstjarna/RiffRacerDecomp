@@ -5793,3 +5793,16 @@ test-cycle-simplex-result-reset: $(OUT)/reriff-match $(OUT)/simplex_result_reset
 
 test-recovered: test-cycle-simplex-result-reset
 .PHONY: test-cycle-simplex-result-reset
+
+# Reviewed cycle reference: device-indexed-handle-select (assembly evidence only).
+$(OUT)/device_indexed_handle_select.bin: native/device_indexed_handle_select.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/device_indexed_handle_select.o
+	ld -m elf_i386 -Ttext=0x536320 -e original_device_indexed_handle_select $(OUT)/device_indexed_handle_select.o -o $(OUT)/device_indexed_handle_select.elf
+	objcopy -O binary --only-section=.text $(OUT)/device_indexed_handle_select.elf $@
+
+test-cycle-device-indexed-handle-select: $(OUT)/reriff-match $(OUT)/device_indexed_handle_select.bin
+	$(OUT)/reriff-match native-check "$(GAME)" device-indexed-handle-select $(OUT)/device_indexed_handle_select.bin $(OUT)/device-indexed-handle-select-comparison.json
+
+test-recovered: test-cycle-device-indexed-handle-select
+.PHONY: test-cycle-device-indexed-handle-select
