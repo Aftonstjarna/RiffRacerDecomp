@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source matches the reference’s x86 cdecl ABI, callback offset, ordered calls, callback reload, and wrapping sum. Independently rebuilt at O2: all 256 original/recovered calls passed, covering callback replacement, boundary values, side effects, and guards. Verified reference bytes against Game.exe and source hashes against validation.json. Native Windows compilation records cover the actual implementation. Documented layout and untested fault/unwind limitations are appropriate; sampled validation does not establish all-input equivalence."
+}

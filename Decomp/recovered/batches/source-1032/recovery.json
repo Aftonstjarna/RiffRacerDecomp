@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Stereo callback bridge",
+  "summary": "Recovers the 51-byte cdecl bridge at VA 0x58e7a0: invoke the decoder callback at +0x4cb4 with (first,0,decoder,0), reload it, invoke (second,1,decoder,1), and return the modulo-2^32 sum. No bridge-owned object writes or status checks.",
+  "targets": ["audio-stereo-callback-bridge"],
+  "references": ["audio-stereo-callback-bridge"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "256 total original/recovered calls over 64 pairs of zero, small, signed-boundary, negative-bit-pattern and wraparound result/input words, with and without first-call callback replacement. Check ordered arguments, decoder identity, both calls even after error-like results, summed result, callback slot mutation, callback-owned buffer/decoder writes, every untouched prefix byte, and surrounding guards. Original is linked at VA 0x58e7a0.",
+  "known_limits": [
+    "Input and return words are deliberately opaque; signedness and buffer element types are not established by this bridge.",
+    "Null decoder or invalid callback faults are not exercised; the original has no checks. Callback exception/unwind behavior and real audio decoding are outside scope.",
+    "Sixteen original table entries at 0x9eea50 reference this bridge; no direct caller was found. Indirect dispatch and complete decoder layout remain unresolved.",
+    "Original layout and ABI are x86; on a 64-bit port callback pointers use the native width. No matching-byte claim."
+  ]
+}
