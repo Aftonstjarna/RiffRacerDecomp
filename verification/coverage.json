@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 109245,
-  "remaining_bytes": 8526147,
-  "verified_percent": 1.2650844339203131,
-  "registered_blocks": 547,
-  "exact_blocks": 547,
+  "verified_bytes": 109317,
+  "remaining_bytes": 8526075,
+  "verified_percent": 1.2659182119352543,
+  "registered_blocks": 548,
+  "exact_blocks": 548,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4187,6 +4187,15 @@
       "byte_equal": true,
       "reference_sha256": "7ffb5b4fbc445a6f18e1d5efc86550b31f236945853a98d08ff234370a6421da",
       "candidate_sha256": "7ffb5b4fbc445a6f18e1d5efc86550b31f236945853a98d08ff234370a6421da"
+    },
+    {
+      "name": "record12-capacity-growth",
+      "file_offset": 1739248,
+      "size": 72,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "fe83631638b63ff85e381f2de05d757a4b933adaacbcc470e4bff3e54e1525bd",
+      "candidate_sha256": "fe83631638b63ff85e381f2de05d757a4b933adaacbcc470e4bff3e54e1525bd"
     },
     {
       "name": "byte-range-transform-callback",

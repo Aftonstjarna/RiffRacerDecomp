@@ -6573,3 +6573,16 @@ test-cycle-audio-record36-remove-last: $(OUT)/reriff-match $(OUT)/audio_record36
 
 test-recovered: test-cycle-audio-record36-remove-last
 .PHONY: test-cycle-audio-record36-remove-last
+
+# Reviewed cycle reference: record12-capacity-growth (assembly evidence only).
+$(OUT)/record12_capacity_growth.bin: native/record12_capacity_growth.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_capacity_growth.o
+	ld -m elf_i386 -Ttext=0x5a95f0 -e original_record12_capacity_growth $(OUT)/record12_capacity_growth.o -o $(OUT)/record12_capacity_growth.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_capacity_growth.elf $@
+
+test-cycle-record12-capacity-growth: $(OUT)/reriff-match $(OUT)/record12_capacity_growth.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-capacity-growth $(OUT)/record12_capacity_growth.bin $(OUT)/record12-capacity-growth-comparison.json
+
+test-recovered: test-cycle-record12-capacity-growth
+.PHONY: test-cycle-record12-capacity-growth
