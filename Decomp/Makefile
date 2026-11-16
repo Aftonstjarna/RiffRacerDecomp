@@ -6352,3 +6352,16 @@ test-cycle-audio-resample-phase-at-count: $(OUT)/reriff-match $(OUT)/audio_resam
 
 test-recovered: test-cycle-audio-resample-phase-at-count
 .PHONY: test-cycle-audio-resample-phase-at-count
+
+# Reviewed cycle reference: audio-stream-shift-byte (assembly evidence only).
+$(OUT)/audio_stream_shift_byte.bin: native/audio_stream_shift_byte.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_stream_shift_byte.o
+	ld -m elf_i386 -Ttext=0x58dad0 -e original_audio_stream_shift_byte $(OUT)/audio_stream_shift_byte.o -o $(OUT)/audio_stream_shift_byte.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_stream_shift_byte.elf $@
+
+test-cycle-audio-stream-shift-byte: $(OUT)/reriff-match $(OUT)/audio_stream_shift_byte.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-stream-shift-byte $(OUT)/audio_stream_shift_byte.bin $(OUT)/audio-stream-shift-byte-comparison.json
+
+test-recovered: test-cycle-audio-stream-shift-byte
+.PHONY: test-cycle-audio-stream-shift-byte
