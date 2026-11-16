@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Simplex result reset",
+  "summary": "Recovered the no-argument thiscall reset at VA 0x546100: clear status at +0x24, zero four float weights at +0x14 through +0x20, and clear only flags bits 0..3 at +0x10. Preserve all other object bytes. Caller at 0x546374 supplies a result subobject at simplex+0x13c and subsequently assigns weight zero to 1.0f. Implementation is a genuine member method compatible with GCC and MSVC2013.",
+  "targets": ["simplex-result-reset"],
+  "references": ["simplex-result-reset"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 freestanding harness directly compares the member method to the byte-verified original at 0x546100 for every 16-bit flags value, with cycling byte patterns covering every old status and weight byte value. Independent expected-byte checks cover exact write footprint, prefix, reserved bytes, trailing padding and surrounding guards. Repeated resets verify idempotence. Initialized test-owned FS storage is installed successfully and its head checked after every original call. Local run passes; optional pinned MSVC2013 O2 compilation succeeds.",
+  "known_limits": [
+    "Original field/debug names, meanings of preserved high flag bits, prefix contents and status semantics remain unresolved; weights are inferred from caller floating-point use.",
+    "Only offsets through 0x24 are proven; the modeled 0x28 size includes natural alignment padding and does not establish complete original object extent.",
+    "Valid writable objects are required; null, dangling, inaccessible or misaligned objects and concurrent access are outside the C++ contract.",
+    "Incidental EAX value and CPU condition flags are not modeled as a return contract. No compiler-byte matching is claimed."
+  ]
+}

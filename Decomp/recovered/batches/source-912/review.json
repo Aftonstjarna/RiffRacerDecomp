@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source control flow, thiscall ABI, field layouts, stores and preserved bytes agree with the original routine. All submitted sources and validation records, including actual-implementation MSVC compilation, were inspected. Independent GCC O0/O2 builds passed 262,144 cases each against hash-verified original executable bytes, including exhaustive flags, varied storage, guards and repeated resets. Stated layout and contract limitations are reasonable; sampled validation does not establish all-input equivalence or exact matching."
+}
