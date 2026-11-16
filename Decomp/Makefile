@@ -6027,3 +6027,16 @@ test-cycle-script-call-result-finish: $(OUT)/reriff-match $(OUT)/script_call_res
 
 test-recovered: test-cycle-script-call-result-finish
 .PHONY: test-cycle-script-call-result-finish
+
+# Reviewed cycle reference: audio-memory-seek-callback (assembly evidence only).
+$(OUT)/audio_memory_seek_callback.bin: native/audio_memory_seek_callback.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_memory_seek_callback.o
+	ld -m elf_i386 -Ttext=0x55dd90 -e original_audio_memory_seek_callback $(OUT)/audio_memory_seek_callback.o -o $(OUT)/audio_memory_seek_callback.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_memory_seek_callback.elf $@
+
+test-cycle-audio-memory-seek-callback: $(OUT)/reriff-match $(OUT)/audio_memory_seek_callback.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-memory-seek-callback $(OUT)/audio_memory_seek_callback.bin $(OUT)/audio-memory-seek-callback-comparison.json
+
+test-recovered: test-cycle-audio-memory-seek-callback
+.PHONY: test-cycle-audio-memory-seek-callback
