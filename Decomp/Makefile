@@ -5884,3 +5884,16 @@ test-cycle-block64-zero-initialize: $(OUT)/reriff-match $(OUT)/block64_zero_init
 
 test-recovered: test-cycle-block64-zero-initialize
 .PHONY: test-cycle-block64-zero-initialize
+
+# Reviewed cycle reference: audio-sample-rate-index (assembly evidence only).
+$(OUT)/audio_sample_rate_index.bin: native/audio_sample_rate_index.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_sample_rate_index.o
+	ld -m elf_i386 -Ttext=0x55c9f0 -e original_audio_sample_rate_index $(OUT)/audio_sample_rate_index.o -o $(OUT)/audio_sample_rate_index.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_sample_rate_index.elf $@
+
+test-cycle-audio-sample-rate-index: $(OUT)/reriff-match $(OUT)/audio_sample_rate_index.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-sample-rate-index $(OUT)/audio_sample_rate_index.bin $(OUT)/audio-sample-rate-index-comparison.json
+
+test-recovered: test-cycle-audio-sample-rate-index
+.PHONY: test-cycle-audio-sample-rate-index
