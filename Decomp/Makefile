@@ -5962,3 +5962,16 @@ test-cycle-audio-frame-reuse-buffered: $(OUT)/reriff-match $(OUT)/audio_frame_re
 
 test-recovered: test-cycle-audio-frame-reuse-buffered
 .PHONY: test-cycle-audio-frame-reuse-buffered
+
+# Reviewed cycle reference: audio-buffer-adjust-position (assembly evidence only).
+$(OUT)/audio_buffer_adjust_position.bin: native/audio_buffer_adjust_position.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffer_adjust_position.o
+	ld -m elf_i386 -Ttext=0x58e330 -e original_audio_buffer_adjust_position $(OUT)/audio_buffer_adjust_position.o -o $(OUT)/audio_buffer_adjust_position.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffer_adjust_position.elf $@
+
+test-cycle-audio-buffer-adjust-position: $(OUT)/reriff-match $(OUT)/audio_buffer_adjust_position.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffer-adjust-position $(OUT)/audio_buffer_adjust_position.bin $(OUT)/audio-buffer-adjust-position-comparison.json
+
+test-recovered: test-cycle-audio-buffer-adjust-position
+.PHONY: test-cycle-audio-buffer-adjust-position
