@@ -6274,3 +6274,16 @@ test-cycle-record12-copy-range: $(OUT)/reriff-match $(OUT)/record12_copy_range.b
 
 test-recovered: test-cycle-record12-copy-range
 .PHONY: test-cycle-record12-copy-range
+
+# Reviewed cycle reference: audio-coefficient-rows-initialize (assembly evidence only).
+$(OUT)/audio_coefficient_rows_initialize.bin: native/audio_coefficient_rows_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_coefficient_rows_initialize.o
+	ld -m elf_i386 -Ttext=0x596390 -e original_audio_coefficient_rows_initialize $(OUT)/audio_coefficient_rows_initialize.o -o $(OUT)/audio_coefficient_rows_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_coefficient_rows_initialize.elf $@
+
+test-cycle-audio-coefficient-rows-initialize: $(OUT)/reriff-match $(OUT)/audio_coefficient_rows_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-coefficient-rows-initialize $(OUT)/audio_coefficient_rows_initialize.bin $(OUT)/audio-coefficient-rows-initialize-comparison.json
+
+test-recovered: test-cycle-audio-coefficient-rows-initialize
+.PHONY: test-cycle-audio-coefficient-rows-initialize

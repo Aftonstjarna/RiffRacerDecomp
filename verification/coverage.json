@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 106554,
-  "remaining_bytes": 8528838,
-  "verified_percent": 1.233921980611882,
-  "registered_blocks": 524,
-  "exact_blocks": 524,
+  "verified_bytes": 106603,
+  "remaining_bytes": 8528789,
+  "verified_percent": 1.2344894128720503,
+  "registered_blocks": 525,
+  "exact_blocks": 525,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3971,6 +3971,15 @@
       "byte_equal": true,
       "reference_sha256": "ebfe5049a1b77c93f4a2650c15b9f6fea99b71e32b14e77f74fa8f7a349ca3dc",
       "candidate_sha256": "ebfe5049a1b77c93f4a2650c15b9f6fea99b71e32b14e77f74fa8f7a349ca3dc"
+    },
+    {
+      "name": "audio-coefficient-rows-initialize",
+      "file_offset": 1660816,
+      "size": 49,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "c0e3344b9b92d7eff99527d8073849c0eb3b61b13f96bb6b19675d3dd64833d1",
+      "candidate_sha256": "c0e3344b9b92d7eff99527d8073849c0eb3b61b13f96bb6b19675d3dd64833d1"
     },
     {
       "name": "page-header-stream-id-le32",
