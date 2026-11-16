@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-736",
+  "classification": "source_match_pending_review",
+  "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "original_size": 8635392,
+  "sections": [
+    {
+      "name": ".text",
+      "rva": 4096,
+      "size": 5421056,
+      "offset": 1024
+    },
+    {
+      "name": ".rdata",
+      "rva": 5427200,
+      "size": 2574848,
+      "offset": 5422080
+    },
+    {
+      "name": ".data",
+      "rva": 8003584,
+      "size": 160256,
+      "offset": 7996928
+    },
+    {
+      "name": "_RDATA",
+      "rva": 8450048,
+      "size": 2560,
+      "offset": 8157184
+    },
+    {
+      "name": ".rsrc",
+      "rva": 8454144,
+      "size": 274944,
+      "offset": 8159744
+    },
+    {
+      "name": ".reloc",
+      "rva": 8732672,
+      "size": 200704,
+      "offset": 8434688
+    }
+  ],
+  "source_commit": "42dac92e935d0f0eba3ea4479bcfecd3fa01c584",
+  "manifest_sha256": "6bc25e38c18654a8ea432502aa65d2a112649fc3771f2c873152e2d1b2d5e5f7",
+  "compiler": "18.00.40629.0 built by: REL",
+  "profile": "O2-frame",
+  "flags": "/O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise",
+  "native_toolchain_manifest": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+  "isolated_toolchain_manifest": "663a537894a7ad9d0698931863c652acbd86406b07905f637c7dad96fcc69c41",
+  "checker_sha256": "e09b38e76f53f65d5ecea1b1255355e797bfe7aea4589a74e12f79f0ca2aecc8",
+  "whole_executable_compared": false,
+  "certified_matching_credit": 0,
+  "functions": [
+    {
+      "scope": "audio-decoder-metadata-clear",
+      "source": "Decomp/recovered/msvc/cycle_audio_decoder_metadata_clear.cpp",
+      "source_sha256": "ad48f62648d7aac33847dd309fd5141c7a3c16b8ab8f34f7d5ddc9e89d372514",
+      "rva": 1618464,
+      "file_offset": 1615392,
+      "size": 148,
+      "section": ".text",
+      "code_sha256": "f042704e54672e74d4d4e0fe18d5be2a3217deec32af3a3f2e9b529269744c7a",
+      "native_object_sha256": "6e8b2cde6a0e2360367c259a17fc3e50518ef3823b8f013c6436a5f40df89f06",
+      "isolated_object_sha256": "f4a0170b1707434e34953b35562ce12f79c63bc1d15f9206e61aa9343006948f",
+      "comparison": {
+        "schema": 1,
+        "byte_equal": true,
+        "different_bytes": 0,
+        "original_size": 148,
+        "candidate_size": 148,
+        "candidate_sha256": "f042704e54672e74d4d4e0fe18d5be2a3217deec32af3a3f2e9b529269744c7a",
+        "masked_bytes": 0,
+        "source_rebuild_verified": false,
+        "note": "Binary equality alone does not prove reconstruction from source.",
+        "difference_ranges": [],
+        "reference_fragment_sha256": "f042704e54672e74d4d4e0fe18d5be2a3217deec32af3a3f2e9b529269744c7a",
+        "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "scope": "audio-decoder-metadata-clear",
+        "rva": 1618464,
+        "whole_executable_compared": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "b39d04b28a6242f9fb99885a5c1defd904d0c11f25db48c41a60dfe0dbdb3039",
+  "behavior_sha256": "3b15d641ae4e95ca850faa6ea22665c1ee59c7c4ac81c2514483030951f110b8",
+  "functions": [
+    {
+      "scope": "audio-decoder-metadata-clear",
+      "source_sha256": "ad48f62648d7aac33847dd309fd5141c7a3c16b8ab8f34f7d5ddc9e89d372514",
+      "approved": true,
+      "reason": "Pinned MSVC produced a complete, unmodified 148-byte code section matching Game.exe at 0x58B220–0x58B2B4, with no masking or code relocations. Original disassembly confirms boundaries, thiscall ABI, store order, and absence of branches. Executing both actual compiler output and original bytes passed 4,160 cases covering varied contents, alignments, repeated clearing, and every untouched byte. Approval is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "f7f417d5514a92a0ae8a4d5f6a4cab1f8f6dcaa58981c4f009e1fcb108ee639d",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

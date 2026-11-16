@@ -4,10 +4,10 @@
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
   "text_size": 5421056,
-  "certified_bytes": 4090,
-  "certified_percent": 0.04736322334874896,
-  "certified_text_bytes": 4090,
-  "certified_text_percent": 0.07544655506233472,
+  "certified_bytes": 4238,
+  "certified_percent": 0.04907710037946164,
+  "certified_text_bytes": 4238,
+  "certified_text_percent": 0.0781766504533434,
   "whole_executable_compared": false,
   "note": "Exact compiler-built function spans only. Assembly reference overlaps are not added. This is not a complete rebuilt EXE or port-completion percentage.",
   "entries": [
@@ -1224,6 +1224,21 @@
       "isolated_object_sha256": "1d794d493ebedfefa4835882ae4c31ccd952c8a9a4f6445b2e2cb8ac5d956277",
       "classification": "compiler_built_matching_source",
       "evidence": "verification/source-certifications/msvc-cycle-cycle-687",
+      "source_rebuild_verified": true
+    },
+    {
+      "scope": "audio-decoder-metadata-clear",
+      "source": "Decomp/recovered/msvc/cycle_audio_decoder_metadata_clear.cpp",
+      "source_sha256": "ad48f62648d7aac33847dd309fd5141c7a3c16b8ab8f34f7d5ddc9e89d372514",
+      "rva": 1618464,
+      "file_offset": 1615392,
+      "size": 148,
+      "section": ".text",
+      "code_sha256": "f042704e54672e74d4d4e0fe18d5be2a3217deec32af3a3f2e9b529269744c7a",
+      "native_object_sha256": "6e8b2cde6a0e2360367c259a17fc3e50518ef3823b8f013c6436a5f40df89f06",
+      "isolated_object_sha256": "f4a0170b1707434e34953b35562ce12f79c63bc1d15f9206e61aa9343006948f",
+      "classification": "compiler_built_matching_source",
+      "evidence": "verification/source-certifications/msvc-cycle-cycle-736",
       "source_rebuild_verified": true
     },
     {

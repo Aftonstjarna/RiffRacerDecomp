@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-736",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "audio-decoder-metadata-clear",
+      "stem": "cycle_audio_decoder_metadata_clear",
+      "source": "Decomp/recovered/msvc/cycle_audio_decoder_metadata_clear.cpp",
+      "sha256": "ad48f62648d7aac33847dd309fd5141c7a3c16b8ab8f34f7d5ddc9e89d372514"
+    }
+  ]
+}
