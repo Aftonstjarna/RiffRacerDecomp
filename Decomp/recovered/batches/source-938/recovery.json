@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio backend reset",
+  "summary": "Recovered the nine constant DWORD stores at VA 0x58e6f0 as a genuine thiscall member. Selects original backend table identity 0xbaf470, clears seven fields, and sets +0x6d40 to -1 without touching other storage or invoking dependencies. Direct caller at 0x58a553 retains the same object pointer.",
+  "targets": [
+    "audio-backend-reset"
+  ],
+  "references": [
+    "audio-backend-reset"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "520 direct original-versus-C++ calls: all 256 uniform byte patterns, ascending and descending bytes, two pseudorandom states, and repeated resets. Compare entire partial object and surrounding guards, independently assert all nine assigned fields and unchanged bytes. Require FS installation success and check FS head after every oracle call. GCC freestanding i386 harness passed; pinned MSVC2013 compilation succeeded with O1, O2, and O2 /Oy-.",
+  "known_limits": [
+    "Partial original object layout; exact meanings of neutral state fields and full enclosing class remain unresolved.",
+    "Backend table stored as original 32-bit image address identity; actual Linux callback relocation and callback implementations are outside this scope.",
+    "Only valid writable objects are tested; original null/invalid pointers fault and have no supported recovery behavior.",
+    "No matching-source claim; full audio initialization, real playback, and threading are outside scope."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "All submitted source and validation evidence were reviewed. The layout, thiscall ABI and nine stores agree with the original routine. Native Windows compilation records cover the actual implementation. An independent optimized i386 build passed 1,000 randomized whole-object and guard comparisons against reference assembly independently byte-verified against Game.exe. Tests exercise unchanged storage and repeated resets. Partial-layout, callback relocation and invalid-pointer limitations are explicit; sampled validation does not establish all-input equivalence."
+}
