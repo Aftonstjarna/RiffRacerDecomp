@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "3410795d96df60ee7b09c7e2f430d67058c94c7600f076a7074c04569adfb080",
+  "behavior_sha256": "cc2e220629f8deb9af0a8f8042f1f032a094fd42b60ca317ae2a92bd02d3389e",
+  "functions": [
+    {
+      "scope": "record88-copy-construct",
+      "source_sha256": "a5827fd61670270f3998d64943b7e8b107fe5f657bb75d91da2f9b803c367efd",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation produced a complete, unmodified 142-byte code section exactly matching Game.exe, with no relocations. Original instructions and caller confirm boundaries, layout and thiscall ABI. All 4,352 submitted differential cases and 625 independent overlap/guard counterchecks passed using actual compiled and original code. No embedded instruction data or substituted implementation found. Certification covers this routine only."
+    }
+  ],
+  "review_receipt_sha256": "2298da75bdffdf19978088957f1ed3bd9562c62e638d6e92d59adbc4ac19d41e",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-719",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "record88-copy-construct",
+      "stem": "cycle_record88_copy_construct",
+      "source": "Decomp/recovered/msvc/cycle_record88_copy_construct.cpp",
+      "sha256": "a5827fd61670270f3998d64943b7e8b107fe5f657bb75d91da2f9b803c367efd"
+    }
+  ]
+}
