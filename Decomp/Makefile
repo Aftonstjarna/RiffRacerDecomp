@@ -6105,3 +6105,16 @@ test-cycle-audio-callback-table-contains: $(OUT)/reriff-match $(OUT)/audio_callb
 
 test-recovered: test-cycle-audio-callback-table-contains
 .PHONY: test-cycle-audio-callback-table-contains
+
+# Reviewed cycle reference: audio-stream-query-position (assembly evidence only).
+$(OUT)/audio_stream_query_position.bin: native/audio_stream_query_position.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_stream_query_position.o
+	ld -m elf_i386 -Ttext=0x58dc90 -e original_audio_stream_query_position $(OUT)/audio_stream_query_position.o -o $(OUT)/audio_stream_query_position.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_stream_query_position.elf $@
+
+test-cycle-audio-stream-query-position: $(OUT)/reriff-match $(OUT)/audio_stream_query_position.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-stream-query-position $(OUT)/audio_stream_query_position.bin $(OUT)/audio-stream-query-position-comparison.json
+
+test-recovered: test-cycle-audio-stream-query-position
+.PHONY: test-cycle-audio-stream-query-position
