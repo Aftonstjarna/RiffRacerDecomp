@@ -6443,3 +6443,16 @@ test-cycle-audio-decoder-metadata-clear: $(OUT)/reriff-match $(OUT)/audio_decode
 
 test-recovered: test-cycle-audio-decoder-metadata-clear
 .PHONY: test-cycle-audio-decoder-metadata-clear
+
+# Reviewed cycle reference: audio-callback-backend-select (assembly evidence only).
+$(OUT)/audio_callback_backend_select.bin: native/audio_callback_backend_select.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_callback_backend_select.o
+	ld -m elf_i386 -Ttext=0x58e750 -e original_audio_callback_backend_select $(OUT)/audio_callback_backend_select.o -o $(OUT)/audio_callback_backend_select.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_callback_backend_select.elf $@
+
+test-cycle-audio-callback-backend-select: $(OUT)/reriff-match $(OUT)/audio_callback_backend_select.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-callback-backend-select $(OUT)/audio_callback_backend_select.bin $(OUT)/audio-callback-backend-select-comparison.json
+
+test-recovered: test-cycle-audio-callback-backend-select
+.PHONY: test-cycle-audio-callback-backend-select
