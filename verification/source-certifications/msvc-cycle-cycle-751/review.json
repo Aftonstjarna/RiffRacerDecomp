@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "09ab506f71e7870d829628ef9befb2599444ab28e4bc311dbc4992733477f694",
+  "behavior_sha256": "27d7b736cf18455b2cc3cd7a6ee25684aa0feb1107bfa795898d4158bdcb876a",
+  "functions": [
+    {
+      "scope": "record12-capacity-growth",
+      "source_sha256": "64cfa194706a644237bd35ec40c22aa9785ec5fa945cf9ff696c388d135af636",
+      "approved": true,
+      "reason": "Independent pinned-MSVC rebuild matched the full unmodified 72-byte compiler section to Game.exe. Original disassembly confirmed boundaries and thiscall ABI. Executing compiled and original code passed 11,845 submitted cases and 100,000 independent expected-result checks covering both growth branches, minimum selection, and unchanged state. Approval is limited to this routine."
+    }
+  ],
+  "review_receipt_sha256": "36b6fd9751c1ddbbd89768812a406f52481fd7fc858e5e98d5c79491727581e3",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
