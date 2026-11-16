@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-687",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "audio-unity-arrays-initialize",
+      "stem": "cycle_audio_unity_arrays_initialize",
+      "source": "Decomp/recovered/msvc/cycle_audio_unity_arrays_initialize.cpp",
+      "sha256": "60ed6e0f539b39fc40ed39da3c003e94ae343beb870fdcf7b9053daa1f97f0cc"
+    }
+  ]
+}

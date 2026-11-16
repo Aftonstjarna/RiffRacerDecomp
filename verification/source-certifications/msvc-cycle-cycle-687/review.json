@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "2158b7acd7f6279d1537115212b02e57ccb795e62f75749da7a784660e0cd76f",
+  "behavior_sha256": "65d2c9a6e3bf2d9d96f905b8f45bd3e2f819dd93f89241e27b6839e41149b04d",
+  "functions": [
+    {
+      "scope": "audio-unity-arrays-initialize",
+      "source_sha256": "60ed6e0f539b39fc40ed39da3c003e94ae343beb870fdcf7b9053daa1f97f0cc",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified code section exactly against Game.exe. Original instructions confirm boundaries, thiscall ABI, state reset and 64 float writes. Both actual compiled code and extracted original code passed 520 differential cases, repeated with expanded untouched-state coverage. Approval is limited to this function."
+    }
+  ],
+  "review_receipt_sha256": "56ab78a84db9a985ae030b6a3a060e105bffb1cbd0c58a065deda8be4e1b53c1",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
