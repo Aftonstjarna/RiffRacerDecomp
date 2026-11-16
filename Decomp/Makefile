@@ -5871,3 +5871,16 @@ test-cycle-record48-default-construct-range: $(OUT)/reriff-match $(OUT)/record48
 
 test-recovered: test-cycle-record48-default-construct-range
 .PHONY: test-cycle-record48-default-construct-range
+
+# Reviewed cycle reference: block64-zero-initialize (assembly evidence only).
+$(OUT)/block64_zero_initialize.bin: native/block64_zero_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/block64_zero_initialize.o
+	ld -m elf_i386 -Ttext=0x41e770 -e original_block64_zero_initialize $(OUT)/block64_zero_initialize.o -o $(OUT)/block64_zero_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/block64_zero_initialize.elf $@
+
+test-cycle-block64-zero-initialize: $(OUT)/reriff-match $(OUT)/block64_zero_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" block64-zero-initialize $(OUT)/block64_zero_initialize.bin $(OUT)/block64-zero-initialize-comparison.json
+
+test-recovered: test-cycle-block64-zero-initialize
+.PHONY: test-cycle-block64-zero-initialize
