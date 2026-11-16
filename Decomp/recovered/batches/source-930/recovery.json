@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio buffer position advance callback",
+  "summary": "Recover VA 0x58e2d0 (83 bytes) as readable cdecl C++ with a partial buffer-state layout. Negative amounts return -1 without dereferencing state. Signed comparison of wrapped available bytes controls checkpoint restoration and -10; successful updates return the negative position directly or wrapped base plus position. Only position is written. Original callback-table evidence and unresolved indirect callers are documented in impl.cpp. GCC oracle tests pass; VS2013 compiles O1, O2 and O2 /Oy-. No compiler byte match is claimed.",
+  "targets": ["audio-buffer-advance-position"],
+  "references": ["audio-buffer-advance-position"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct comparison to original_audio_buffer_advance_position linked at 0x58e2d0, whose 83 assembled bytes were checked against Game.exe. Explicit cases cover zero, negative and INT_MIN amounts, exact capacity, insufficient capacity with checkpoint restore, signed subtraction overflow, negative updated position, addition wrap and base-result overflow; a null state with negative amount is checked. 1331 edge-value combinations and 2000 deterministic randomized states compare returns and every object byte, checking that all bytes outside position stay unchanged. Test-owned FS storage is installed with required success and its head checked after oracle calls. GCC freestanding i386 harness exits zero. Implementation compiled with pinned VS2013 O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Complete decoder object type and semantic field names remain inferred; only the observed offsets are recovered.",
+    "Callback pointer occurs at 0xbaf514 in table 0xbaf500 installed at object+0x6d3c; concrete indirect invocation sites remain unresolved. No direct call xrefs found.",
+    "Positive or zero amounts require a valid state object as in the original. No OS, decoder integration or exception behavior is claimed.",
+    "High-level behavior recovery only; generated implementation bytes are not claimed to match the original."
+  ]
+}
