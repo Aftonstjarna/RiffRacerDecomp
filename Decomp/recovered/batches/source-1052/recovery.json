@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio resampler output count",
+  "summary": "Recovered VA 0x5909e0 as a read-only fastcall member query over fields +0x4ba0 and +0x4cec. Preserves local half-unit Q15 phase, signed chunk selection, truncation toward zero and all 32-bit arithmetic wrapping. Three direct callers select it for mode 3.",
+  "targets": [
+    "audio-resample-output-count"
+  ],
+  "references": [
+    "audio-resample-output-count"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct GCC i386 fastcall oracle comparison across 1456 count/limit/step combinations, signed limits and count boundaries, Q15 rounding thresholds, product wrapping, large counts and 3000 deterministic randomized cases. Independently expected rounding and overflow results; checks every byte of the partial state after both calls, with repeat queries to detect phase persistence. Local GCC harness passed; accepted oracle text compared equal to all 113 bytes in immutable Game.exe. Implementation also compiled with pinned MSVC2013 at /O1, /O2 and /O2 /Oy-; this establishes compiler compatibility, not code matching.",
+  "known_limits": [
+    "Partial enclosing object layout and descriptive field names only; other audio behavior is outside scope.",
+    "Positive counts with zero chunk limit do not terminate in the original or recovery and are not executed. General negative-limit runs can be extremely long; only selected promptly terminating cases are tested.",
+    "No byte identity claim; sampled behavioral validation does not exhaust the 32-bit input space.",
+    "Original reads the chunk field even for nonpositive input; invalid object pointers, memory faults and concurrent mutation are outside the portable model."
+  ]
+}

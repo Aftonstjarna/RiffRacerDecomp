@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Readable source preserves the reference control flow, fastcall ABI, field offsets, wrapped arithmetic, signed truncation and read-only state behavior. Independently verified all 113 oracle bytes against immutable Game.exe, passed optimized differential tests and additional signed-limit edge cases, and compiled the actual implementation with pinned MSVC2013. Native compilation evidence claims no matching credit. Nontermination, partial layout and portable-model limitations are disclosed; sampled validation does not establish all-input equivalence."
+}
