@@ -6053,3 +6053,16 @@ test-cycle-audio-memory-read-callback: $(OUT)/reriff-match $(OUT)/audio_memory_r
 
 test-recovered: test-cycle-audio-memory-read-callback
 .PHONY: test-cycle-audio-memory-read-callback
+
+# Reviewed cycle reference: audio-buffer-commit-consumed (assembly evidence only).
+$(OUT)/audio_buffer_commit_consumed.bin: native/audio_buffer_commit_consumed.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffer_commit_consumed.o
+	ld -m elf_i386 -Ttext=0x58e180 -e original_audio_buffer_commit_consumed $(OUT)/audio_buffer_commit_consumed.o -o $(OUT)/audio_buffer_commit_consumed.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffer_commit_consumed.elf $@
+
+test-cycle-audio-buffer-commit-consumed: $(OUT)/reriff-match $(OUT)/audio_buffer_commit_consumed.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffer-commit-consumed $(OUT)/audio_buffer_commit_consumed.bin $(OUT)/audio-buffer-commit-consumed-comparison.json
+
+test-recovered: test-cycle-audio-buffer-commit-consumed
+.PHONY: test-cycle-audio-buffer-commit-consumed

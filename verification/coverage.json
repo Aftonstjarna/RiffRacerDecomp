@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 104733,
-  "remaining_bytes": 8530659,
-  "verified_percent": 1.2128343449839916,
-  "registered_blocks": 507,
-  "exact_blocks": 507,
+  "verified_bytes": 104843,
+  "remaining_bytes": 8530549,
+  "verified_percent": 1.2141081725068184,
+  "registered_blocks": 508,
+  "exact_blocks": 508,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3755,6 +3755,15 @@
       "byte_equal": true,
       "reference_sha256": "37a5da54e73756f63a3eefd7e7d955ca7197055abc2d0131c742f11661fcdc71",
       "candidate_sha256": "37a5da54e73756f63a3eefd7e7d955ca7197055abc2d0131c742f11661fcdc71"
+    },
+    {
+      "name": "audio-buffer-commit-consumed",
+      "file_offset": 1627520,
+      "size": 110,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f73a157edd83a2073a9bc18fb1087bb6a1c167c6e237b1cefd405e8689e103ef",
+      "candidate_sha256": "f73a157edd83a2073a9bc18fb1087bb6a1c167c6e237b1cefd405e8689e103ef"
     },
     {
       "name": "audio-buffer-advance-position",
