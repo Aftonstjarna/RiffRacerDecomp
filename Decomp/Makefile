@@ -6235,3 +6235,16 @@ test-cycle-audio-buffer-reset: $(OUT)/reriff-match $(OUT)/audio_buffer_reset.bin
 
 test-recovered: test-cycle-audio-buffer-reset
 .PHONY: test-cycle-audio-buffer-reset
+
+# Reviewed cycle reference: audio-metadata-state-initialize (assembly evidence only).
+$(OUT)/audio_metadata_state_initialize.bin: native/audio_metadata_state_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_metadata_state_initialize.o
+	ld -m elf_i386 -Ttext=0x58b2c0 -e original_audio_metadata_state_initialize $(OUT)/audio_metadata_state_initialize.o -o $(OUT)/audio_metadata_state_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_metadata_state_initialize.elf $@
+
+test-cycle-audio-metadata-state-initialize: $(OUT)/reriff-match $(OUT)/audio_metadata_state_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-metadata-state-initialize $(OUT)/audio_metadata_state_initialize.bin $(OUT)/audio-metadata-state-initialize-comparison.json
+
+test-recovered: test-cycle-audio-metadata-state-initialize
+.PHONY: test-cycle-audio-metadata-state-initialize
