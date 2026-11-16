@@ -6196,3 +6196,16 @@ test-cycle-audio-input-read-loop: $(OUT)/reriff-match $(OUT)/audio_input_read_lo
 
 test-recovered: test-cycle-audio-input-read-loop
 .PHONY: test-cycle-audio-input-read-loop
+
+# Reviewed cycle reference: audio-buffer-dispose-cached (assembly evidence only).
+$(OUT)/audio_buffer_dispose_cached.bin: native/audio_buffer_dispose_cached.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffer_dispose_cached.o
+	ld -m elf_i386 -Ttext=0x58de70 -e original_audio_buffer_dispose_cached $(OUT)/audio_buffer_dispose_cached.o -o $(OUT)/audio_buffer_dispose_cached.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffer_dispose_cached.elf $@
+
+test-cycle-audio-buffer-dispose-cached: $(OUT)/reriff-match $(OUT)/audio_buffer_dispose_cached.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffer-dispose-cached $(OUT)/audio_buffer_dispose_cached.bin $(OUT)/audio-buffer-dispose-cached-comparison.json
+
+test-recovered: test-cycle-audio-buffer-dispose-cached
+.PHONY: test-cycle-audio-buffer-dispose-cached
