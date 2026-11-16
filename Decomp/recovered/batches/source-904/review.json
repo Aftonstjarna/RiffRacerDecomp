@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source and reference review supports the layouts, ordered releases, wrapping sizes, callback timing, captured-owner accounting, and unreachable allocation-error paths. Independently rebuilt optimized source passed all 112 differential cases against bytes extracted from immutable Game.exe; tests exercise null blocks, overflow, callback mutations, and whole-fixture changes. Unmodified implementation also compiled with pinned MSVC2013. The ABI difference and scope limitations are disclosed; sampled validation does not establish all-input equivalence or exact matching."
+}
