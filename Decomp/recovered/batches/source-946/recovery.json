@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Linked audio buffer range read",
+  "summary": "Recover VA 0x58e0d0: signed availability check, saved-cursor restoration and -10 on insufficient bytes; locate a linked chunk by cumulative length, copy across chunks, advance cursor and return actual copied bytes. Direct original disassembly and both callers at 0x58e2b2 and 0x58e561 confirm ECX/EDX plus caller-cleaned stack ABI. Adjacent append/compact routines support chunk length/capacity and buffer cursor interpretations.",
+  "targets": [
+    "audio-buffer-read-range"
+  ],
+  "references": [
+    "audio-buffer-read-range",
+    "memcpy-import"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Direct original comparison over three chain shapes (full chain with internal empty chunk, truncated chain, null chain), cursor 0..17, counts -3..20, and huge-count rejection. Compare return, entire destination including guards, entire buffer state, copy call counts/sizes, unchanged chunk records/data, cursor-only mutation and explicit insufficient-data behavior. Install test-owned FS and verify unchanged head after every original call. memcpy import is a controlled test callback. Local GCC freestanding oracle executable exits zero; linked accepted routine (175 bytes) and memcpy thunk (6 bytes) independently equal Game.exe. Pinned MSVC2013 compilation passed O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "No matching-byte claim. Portable member ABI differs from original optimized ECX/EDX/caller-cleanup ABI; GCC test-only regparm adapter supplies the original registers without assembly.",
+    "Malformed pointers, cyclic chains, overlapping memcpy regions and negative chunk lengths that cause invalid memory accesses are outside controlled tests. No validation or invented error handling was added.",
+    "Field +16 is a saved cursor by observed restoration and adjacent compaction stores; wider ownership and audio codec semantics are outside scope.",
+    "32-bit arithmetic wrapping is retained explicitly; tests cover safe signed boundary rejection, not arbitrary invalid address arithmetic. Native pointer layouts are original-compatible on 32-bit targets."
+  ]
+}
