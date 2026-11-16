@@ -5741,3 +5741,16 @@ test-cycle-simplex-solver-reset: $(OUT)/reriff-match $(OUT)/simplex_solver_reset
 
 test-recovered: test-cycle-simplex-solver-reset
 .PHONY: test-cycle-simplex-solver-reset
+
+# Reviewed cycle reference: simplex-solver-contains-vertex (assembly evidence only).
+$(OUT)/simplex_solver_contains_vertex.bin: native/simplex_solver_contains_vertex.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/simplex_solver_contains_vertex.o
+	ld -m elf_i386 -Ttext=0x546a30 -e original_simplex_solver_contains_vertex $(OUT)/simplex_solver_contains_vertex.o -o $(OUT)/simplex_solver_contains_vertex.elf
+	objcopy -O binary --only-section=.text $(OUT)/simplex_solver_contains_vertex.elf $@
+
+test-cycle-simplex-solver-contains-vertex: $(OUT)/reriff-match $(OUT)/simplex_solver_contains_vertex.bin
+	$(OUT)/reriff-match native-check "$(GAME)" simplex-solver-contains-vertex $(OUT)/simplex_solver_contains_vertex.bin $(OUT)/simplex-solver-contains-vertex-comparison.json
+
+test-recovered: test-cycle-simplex-solver-contains-vertex
+.PHONY: test-cycle-simplex-solver-contains-vertex
