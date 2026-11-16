@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio stream exact-read adapter",
+  "summary": "Recovered the cdecl wrapper at VA 0x58dc60 as readable C++: call stream backend slot +8 once, preserve its result when its 32-bit value equals count, otherwise return -10. Stream dispatch pointer is at +0x6d3c. No retry, validation or rollback. Accepted oracle matches all 40 original bytes. GCC differential tests pass; implementation compiles with pinned VS2013 at O1, O2 and O2 /Oy-. No source byte matching claimed.",
+  "targets": [
+    "audio-stream-read-exact"
+  ],
+  "references": [
+    "audio-stream-read-exact"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "196 differential cases: seven counts including zero, signed boundaries and UINT_MAX, seven callback return patterns per count, and four mutation/null-destination modes. Checks cdecl argument forwarding, exactly one callback, expected return bits, original/recovered equality, full partial-stream layout and surrounding guards, destination guards, callback mutations including dispatch replacement, unchanged backend table, and FS head restoration after every original call. Callback deliberately does not dereference null destinations or read/write count-sized buffers.",
+  "known_limits": [
+    "Original source type names and count/result signedness remain unresolved; comparison is modeled as exact 32-bit equality.",
+    "No direct call references found; original tables at 0xbaf4a0/4d0/500/530/560 expose wrapper in slot +0x18. Concrete indirect callers remain unidentified.",
+    "Backend callbacks are controlled test fixtures; actual backend I/O, OS/CRT behavior, invalid pointer faults and exceptional paths are outside scope.",
+    "Layout is partial and describes only the accessed dispatch field; wrapper itself writes no stream fields."
+  ]
+}

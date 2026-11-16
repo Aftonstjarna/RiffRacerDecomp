@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source preserves the x86 cdecl ABI, dispatch offsets, single callback, 32-bit result comparison, -10 fallback, and callback side effects. Submitted tests call the original and cover boundary values, null destinations, mutations, and guards. Native Windows records compile the actual implementation in three profiles. Independently verified all 40 reference bytes against immutable Game.exe and passed 100,000 randomized differential cases. Documented backend, fault, and exception limitations remain; sampled validation does not establish all-input equivalence."
+}
