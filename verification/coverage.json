@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 103659,
-  "remaining_bytes": 8531733,
-  "verified_percent": 1.200397156261117,
-  "registered_blocks": 495,
-  "exact_blocks": 495,
+  "verified_bytes": 103804,
+  "remaining_bytes": 8531588,
+  "verified_percent": 1.2020762925412072,
+  "registered_blocks": 496,
+  "exact_blocks": 496,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3593,6 +3593,15 @@
       "byte_equal": true,
       "reference_sha256": "4cf5411c75a4c50f6f95cbc51f4c4fb5d243259bfdd788a37c477bb9170b6397",
       "candidate_sha256": "4cf5411c75a4c50f6f95cbc51f4c4fb5d243259bfdd788a37c477bb9170b6397"
+    },
+    {
+      "name": "audio-configuration-select",
+      "file_offset": 1424928,
+      "size": 145,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "5a6cde297b669ead3cce3ad858e271e15a7e7fbe6b58d2f7964af37cc5207131",
+      "candidate_sha256": "5a6cde297b669ead3cce3ad858e271e15a7e7fbe6b58d2f7964af37cc5207131"
     },
     {
       "name": "flag-selected-product",

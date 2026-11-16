@@ -5897,3 +5897,16 @@ test-cycle-audio-sample-rate-index: $(OUT)/reriff-match $(OUT)/audio_sample_rate
 
 test-recovered: test-cycle-audio-sample-rate-index
 .PHONY: test-cycle-audio-sample-rate-index
+
+# Reviewed cycle reference: audio-configuration-select (assembly evidence only).
+$(OUT)/audio_configuration_select.bin: native/audio_configuration_select.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_configuration_select.o
+	ld -m elf_i386 -Ttext=0x55ca20 -e original_audio_configuration_select $(OUT)/audio_configuration_select.o -o $(OUT)/audio_configuration_select.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_configuration_select.elf $@
+
+test-cycle-audio-configuration-select: $(OUT)/reriff-match $(OUT)/audio_configuration_select.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-configuration-select $(OUT)/audio_configuration_select.bin $(OUT)/audio-configuration-select-comparison.json
+
+test-recovered: test-cycle-audio-configuration-select
+.PHONY: test-cycle-audio-configuration-select
