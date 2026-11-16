@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-683",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "audio-stream-query-position",
+      "stem": "cycle_audio_stream_query_position",
+      "source": "Decomp/recovered/msvc/cycle_audio_stream_query_position.cpp",
+      "sha256": "9bfda3f548b9096c44167f4faeb4bbd08a39f9a87cae61a81670a8f4f4507442"
+    }
+  ]
+}
