@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-635",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "script-remove-active-locals",
+      "stem": "cycle_script_remove_active_locals",
+      "source": "Decomp/recovered/msvc/cycle_script_remove_active_locals.cpp",
+      "sha256": "56072857177d5fa61f72ba76edc2e02c0fadcb628f5e8e5ace980369331e98f4"
+    }
+  ]
+}
