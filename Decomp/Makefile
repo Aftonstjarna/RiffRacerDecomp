@@ -5689,3 +5689,16 @@ test-cycle-script-prototype-local-name: $(OUT)/reriff-match $(OUT)/script_protot
 
 test-recovered: test-cycle-script-prototype-local-name
 .PHONY: test-cycle-script-prototype-local-name
+
+# Reviewed cycle reference: script-callinfo-grow (assembly evidence only).
+$(OUT)/script_callinfo_grow.bin: native/script_callinfo_grow.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_callinfo_grow.o
+	ld -m elf_i386 -Ttext=0x4f4fd0 -e original_script_callinfo_grow $(OUT)/script_callinfo_grow.o -o $(OUT)/script_callinfo_grow.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_callinfo_grow.elf $@
+
+test-cycle-script-callinfo-grow: $(OUT)/reriff-match $(OUT)/script_callinfo_grow.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-callinfo-grow $(OUT)/script_callinfo_grow.bin $(OUT)/script-callinfo-grow-comparison.json
+
+test-recovered: test-cycle-script-callinfo-grow
+.PHONY: test-cycle-script-callinfo-grow
