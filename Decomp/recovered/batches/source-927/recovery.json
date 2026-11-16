@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio frame header compatibility predicate",
+  "summary": "Recovered the pure two-scalar ECX/EDX fastcall predicate at VA 0x58f460. Requires equality under mask 0xfffe0c00 and agreement on channel mode being 3. Returns exactly 0 or 1 without memory accesses. Direct caller 0x590197 follows a separate validity predicate; compatibility itself accepts invalid headers too.",
+  "targets": ["audio-frame-headers-compatible"],
+  "references": ["audio-frame-headers-compatible"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct accepted-original comparisons: zero/all-one and representative MPEG headers, each differing bit in both directions on two backgrounds, all 8192 ignored-bit combinations across all 16 channel-mode pairs, each equality-mask bit broken across all modes, and 100000 pseudorandom raw and mask-matched pairs. Assert exact 0/1 results, explicit expected mode and rejection outcomes, and unchanged input/sentinel storage. Original disassembly establishes absence of memory side effects.",
+  "known_limits": ["No byte-matching claim; portable scalar logic with x86 fastcall declaration.", "Only this compatibility predicate is recovered; frame parsing and independent header validity are outside scope.", "Caller inspection covers the direct call found in executable disassembly; indirect uses are not established."]
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source matches the original predicate’s control flow, ECX/EDX fastcall ABI, exact 0/1 returns, and lack of externally visible memory effects. Independently verified reference bytes against Game.exe and rebuilt/reran the differential test successfully. Tests call the original and cover mask differences, all channel-mode pairs, ignored-bit combinations, and random inputs. Native Windows compilation records actual implementation builds with nonmatching output. Minor comment error: protection bit 16 is excluded from the equality mask. Sampled validation does not establish all-input equivalence."
+}
