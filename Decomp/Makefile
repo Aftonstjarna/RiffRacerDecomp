@@ -5936,3 +5936,16 @@ test-cycle-audio-frame-header-plausible: $(OUT)/reriff-match $(OUT)/audio_frame_
 
 test-recovered: test-cycle-audio-frame-header-plausible
 .PHONY: test-cycle-audio-frame-header-plausible
+
+# Reviewed cycle reference: audio-frame-headers-compatible (assembly evidence only).
+$(OUT)/audio_frame_headers_compatible.bin: native/audio_frame_headers_compatible.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_frame_headers_compatible.o
+	ld -m elf_i386 -Ttext=0x58f460 -e original_audio_frame_headers_compatible $(OUT)/audio_frame_headers_compatible.o -o $(OUT)/audio_frame_headers_compatible.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_frame_headers_compatible.elf $@
+
+test-cycle-audio-frame-headers-compatible: $(OUT)/reriff-match $(OUT)/audio_frame_headers_compatible.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-frame-headers-compatible $(OUT)/audio_frame_headers_compatible.bin $(OUT)/audio-frame-headers-compatible-comparison.json
+
+test-recovered: test-cycle-audio-frame-headers-compatible
+.PHONY: test-cycle-audio-frame-headers-compatible
