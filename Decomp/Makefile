@@ -6248,3 +6248,16 @@ test-cycle-audio-metadata-state-initialize: $(OUT)/reriff-match $(OUT)/audio_met
 
 test-recovered: test-cycle-audio-metadata-state-initialize
 .PHONY: test-cycle-audio-metadata-state-initialize
+
+# Reviewed cycle reference: audio-buffer-append (assembly evidence only).
+$(OUT)/audio_buffer_append.bin: native/audio_buffer_append.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffer_append.o
+	ld -m elf_i386 -Ttext=0x58dfc0 -e original_audio_buffer_append $(OUT)/audio_buffer_append.o -o $(OUT)/audio_buffer_append.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffer_append.elf $@
+
+test-cycle-audio-buffer-append: $(OUT)/reriff-match $(OUT)/audio_buffer_append.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffer-append $(OUT)/audio_buffer_append.bin $(OUT)/audio-buffer-append-comparison.json
+
+test-recovered: test-cycle-audio-buffer-append
+.PHONY: test-cycle-audio-buffer-append
