@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio input accumulating read loop",
+  "summary": "Recovered free cdecl reader at VA 0x58d880: repeatedly invokes +0x6d58, advances destination, accumulates positive results, conditionally accounts position at +0x6d44 using post-callback flag 8, stops on zero and normalizes negatives to -1. Preserves unchecked oversized results and wrapping 32-bit arithmetic. Direct original disassembly confirms accepted instructions; setup installs this callback at +0x6d78.",
+  "targets": [
+    "audio-input-read-loop"
+  ],
+  "references": [
+    "audio-input-read-loop"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "504 differential cases plus null nonpositive early exits against original cdecl reference at its original VA. Negative/zero/positive/INT_MAX requests; immediate zero and negative results including INT_MIN; partial reads, partial then error, completion, oversized results and signed accumulator wrap; position wrap; flag 8 enabled/disabled and unrelated bits; callback mutates flags, position, opaque bytes and callback slot. Compares return, callback order/destination/remaining/count/state observations, complete state image and guarded destination bytes. Explicit FS setup and head restoration checks after every original call. Locally passed GCC fixed-flag freestanding execution; accepted reference verified equal to all 83 original bytes. Implementation also compiled with pinned MSVC2013 under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Callbacks are controlled test functions; audio backend, dispatcher and installed-callback consumers are outside scope.",
+    "No validation of null callbacks or invalid writable buffers on positive-count paths; the original performs none.",
+    "Overlarge-result tests use opaque non-dereferenced 32-bit addresses; memory safety is a caller/backend contract. Infinite positive callback sequences after arithmetic wrap are not run.",
+    "Original field offsets and address wrap apply to the 32-bit ABI; native 64-bit pointer arithmetic follows native address width.",
+    "No matching-byte credit claimed; opaque field meanings and full state extent remain unresolved."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, reference assembly, recovery claims, and validation including native Windows compilation records. Control flow, cdecl ABI, field offsets, callback mutations, error handling, and wrapping arithmetic agree with the original within the stated 32-bit scope. Independently verified all 83 oracle bytes against Game.exe, reran 504 differential cases, and passed 16,800 additional scripted comparisons with optimized C++. Tests compare returns, callback traces, state, and buffer changes. Documented platform and callback limitations remain; sampled validation does not establish all-input equivalence."
+}
