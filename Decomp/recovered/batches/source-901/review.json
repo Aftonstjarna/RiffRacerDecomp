@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Control flow, signed interval checks, ordinal wraparound, 32-bit layouts, return-address arithmetic and absence of writes agree with the original leaf. The ABI adaptation and portability limits are explicit. Submitted tests call the original and cover meaningful boundaries and side effects. Independently verified the 67-byte reference against Game.exe, passed 100,000 differential cases, and compiled the unmodified implementation with pinned MSVC. Sampled validation does not establish all-input equivalence or exact matching."
+}
