@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio index even-entry compaction",
+  "summary": "Recovered the ECX member routine at VA 0x5960b0: counts below two do nothing; otherwise double stride, halve count, copy even-index entries forward, and recompute covered units with 32-bit wraparound. Direct original disassembly and the full-table caller at 0x5961c0 establish field uses and ignored return register.",
+  "targets": ["audio-index-compact-even"],
+  "references": ["audio-index-compact-even"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 thiscall oracle comparison for every count 0 through 257, eight strides including zero and overflow boundaries, and twelve repeated calls per case. Independently asserts expected count, stride, product and even-entry selection; compares every array slot including guards and unused tail, pointer preservation, capacity and growth. Null entries tested for counts zero and one. No imports or FS access occur in this routine.",
+  "known_limits": ["Field names are inferred from local instructions and callers; opaque entry meanings are unresolved.", "Valid separate object and entry storage is assumed, as in the observed callers; corrupt, overlapping or undersized storage is not supported or tested.", "Extremely large counts are not executed because they require huge allocations; unsigned count comparison and arithmetic are preserved.", "No byte-matching claim; original EAX contents are incidental and modeled as a void member method."]
+}
