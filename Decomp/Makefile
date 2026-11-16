@@ -5715,3 +5715,16 @@ test-cycle-script-prototype-dispose: $(OUT)/reriff-match $(OUT)/script_prototype
 
 test-recovered: test-cycle-script-prototype-dispose
 .PHONY: test-cycle-script-prototype-dispose
+
+# Reviewed cycle reference: script-lua-closure-allocate (assembly evidence only).
+$(OUT)/script_lua_closure_allocate.bin: native/script_lua_closure_allocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_lua_closure_allocate.o
+	ld -m elf_i386 -Ttext=0x4f4800 -e original_script_lua_closure_allocate $(OUT)/script_lua_closure_allocate.o -o $(OUT)/script_lua_closure_allocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_lua_closure_allocate.elf $@
+
+test-cycle-script-lua-closure-allocate: $(OUT)/reriff-match $(OUT)/script_lua_closure_allocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-lua-closure-allocate $(OUT)/script_lua_closure_allocate.bin $(OUT)/script-lua-closure-allocate-comparison.json
+
+test-recovered: test-cycle-script-lua-closure-allocate
+.PHONY: test-cycle-script-lua-closure-allocate
