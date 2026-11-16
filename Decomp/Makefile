@@ -6066,3 +6066,16 @@ test-cycle-audio-buffer-commit-consumed: $(OUT)/reriff-match $(OUT)/audio_buffer
 
 test-recovered: test-cycle-audio-buffer-commit-consumed
 .PHONY: test-cycle-audio-buffer-commit-consumed
+
+# Reviewed cycle reference: audio-backend-reset (assembly evidence only).
+$(OUT)/audio_backend_reset.bin: native/audio_backend_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_backend_reset.o
+	ld -m elf_i386 -Ttext=0x58e6f0 -e original_audio_backend_reset $(OUT)/audio_backend_reset.o -o $(OUT)/audio_backend_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_backend_reset.elf $@
+
+test-cycle-audio-backend-reset: $(OUT)/reriff-match $(OUT)/audio_backend_reset.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-backend-reset $(OUT)/audio_backend_reset.bin $(OUT)/audio-backend-reset-comparison.json
+
+test-recovered: test-cycle-audio-backend-reset
+.PHONY: test-cycle-audio-backend-reset
