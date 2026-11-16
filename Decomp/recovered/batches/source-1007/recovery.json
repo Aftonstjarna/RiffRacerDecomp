@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio decoder metadata reset",
+  "summary": "Recover VA 0x58b220 as a portable C++ member method clearing the flag at +0x6f70 and fourteen words at +0x6f74..+0x6fa8. Preserves the gap and all other bytes; no allocation, cleanup, imports or pointer dereferences occur. Callers at 0x589f74 and 0x58a757 pass the decoder via ECX; the latter performs collection cleanup first.",
+  "targets": ["audio-decoder-metadata-clear"],
+  "references": ["audio-decoder-metadata-clear"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "260 full-object patterns including zero, FF, 55, AA and varying bytes, compared directly with the original thiscall routine at its original VA. Checks every byte against an independent expected write mask, including prefix, three-byte gap and 16-byte guards; repeats each reset for idempotence. Installs test-owned FS backing and checks the head after every original call.",
+  "known_limits": ["Metadata field meanings and complete decoder size remain unresolved; the struct models only the known extent.", "Requires valid writable object storage; invalid pointers are outside the original method contract.", "Normal single-threaded behavior tested; no claim of atomic stores or concurrent observation guarantees.", "Portable C++ source is behavior recovery, not a matching-byte reconstruction."]
+}
