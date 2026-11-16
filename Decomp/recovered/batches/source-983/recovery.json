@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio stream byte shift",
+  "summary": "Recover cdecl routine at VA 0x58dad0 (RVA 0x18dad0), 66 bytes. Invoke backend read at table +8 through stream +0x6d3c with count 1. Preserve -10; map other non-1 counts to 0; on 1 append an unsigned byte to the accumulator with a wrapping eight-bit left shift. Accumulator is read after the callback. Direct original disassembly and four table entries at +0x10 confirm dispatch registration; individual indirect caller identities remain unresolved. GCC differential tests pass against a byte-verified oracle linked at its original address. Readable source compiled with pinned VS2013 under O1, O2 and O2 /Oy-; no source byte-matching claim.",
+  "targets": ["audio-stream-shift-byte"],
+  "references": ["audio-stream-shift-byte"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "55,296 differential cases: nine statuses (-10, INT_MIN, -11, -1, 0, 1, 2, 255, INT_MAX), every byte 0..255, six accumulator seeds, callback mutation on/off, and accumulator separate or inside stream storage. Also two failed reads without writing the byte destination. Assert callback identity/count/call count, return status, accumulator value, overflow, zero extension, callback side effects, complete stream memory equality, independently expected untouched bytes, backend pointer and output guards. Install test-owned FS backing and check head restoration after every oracle call. Freestanding GCC i386 fixed flags; accepted oracle independently compared against all 66 original bytes and run at 0x58dad0.",
+  "known_limits": [
+    "Only the assigned routine is recovered. Stream prefix and unused backend entries remain opaque; backend I/O and real audio decoding are controlled callbacks, not recovered dependencies.",
+    "Requires a valid stream and readable backend table with callable cdecl read slot. Accumulator must be valid when status is 1; no null-pointer checks are invented.",
+    "Successful reads must initialize the requested byte. Original scratch aliases the high byte of its incoming stream pointer argument; a success callback that fails to write observes that pointer byte in the original. This malformed backend behavior and callbacks inspecting or retaining the scratch address are outside the portable contract.",
+    "No exception, unwind, reentrant callback, concurrent access, or OS audio validation. Individual indirect callers have not been identified beyond original backend dispatch table registration.",
+    "32-bit layout and ABI validated; on 64-bit ports backend slot offsets naturally follow native pointer size while stream backend offset remains 0x6d3c. Full original stream layout is not established.",
+    "Source is classified high_level_unmatched; compiler success and behavioral tests do not establish matching original code generation."
+  ]
+}

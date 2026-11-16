@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "Reviewed every submitted source/header, recovery and validation records, and original assembly. Independently verified all 66 reference bytes and four dispatch entries against Game.exe, reran 55,298 differential cases successfully, and compiled the unchanged implementation with pinned VS2013. Control flow, cdecl ABI, layouts, status handling, unsigned wrapping shift, and callback side effects agree within the documented contract. Scratch-address differences and untested exception/concurrency behavior are explicitly disclosed. Sampled validation does not establish all-input equivalence or exact matching."
+}
