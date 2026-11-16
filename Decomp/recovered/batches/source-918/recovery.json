@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "64-byte subobject zero initialization",
+  "summary": "Recover 0x41e770 as a thiscall member returning its receiver after sixteen ascending 32-bit zero stores. Direct calls at 0x41e443 and 0x41e8c1 initialize enclosing-object bytes +0x28 through +0x67. No dependencies, imports, input reads, or conditional paths occur.",
+  "targets": ["block64-zero-initialize"],
+  "references": ["block64-zero-initialize"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare original thiscall routine and recovered member on 67 initial patterns including zero, all ones, walking bits and mixed words; repeat every call to verify idempotence. Assert receiver return, all sixteen zero words, ten preceding and sixteen following untouched words, unchanged MXCSR, and restored initialized FS head after each original call. Freestanding GCC i386 harness links accepted reference at its original VA.",
+  "known_limits": ["Individual word meanings and original type name are unresolved; Block64 is a neutral storage model.", "Valid writable ordinary 64-byte object storage is required. Null, inaccessible storage, concurrent observers, and hardware faults are outside the portable C++ contract.", "Behavioral recovery only; no byte matching claim."]
+}
