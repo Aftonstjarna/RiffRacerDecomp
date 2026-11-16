@@ -6339,3 +6339,16 @@ test-cycle-audio-buffered-backend-initialize: $(OUT)/reriff-match $(OUT)/audio_b
 
 test-recovered: test-cycle-audio-buffered-backend-initialize
 .PHONY: test-cycle-audio-buffered-backend-initialize
+
+# Reviewed cycle reference: audio-resample-phase-at-count (assembly evidence only).
+$(OUT)/audio_resample_phase_at_count.bin: native/audio_resample_phase_at_count.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_resample_phase_at_count.o
+	ld -m elf_i386 -Ttext=0x5908d0 -e original_audio_resample_phase_at_count $(OUT)/audio_resample_phase_at_count.o -o $(OUT)/audio_resample_phase_at_count.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_resample_phase_at_count.elf $@
+
+test-cycle-audio-resample-phase-at-count: $(OUT)/reriff-match $(OUT)/audio_resample_phase_at_count.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-resample-phase-at-count $(OUT)/audio_resample_phase_at_count.bin $(OUT)/audio-resample-phase-at-count-comparison.json
+
+test-recovered: test-cycle-audio-resample-phase-at-count
+.PHONY: test-cycle-audio-resample-phase-at-count
