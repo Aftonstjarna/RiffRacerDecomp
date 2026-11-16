@@ -5767,3 +5767,16 @@ test-cycle-simplex-solver-reduce-vertices: $(OUT)/reriff-match $(OUT)/simplex_so
 
 test-recovered: test-cycle-simplex-solver-reduce-vertices
 .PHONY: test-cycle-simplex-solver-reduce-vertices
+
+# Reviewed cycle reference: collision-face-list-unlink (assembly evidence only).
+$(OUT)/collision_face_list_unlink.bin: native/collision_face_list_unlink.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/collision_face_list_unlink.o
+	ld -m elf_i386 -Ttext=0x549780 -e original_collision_face_list_unlink $(OUT)/collision_face_list_unlink.o -o $(OUT)/collision_face_list_unlink.elf
+	objcopy -O binary --only-section=.text $(OUT)/collision_face_list_unlink.elf $@
+
+test-cycle-collision-face-list-unlink: $(OUT)/reriff-match $(OUT)/collision_face_list_unlink.bin
+	$(OUT)/reriff-match native-check "$(GAME)" collision-face-list-unlink $(OUT)/collision_face_list_unlink.bin $(OUT)/collision-face-list-unlink-comparison.json
+
+test-recovered: test-cycle-collision-face-list-unlink
+.PHONY: test-cycle-collision-face-list-unlink
