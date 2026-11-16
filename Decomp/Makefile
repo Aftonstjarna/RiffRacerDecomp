@@ -6547,3 +6547,16 @@ test-cycle-audio-record36-append: $(OUT)/reriff-match $(OUT)/audio_record36_appe
 
 test-recovered: test-cycle-audio-record36-append
 .PHONY: test-cycle-audio-record36-append
+
+# Reviewed cycle reference: audio-record32-remove-last (assembly evidence only).
+$(OUT)/audio_record32_remove_last.bin: native/audio_record32_remove_last.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_record32_remove_last.o
+	ld -m elf_i386 -Ttext=0x58b640 -e original_audio_record32_remove_last $(OUT)/audio_record32_remove_last.o -o $(OUT)/audio_record32_remove_last.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_record32_remove_last.elf $@
+
+test-cycle-audio-record32-remove-last: $(OUT)/reriff-match $(OUT)/audio_record32_remove_last.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-record32-remove-last $(OUT)/audio_record32_remove_last.bin $(OUT)/audio-record32-remove-last-comparison.json
+
+test-recovered: test-cycle-audio-record32-remove-last
+.PHONY: test-cycle-audio-record32-remove-last
