@@ -5988,3 +5988,16 @@ test-cycle-audio-buffer-advance-position: $(OUT)/reriff-match $(OUT)/audio_buffe
 
 test-recovered: test-cycle-audio-buffer-advance-position
 .PHONY: test-cycle-audio-buffer-advance-position
+
+# Reviewed cycle reference: audio-unavailable-callback (assembly evidence only).
+$(OUT)/audio_unavailable_callback.bin: native/audio_unavailable_callback.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_unavailable_callback.o
+	ld -m elf_i386 -Ttext=0x58e5b0 -e original_audio_unavailable_callback $(OUT)/audio_unavailable_callback.o -o $(OUT)/audio_unavailable_callback.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_unavailable_callback.elf $@
+
+test-cycle-audio-unavailable-callback: $(OUT)/reriff-match $(OUT)/audio_unavailable_callback.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-unavailable-callback $(OUT)/audio_unavailable_callback.bin $(OUT)/audio-unavailable-callback-comparison.json
+
+test-recovered: test-cycle-audio-unavailable-callback
+.PHONY: test-cycle-audio-unavailable-callback
