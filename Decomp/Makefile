@@ -5858,3 +5858,16 @@ test-cycle-buffer-pack-high-three-bytes: $(OUT)/reriff-match $(OUT)/buffer_pack_
 
 test-recovered: test-cycle-buffer-pack-high-three-bytes
 .PHONY: test-cycle-buffer-pack-high-three-bytes
+
+# Reviewed cycle reference: record48-default-construct-range (assembly evidence only).
+$(OUT)/record48_default_construct_range.bin: native/record48_default_construct_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record48_default_construct_range.o
+	ld -m elf_i386 -Ttext=0x541f40 -e original_record48_default_construct_range $(OUT)/record48_default_construct_range.o -o $(OUT)/record48_default_construct_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/record48_default_construct_range.elf $@
+
+test-cycle-record48-default-construct-range: $(OUT)/reriff-match $(OUT)/record48_default_construct_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record48-default-construct-range $(OUT)/record48_default_construct_range.bin $(OUT)/record48-default-construct-range-comparison.json
+
+test-recovered: test-cycle-record48-default-construct-range
+.PHONY: test-cycle-record48-default-construct-range
