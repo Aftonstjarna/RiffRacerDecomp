@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-661",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "convex-hull-vertex-without-margin",
+      "stem": "cycle_convex_hull_vertex_without_margin",
+      "source": "Decomp/recovered/msvc/cycle_convex_hull_vertex_without_margin.cpp",
+      "sha256": "05e974f2e77fba2f84e86e8118fa190da25531153d3f8583e2b99af1ed5ed373"
+    }
+  ]
+}
