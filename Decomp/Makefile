@@ -5819,3 +5819,16 @@ test-cycle-collision-workspace-link-free-records: $(OUT)/reriff-match $(OUT)/col
 
 test-recovered: test-cycle-collision-workspace-link-free-records
 .PHONY: test-cycle-collision-workspace-link-free-records
+
+# Reviewed cycle reference: flag-selected-product (assembly evidence only).
+$(OUT)/flag_selected_product.bin: native/flag_selected_product.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/flag_selected_product.o
+	ld -m elf_i386 -Ttext=0x55d190 -e original_flag_selected_product $(OUT)/flag_selected_product.o -o $(OUT)/flag_selected_product.elf
+	objcopy -O binary --only-section=.text $(OUT)/flag_selected_product.elf $@
+
+test-cycle-flag-selected-product: $(OUT)/reriff-match $(OUT)/flag_selected_product.bin
+	$(OUT)/reriff-match native-check "$(GAME)" flag-selected-product $(OUT)/flag_selected_product.bin $(OUT)/flag-selected-product-comparison.json
+
+test-recovered: test-cycle-flag-selected-product
+.PHONY: test-cycle-flag-selected-product
