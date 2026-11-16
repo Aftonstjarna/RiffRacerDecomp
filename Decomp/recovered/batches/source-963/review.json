@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Reviewed all submitted source, metadata, validation and original assembly. Layout, thiscall ABI and memory effects agree, including preserved byte +7. Independently verified reference bytes against Game.exe and passed 4,096 differential cases across 16 alignments with surrounding-byte checks. Native MSVC evidence compiles the actual implementation. EAX preservation and invalid-memory behavior are explicitly excluded; approval does not establish drop-in binary compatibility or all-input equivalence."
+}
