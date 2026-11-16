@@ -6092,3 +6092,16 @@ test-cycle-audio-stream-commit-position: $(OUT)/reriff-match $(OUT)/audio_stream
 
 test-recovered: test-cycle-audio-stream-commit-position
 .PHONY: test-cycle-audio-stream-commit-position
+
+# Reviewed cycle reference: audio-callback-table-contains (assembly evidence only).
+$(OUT)/audio_callback_table_contains.bin: native/audio_callback_table_contains.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_callback_table_contains.o
+	ld -m elf_i386 -Ttext=0x58e7e0 -e original_audio_callback_table_contains $(OUT)/audio_callback_table_contains.o -o $(OUT)/audio_callback_table_contains.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_callback_table_contains.elf $@
+
+test-cycle-audio-callback-table-contains: $(OUT)/reriff-match $(OUT)/audio_callback_table_contains.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-callback-table-contains $(OUT)/audio_callback_table_contains.bin $(OUT)/audio-callback-table-contains-comparison.json
+
+test-recovered: test-cycle-audio-callback-table-contains
+.PHONY: test-cycle-audio-callback-table-contains
