@@ -6222,3 +6222,16 @@ test-cycle-audio-buffer-rebalance-cache: $(OUT)/reriff-match $(OUT)/audio_buffer
 
 test-recovered: test-cycle-audio-buffer-rebalance-cache
 .PHONY: test-cycle-audio-buffer-rebalance-cache
+
+# Reviewed cycle reference: audio-buffer-reset (assembly evidence only).
+$(OUT)/audio_buffer_reset.bin: native/audio_buffer_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffer_reset.o
+	ld -m elf_i386 -Ttext=0x58df50 -e original_audio_buffer_reset $(OUT)/audio_buffer_reset.o -o $(OUT)/audio_buffer_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffer_reset.elf $@
+
+test-cycle-audio-buffer-reset: $(OUT)/reriff-match $(OUT)/audio_buffer_reset.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffer-reset $(OUT)/audio_buffer_reset.bin $(OUT)/audio-buffer-reset-comparison.json
+
+test-recovered: test-cycle-audio-buffer-reset
+.PHONY: test-cycle-audio-buffer-reset
