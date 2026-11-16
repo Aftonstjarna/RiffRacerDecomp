@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Buffered audio frame reuse",
+  "summary": "Recovered VA 0x58f4a0 (149 bytes) as a genuine no-argument thiscall member. A zero field at +0x6dbc returns zero without writes. Otherwise zero repeats at +0x2570 seeds repeats to field-minus-one and returns zero. Nonzero repeats decrement with unsigned wrapping, set +0x6d08 and +0x6d04 to one, reset bit offset and cursor from buffered storage, copy saved bytes for mode 3, optionally read a 16-bit prefix through the accepted reader, and return one. Direct original caller 0x58f57a passes ECX and branches on result equal to one. Opaque fields and tentative semantic names are retained honestly. Accepted oracle fragments were independently byte-compared to immutable Game.exe. Readable implementation compiled with GCC and supplied VS2013 O1, O2, O2 /Oy-; no matching source claim.",
+  "targets": ["audio-frame-reuse-buffered"],
+  "references": ["audio-frame-reuse-buffered", "audio-bitstream-read16", "memcpy-import"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Freestanding i386 GCC harness passed 2250 differential cases against original_audio_frame_reuse_buffered at its original address: Cartesian product of frame and repeat values 0,1,2,0x80000000,0xffffffff; modes 0,2,3,4,0xffffffff; copy sizes 0,1,2,3,16,36; and prefix-enable values 0,1,0xffffffff. Compare return values, every byte of the decoder object (including untouched opaque fields), and all 128 buffer bytes including guards. Patterned saved bytes and buffer bytes distinguish copy direction and optional prefix reads. Both implementations use the accepted reader as an explicit dependency; test-only member adapter binds that dependency to the oracle. A controlled cdecl memcpy callback occupies exactly four bytes in .test_iat at 0x92d494. Initialized test-owned FS installation must succeed; head restoration is checked after each original invocation. Locally linked frame, reader, and memcpy thunk sections matched original bytes for all 149,77,6 bytes respectively.",
+  "known_limits": [
+    "Decoder class identity and full meaning of numeric modes, counters and flags remain unresolved; field names describe local observations only.",
+    "read16 is a declared integration dependency, not additional recovered scope; the harness supplies it using the accepted original audio-bitstream-read16 reference.",
+    "Requires readable source, sufficient writable destination for mode 3, and three readable bytes for an enabled reader. No bounds checks exist in the original. Faulting pointers, overlapping memcpy regions and buffer/object aliasing are not tested; no portable overlap semantics are invented.",
+    "Source layout supports ordinary native pointers, but faithful original address arithmetic and ABI verification are limited to i386. Unusual self-aliasing objects or concurrent mutation are outside the tests.",
+    "Controlled memcpy binding validates the observed call behavior, not CRT internals. Full decoder, playback and exception behavior are outside scope.",
+    "Behavioral recovery only: compiler-built matching credit is zero."
+  ]
+}

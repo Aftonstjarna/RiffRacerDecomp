@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source control flow, i386 ABI, field layouts and side effects agree with the original routines. The submitted test calls the original and compares complete objects and buffers across meaningful edge cases. An independent 3,375-case differential check passed with oracle bytes verified against Game.exe; the actual implementation also compiled with pinned VS2013 /O2. Dependencies and untested aliasing, fault and integration behavior are documented. Sampled validation does not establish all-input equivalence."
+}

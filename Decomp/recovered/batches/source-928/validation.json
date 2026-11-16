@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "0ffb99bdd7395c1e617f2a26775f19a910977a363e8b1d00b1a75b38e542528f",
+    "impl.hpp": "1a6dbf41c4806a527ba7e7ef1d0a87862eac7e66c1861b16b967ced03d41544e",
+    "test.cpp": "606d1c37637ad7659397d1c524ed7969a9157c9386e2f04e8c0870159800354c"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 77,
+      "candidate_size": 77,
+      "candidate_sha256": "c35525112c2be9a60c8979613216dd8376ea9d1e7fe8c6910edd713986fe42c2",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "c35525112c2be9a60c8979613216dd8376ea9d1e7fe8c6910edd713986fe42c2",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "audio-bitstream-read16",
+      "rva": 1632944,
+      "whole_executable_compared": false
+    },
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 149,
+      "candidate_size": 149,
+      "candidate_sha256": "52d6f82b38b46314bad4232c8f15841373f57018cb59c7ac17fd79ec38ff30c4",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "52d6f82b38b46314bad4232c8f15841373f57018cb59c7ac17fd79ec38ff30c4",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "audio-frame-reuse-buffered",
+      "rva": 1635488,
+      "whole_executable_compared": false
+    },
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 6,
+      "candidate_size": 6,
+      "candidate_sha256": "d05fd5d905112eeb13e48d0fec230e6b1638868a7830f8a5fd8df989e05361c8",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "d05fd5d905112eeb13e48d0fec230e6b1638868a7830f8a5fd8df989e05361c8",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "memcpy-import",
+      "rva": 5213542,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "ecbded9810b36755f966b2abcefbe4207bda6ae0",
+  "test_output": "buffered frame oracle checks passed\n",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "4328da1488fc4100ba5434fa02a31670554a16a40299f92969ea22ae87b6ca79",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "c0f6680d2ed912c9b8cceec6d91fb2a96e449adc9ea4083e600fa52568eea302",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "2a7961c7e4dc8ad906200200822915f7aca01dfe2c20f1e41adaeeeb96eaebe2",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "audio-frame-reuse-buffered",
+        "code_sections": 1,
+        "relocations": 2,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "unresolved_relocations"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "audio-frame-reuse-buffered",
+        "code_sections": 1,
+        "relocations": 2,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "unresolved_relocations"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "audio-frame-reuse-buffered",
+        "code_sections": 1,
+        "relocations": 2,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "unresolved_relocations"
+      }
+    ]
+  }
+}
