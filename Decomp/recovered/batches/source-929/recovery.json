@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio buffer position adjustment",
+  "summary": "Recovered the cdecl callback at VA 0x58e330 as readable portable C++. Rewinds reject amounts past the current signed position. Advances reject INT_MIN, compare wrapped signed availability, restore the checkpoint on insufficient data, and commit the new position before testing its sign and the wrapped base-relative sum. Returns exactly zero or minus one. Only the position DWORD is written. Original callback pointer resides in table 0xbaf500 at slot +0x1c, installed at object offset 0x6d3c. Accepted oracle was verified against all 158 original bytes; no matching-source credit claimed.",
+  "targets": ["audio-buffer-adjust-position"],
+  "references": ["audio-buffer-adjust-position"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC freestanding i386 harness directly compares 3341 cases with original_audio_buffer_adjust_position linked at VA 0x58e330: ten explicit result/position assertions, 1331 signed boundary combinations and 2000 deterministic pseudorandom states. Covers zero, exact rewind/advance, overrun rollback, INT_MIN rejection, negative initial positions, wrapped subtraction/addition and failure after position commit. Compares the entire 0x6d94-byte partial object and separately verifies every byte outside position remains unchanged. No imports or FS registration are used by this routine. Local accepted oracle byte check passed; local GCC behavioral execution passed. MSVC2013 compilation checked at O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Partial object layout only; field names describe observed roles, not recovered original identifiers or confirmed audio units.",
+    "The callback table installation is identified, but concrete indirect calls to this particular slot have not been uniquely resolved.",
+    "Tests use valid writable object storage; invalid pointers and concurrent modification are outside the recovered contract.",
+    "No full audio decoder, OS behavior or game integration is recovered, and compiler byte equivalence is not claimed."
+  ]
+}
