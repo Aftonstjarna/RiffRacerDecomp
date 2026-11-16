@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 107790,
-  "remaining_bytes": 8527602,
-  "verified_percent": 1.2482351698683742,
-  "registered_blocks": 538,
-  "exact_blocks": 538,
+  "verified_bytes": 108346,
+  "remaining_bytes": 8527046,
+  "verified_percent": 1.2546737889837543,
+  "registered_blocks": 539,
+  "exact_blocks": 539,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3791,6 +3791,15 @@
       "byte_equal": true,
       "reference_sha256": "c44111ffc37db6af65e91558d0bbd0a232d26731319088fbee6e48d44b506a0c",
       "candidate_sha256": "c44111ffc37db6af65e91558d0bbd0a232d26731319088fbee6e48d44b506a0c"
+    },
+    {
+      "name": "audio-decoder-reset-stream",
+      "file_offset": 1612112,
+      "size": 556,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "2ced6d54dc555a6cbab61c29cc564477d4fe282e8f75e963e38d0eeef9ac2f32",
+      "candidate_sha256": "2ced6d54dc555a6cbab61c29cc564477d4fe282e8f75e963e38d0eeef9ac2f32"
     },
     {
       "name": "audio-decoder-metadata-clear",

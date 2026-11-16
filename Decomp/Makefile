@@ -6456,3 +6456,16 @@ test-cycle-audio-callback-backend-select: $(OUT)/reriff-match $(OUT)/audio_callb
 
 test-recovered: test-cycle-audio-callback-backend-select
 .PHONY: test-cycle-audio-callback-backend-select
+
+# Reviewed cycle reference: audio-decoder-reset-stream (assembly evidence only).
+$(OUT)/audio_decoder_reset_stream.bin: native/audio_decoder_reset_stream.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_decoder_reset_stream.o
+	ld -m elf_i386 -Ttext=0x58a550 -e original_audio_decoder_reset_stream $(OUT)/audio_decoder_reset_stream.o -o $(OUT)/audio_decoder_reset_stream.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_decoder_reset_stream.elf $@
+
+test-cycle-audio-decoder-reset-stream: $(OUT)/reriff-match $(OUT)/audio_decoder_reset_stream.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-decoder-reset-stream $(OUT)/audio_decoder_reset_stream.bin $(OUT)/audio-decoder-reset-stream-comparison.json
+
+test-recovered: test-cycle-audio-decoder-reset-stream
+.PHONY: test-cycle-audio-decoder-reset-stream
