@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Audio stream cached position query",
+  "summary": "Recovered cdecl routine at VA 0x58dc90: flag byte +0x6d50 bit 3 selects refreshing cached +0x6d44 from +0x6d90 plus +0x6d88 modulo 2^32. Otherwise the cached value is returned without writes. Original indirect callers use stream operation table slot +0x24.",
+  "targets": ["audio-stream-query-position"],
+  "references": ["audio-stream-query-position"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct GCC i386 cdecl oracle comparison at original VA, all 256 flag bytes crossed with 11 operand pairs including zero, high-bit values and overflow. Each case checks initial query, repeated query and bit-3 transition with changed offset. Return values, complete partial stream layout and surrounding guards are checked against expected state; test-owned FS setup must succeed and FS head is checked after every oracle call.",
+  "known_limits": ["Original field/type names and exact position units remain unresolved; descriptive arithmetic names and a partial stream layout are used.", "Null/invalid pointers, concurrent mutation and full audio backend operation are outside the valid single-threaded object tests.", "High-level behavioral recovery; no matching-byte claim."]
+}

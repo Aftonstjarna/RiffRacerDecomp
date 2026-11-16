@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source matches original control flow, cdecl ABI, field offsets, wrapping arithmetic, return value and cache-only side effect. Submitted tests meaningfully cover flags, overflow, transitions and unchanged memory. Independent execution against machine code extracted from immutable Game.exe passed 196,608 differential calls with full guarded-memory comparisons. Source hashes agree with validation; native Windows compilation records cover the actual implementation. Documented pointer, concurrency and layout limitations are reasonable. Sampled validation does not establish all-input or whole-executable equivalence."
+}
