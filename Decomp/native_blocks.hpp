@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"simplex-solver-contains-vertex",0x146a30,188},
+  return {NativeBlock{"simplex-solver-reduce-vertices",0x146130,269},
+                     NativeBlock{"simplex-solver-contains-vertex",0x146a30,188},
                      NativeBlock{"simplex-solver-reset",0x146240,95},
                      NativeBlock{"script-lua-closure-allocate",0xf4800,100},
                      NativeBlock{"script-prototype-dispose",0xf4bb0,140},

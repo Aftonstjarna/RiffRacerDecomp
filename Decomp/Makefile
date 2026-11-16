@@ -5754,3 +5754,16 @@ test-cycle-simplex-solver-contains-vertex: $(OUT)/reriff-match $(OUT)/simplex_so
 
 test-recovered: test-cycle-simplex-solver-contains-vertex
 .PHONY: test-cycle-simplex-solver-contains-vertex
+
+# Reviewed cycle reference: simplex-solver-reduce-vertices (assembly evidence only).
+$(OUT)/simplex_solver_reduce_vertices.bin: native/simplex_solver_reduce_vertices.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/simplex_solver_reduce_vertices.o
+	ld -m elf_i386 -Ttext=0x546130 -e original_simplex_solver_reduce_vertices $(OUT)/simplex_solver_reduce_vertices.o -o $(OUT)/simplex_solver_reduce_vertices.elf
+	objcopy -O binary --only-section=.text $(OUT)/simplex_solver_reduce_vertices.elf $@
+
+test-cycle-simplex-solver-reduce-vertices: $(OUT)/reriff-match $(OUT)/simplex_solver_reduce_vertices.bin
+	$(OUT)/reriff-match native-check "$(GAME)" simplex-solver-reduce-vertices $(OUT)/simplex_solver_reduce_vertices.bin $(OUT)/simplex-solver-reduce-vertices-comparison.json
+
+test-recovered: test-cycle-simplex-solver-reduce-vertices
+.PHONY: test-cycle-simplex-solver-reduce-vertices
