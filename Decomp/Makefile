@@ -5728,3 +5728,16 @@ test-cycle-script-lua-closure-allocate: $(OUT)/reriff-match $(OUT)/script_lua_cl
 
 test-recovered: test-cycle-script-lua-closure-allocate
 .PHONY: test-cycle-script-lua-closure-allocate
+
+# Reviewed cycle reference: simplex-solver-reset (assembly evidence only).
+$(OUT)/simplex_solver_reset.bin: native/simplex_solver_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/simplex_solver_reset.o
+	ld -m elf_i386 -Ttext=0x546240 -e original_simplex_solver_reset $(OUT)/simplex_solver_reset.o -o $(OUT)/simplex_solver_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/simplex_solver_reset.elf $@
+
+test-cycle-simplex-solver-reset: $(OUT)/reriff-match $(OUT)/simplex_solver_reset.bin
+	$(OUT)/reriff-match native-check "$(GAME)" simplex-solver-reset $(OUT)/simplex_solver_reset.bin $(OUT)/simplex-solver-reset-comparison.json
+
+test-recovered: test-cycle-simplex-solver-reset
+.PHONY: test-cycle-simplex-solver-reset
