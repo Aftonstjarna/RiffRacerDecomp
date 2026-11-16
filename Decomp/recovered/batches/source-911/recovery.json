@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Collision face intrusive list removal",
+  "summary": "Recovered 0x549780 (41 bytes) as a fastcall member method: reconnect neighbors at face+0x30/+0x34, replace list head if equal, and decrement the 32-bit count. Removed links are retained. Caller 0x54a5a7 supplies ECX=owner+0x2640 and EDX=face before reinserting it into another list.",
+  "targets": ["collision-face-list-unlink"],
+  "references": ["collision-face-list-unlink"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "GCC i386 fastcall differential calls to the original reference at 0x549780. Independently asserts normal middle removal and retained links. Enumerates 4096 link configurations, four head choices, three removal targets and five counts (245760 comparisons), including null neighbors, singleton/head/tail removal, cycles, self-links, inconsistent membership and unsigned underflow. Compares the entire fixture byte-for-byte at identical addresses, including opaque face fields and list guards.",
+  "known_limits": ["Opaque face prefix and surrounding owner fields remain unidentified; names describe observed link roles.", "Null or invalid face/list pointers and arbitrary overlapping object storage are outside valid C++ object inputs and are not tested.", "No byte-matching claim; native pointer layouts widen on 64-bit ports while i386 offsets are asserted. No allocation, OS, exception or rendering dependencies occur in this routine."]
+}

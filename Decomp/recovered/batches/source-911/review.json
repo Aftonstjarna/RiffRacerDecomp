@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++; zero matching-source byte credit.",
+  "reason": "Source preserves the original ordered link updates, head replacement, retained links, and wrapping count decrement. ABI/layout assertions and caller context agree with original evidence. Independently verified reference bytes against Game.exe and reran 245,760 differential cases at both O0 and O2, comparing the entire fixture. Tests exercise self-links, cycles, inconsistent membership, null neighbors, and underflow. Native Windows compilation records cover the actual implementation. Documented pointer/layout limitations remain; sampled validation does not establish all-input equivalence or exact matching."
+}
