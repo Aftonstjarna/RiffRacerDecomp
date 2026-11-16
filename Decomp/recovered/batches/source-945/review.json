@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched C++ with zero matching-source byte credit.",
+  "reason": "Source control flow, thiscall ABI, field offsets and writes agree with the original routine. Submitted tests exercise original code, repeated calls, guards and floating-point state. Independent original-byte verification and an optimized differential check across 256 byte patterns passed. Native Windows compilation records cover the actual implementation. Partial layout and fault/concurrency limitations are disclosed; sampled validation does not establish all-input equivalence or exact matching."
+}
