@@ -6209,3 +6209,16 @@ test-cycle-audio-buffer-dispose-cached: $(OUT)/reriff-match $(OUT)/audio_buffer_
 
 test-recovered: test-cycle-audio-buffer-dispose-cached
 .PHONY: test-cycle-audio-buffer-dispose-cached
+
+# Reviewed cycle reference: audio-buffer-rebalance-cache (assembly evidence only).
+$(OUT)/audio_buffer_rebalance_cache.bin: native/audio_buffer_rebalance_cache.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/audio_buffer_rebalance_cache.o
+	ld -m elf_i386 -Ttext=0x58deb0 -e original_audio_buffer_rebalance_cache $(OUT)/audio_buffer_rebalance_cache.o -o $(OUT)/audio_buffer_rebalance_cache.elf
+	objcopy -O binary --only-section=.text $(OUT)/audio_buffer_rebalance_cache.elf $@
+
+test-cycle-audio-buffer-rebalance-cache: $(OUT)/reriff-match $(OUT)/audio_buffer_rebalance_cache.bin
+	$(OUT)/reriff-match native-check "$(GAME)" audio-buffer-rebalance-cache $(OUT)/audio_buffer_rebalance_cache.bin $(OUT)/audio-buffer-rebalance-cache-comparison.json
+
+test-recovered: test-cycle-audio-buffer-rebalance-cache
+.PHONY: test-cycle-audio-buffer-rebalance-cache
