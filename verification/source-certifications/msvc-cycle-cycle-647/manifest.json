@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-647",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "buffer-pack-high-three-bytes",
+      "stem": "cycle_buffer_pack_high_three_bytes",
+      "source": "Decomp/recovered/msvc/cycle_buffer_pack_high_three_bytes.cpp",
+      "sha256": "78ab0f163790acc8204e2d51a3db2f0c3226c23e00e0aa571d4c14cd5b9c338b"
+    }
+  ]
+}

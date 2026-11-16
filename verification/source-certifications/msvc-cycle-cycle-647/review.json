@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "5e39630bcc2d594363920567985ebc061c24aa8dbb1e4ada452557f4d351293a",
+  "behavior_sha256": "6ac4f4180662deffaa7e15e8ec4f643c6f358b6b51ed41f6e9832f196dc82683",
+  "functions": [
+    {
+      "scope": "buffer-pack-high-three-bytes",
+      "source_sha256": "78ab0f163790acc8204e2d51a3db2f0c3226c23e00e0aa571d4c14cd5b9c338b",
+      "approved": true,
+      "reason": "Independent pinned-MSVC compilation reproduced the entire unmodified compiler code section exactly against hash-verified Game.exe. Original instructions confirm boundaries, thiscall ABI, packing semantics and preserved fields. All 20,500 supplied differential cases passed using actual compiled and original bytes, including untouched-memory checks. Additional null-buffer, larger-length and repeated-conversion counterchecks passed. No embedded instruction data or substituted implementation was found."
+    }
+  ],
+  "review_receipt_sha256": "d2d61cfeb200ccb1535321c6568c8e9f8e3b93f53907bb566e17b5c38b9bee61",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
