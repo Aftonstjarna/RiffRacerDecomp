@@ -6651,3 +6651,16 @@ test-cycle-graphics-frame-interval: $(OUT)/reriff-match $(OUT)/graphics_frame_in
 
 test-recovered: test-cycle-graphics-frame-interval
 .PHONY: test-cycle-graphics-frame-interval
+
+# Reviewed cycle reference: sse-double-to-integer-dispatch (assembly evidence only).
+$(OUT)/sse_double_to_integer_dispatch.bin: native/sse_double_to_integer_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/sse_double_to_integer_dispatch.o
+	ld -m elf_i386 -Ttext=0x8f9131 -e original_sse_double_to_integer_dispatch $(OUT)/sse_double_to_integer_dispatch.o -o $(OUT)/sse_double_to_integer_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/sse_double_to_integer_dispatch.elf $@
+
+test-cycle-sse-double-to-integer-dispatch: $(OUT)/reriff-match $(OUT)/sse_double_to_integer_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" sse-double-to-integer-dispatch $(OUT)/sse_double_to_integer_dispatch.bin $(OUT)/sse-double-to-integer-dispatch-comparison.json
+
+test-recovered: test-cycle-sse-double-to-integer-dispatch
+.PHONY: test-cycle-sse-double-to-integer-dispatch

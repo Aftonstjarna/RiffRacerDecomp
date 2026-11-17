@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"graphics-frame-interval",0xa5b00,309},
+  return {NativeBlock{"sse-double-to-integer-dispatch",0x4f9131,301},
+                     NativeBlock{"graphics-frame-interval",0xa5b00,309},
                      NativeBlock{"script-gc-mark-object",0xf0ef0,178},
                      NativeBlock{"record6-capacity-growth",0x1a9680,70},
                      NativeBlock{"audio-storage-resize",0x1ae020,114},
