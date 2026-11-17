@@ -6716,3 +6716,16 @@ test-cycle-record20-ensure-spare: $(OUT)/reriff-match $(OUT)/record20_ensure_spa
 
 test-recovered: test-cycle-record20-ensure-spare
 .PHONY: test-cycle-record20-ensure-spare
+
+# Reviewed cycle reference: record20-reallocate (assembly evidence only).
+$(OUT)/record20_reallocate.bin: native/record20_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record20_reallocate.o
+	ld -m elf_i386 -Ttext=0x52c750 -e original_record20_reallocate $(OUT)/record20_reallocate.o -o $(OUT)/record20_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/record20_reallocate.elf $@
+
+test-cycle-record20-reallocate: $(OUT)/reriff-match $(OUT)/record20_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record20-reallocate $(OUT)/record20_reallocate.bin $(OUT)/record20-reallocate-comparison.json
+
+test-recovered: test-cycle-record20-reallocate
+.PHONY: test-cycle-record20-reallocate
