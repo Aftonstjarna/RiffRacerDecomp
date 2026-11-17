@@ -6703,3 +6703,16 @@ test-cycle-record20-append: $(OUT)/reriff-match $(OUT)/record20_append.bin
 
 test-recovered: test-cycle-record20-append
 .PHONY: test-cycle-record20-append
+
+# Reviewed cycle reference: record20-ensure-spare (assembly evidence only).
+$(OUT)/record20_ensure_spare.bin: native/record20_ensure_spare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record20_ensure_spare.o
+	ld -m elf_i386 -Ttext=0x52c7e0 -e original_record20_ensure_spare $(OUT)/record20_ensure_spare.o -o $(OUT)/record20_ensure_spare.elf
+	objcopy -O binary --only-section=.text $(OUT)/record20_ensure_spare.elf $@
+
+test-cycle-record20-ensure-spare: $(OUT)/reriff-match $(OUT)/record20_ensure_spare.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record20-ensure-spare $(OUT)/record20_ensure_spare.bin $(OUT)/record20-ensure-spare-comparison.json
+
+test-recovered: test-cycle-record20-ensure-spare
+.PHONY: test-cycle-record20-ensure-spare
