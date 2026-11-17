@@ -4,10 +4,10 @@
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
   "text_size": 5421056,
-  "certified_bytes": 4394,
-  "certified_percent": 0.05088361941183446,
-  "certified_text_bytes": 4394,
-  "certified_text_percent": 0.0810543185681904,
+  "certified_bytes": 4464,
+  "certified_percent": 0.05169423692636073,
+  "certified_text_bytes": 4464,
+  "certified_text_percent": 0.0823455799017756,
   "whole_executable_compared": false,
   "note": "Exact compiler-built function spans only. Assembly reference overlaps are not added. This is not a complete rebuilt EXE or port-completion percentage.",
   "entries": [
@@ -1299,6 +1299,21 @@
       "isolated_object_sha256": "a7a9061c17f46db37cf0dfb653869b0264ebfb597ba05de32b1cf0cbddac6dc0",
       "classification": "compiler_built_matching_source",
       "evidence": "verification/source-certifications/msvc-cycle-cycle-751",
+      "source_rebuild_verified": true
+    },
+    {
+      "scope": "record6-capacity-growth",
+      "source": "Decomp/recovered/msvc/cycle_record6_capacity_growth.cpp",
+      "source_sha256": "638035e1457022c6a84cecda595eb1de8191822ca79af5f8553b67fa93748dc9",
+      "rva": 1742464,
+      "file_offset": 1739392,
+      "size": 70,
+      "section": ".text",
+      "code_sha256": "0d1612dd4c78f96bd70470752a5dd5aa4c2c8cf81eec3442639fa2d1e66539a2",
+      "native_object_sha256": "697032ef1113adc09fdf81e501a3d038d4fd6864ccb0e598445621dbd9a871d2",
+      "isolated_object_sha256": "6014065aa0153d0f804044352352ef7e2916509469cfc12262e3a6fcf0defa2d",
+      "classification": "compiler_built_matching_source",
+      "evidence": "verification/source-certifications/msvc-cycle-cycle-757",
       "source_rebuild_verified": true
     },
     {

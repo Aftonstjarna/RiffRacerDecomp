@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "213b8d9a66cea92a603794fa822f268e2f9c7f40653a19ad784daa1ebef728e8",
+  "behavior_sha256": "4e33ed93dddd092000a8c1e9da4a1a482f8aa013694685b2ac967fa6ca058fa8",
+  "functions": [
+    {
+      "scope": "record6-capacity-growth",
+      "source_sha256": "638035e1457022c6a84cecda595eb1de8191822ca79af5f8553b67fa93748dc9",
+      "approved": true,
+      "reason": "An independent pinned MSVC build with /O2 /Oy- /GS- produced a complete 70-byte compiler section identical to the original Game.exe bytes. The reference assembly also matched those bytes. I independently ran the submitted 1,260-case test against the compiled section and bytes extracted directly from the original; it passed, covering growth and overflow branches, request comparisons, and untouched object and buffer state. The member-function ABI and original instructions agree. This certification concerns the routine, not a complete executable rebuild."
+    }
+  ],
+  "review_receipt_sha256": "dfe010b8a1575b798a536d5f5449dcc8451e8dfcbe7f7b349f46051e06de0a49",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
