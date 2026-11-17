@@ -6625,3 +6625,16 @@ test-cycle-record6-capacity-growth: $(OUT)/reriff-match $(OUT)/record6_capacity_
 
 test-recovered: test-cycle-record6-capacity-growth
 .PHONY: test-cycle-record6-capacity-growth
+
+# Reviewed cycle reference: script-gc-mark-object (assembly evidence only).
+$(OUT)/script_gc_mark_object.bin: native/script_gc_mark_object.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_mark_object.o
+	ld -m elf_i386 -Ttext=0x4f0ef0 -e original_script_gc_mark_object $(OUT)/script_gc_mark_object.o -o $(OUT)/script_gc_mark_object.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_mark_object.elf $@
+
+test-cycle-script-gc-mark-object: $(OUT)/reriff-match $(OUT)/script_gc_mark_object.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-mark-object $(OUT)/script_gc_mark_object.bin $(OUT)/script-gc-mark-object-comparison.json
+
+test-recovered: test-cycle-script-gc-mark-object
+.PHONY: test-cycle-script-gc-mark-object
