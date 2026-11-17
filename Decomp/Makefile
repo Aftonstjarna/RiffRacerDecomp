@@ -6690,3 +6690,16 @@ test-cycle-request-resource-prepare: $(OUT)/reriff-match $(OUT)/request_resource
 
 test-recovered: test-cycle-request-resource-prepare
 .PHONY: test-cycle-request-resource-prepare
+
+# Reviewed cycle reference: record20-append (assembly evidence only).
+$(OUT)/record20_append.bin: native/record20_append.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record20_append.o
+	ld -m elf_i386 -Ttext=0x52c610 -e original_record20_append $(OUT)/record20_append.o -o $(OUT)/record20_append.elf
+	objcopy -O binary --only-section=.text $(OUT)/record20_append.elf $@
+
+test-cycle-record20-append: $(OUT)/reriff-match $(OUT)/record20_append.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record20-append $(OUT)/record20_append.bin $(OUT)/record20-append-comparison.json
+
+test-recovered: test-cycle-record20-append
+.PHONY: test-cycle-record20-append

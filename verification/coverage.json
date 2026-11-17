@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 110757,
-  "remaining_bytes": 8524635,
-  "verified_percent": 1.2825937722340803,
-  "registered_blocks": 556,
-  "exact_blocks": 556,
+  "verified_bytes": 110895,
+  "remaining_bytes": 8524497,
+  "verified_percent": 1.2841918467627178,
+  "registered_blocks": 557,
+  "exact_blocks": 557,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3179,6 +3179,15 @@
       "byte_equal": true,
       "reference_sha256": "d69af9c1955a683325732e23b08f91b2b916472598fee17f4d85ce01bfc54fd3",
       "candidate_sha256": "d69af9c1955a683325732e23b08f91b2b916472598fee17f4d85ce01bfc54fd3"
+    },
+    {
+      "name": "record20-append",
+      "file_offset": 1227280,
+      "size": 138,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "031e56775e9947ad4e3bfd78958b1416f9659018feaebcd347f70e9824e03716",
+      "candidate_sha256": "031e56775e9947ad4e3bfd78958b1416f9659018feaebcd347f70e9824e03716"
     },
     {
       "name": "shader-basic2d-ctor",
