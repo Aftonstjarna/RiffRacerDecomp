@@ -6664,3 +6664,16 @@ test-cycle-sse-double-to-integer-dispatch: $(OUT)/reriff-match $(OUT)/sse_double
 
 test-recovered: test-cycle-sse-double-to-integer-dispatch
 .PHONY: test-cycle-sse-double-to-integer-dispatch
+
+# Reviewed cycle reference: script-gc-scan-linked-values (assembly evidence only).
+$(OUT)/script_gc_scan_linked_values.bin: native/script_gc_scan_linked_values.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_scan_linked_values.o
+	ld -m elf_i386 -Ttext=0x4f2150 -e original_script_gc_scan_linked_values $(OUT)/script_gc_scan_linked_values.o -o $(OUT)/script_gc_scan_linked_values.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_scan_linked_values.elf $@
+
+test-cycle-script-gc-scan-linked-values: $(OUT)/reriff-match $(OUT)/script_gc_scan_linked_values.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-scan-linked-values $(OUT)/script_gc_scan_linked_values.bin $(OUT)/script-gc-scan-linked-values-comparison.json
+
+test-recovered: test-cycle-script-gc-scan-linked-values
+.PHONY: test-cycle-script-gc-scan-linked-values
