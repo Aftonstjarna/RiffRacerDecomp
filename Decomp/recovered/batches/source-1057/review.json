@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as an unmatched high-level recovery of the forward barrier, with zero matching-source byte credit.",
+  "reason": "The source follows the reference branch and recoloring operations and explicitly delegates phase-1 marking to an integration dependency. The hybrid ABI difference and untested marker traversal are disclosed. The differential test calls the reference routines, covers all parent-mark and current-white byte values across representative phases, checks aliasing and compares the full fixture. An independent SHA-256 check confirmed the submitted source hashes in validation.json. Native Windows compilation records the actual implementation, but does not establish matching credit. Sampled validation does not prove all-input equivalence."
+}
