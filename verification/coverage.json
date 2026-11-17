@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 109792,
-  "remaining_bytes": 8525600,
-  "verified_percent": 1.2714188307838254,
-  "registered_blocks": 552,
-  "exact_blocks": 552,
+  "verified_bytes": 110101,
+  "remaining_bytes": 8525291,
+  "verified_percent": 1.2749971280979486,
+  "registered_blocks": 553,
+  "exact_blocks": 553,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2351,6 +2351,15 @@
       "byte_equal": true,
       "reference_sha256": "6eb8f107a5f1d6e3de361ffb4e8c8ae5f20ba99be0f5d13f53cf4d6282d398ee",
       "candidate_sha256": "6eb8f107a5f1d6e3de361ffb4e8c8ae5f20ba99be0f5d13f53cf4d6282d398ee"
+    },
+    {
+      "name": "graphics-frame-interval",
+      "file_offset": 675584,
+      "size": 309,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f5c2eb9ecf47c01b3fa44865d3a4da6c924283a0d9f7a1edc5d0991b43e11164",
+      "candidate_sha256": "f5c2eb9ecf47c01b3fa44865d3a4da6c924283a0d9f7a1edc5d0991b43e11164"
     },
     {
       "name": "device-destroy",

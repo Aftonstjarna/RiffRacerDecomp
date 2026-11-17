@@ -6638,3 +6638,16 @@ test-cycle-script-gc-mark-object: $(OUT)/reriff-match $(OUT)/script_gc_mark_obje
 
 test-recovered: test-cycle-script-gc-mark-object
 .PHONY: test-cycle-script-gc-mark-object
+
+# Reviewed cycle reference: graphics-frame-interval (assembly evidence only).
+$(OUT)/graphics_frame_interval.bin: native/graphics_frame_interval.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_frame_interval.o
+	ld -m elf_i386 -Ttext=0x4a5b00 -e original_graphics_frame_interval $(OUT)/graphics_frame_interval.o -o $(OUT)/graphics_frame_interval.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_frame_interval.elf $@
+
+test-cycle-graphics-frame-interval: $(OUT)/reriff-match $(OUT)/graphics_frame_interval.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-frame-interval $(OUT)/graphics_frame_interval.bin $(OUT)/graphics-frame-interval-comparison.json
+
+test-recovered: test-cycle-graphics-frame-interval
+.PHONY: test-cycle-graphics-frame-interval
