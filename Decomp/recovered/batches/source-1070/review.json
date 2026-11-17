@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, unmatched source recovery with zero matching-source byte credit.",
+  "reason": "The scan’s signed tag comparison, short-circuit checks, circular-list traversal, field offsets, and marker delegation agree with the reference assembly for the stated 32-bit layout and valid-pointer assumptions. The tests call the original and compare complete fixtures, including empty and multi-node lists, shared objects, boundary tags, short-circuit cases, and marker side effects. The marker’s other object types remain an explicitly stated integration limitation. An independent source-hash check matched validation.json; native Windows compilation records successful builds of the submitted implementation, with no matching credit. The sampled tests do not establish all-input equivalence."
+}

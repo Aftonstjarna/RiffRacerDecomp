@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "compiler_built_matching_bytes": 0,
+  "source_rebuild_verified": false,
+  "whole_executable_compared": false,
+  "behavior_test_process_passed": true,
+  "compiler_flags": "-std=c++17 -m32 -O0 -Wall -Wextra -Werror -ffreestanding -fno-exceptions -fno-rtti -fno-pie -fno-stack-protector -fno-fast-math -ffp-contract=off -msse2 -mfpmath=sse -ffunction-sections -fno-tree-vectorize -fno-tree-loop-distribute-patterns",
+  "source_sha256": {
+    "impl.cpp": "16faeb8308c2b555a2a91d57252f5bcafd12f765ee7296ed63fc8f8c39c82b5a",
+    "impl.hpp": "228dd4a0026456ac886c2c12c68711b4254690d48aa48f414ba94b5eb1993b13",
+    "test.cpp": "d6c5dc18a88ea12f92b26b441721039eb9f93dc0cc9fc5399013dba9e103b10c"
+  },
+  "reference_checks": [
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 178,
+      "candidate_size": 178,
+      "candidate_sha256": "00ec2cdc0523659b37d81e142c69b85143905eaec78aaede10782956dc54ddfc",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "00ec2cdc0523659b37d81e142c69b85143905eaec78aaede10782956dc54ddfc",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "script-gc-mark-object",
+      "rva": 986864,
+      "whole_executable_compared": false
+    },
+    {
+      "schema": 1,
+      "byte_equal": true,
+      "different_bytes": 0,
+      "original_size": 57,
+      "candidate_size": 57,
+      "candidate_sha256": "3cadb564fd32efe54009d8870e493c133660a5120944f058914de1a4cf366a28",
+      "masked_bytes": 0,
+      "source_rebuild_verified": false,
+      "note": "Binary equality alone does not prove reconstruction from source.",
+      "difference_ranges": [],
+      "reference_fragment_sha256": "3cadb564fd32efe54009d8870e493c133660a5120944f058914de1a4cf366a28",
+      "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+      "scope": "script-gc-scan-linked-values",
+      "rva": 991568,
+      "whole_executable_compared": false
+    }
+  ],
+  "original_exe_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+  "base_commit": "2367ede087dae0095f1c9f1c248db9a07aefb486",
+  "test_output": "",
+  "native_windows_compilation": {
+    "compiler": "18.00.40629.0 built by: REL",
+    "all_profiles_compiled": true,
+    "manifest_sha256": "2f959c2ed53b74c100cfe9baccb821b3c522f8ca666846b1e86f0ec3605486be",
+    "matching_credit": 0,
+    "attempts": [
+      {
+        "flags": "/nologo /c /O1 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O1.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O1",
+        "object": "impl-O1.obj",
+        "object_sha256": "8764da7e2c0311e1711e263aeced91f73c20414e4e63cdfa72f34d04d3a9f323",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2",
+        "object": "impl-O2.obj",
+        "object_sha256": "4715b063a4c9e5ff23564950a33ef37196cd21a305e14f4e0f4e34fd79a5f66b",
+        "log": "impl.cpp\r\n"
+      },
+      {
+        "flags": "/nologo /c /O2 /Oy- /GS- /GR- /EHsc /Zl /Gy /arch:SSE2 /fp:precise /Foimpl-O2-frame.obj impl.cpp",
+        "exit_code": 0,
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "object": "impl-O2-frame.obj",
+        "object_sha256": "b06e85400ea8c63dd5af792706d44b7a394cc074339a94042fe01ceac216cd95",
+        "log": "impl.cpp\r\n"
+      }
+    ],
+    "comparisons": [
+      {
+        "source": "impl.cpp",
+        "profile": "O1",
+        "scope": "script-gc-scan-linked-values",
+        "code_sections": 1,
+        "relocations": 1,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "unresolved_relocations"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2",
+        "scope": "script-gc-scan-linked-values",
+        "code_sections": 1,
+        "relocations": 1,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "unresolved_relocations"
+      },
+      {
+        "source": "impl.cpp",
+        "profile": "O2-frame",
+        "scope": "script-gc-scan-linked-values",
+        "code_sections": 1,
+        "relocations": 1,
+        "candidate_exact": false,
+        "certified_matching_credit": 0,
+        "status": "unresolved_relocations"
+      }
+    ]
+  }
+}
