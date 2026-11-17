@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Append an opaque 20-byte record",
+  "summary": "Recover the thiscall vector append at 0x52c610, preserving internal source rebasing, growth delegation, chunk copy order and end update.",
+  "targets": ["record20-append"],
+  "references": ["record20-append"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare the original and recovered methods for external, internal, unaligned, boundary and overlapping sources, checking all backing bytes, all vector fields and FS head restoration; compare the null destination case. Exercise relocation and internal rebasing separately using a controlled reserve stub.",
+  "known_limits": ["The 0x52c7e0 ensure-spare method is an external dependency and must be supplied by the integrating program.", "Original growth paths require allocator and error imports without supplied audited bindings, so relocation is tested only against a controlled stub, not against the original growth routine.", "Allocation failure, exception paths and invalid memory accesses are not tested."]
+}

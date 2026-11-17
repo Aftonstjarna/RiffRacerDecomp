@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as an unmatched high-level recovery with zero matching-source byte credit.",
+  "reason": "The source follows the original append routine’s internal-source rebasing, growth delegation, copy order, null-destination behavior, and end update. An independent disassembly of Game.exe agrees with the supplied assembly, and the submitted source hashes match validation.json. The tests call the original for non-growth cases and cover internal, boundary, unaligned, overlapping, external, and null-destination inputs while comparing backing bytes and vector fields. Growth relocation is checked only with a stub; allocation failures, exceptions, and invalid accesses remain untested as disclosed. The recorded native Windows builds compile the submitted implementation but do not establish matching bytes. Sampled validation does not establish all-input equivalence."
+}
