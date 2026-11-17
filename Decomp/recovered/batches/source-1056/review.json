@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered capacity calculation is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "The source’s 32-bit field layout, signed division, unsigned growth guard, return selection, and lack of object writes agree with the original routine’s disassembly. The submitted tests call the original and cover wrapped differences, boundaries, varied requests, object words, and the FS head. An independent million-case arithmetic countercheck passed, and source hashes match validation.json. Native Windows compilation records the actual implementation; its profiles differ in size from the original. Sampled checks do not establish all-input equivalence."
+}
