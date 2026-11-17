@@ -6677,3 +6677,16 @@ test-cycle-script-gc-scan-linked-values: $(OUT)/reriff-match $(OUT)/script_gc_sc
 
 test-recovered: test-cycle-script-gc-scan-linked-values
 .PHONY: test-cycle-script-gc-scan-linked-values
+
+# Reviewed cycle reference: request-resource-prepare (assembly evidence only).
+$(OUT)/request_resource_prepare.bin: native/request_resource_prepare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/request_resource_prepare.o
+	ld -m elf_i386 -Ttext=0x528d10 -e original_request_resource_prepare $(OUT)/request_resource_prepare.o -o $(OUT)/request_resource_prepare.elf
+	objcopy -O binary --only-section=.text $(OUT)/request_resource_prepare.elf $@
+
+test-cycle-request-resource-prepare: $(OUT)/reriff-match $(OUT)/request_resource_prepare.bin
+	$(OUT)/reriff-match native-check "$(GAME)" request-resource-prepare $(OUT)/request_resource_prepare.bin $(OUT)/request-resource-prepare-comparison.json
+
+test-recovered: test-cycle-request-resource-prepare
+.PHONY: test-cycle-request-resource-prepare
