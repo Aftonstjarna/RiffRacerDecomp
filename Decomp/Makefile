@@ -6729,3 +6729,16 @@ test-cycle-record20-reallocate: $(OUT)/reriff-match $(OUT)/record20_reallocate.b
 
 test-recovered: test-cycle-record20-reallocate
 .PHONY: test-cycle-record20-reallocate
+
+# Reviewed cycle reference: application-worker-stop (assembly evidence only).
+$(OUT)/application_worker_stop.bin: native/application_worker_stop.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/application_worker_stop.o
+	ld -m elf_i386 -Ttext=0x491f50 -e original_application_worker_stop $(OUT)/application_worker_stop.o -o $(OUT)/application_worker_stop.elf
+	objcopy -O binary --only-section=.text $(OUT)/application_worker_stop.elf $@
+
+test-cycle-application-worker-stop: $(OUT)/reriff-match $(OUT)/application_worker_stop.bin
+	$(OUT)/reriff-match native-check "$(GAME)" application-worker-stop $(OUT)/application_worker_stop.bin $(OUT)/application-worker-stop-comparison.json
+
+test-recovered: test-cycle-application-worker-stop
+.PHONY: test-cycle-application-worker-stop
