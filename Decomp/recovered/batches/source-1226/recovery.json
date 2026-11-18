@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Clear script GC weak entries",
+  "summary": "Recover the linked-table weak array and hash traversal at 0x4f1900, including mark-bit changes and hash tombstones.",
+  "targets": [
+    "script-gc-clear-weak-entries"
+  ],
+  "references": [
+    "script-gc-clear-weak-entries"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Compare original and recovered routines on null, 10000 deterministic linked-table fixtures, and exhaustive combinations of eight signed tags and 16 flag patterns for array, hash key and hash value; compare all fixture fields and FS head restoration.",
+  "known_limits": [
+    "Table and tag names are descriptive; their broader runtime meanings remain unconfirmed.",
+    "Valid pointers, acyclic table chains and suitably sized arrays and hash storage are assumed, as in the original.",
+    "Large hash exponents and faulting inputs are not exercised."
+  ]
+}

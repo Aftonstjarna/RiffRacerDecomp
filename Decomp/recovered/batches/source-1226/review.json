@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery with zero matching-source byte credit.",
+  "reason": "The readable C++ follows the reference traversal, tag decisions, flag updates, tombstones, and 32-bit layouts. The submitted tests call the original and compare the relevant fixture fields across linked tables, tag and flag combinations, and null input; they do not establish all-input equivalence. An independent assembly-to-original byte comparison passed, and the submitted source hashes match validation.json. Native Windows compilation records successful builds of the actual implementation, with no certified matching credit. The stated limits on valid storage, large hash exponents, and faulting inputs remain applicable."
+}
