@@ -7275,3 +7275,16 @@ test-cycle-worker-wide-service-action: $(OUT)/reriff-match $(OUT)/worker_wide_se
 
 test-recovered: test-cycle-worker-wide-service-action
 .PHONY: test-cycle-worker-wide-service-action
+
+# Reviewed cycle reference: application-worker-initialize-singleton (assembly evidence only).
+$(OUT)/application_worker_initialize_singleton.bin: native/application_worker_initialize_singleton.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/application_worker_initialize_singleton.o
+	ld -m elf_i386 -Ttext=0x5280b0 -e original_application_worker_initialize_singleton $(OUT)/application_worker_initialize_singleton.o -o $(OUT)/application_worker_initialize_singleton.elf
+	objcopy -O binary --only-section=.text $(OUT)/application_worker_initialize_singleton.elf $@
+
+test-cycle-application-worker-initialize-singleton: $(OUT)/reriff-match $(OUT)/application_worker_initialize_singleton.bin
+	$(OUT)/reriff-match native-check "$(GAME)" application-worker-initialize-singleton $(OUT)/application_worker_initialize_singleton.bin $(OUT)/application-worker-initialize-singleton-comparison.json
+
+test-recovered: test-cycle-application-worker-initialize-singleton
+.PHONY: test-cycle-application-worker-initialize-singleton
