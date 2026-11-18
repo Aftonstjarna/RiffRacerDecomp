@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery with zero matching-source byte credit.",
+  "reason": "The recovered 32-bit arithmetic, capacity checks, growth selection, thiscall layout, and dependency dispatch agree with the independently inspected original disassembly. Source hashes match validation.json, and native Windows compilation records cover the submitted implementation. Tests compare the original on no-growth cases and exercise growth and overflow through a dependency spy; direct growth, allocation failures, and exception behavior remain stated limitations. Sampled validation does not establish all-input equivalence."
+}
