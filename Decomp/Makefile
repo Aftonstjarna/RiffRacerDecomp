@@ -7028,3 +7028,16 @@ test-cycle-script-gc-visit-prototype: $(OUT)/reriff-match $(OUT)/script_gc_visit
 
 test-recovered: test-cycle-script-gc-visit-prototype
 .PHONY: test-cycle-script-gc-visit-prototype
+
+# Reviewed cycle reference: script-instruction-open-result (assembly evidence only).
+$(OUT)/script_instruction_open_result.bin: native/script_instruction_open_result.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_instruction_open_result.o
+	ld -m elf_i386 -Ttext=0x486150 -e original_script_instruction_open_result $(OUT)/script_instruction_open_result.o -o $(OUT)/script_instruction_open_result.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_instruction_open_result.elf $@
+
+test-cycle-script-instruction-open-result: $(OUT)/reriff-match $(OUT)/script_instruction_open_result.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-instruction-open-result $(OUT)/script_instruction_open_result.bin $(OUT)/script-instruction-open-result-comparison.json
+
+test-recovered: test-cycle-script-instruction-open-result
+.PHONY: test-cycle-script-instruction-open-result
