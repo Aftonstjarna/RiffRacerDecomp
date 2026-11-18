@@ -7548,3 +7548,16 @@ test-cycle-shader-global-resource-construct: $(OUT)/reriff-match $(OUT)/shader_g
 
 test-recovered: test-cycle-shader-global-resource-construct
 .PHONY: test-cycle-shader-global-resource-construct
+
+# Reviewed cycle reference: matrix3-identity-construct (assembly evidence only).
+$(OUT)/matrix3_identity_construct.bin: native/matrix3_identity_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/matrix3_identity_construct.o
+	ld -m elf_i386 -Ttext=0x422650 -e original_matrix3_identity_construct $(OUT)/matrix3_identity_construct.o -o $(OUT)/matrix3_identity_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/matrix3_identity_construct.elf $@
+
+test-cycle-matrix3-identity-construct: $(OUT)/reriff-match $(OUT)/matrix3_identity_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" matrix3-identity-construct $(OUT)/matrix3_identity_construct.bin $(OUT)/matrix3-identity-construct-comparison.json
+
+test-recovered: test-cycle-matrix3-identity-construct
+.PHONY: test-cycle-matrix3-identity-construct

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 123226,
-  "remaining_bytes": 8512166,
-  "verified_percent": 1.4269879120716233,
-  "registered_blocks": 622,
-  "exact_blocks": 622,
+  "verified_bytes": 123395,
+  "remaining_bytes": 8511997,
+  "verified_percent": 1.428944974356694,
+  "registered_blocks": 623,
+  "exact_blocks": 623,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -326,6 +326,15 @@
       "byte_equal": true,
       "reference_sha256": "f2b0182db5b34119500df06a9f4991d17119cfdc066fd9bb25231d7fa28ee163",
       "candidate_sha256": "f2b0182db5b34119500df06a9f4991d17119cfdc066fd9bb25231d7fa28ee163"
+    },
+    {
+      "name": "matrix3-identity-construct",
+      "file_offset": 137808,
+      "size": 169,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "41989682940bfd5f9d65b65b9f87110ab9f2e2803c71cfd2985e8f46f967c944",
+      "candidate_sha256": "41989682940bfd5f9d65b65b9f87110ab9f2e2803c71cfd2985e8f46f967c944"
     },
     {
       "name": "matrix3-identity-initialize",
