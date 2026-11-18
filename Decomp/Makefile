@@ -7600,3 +7600,16 @@ test-cycle-triangle-info-map-member-destruct: $(OUT)/reriff-match $(OUT)/triangl
 
 test-recovered: test-cycle-triangle-info-map-member-destruct
 .PHONY: test-cycle-triangle-info-map-member-destruct
+
+# Reviewed cycle reference: application-service-construct (assembly evidence only).
+$(OUT)/application_service_construct.bin: native/application_service_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/application_service_construct.o
+	ld -m elf_i386 -Ttext=0x48ce90 -e original_application_service_construct $(OUT)/application_service_construct.o -o $(OUT)/application_service_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/application_service_construct.elf $@
+
+test-cycle-application-service-construct: $(OUT)/reriff-match $(OUT)/application_service_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" application-service-construct $(OUT)/application_service_construct.bin $(OUT)/application-service-construct-comparison.json
+
+test-recovered: test-cycle-application-service-construct
+.PHONY: test-cycle-application-service-construct
