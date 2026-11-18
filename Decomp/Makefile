@@ -8042,3 +8042,16 @@ test-cycle-worker-view-pointer-vector-reallocate: $(OUT)/reriff-match $(OUT)/wor
 
 test-recovered: test-cycle-worker-view-pointer-vector-reallocate
 .PHONY: test-cycle-worker-view-pointer-vector-reallocate
+
+# Reviewed cycle reference: worker-view-pointer-range-destroy (assembly evidence only).
+$(OUT)/worker_view_pointer_range_destroy.bin: native/worker_view_pointer_range_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_view_pointer_range_destroy.o
+	ld -m elf_i386 -Ttext=0x43ee20 -e original_worker_view_pointer_range_destroy $(OUT)/worker_view_pointer_range_destroy.o -o $(OUT)/worker_view_pointer_range_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_view_pointer_range_destroy.elf $@
+
+test-cycle-worker-view-pointer-range-destroy: $(OUT)/reriff-match $(OUT)/worker_view_pointer_range_destroy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-view-pointer-range-destroy $(OUT)/worker_view_pointer_range_destroy.bin $(OUT)/worker-view-pointer-range-destroy-comparison.json
+
+test-recovered: test-cycle-worker-view-pointer-range-destroy
+.PHONY: test-cycle-worker-view-pointer-range-destroy
