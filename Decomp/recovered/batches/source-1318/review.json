@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as an unmatched high-level recovery of the 84-byte record transfer, with zero matching-source byte credit.",
+  "reason": "The source follows the reference routine’s forward iteration, null-destination handling, return value, and 16-byte then 4-byte transfer order. The submitted tests call the original and compare full buffers across empty, overlapping, unaligned, and null-destination cases. An independent transfer-order countercheck covered 670 overlap cases, and the recorded source and original executable hashes agree. Native Windows compilation covers the actual implementation, but does not establish byte matching. The adapter’s ABI difference and untested invalid-memory and fault behavior are stated limitations; sampled validation does not establish all-input equivalence."
+}
