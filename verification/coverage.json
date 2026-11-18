@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 122959,
-  "remaining_bytes": 8512433,
-  "verified_percent": 1.423895985266216,
-  "registered_blocks": 619,
-  "exact_blocks": 619,
+  "verified_bytes": 123056,
+  "remaining_bytes": 8512336,
+  "verified_percent": 1.4250192695363453,
+  "registered_blocks": 620,
+  "exact_blocks": 620,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -3602,6 +3602,15 @@
       "byte_equal": true,
       "reference_sha256": "1e2795209b08a6ccfd221e47fcfba12db8925bf91f17cc50a3a09e0c844dd572",
       "candidate_sha256": "1e2795209b08a6ccfd221e47fcfba12db8925bf91f17cc50a3a09e0c844dd572"
+    },
+    {
+      "name": "worker-record40-range-transfer",
+      "file_offset": 1179232,
+      "size": 97,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "fd214f841cdab032e1fea6c1492d53ddef3bcc98d17509101eedd3954756427c",
+      "candidate_sha256": "fd214f841cdab032e1fea6c1492d53ddef3bcc98d17509101eedd3954756427c"
     },
     {
       "name": "record56-range-transfer",
