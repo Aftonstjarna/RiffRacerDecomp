@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as an unmatched high-level recovery with zero matching-source byte credit.",
+  "reason": "The implementation agrees with the reference routine’s signed-key stable insertion behavior for valid ranges. The tests compare array contents, canaries, and object bytes, and exercise duplicates, negative values, extremes, and empty ranges. They call the original for cases that avoid its prepend branch; that branch is only checked against an independent expected ordering, a limitation disclosed in recovery.json. An independent hash check matched all submitted source hashes to validation.json. Native Windows compilation records show successful compilation of the actual implementation, with no matching credit. The sampled tests do not establish all-input equivalence."
+}
