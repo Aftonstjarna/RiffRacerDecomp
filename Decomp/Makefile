@@ -7223,3 +7223,16 @@ test-cycle-worker-pair-vector-construct: $(OUT)/reriff-match $(OUT)/worker_pair_
 
 test-recovered: test-cycle-worker-pair-vector-construct
 .PHONY: test-cycle-worker-pair-vector-construct
+
+# Reviewed cycle reference: worker-string-compose (assembly evidence only).
+$(OUT)/worker_string_compose.bin: native/worker_string_compose.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_string_compose.o
+	ld -m elf_i386 -Ttext=0x5c21d0 -e original_worker_string_compose $(OUT)/worker_string_compose.o -o $(OUT)/worker_string_compose.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_string_compose.elf $@
+
+test-cycle-worker-string-compose: $(OUT)/reriff-match $(OUT)/worker_string_compose.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-string-compose $(OUT)/worker_string_compose.bin $(OUT)/worker-string-compose-comparison.json
+
+test-recovered: test-cycle-worker-string-compose
+.PHONY: test-cycle-worker-string-compose
