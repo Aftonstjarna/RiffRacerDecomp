@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered routine is a plausible high-level implementation of the original range destruction behavior, with zero matching-source byte credit.",
+  "reason": "The original disassembly independently confirms the range traversal, null handling, adjusted counted-object pointer, wrapping decrement, virtual call with flag 1, and stdcall stack cleanup. The submitted differential test calls the original and checks empty, single, null-containing, repeated-object, zero-count, and higher-count cases, including callback order and surrounding state. Source hashes agree with validation.json. The recorded native Windows builds compile the submitted implementation but do not match the original bytes. Validation is sampled and does not establish all-input equivalence; exceptional callbacks and invalid ranges remain untested."
+}
