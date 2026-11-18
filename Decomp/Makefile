@@ -6872,3 +6872,16 @@ test-cycle-script-prepare-callable: $(OUT)/reriff-match $(OUT)/script_prepare_ca
 
 test-recovered: test-cycle-script-prepare-callable
 .PHONY: test-cycle-script-prepare-callable
+
+# Reviewed cycle reference: script-pre-call (assembly evidence only).
+$(OUT)/script_pre_call.bin: native/script_pre_call.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_pre_call.o
+	ld -m elf_i386 -Ttext=0x4f54a0 -e original_script_pre_call $(OUT)/script_pre_call.o -o $(OUT)/script_pre_call.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_pre_call.elf $@
+
+test-cycle-script-pre-call: $(OUT)/reriff-match $(OUT)/script_pre_call.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-pre-call $(OUT)/script_pre_call.bin $(OUT)/script-pre-call-comparison.json
+
+test-recovered: test-cycle-script-pre-call
+.PHONY: test-cycle-script-pre-call
