@@ -6820,3 +6820,16 @@ test-cycle-worker-slot-reset: $(OUT)/reriff-match $(OUT)/worker_slot_reset.bin
 
 test-recovered: test-cycle-worker-slot-reset
 .PHONY: test-cycle-worker-slot-reset
+
+# Reviewed cycle reference: worker-record-reset (assembly evidence only).
+$(OUT)/worker_record_reset.bin: native/worker_record_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record_reset.o
+	ld -m elf_i386 -Ttext=0x4909e0 -e original_worker_record_reset $(OUT)/worker_record_reset.o -o $(OUT)/worker_record_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record_reset.elf $@
+
+test-cycle-worker-record-reset: $(OUT)/reriff-match $(OUT)/worker_record_reset.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record-reset $(OUT)/worker_record_reset.bin $(OUT)/worker-record-reset-comparison.json
+
+test-recovered: test-cycle-worker-record-reset
+.PHONY: test-cycle-worker-record-reset
