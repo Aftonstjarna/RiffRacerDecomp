@@ -7119,3 +7119,16 @@ test-cycle-script-gc-clear-weak-entries: $(OUT)/reriff-match $(OUT)/script_gc_cl
 
 test-recovered: test-cycle-script-gc-clear-weak-entries
 .PHONY: test-cycle-script-gc-clear-weak-entries
+
+# Reviewed cycle reference: script-gc-process-circular-list (assembly evidence only).
+$(OUT)/script_gc_process_circular_list.bin: native/script_gc_process_circular_list.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_process_circular_list.o
+	ld -m elf_i386 -Ttext=0x4f0fc0 -e original_script_gc_process_circular_list $(OUT)/script_gc_process_circular_list.o -o $(OUT)/script_gc_process_circular_list.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_process_circular_list.elf $@
+
+test-cycle-script-gc-process-circular-list: $(OUT)/reriff-match $(OUT)/script_gc_process_circular_list.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-process-circular-list $(OUT)/script_gc_process_circular_list.bin $(OUT)/script-gc-process-circular-list-comparison.json
+
+test-recovered: test-cycle-script-gc-process-circular-list
+.PHONY: test-cycle-script-gc-process-circular-list
