@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"float-cos-precise-bridge",0x1f4a0,40},
+  return {NativeBlock{"allocator-statistics-snapshot",0xb53c0,246},
+                     NativeBlock{"float-cos-precise-bridge",0x1f4a0,40},
                      NativeBlock{"float-sin-precise-bridge",0x1f4d0,40},
                      NativeBlock{"worker-resource-parameter-update",0x248e0,224},
                      NativeBlock{"worker-resource-singleton-d0-get",0x176f0,132},

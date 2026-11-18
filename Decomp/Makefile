@@ -7925,3 +7925,16 @@ test-cycle-float-cos-precise-bridge: $(OUT)/reriff-match $(OUT)/float_cos_precis
 
 test-recovered: test-cycle-float-cos-precise-bridge
 .PHONY: test-cycle-float-cos-precise-bridge
+
+# Reviewed cycle reference: allocator-statistics-snapshot (assembly evidence only).
+$(OUT)/allocator_statistics_snapshot.bin: native/allocator_statistics_snapshot.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/allocator_statistics_snapshot.o
+	ld -m elf_i386 -Ttext=0x4b53c0 -e original_allocator_statistics_snapshot $(OUT)/allocator_statistics_snapshot.o -o $(OUT)/allocator_statistics_snapshot.elf
+	objcopy -O binary --only-section=.text $(OUT)/allocator_statistics_snapshot.elf $@
+
+test-cycle-allocator-statistics-snapshot: $(OUT)/reriff-match $(OUT)/allocator_statistics_snapshot.bin
+	$(OUT)/reriff-match native-check "$(GAME)" allocator-statistics-snapshot $(OUT)/allocator_statistics_snapshot.bin $(OUT)/allocator-statistics-snapshot-comparison.json
+
+test-recovered: test-cycle-allocator-statistics-snapshot
+.PHONY: test-cycle-allocator-statistics-snapshot
