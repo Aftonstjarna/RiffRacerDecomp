@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 117875,
-  "remaining_bytes": 8517517,
-  "verified_percent": 1.3650219932111942,
-  "registered_blocks": 594,
-  "exact_blocks": 594,
+  "verified_bytes": 118018,
+  "remaining_bytes": 8517374,
+  "verified_percent": 1.3666779689908692,
+  "registered_blocks": 595,
+  "exact_blocks": 595,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -695,6 +695,15 @@
       "byte_equal": true,
       "reference_sha256": "3afe41006d7355fe587bc49e0007cdf1274c75d30b9b55f49d99276c2519da9c",
       "candidate_sha256": "3afe41006d7355fe587bc49e0007cdf1274c75d30b9b55f49d99276c2519da9c"
+    },
+    {
+      "name": "record12-vector-reallocate",
+      "file_offset": 167760,
+      "size": 143,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "4e4bd641dd47057d9ad06a9b3c9ed3e8b4660924ae3fc057eb19e3b6ace4ba2d",
+      "candidate_sha256": "4e4bd641dd47057d9ad06a9b3c9ed3e8b4660924ae3fc057eb19e3b6ace4ba2d"
     },
     {
       "name": "record12-vector-ensure-spare",

@@ -7184,3 +7184,16 @@ test-cycle-record12-vector-ensure-spare: $(OUT)/reriff-match $(OUT)/record12_vec
 
 test-recovered: test-cycle-record12-vector-ensure-spare
 .PHONY: test-cycle-record12-vector-ensure-spare
+
+# Reviewed cycle reference: record12-vector-reallocate (assembly evidence only).
+$(OUT)/record12_vector_reallocate.bin: native/record12_vector_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_vector_reallocate.o
+	ld -m elf_i386 -Ttext=0x429b50 -e original_record12_vector_reallocate $(OUT)/record12_vector_reallocate.o -o $(OUT)/record12_vector_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_vector_reallocate.elf $@
+
+test-cycle-record12-vector-reallocate: $(OUT)/reriff-match $(OUT)/record12_vector_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-vector-reallocate $(OUT)/record12_vector_reallocate.bin $(OUT)/record12-vector-reallocate-comparison.json
+
+test-recovered: test-cycle-record12-vector-reallocate
+.PHONY: test-cycle-record12-vector-reallocate
