@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery with zero matching-source byte credit.",
+  "reason": "The readable implementation follows the reference routine’s forward 40-byte transfer, including its grouped loads and stores, null-destination skip, empty-range return, and advanced destination. The custom original ABI and untested faulting or invalid ranges are disclosed. The submitted tests call the original and compare complete buffers and return values across empty, unaligned, overlapping, identical, and null cases. An independent rebuild and execution of those tests passed, and source and original-executable hashes agree with the validation record. Native Windows compilation records the actual implementation and reports no matching credit. The sampled tests do not establish all-input equivalence."
+}
