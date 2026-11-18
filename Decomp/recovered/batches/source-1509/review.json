@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level, unmatched recovery with zero matching-source byte credit.",
+  "reason": "The implementation follows the original routine’s forward-copy order, null-output handling, metadata-selected counter increment, wraparound, and returned destination for the documented 32-bit interface. The test calls the original and covers repeated and null referents, empty input, overlap, counter wraparound, output guards, and FS-head preservation. Independent disassembly of Game.exe agrees with the reference assembly, and the submitted source hashes match validation.json. Native Windows compilation records the actual implementation and reports no exact match. The register-based original ABI and untested invalid-input behavior are disclosed; sampled tests do not establish all-input equivalence."
+}
