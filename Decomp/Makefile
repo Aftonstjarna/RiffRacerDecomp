@@ -7938,3 +7938,16 @@ test-cycle-allocator-statistics-snapshot: $(OUT)/reriff-match $(OUT)/allocator_s
 
 test-recovered: test-cycle-allocator-statistics-snapshot
 .PHONY: test-cycle-allocator-statistics-snapshot
+
+# Reviewed cycle reference: worker-record12-reallocate (assembly evidence only).
+$(OUT)/worker_record12_reallocate.bin: native/worker_record12_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record12_reallocate.o
+	ld -m elf_i386 -Ttext=0x41da10 -e original_worker_record12_reallocate $(OUT)/worker_record12_reallocate.o -o $(OUT)/worker_record12_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record12_reallocate.elf $@
+
+test-cycle-worker-record12-reallocate: $(OUT)/reriff-match $(OUT)/worker_record12_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record12-reallocate $(OUT)/worker_record12_reallocate.bin $(OUT)/worker-record12-reallocate-comparison.json
+
+test-recovered: test-cycle-worker-record12-reallocate
+.PHONY: test-cycle-worker-record12-reallocate
