@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, unmatched source recovery of script hook dispatch, with zero matching-source byte credit.",
+  "reason": "The implementation follows the reference control flow, signed threshold and frame-index arithmetic, callback timing, and restoration through the current stack and frame. The submitted differential tests call the original and cover meaningful boundaries, relocation, recursion, callback mutations, and whole-fixture changes. An independent SHA-256 check confirmed the submitted source hashes, and the native Windows record identifies compilation of the actual implementation. The documented ABI adaptation, uninitialized record bytes, external dependencies, and untested failure paths remain limitations; sampled validation does not establish all-input equivalence."
+}

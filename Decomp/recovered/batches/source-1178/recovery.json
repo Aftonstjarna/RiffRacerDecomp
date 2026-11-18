@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script hook dispatch",
+  "summary": "Recover dispatch at 0x4f5020: check the hook and enable flag, save stack-relative top and frame limit, form the partially initialized hook record, grow the stack when needed, disable recursive hooks during the callback, and restore offsets using the current stack and frame. The resize helper is an explicit port binding.",
+  "targets": ["script-hook-dispatch"],
+  "references": ["script-hook-dispatch", "script-stack-resize", "script-stack-relocate-pointers", "script-reallocate", "cookie-check"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct original/source comparisons cover seven signed free-space gaps including 160 and 161, four capacities across the 20-slot growth threshold, three event values including 4, enabled and disabled hooks, in-place and moving successful allocation, callback frame changes and recursive dispatch. Eleven additional signed and non-aligned frame differences check division toward zero. Assertions cover callback arguments, flag, temporary frame limit, allocation arguments, restoration, FS head, whole state, frames, stack buffers and allocator globals. Local GCC oracle harness passed; MSVC2013 compiled implementation under O1, O2 and O2 /Oy-.",
+  "known_limits": [
+    "Readable unmatched recovery; original ECX/EDX and caller-cleaned stack argument are modeled by a member with an explicit resize binding, not an ABI-identical entry point.",
+    "The callback record contains uninitialized opaque bytes; only the event, argument and frame index are identified. Callbacks must not rely on unspecified bytes in this recovery.",
+    "Resize, allocator, relocation and cookie handling are external dependencies. Tests use accepted original helpers and a controlled successful allocator; allocation failure, exceptions, nonlocal exits and actual runtime services are not tested.",
+    "Requires original 32-bit pointer layout; extreme capacity and invalid object paths are not executed through the original allocator."
+  ]
+}
