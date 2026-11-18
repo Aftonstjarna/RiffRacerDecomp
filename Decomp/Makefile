@@ -7678,3 +7678,16 @@ test-cycle-worker-quad-vector-reserve: $(OUT)/reriff-match $(OUT)/worker_quad_ve
 
 test-recovered: test-cycle-worker-quad-vector-reserve
 .PHONY: test-cycle-worker-quad-vector-reserve
+
+# Reviewed cycle reference: worker-pair-vector-reallocate (assembly evidence only).
+$(OUT)/worker_pair_vector_reallocate.bin: native/worker_pair_vector_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_pair_vector_reallocate.o
+	ld -m elf_i386 -Ttext=0x41c5e0 -e original_worker_pair_vector_reallocate $(OUT)/worker_pair_vector_reallocate.o -o $(OUT)/worker_pair_vector_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_pair_vector_reallocate.elf $@
+
+test-cycle-worker-pair-vector-reallocate: $(OUT)/reriff-match $(OUT)/worker_pair_vector_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-pair-vector-reallocate $(OUT)/worker_pair_vector_reallocate.bin $(OUT)/worker-pair-vector-reallocate-comparison.json
+
+test-recovered: test-cycle-worker-pair-vector-reallocate
+.PHONY: test-cycle-worker-pair-vector-reallocate
