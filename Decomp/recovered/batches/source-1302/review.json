@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered range-copy routine is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "Independent disassembly of the original confirms the empty-range return, null-destination skip, sequential ten-word copies, 40-byte advancement, and return value. The submitted tests call the original and cover empty, single, multiple, overlapping, one-word-shifted, and null-destination cases while comparing surrounding data. Source hashes match validation.json, and native Windows compilation records successful builds of the actual implementation. The calling-convention difference and untested fault cases are disclosed. Sampled validation does not establish all-input equivalence."
+}
