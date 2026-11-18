@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as an unmatched high-level recovery with zero matching-source byte credit.",
+  "reason": "The source follows the reference visitor’s field offsets, signed loop bounds, mark-bit checks, call order, and ECX/EDX ABI. The test calls both the original visitor and the recovered implementation and compares fixture bytes and normalized pointers across null, zero, negative-count, tag-threshold, and aliasing cases. An independent SHA-256 check matched the recorded source hashes. Native Windows compilation is recorded for the actual implementation, with no matching credit. The tests use marker types outside its dispatch range, so recursive marker effects remain untested as disclosed; sampled validation does not establish all-input equivalence."
+}
