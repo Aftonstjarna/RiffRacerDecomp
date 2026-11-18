@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery with zero matching-source byte credit.",
+  "reason": "The recovered control flow, signed comparisons, flag masking, field offsets, return values, and lack of object writes agree with the original disassembly. The stated calling-convention limitation is explicit. The submitted test calls the original and exercises signed boundaries, flag transitions, limit values, default types, and context-byte preservation. An independent disassembly of Game.exe and source-hash check agreed with the reference and validation record. Native Windows compilation covers the actual implementation and reports no matching credit. The behavioral results are sampled evidence, not all-input equivalence."
+}
