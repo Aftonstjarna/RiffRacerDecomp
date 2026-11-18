@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The worker-record reset is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "The source follows the reference routines’ 32-bit layouts, reset order, reference-count decrement, release callback, and final range update. The tests call both original and recovered code and cover empty and populated ranges, null and duplicate references, count wraparound, callback order, and mutation of the range beginning while comparing record and object bytes. An independent hash check confirmed the submitted source files match validation.json. Native Windows compilation records successful builds of the actual implementation without matching credit. Invalid ranges, exceptions, actual destruction, and the incidental register return remain outside the stated scope; sampled tests do not establish all-input equivalence."
+}
