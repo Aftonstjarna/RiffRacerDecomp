@@ -7977,3 +7977,16 @@ test-cycle-worker-record12-range-destroy: $(OUT)/reriff-match $(OUT)/worker_reco
 
 test-recovered: test-cycle-worker-record12-range-destroy
 .PHONY: test-cycle-worker-record12-range-destroy
+
+# Reviewed cycle reference: worker-view-construct (assembly evidence only).
+$(OUT)/worker_view_construct.bin: native/worker_view_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_view_construct.o
+	ld -m elf_i386 -Ttext=0x454790 -e original_worker_view_construct $(OUT)/worker_view_construct.o -o $(OUT)/worker_view_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_view_construct.elf $@
+
+test-cycle-worker-view-construct: $(OUT)/reriff-match $(OUT)/worker_view_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-view-construct $(OUT)/worker_view_construct.bin $(OUT)/worker-view-construct-comparison.json
+
+test-recovered: test-cycle-worker-view-construct
+.PHONY: test-cycle-worker-view-construct
