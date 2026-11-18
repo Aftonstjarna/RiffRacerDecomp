@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, high-level unmatched recovery with zero matching-source byte credit.",
+  "reason": "The implementation follows the reference heap-finish, sift, and push control flow for the stated valid, practical pointer ranges, including signed priority comparisons and tie handling. The submitted oracle test calls the original and checks pointer slots, guards, item bytes, and the FS head across empty and small ranges, duplicate and extreme priorities, heaps, and arbitrary inputs. Independent SHA-256 checks confirmed the submitted source and original executable hashes. Native Windows compilation records cover the actual implementation and report no matching credit. The sampled tests do not establish all-input equivalence; the documented range and ABI limitations remain applicable."
+}
