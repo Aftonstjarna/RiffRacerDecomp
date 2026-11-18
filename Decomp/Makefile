@@ -7002,3 +7002,16 @@ test-cycle-script-operand-validate: $(OUT)/reriff-match $(OUT)/script_operand_va
 
 test-recovered: test-cycle-script-operand-validate
 .PHONY: test-cycle-script-operand-validate
+
+# Reviewed cycle reference: script-gc-propagate-one (assembly evidence only).
+$(OUT)/script_gc_propagate_one.bin: native/script_gc_propagate_one.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_propagate_one.o
+	ld -m elf_i386 -Ttext=0x4f16f0 -e original_script_gc_propagate_one $(OUT)/script_gc_propagate_one.o -o $(OUT)/script_gc_propagate_one.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_propagate_one.elf $@
+
+test-cycle-script-gc-propagate-one: $(OUT)/reriff-match $(OUT)/script_gc_propagate_one.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-propagate-one $(OUT)/script_gc_propagate_one.bin $(OUT)/script-gc-propagate-one-comparison.json
+
+test-recovered: test-cycle-script-gc-propagate-one
+.PHONY: test-cycle-script-gc-propagate-one
