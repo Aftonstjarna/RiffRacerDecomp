@@ -7041,3 +7041,16 @@ test-cycle-script-instruction-open-result: $(OUT)/reriff-match $(OUT)/script_ins
 
 test-recovered: test-cycle-script-instruction-open-result
 .PHONY: test-cycle-script-instruction-open-result
+
+# Reviewed cycle reference: worker-resource-state-update (assembly evidence only).
+$(OUT)/worker_resource_state_update.bin: native/worker_resource_state_update.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_resource_state_update.o
+	ld -m elf_i386 -Ttext=0x59efd0 -e original_worker_resource_state_update $(OUT)/worker_resource_state_update.o -o $(OUT)/worker_resource_state_update.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_resource_state_update.elf $@
+
+test-cycle-worker-resource-state-update: $(OUT)/reriff-match $(OUT)/worker_resource_state_update.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-resource-state-update $(OUT)/worker_resource_state_update.bin $(OUT)/worker-resource-state-update-comparison.json
+
+test-recovered: test-cycle-worker-resource-state-update
+.PHONY: test-cycle-worker-resource-state-update
