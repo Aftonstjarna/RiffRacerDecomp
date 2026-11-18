@@ -7210,3 +7210,16 @@ test-cycle-lifetime-initialize-global: $(OUT)/reriff-match $(OUT)/lifetime_initi
 
 test-recovered: test-cycle-lifetime-initialize-global
 .PHONY: test-cycle-lifetime-initialize-global
+
+# Reviewed cycle reference: worker-pair-vector-construct (assembly evidence only).
+$(OUT)/worker_pair_vector_construct.bin: native/worker_pair_vector_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_pair_vector_construct.o
+	ld -m elf_i386 -Ttext=0x42bfd0 -e original_worker_pair_vector_construct $(OUT)/worker_pair_vector_construct.o -o $(OUT)/worker_pair_vector_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_pair_vector_construct.elf $@
+
+test-cycle-worker-pair-vector-construct: $(OUT)/reriff-match $(OUT)/worker_pair_vector_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-pair-vector-construct $(OUT)/worker_pair_vector_construct.bin $(OUT)/worker-pair-vector-construct-comparison.json
+
+test-recovered: test-cycle-worker-pair-vector-construct
+.PHONY: test-cycle-worker-pair-vector-construct
