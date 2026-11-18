@@ -7743,3 +7743,16 @@ test-cycle-graphics-error-message: $(OUT)/reriff-match $(OUT)/graphics_error_mes
 
 test-recovered: test-cycle-graphics-error-message
 .PHONY: test-cycle-graphics-error-message
+
+# Reviewed cycle reference: worker-resource-pool-get (assembly evidence only).
+$(OUT)/worker_resource_pool_get.bin: native/worker_resource_pool_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_resource_pool_get.o
+	ld -m elf_i386 -Ttext=0x417150 -e original_worker_resource_pool_get $(OUT)/worker_resource_pool_get.o -o $(OUT)/worker_resource_pool_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_resource_pool_get.elf $@
+
+test-cycle-worker-resource-pool-get: $(OUT)/reriff-match $(OUT)/worker_resource_pool_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-resource-pool-get $(OUT)/worker_resource_pool_get.bin $(OUT)/worker-resource-pool-get-comparison.json
+
+test-recovered: test-cycle-worker-resource-pool-get
+.PHONY: test-cycle-worker-resource-pool-get
