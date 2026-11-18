@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The unmatched C++ recovery is consistent with the reviewed original routines for the supported integration boundary. It receives zero matching-source byte credit.",
+  "reason": "The queue removal, root relinking, mark update, cached lookup, stack setup, temporary hook and threshold changes, and normal-return restoration follow the reference control flow. The submitted test calls the original and compares complete fixture state across singleton and two-object queues, cached absence, nil values, and native finalizer calls. An independent 32-bit compilation succeeded and the source hashes match validation.json. The test does not cover hash-chain misses, nonlocal errors, or actual script execution; the VM adapter remains an explicit integration requirement. Sampled validation does not establish all-input equivalence."
+}
