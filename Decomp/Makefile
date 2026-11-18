@@ -7522,3 +7522,16 @@ test-cycle-worker-record40-range-transfer: $(OUT)/reriff-match $(OUT)/worker_rec
 
 test-recovered: test-cycle-worker-record40-range-transfer
 .PHONY: test-cycle-worker-record40-range-transfer
+
+# Reviewed cycle reference: pointer-slot-release (assembly evidence only).
+$(OUT)/pointer_slot_release.bin: native/pointer_slot_release.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/pointer_slot_release.o
+	ld -m elf_i386 -Ttext=0x41f480 -e original_pointer_slot_release $(OUT)/pointer_slot_release.o -o $(OUT)/pointer_slot_release.elf
+	objcopy -O binary --only-section=.text $(OUT)/pointer_slot_release.elf $@
+
+test-cycle-pointer-slot-release: $(OUT)/reriff-match $(OUT)/pointer_slot_release.bin
+	$(OUT)/reriff-match native-check "$(GAME)" pointer-slot-release $(OUT)/pointer_slot_release.bin $(OUT)/pointer-slot-release-comparison.json
+
+test-recovered: test-cycle-pointer-slot-release
+.PHONY: test-cycle-pointer-slot-release
