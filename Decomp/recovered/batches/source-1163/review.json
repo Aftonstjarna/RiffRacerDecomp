@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered range-clear implementation is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "The control flow, 32-bit layout, decrement and release behavior, callback arguments, and final range update agree with the original routine for the stated valid-layout and normal-callback scope. The tests call both the original and recovered routines and cover empty and mixed ranges, null entries, shared references, count wraparound, callback order, and mutation of the range beginning. An independent assembly and byte comparison confirmed that the reference fragment matches the original executable. Native Windows compilation records successful builds of the actual implementation; none earned matching credit. Exception paths and invalid ranges remain outside the tested scope, and sampled validation does not establish all-input equivalence."
+}
