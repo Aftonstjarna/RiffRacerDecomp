@@ -7236,3 +7236,16 @@ test-cycle-worker-string-compose: $(OUT)/reriff-match $(OUT)/worker_string_compo
 
 test-recovered: test-cycle-worker-string-compose
 .PHONY: test-cycle-worker-string-compose
+
+# Reviewed cycle reference: script-gc-finalize-one (assembly evidence only).
+$(OUT)/script_gc_finalize_one.bin: native/script_gc_finalize_one.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_finalize_one.o
+	ld -m elf_i386 -Ttext=0x4f1bc0 -e original_script_gc_finalize_one $(OUT)/script_gc_finalize_one.o -o $(OUT)/script_gc_finalize_one.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_finalize_one.elf $@
+
+test-cycle-script-gc-finalize-one: $(OUT)/reriff-match $(OUT)/script_gc_finalize_one.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-finalize-one $(OUT)/script_gc_finalize_one.bin $(OUT)/script-gc-finalize-one-comparison.json
+
+test-recovered: test-cycle-script-gc-finalize-one
+.PHONY: test-cycle-script-gc-finalize-one
