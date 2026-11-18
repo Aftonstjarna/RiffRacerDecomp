@@ -7067,3 +7067,16 @@ test-cycle-worker-byte-vector-append: $(OUT)/reriff-match $(OUT)/worker_byte_vec
 
 test-recovered: test-cycle-worker-byte-vector-append
 .PHONY: test-cycle-worker-byte-vector-append
+
+# Reviewed cycle reference: worker-byte-vector-ensure-spare (assembly evidence only).
+$(OUT)/worker_byte_vector_ensure_spare.bin: native/worker_byte_vector_ensure_spare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_byte_vector_ensure_spare.o
+	ld -m elf_i386 -Ttext=0x519d50 -e original_worker_byte_vector_ensure_spare $(OUT)/worker_byte_vector_ensure_spare.o -o $(OUT)/worker_byte_vector_ensure_spare.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_byte_vector_ensure_spare.elf $@
+
+test-cycle-worker-byte-vector-ensure-spare: $(OUT)/reriff-match $(OUT)/worker_byte_vector_ensure_spare.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-byte-vector-ensure-spare $(OUT)/worker_byte_vector_ensure_spare.bin $(OUT)/worker-byte-vector-ensure-spare-comparison.json
+
+test-recovered: test-cycle-worker-byte-vector-ensure-spare
+.PHONY: test-cycle-worker-byte-vector-ensure-spare
