@@ -6924,3 +6924,16 @@ test-cycle-script-gc-shrink-buffers: $(OUT)/reriff-match $(OUT)/script_gc_shrink
 
 test-recovered: test-cycle-script-gc-shrink-buffers
 .PHONY: test-cycle-script-gc-shrink-buffers
+
+# Reviewed cycle reference: script-gc-begin-mark (assembly evidence only).
+$(OUT)/script_gc_begin_mark.bin: native/script_gc_begin_mark.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_begin_mark.o
+	ld -m elf_i386 -Ttext=0x4f20e0 -e original_script_gc_begin_mark $(OUT)/script_gc_begin_mark.o -o $(OUT)/script_gc_begin_mark.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_begin_mark.elf $@
+
+test-cycle-script-gc-begin-mark: $(OUT)/reriff-match $(OUT)/script_gc_begin_mark.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-begin-mark $(OUT)/script_gc_begin_mark.bin $(OUT)/script-gc-begin-mark-comparison.json
+
+test-recovered: test-cycle-script-gc-begin-mark
+.PHONY: test-cycle-script-gc-begin-mark
