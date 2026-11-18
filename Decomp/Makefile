@@ -7171,3 +7171,16 @@ test-cycle-record12-vector-append: $(OUT)/reriff-match $(OUT)/record12_vector_ap
 
 test-recovered: test-cycle-record12-vector-append
 .PHONY: test-cycle-record12-vector-append
+
+# Reviewed cycle reference: record12-vector-ensure-spare (assembly evidence only).
+$(OUT)/record12_vector_ensure_spare.bin: native/record12_vector_ensure_spare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_vector_ensure_spare.o
+	ld -m elf_i386 -Ttext=0x429be0 -e original_record12_vector_ensure_spare $(OUT)/record12_vector_ensure_spare.o -o $(OUT)/record12_vector_ensure_spare.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_vector_ensure_spare.elf $@
+
+test-cycle-record12-vector-ensure-spare: $(OUT)/reriff-match $(OUT)/record12_vector_ensure_spare.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-vector-ensure-spare $(OUT)/record12_vector_ensure_spare.bin $(OUT)/record12-vector-ensure-spare-comparison.json
+
+test-recovered: test-cycle-record12-vector-ensure-spare
+.PHONY: test-cycle-record12-vector-ensure-spare
