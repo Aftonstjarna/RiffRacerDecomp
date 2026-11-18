@@ -7457,3 +7457,16 @@ test-cycle-worker-record64-reallocate: $(OUT)/reriff-match $(OUT)/worker_record6
 
 test-recovered: test-cycle-worker-record64-reallocate
 .PHONY: test-cycle-worker-record64-reallocate
+
+# Reviewed cycle reference: worker-record64-range-construct (assembly evidence only).
+$(OUT)/worker_record64_range_construct.bin: native/worker_record64_range_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record64_range_construct.o
+	ld -m elf_i386 -Ttext=0x520b60 -e original_worker_record64_range_construct $(OUT)/worker_record64_range_construct.o -o $(OUT)/worker_record64_range_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record64_range_construct.elf $@
+
+test-cycle-worker-record64-range-construct: $(OUT)/reriff-match $(OUT)/worker_record64_range_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record64-range-construct $(OUT)/worker_record64_range_construct.bin $(OUT)/worker-record64-range-construct-comparison.json
+
+test-recovered: test-cycle-worker-record64-range-construct
+.PHONY: test-cycle-worker-record64-range-construct
