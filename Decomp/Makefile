@@ -6859,3 +6859,16 @@ test-cycle-script-gc-step: $(OUT)/reriff-match $(OUT)/script_gc_step.bin
 
 test-recovered: test-cycle-script-gc-step
 .PHONY: test-cycle-script-gc-step
+
+# Reviewed cycle reference: script-prepare-callable (assembly evidence only).
+$(OUT)/script_prepare_callable.bin: native/script_prepare_callable.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_prepare_callable.o
+	ld -m elf_i386 -Ttext=0x4f5380 -e original_script_prepare_callable $(OUT)/script_prepare_callable.o -o $(OUT)/script_prepare_callable.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_prepare_callable.elf $@
+
+test-cycle-script-prepare-callable: $(OUT)/reriff-match $(OUT)/script_prepare_callable.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-prepare-callable $(OUT)/script_prepare_callable.bin $(OUT)/script-prepare-callable-comparison.json
+
+test-recovered: test-cycle-script-prepare-callable
+.PHONY: test-cycle-script-prepare-callable
