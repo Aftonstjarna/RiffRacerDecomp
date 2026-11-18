@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered wrapper is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "The source follows the reference routine’s call order, arguments, use of the append return value, and output return identity. The 32-bit string layout and thiscall dependencies agree with the referenced helpers. The differential test calls the original and compares complete fixtures across empty, nonempty, and self-append cases; it does not cover allocation, exceptions, or inline move construction, as disclosed. An independent i386 compilation and disassembly confirmed the wrapper’s call sequence, and source and executable hashes match the validation record. The native Windows compilation records the actual implementation and claims no matching credit. Sampled validation does not establish all-input equivalence."
+}
