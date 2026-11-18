@@ -6781,3 +6781,16 @@ test-cycle-worker-flush-slot: $(OUT)/reriff-match $(OUT)/worker_flush_slot.bin
 
 test-recovered: test-cycle-worker-flush-slot
 .PHONY: test-cycle-worker-flush-slot
+
+# Reviewed cycle reference: worker-record-range-clear (assembly evidence only).
+$(OUT)/worker_record_range_clear.bin: native/worker_record_range_clear.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record_range_clear.o
+	ld -m elf_i386 -Ttext=0x49a940 -e original_worker_record_range_clear $(OUT)/worker_record_range_clear.o -o $(OUT)/worker_record_range_clear.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record_range_clear.elf $@
+
+test-cycle-worker-record-range-clear: $(OUT)/reriff-match $(OUT)/worker_record_range_clear.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record-range-clear $(OUT)/worker_record_range_clear.bin $(OUT)/worker-record-range-clear-comparison.json
+
+test-recovered: test-cycle-worker-record-range-clear
+.PHONY: test-cycle-worker-record-range-clear
