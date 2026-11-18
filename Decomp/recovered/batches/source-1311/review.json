@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level, unmatched recovery with zero matching-source byte credit.",
+  "reason": "The implementation follows the reference routines’ sequential 48-byte traversal, nullable destination behavior, ordered pointer copies and non-atomic retains, payload copies, and return value. The documented calling-convention adapter and invalid-memory limitations are material and appropriately stated. The differential tests cover empty and short ranges, null pointer masks, shared resources, counter wraparound, self-copy and record-aligned overlaps, with whole-arena comparisons. Independent SHA-256 checks confirmed the submitted source hashes. The recorded native Windows builds compile the actual implementation and claim no matching credit. These sampled tests do not establish all-input equivalence."
+}
