@@ -7899,3 +7899,16 @@ test-cycle-worker-resource-parameter-update: $(OUT)/reriff-match $(OUT)/worker_r
 
 test-recovered: test-cycle-worker-resource-parameter-update
 .PHONY: test-cycle-worker-resource-parameter-update
+
+# Reviewed cycle reference: float-sin-precise-bridge (assembly evidence only).
+$(OUT)/float_sin_precise_bridge.bin: native/float_sin_precise_bridge.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/float_sin_precise_bridge.o
+	ld -m elf_i386 -Ttext=0x41f4d0 -e original_float_sin_precise_bridge $(OUT)/float_sin_precise_bridge.o -o $(OUT)/float_sin_precise_bridge.elf
+	objcopy -O binary --only-section=.text $(OUT)/float_sin_precise_bridge.elf $@
+
+test-cycle-float-sin-precise-bridge: $(OUT)/reriff-match $(OUT)/float_sin_precise_bridge.bin
+	$(OUT)/reriff-match native-check "$(GAME)" float-sin-precise-bridge $(OUT)/float_sin_precise_bridge.bin $(OUT)/float-sin-precise-bridge-comparison.json
+
+test-recovered: test-cycle-float-sin-precise-bridge
+.PHONY: test-cycle-float-sin-precise-bridge
