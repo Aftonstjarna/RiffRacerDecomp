@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 125330,
-  "remaining_bytes": 8510062,
-  "verified_percent": 1.4513527585082415,
-  "registered_blocks": 631,
-  "exact_blocks": 631,
+  "verified_bytes": 125500,
+  "remaining_bytes": 8509892,
+  "verified_percent": 1.4533214010435196,
+  "registered_blocks": 632,
+  "exact_blocks": 632,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1262,6 +1262,15 @@
       "byte_equal": true,
       "reference_sha256": "ae474caf801c4d3eeeb9548de2e959f34e2f3122d47719864ebba265d49a4e78",
       "candidate_sha256": "ae474caf801c4d3eeeb9548de2e959f34e2f3122d47719864ebba265d49a4e78"
+    },
+    {
+      "name": "worker-quad-vector-reserve",
+      "file_offset": 262336,
+      "size": 170,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "aad36408e1b6552d3b2f7bb775bdeaaac6b5849154fab647a3786392d30a8d1f",
+      "candidate_sha256": "aad36408e1b6552d3b2f7bb775bdeaaac6b5849154fab647a3786392d30a8d1f"
     },
     {
       "name": "narrow-replace-range",

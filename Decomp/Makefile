@@ -7665,3 +7665,16 @@ test-cycle-resource-manager-get: $(OUT)/reriff-match $(OUT)/resource_manager_get
 
 test-recovered: test-cycle-resource-manager-get
 .PHONY: test-cycle-resource-manager-get
+
+# Reviewed cycle reference: worker-quad-vector-reserve (assembly evidence only).
+$(OUT)/worker_quad_vector_reserve.bin: native/worker_quad_vector_reserve.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_quad_vector_reserve.o
+	ld -m elf_i386 -Ttext=0x440cc0 -e original_worker_quad_vector_reserve $(OUT)/worker_quad_vector_reserve.o -o $(OUT)/worker_quad_vector_reserve.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_quad_vector_reserve.elf $@
+
+test-cycle-worker-quad-vector-reserve: $(OUT)/reriff-match $(OUT)/worker_quad_vector_reserve.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-quad-vector-reserve $(OUT)/worker_quad_vector_reserve.bin $(OUT)/worker-quad-vector-reserve-comparison.json
+
+test-recovered: test-cycle-worker-quad-vector-reserve
+.PHONY: test-cycle-worker-quad-vector-reserve
