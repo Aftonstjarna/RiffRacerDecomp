@@ -8055,3 +8055,16 @@ test-cycle-worker-view-pointer-range-destroy: $(OUT)/reriff-match $(OUT)/worker_
 
 test-recovered: test-cycle-worker-view-pointer-range-destroy
 .PHONY: test-cycle-worker-view-pointer-range-destroy
+
+# Reviewed cycle reference: worker-view-pointer-sort (assembly evidence only).
+$(OUT)/worker_view_pointer_sort.bin: native/worker_view_pointer_sort.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_view_pointer_sort.o
+	ld -m elf_i386 -Ttext=0x42c310 -e original_worker_view_pointer_sort $(OUT)/worker_view_pointer_sort.o -o $(OUT)/worker_view_pointer_sort.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_view_pointer_sort.elf $@
+
+test-cycle-worker-view-pointer-sort: $(OUT)/reriff-match $(OUT)/worker_view_pointer_sort.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-view-pointer-sort $(OUT)/worker_view_pointer_sort.bin $(OUT)/worker-view-pointer-sort-comparison.json
+
+test-recovered: test-cycle-worker-view-pointer-sort
+.PHONY: test-cycle-worker-view-pointer-sort
