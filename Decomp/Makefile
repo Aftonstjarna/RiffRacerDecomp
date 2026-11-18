@@ -7613,3 +7613,16 @@ test-cycle-application-service-construct: $(OUT)/reriff-match $(OUT)/application
 
 test-recovered: test-cycle-application-service-construct
 .PHONY: test-cycle-application-service-construct
+
+# Reviewed cycle reference: application-worker-construct (assembly evidence only).
+$(OUT)/application_worker_construct.bin: native/application_worker_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/application_worker_construct.o
+	ld -m elf_i386 -Ttext=0x43f310 -e original_application_worker_construct $(OUT)/application_worker_construct.o -o $(OUT)/application_worker_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/application_worker_construct.elf $@
+
+test-cycle-application-worker-construct: $(OUT)/reriff-match $(OUT)/application_worker_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" application-worker-construct $(OUT)/application_worker_construct.bin $(OUT)/application-worker-construct-comparison.json
+
+test-recovered: test-cycle-application-worker-construct
+.PHONY: test-cycle-application-worker-construct
