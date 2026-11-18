@@ -7054,3 +7054,16 @@ test-cycle-worker-resource-state-update: $(OUT)/reriff-match $(OUT)/worker_resou
 
 test-recovered: test-cycle-worker-resource-state-update
 .PHONY: test-cycle-worker-resource-state-update
+
+# Reviewed cycle reference: worker-byte-vector-append (assembly evidence only).
+$(OUT)/worker_byte_vector_append.bin: native/worker_byte_vector_append.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_byte_vector_append.o
+	ld -m elf_i386 -Ttext=0x5c20e0 -e original_worker_byte_vector_append $(OUT)/worker_byte_vector_append.o -o $(OUT)/worker_byte_vector_append.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_byte_vector_append.elf $@
+
+test-cycle-worker-byte-vector-append: $(OUT)/reriff-match $(OUT)/worker_byte_vector_append.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-byte-vector-append $(OUT)/worker_byte_vector_append.bin $(OUT)/worker-byte-vector-append-comparison.json
+
+test-recovered: test-cycle-worker-byte-vector-append
+.PHONY: test-cycle-worker-byte-vector-append

@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"worker-resource-state-update",0x19efd0,222},
+  return {NativeBlock{"worker-byte-vector-append",0x1c20e0,96},
+                     NativeBlock{"worker-resource-state-update",0x19efd0,222},
                      NativeBlock{"script-instruction-open-result",0x86150,37},
                      NativeBlock{"script-gc-visit-prototype",0xf1320,163},
                      NativeBlock{"script-gc-propagate-one",0xf16f0,215},
