@@ -7132,3 +7132,16 @@ test-cycle-script-gc-process-circular-list: $(OUT)/reriff-match $(OUT)/script_gc
 
 test-recovered: test-cycle-script-gc-process-circular-list
 .PHONY: test-cycle-script-gc-process-circular-list
+
+# Reviewed cycle reference: script-gc-propagate-all (assembly evidence only).
+$(OUT)/script_gc_propagate_all.bin: native/script_gc_propagate_all.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_propagate_all.o
+	ld -m elf_i386 -Ttext=0x4f17e0 -e original_script_gc_propagate_all $(OUT)/script_gc_propagate_all.o -o $(OUT)/script_gc_propagate_all.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_propagate_all.elf $@
+
+test-cycle-script-gc-propagate-all: $(OUT)/reriff-match $(OUT)/script_gc_propagate_all.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-propagate-all $(OUT)/script_gc_propagate_all.bin $(OUT)/script-gc-propagate-all-comparison.json
+
+test-recovered: test-cycle-script-gc-propagate-all
+.PHONY: test-cycle-script-gc-propagate-all

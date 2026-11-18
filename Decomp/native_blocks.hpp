@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"script-gc-process-circular-list",0xf0fc0,177},
+  return {NativeBlock{"script-gc-propagate-all",0xf17e0,257},
+                     NativeBlock{"script-gc-process-circular-list",0xf0fc0,177},
                      NativeBlock{"script-gc-clear-weak-entries",0xf1900,229},
                      NativeBlock{"script-gc-finish-mark",0xf2190,150},
                      NativeBlock{"worker-byte-vector-reallocate",0x11a450,111},
