@@ -7093,3 +7093,16 @@ test-cycle-worker-byte-vector-reallocate: $(OUT)/reriff-match $(OUT)/worker_byte
 
 test-recovered: test-cycle-worker-byte-vector-reallocate
 .PHONY: test-cycle-worker-byte-vector-reallocate
+
+# Reviewed cycle reference: script-gc-finish-mark (assembly evidence only).
+$(OUT)/script_gc_finish_mark.bin: native/script_gc_finish_mark.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_finish_mark.o
+	ld -m elf_i386 -Ttext=0x4f2190 -e original_script_gc_finish_mark $(OUT)/script_gc_finish_mark.o -o $(OUT)/script_gc_finish_mark.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_finish_mark.elf $@
+
+test-cycle-script-gc-finish-mark: $(OUT)/reriff-match $(OUT)/script_gc_finish_mark.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-finish-mark $(OUT)/script_gc_finish_mark.bin $(OUT)/script-gc-finish-mark-comparison.json
+
+test-recovered: test-cycle-script-gc-finish-mark
+.PHONY: test-cycle-script-gc-finish-mark
