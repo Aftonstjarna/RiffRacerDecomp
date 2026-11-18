@@ -8081,3 +8081,16 @@ test-cycle-worker-view-pointer-small-sort: $(OUT)/reriff-match $(OUT)/worker_vie
 
 test-recovered: test-cycle-worker-view-pointer-small-sort
 .PHONY: test-cycle-worker-view-pointer-small-sort
+
+# Reviewed cycle reference: worker-view-heap-finish (assembly evidence only).
+$(OUT)/worker_view_heap_finish.bin: native/worker_view_heap_finish.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_view_heap_finish.o
+	ld -m elf_i386 -Ttext=0x42c8c0 -e original_worker_view_heap_finish $(OUT)/worker_view_heap_finish.o -o $(OUT)/worker_view_heap_finish.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_view_heap_finish.elf $@
+
+test-cycle-worker-view-heap-finish: $(OUT)/reriff-match $(OUT)/worker_view_heap_finish.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-view-heap-finish $(OUT)/worker_view_heap_finish.bin $(OUT)/worker-view-heap-finish-comparison.json
+
+test-recovered: test-cycle-worker-view-heap-finish
+.PHONY: test-cycle-worker-view-heap-finish
