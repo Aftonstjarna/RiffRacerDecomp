@@ -7145,3 +7145,16 @@ test-cycle-script-gc-propagate-all: $(OUT)/reriff-match $(OUT)/script_gc_propaga
 
 test-recovered: test-cycle-script-gc-propagate-all
 .PHONY: test-cycle-script-gc-propagate-all
+
+# Reviewed cycle reference: worker-queue-record-dispatch (assembly evidence only).
+$(OUT)/worker_queue_record_dispatch.bin: native/worker_queue_record_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_queue_record_dispatch.o
+	ld -m elf_i386 -Ttext=0x499120 -e original_worker_queue_record_dispatch $(OUT)/worker_queue_record_dispatch.o -o $(OUT)/worker_queue_record_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_queue_record_dispatch.elf $@
+
+test-cycle-worker-queue-record-dispatch: $(OUT)/reriff-match $(OUT)/worker_queue_record_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-queue-record-dispatch $(OUT)/worker_queue_record_dispatch.bin $(OUT)/worker-queue-record-dispatch-comparison.json
+
+test-recovered: test-cycle-worker-queue-record-dispatch
+.PHONY: test-cycle-worker-queue-record-dispatch
