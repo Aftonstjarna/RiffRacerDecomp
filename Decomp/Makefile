@@ -7756,3 +7756,16 @@ test-cycle-worker-resource-pool-get: $(OUT)/reriff-match $(OUT)/worker_resource_
 
 test-recovered: test-cycle-worker-resource-pool-get
 .PHONY: test-cycle-worker-resource-pool-get
+
+# Reviewed cycle reference: narrow-format-variadic (assembly evidence only).
+$(OUT)/narrow_format_variadic.bin: native/narrow_format_variadic.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_format_variadic.o
+	ld -m elf_i386 -Ttext=0x452ca0 -e original_narrow_format_variadic $(OUT)/narrow_format_variadic.o -o $(OUT)/narrow_format_variadic.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_format_variadic.elf $@
+
+test-cycle-narrow-format-variadic: $(OUT)/reriff-match $(OUT)/narrow_format_variadic.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-format-variadic $(OUT)/narrow_format_variadic.bin $(OUT)/narrow-format-variadic-comparison.json
+
+test-recovered: test-cycle-narrow-format-variadic
+.PHONY: test-cycle-narrow-format-variadic
