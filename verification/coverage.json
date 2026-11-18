@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 128410,
-  "remaining_bytes": 8506982,
-  "verified_percent": 1.4870199291473971,
-  "registered_blocks": 647,
-  "exact_blocks": 647,
+  "verified_bytes": 128542,
+  "remaining_bytes": 8506850,
+  "verified_percent": 1.4885485221747896,
+  "registered_blocks": 648,
+  "exact_blocks": 648,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -263,6 +263,15 @@
       "byte_equal": true,
       "reference_sha256": "6c350f40d12f0b8bfb697744b3772adf84bb440d479b443470a65606a0f024f1",
       "candidate_sha256": "6c350f40d12f0b8bfb697744b3772adf84bb440d479b443470a65606a0f024f1"
+    },
+    {
+      "name": "worker-resource-singleton-d0-get",
+      "file_offset": 92912,
+      "size": 132,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "a89c48987cd183dbc31b5ac6e81351b8aaf1c681d5fcc1ec01937b7841695dec",
+      "candidate_sha256": "a89c48987cd183dbc31b5ac6e81351b8aaf1c681d5fcc1ec01937b7841695dec"
     },
     {
       "name": "resource-manager-construct",
