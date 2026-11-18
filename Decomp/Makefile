@@ -6846,3 +6846,16 @@ test-cycle-worker-reference-range-clear: $(OUT)/reriff-match $(OUT)/worker_refer
 
 test-recovered: test-cycle-worker-reference-range-clear
 .PHONY: test-cycle-worker-reference-range-clear
+
+# Reviewed cycle reference: script-gc-step (assembly evidence only).
+$(OUT)/script_gc_step.bin: native/script_gc_step.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_step.o
+	ld -m elf_i386 -Ttext=0x4f2330 -e original_script_gc_step $(OUT)/script_gc_step.o -o $(OUT)/script_gc_step.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_step.elf $@
+
+test-cycle-script-gc-step: $(OUT)/reriff-match $(OUT)/script_gc_step.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-step $(OUT)/script_gc_step.bin $(OUT)/script-gc-step-comparison.json
+
+test-recovered: test-cycle-script-gc-step
+.PHONY: test-cycle-script-gc-step
