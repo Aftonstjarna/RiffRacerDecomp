@@ -7353,3 +7353,16 @@ test-cycle-narrow-self-replace: $(OUT)/reriff-match $(OUT)/narrow_self_replace.b
 
 test-recovered: test-cycle-narrow-self-replace
 .PHONY: test-cycle-narrow-self-replace
+
+# Reviewed cycle reference: record40-vector-reallocate (assembly evidence only).
+$(OUT)/record40_vector_reallocate.bin: native/record40_vector_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record40_vector_reallocate.o
+	ld -m elf_i386 -Ttext=0x429850 -e original_record40_vector_reallocate $(OUT)/record40_vector_reallocate.o -o $(OUT)/record40_vector_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/record40_vector_reallocate.elf $@
+
+test-cycle-record40-vector-reallocate: $(OUT)/reriff-match $(OUT)/record40_vector_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record40-vector-reallocate $(OUT)/record40_vector_reallocate.bin $(OUT)/record40-vector-reallocate-comparison.json
+
+test-recovered: test-cycle-record40-vector-reallocate
+.PHONY: test-cycle-record40-vector-reallocate
