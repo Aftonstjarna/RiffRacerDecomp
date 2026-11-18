@@ -7197,3 +7197,16 @@ test-cycle-record12-vector-reallocate: $(OUT)/reriff-match $(OUT)/record12_vecto
 
 test-recovered: test-cycle-record12-vector-reallocate
 .PHONY: test-cycle-record12-vector-reallocate
+
+# Reviewed cycle reference: lifetime-initialize-global (assembly evidence only).
+$(OUT)/lifetime_initialize_global.bin: native/lifetime_initialize_global.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/lifetime_initialize_global.o
+	ld -m elf_i386 -Ttext=0x44ebe0 -e original_lifetime_initialize_global $(OUT)/lifetime_initialize_global.o -o $(OUT)/lifetime_initialize_global.elf
+	objcopy -O binary --only-section=.text $(OUT)/lifetime_initialize_global.elf $@
+
+test-cycle-lifetime-initialize-global: $(OUT)/reriff-match $(OUT)/lifetime_initialize_global.bin
+	$(OUT)/reriff-match native-check "$(GAME)" lifetime-initialize-global $(OUT)/lifetime_initialize_global.bin $(OUT)/lifetime-initialize-global-comparison.json
+
+test-recovered: test-cycle-lifetime-initialize-global
+.PHONY: test-cycle-lifetime-initialize-global
