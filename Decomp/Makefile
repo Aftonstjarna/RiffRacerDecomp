@@ -7717,3 +7717,16 @@ test-cycle-processor-feature-import: $(OUT)/reriff-match $(OUT)/processor_featur
 
 test-recovered: test-cycle-processor-feature-import
 .PHONY: test-cycle-processor-feature-import
+
+# Reviewed cycle reference: worker-manager-singleton-get (assembly evidence only).
+$(OUT)/worker_manager_singleton_get.bin: native/worker_manager_singleton_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_manager_singleton_get.o
+	ld -m elf_i386 -Ttext=0x4170c0 -e original_worker_manager_singleton_get $(OUT)/worker_manager_singleton_get.o -o $(OUT)/worker_manager_singleton_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_manager_singleton_get.elf $@
+
+test-cycle-worker-manager-singleton-get: $(OUT)/reriff-match $(OUT)/worker_manager_singleton_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-manager-singleton-get $(OUT)/worker_manager_singleton_get.bin $(OUT)/worker-manager-singleton-get-comparison.json
+
+test-recovered: test-cycle-worker-manager-singleton-get
+.PHONY: test-cycle-worker-manager-singleton-get
