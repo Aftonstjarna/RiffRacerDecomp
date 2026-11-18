@@ -7262,3 +7262,16 @@ test-cycle-script-gc-visit-closure: $(OUT)/reriff-match $(OUT)/script_gc_visit_c
 
 test-recovered: test-cycle-script-gc-visit-closure
 .PHONY: test-cycle-script-gc-visit-closure
+
+# Reviewed cycle reference: worker-wide-service-action (assembly evidence only).
+$(OUT)/worker_wide_service_action.bin: native/worker_wide_service_action.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_wide_service_action.o
+	ld -m elf_i386 -Ttext=0x44f5b0 -e original_worker_wide_service_action $(OUT)/worker_wide_service_action.o -o $(OUT)/worker_wide_service_action.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_wide_service_action.elf $@
+
+test-cycle-worker-wide-service-action: $(OUT)/reriff-match $(OUT)/worker_wide_service_action.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-wide-service-action $(OUT)/worker_wide_service_action.bin $(OUT)/worker-wide-service-action-comparison.json
+
+test-recovered: test-cycle-worker-wide-service-action
+.PHONY: test-cycle-worker-wide-service-action
