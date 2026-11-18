@@ -6898,3 +6898,16 @@ test-cycle-script-hook-dispatch: $(OUT)/reriff-match $(OUT)/script_hook_dispatch
 
 test-recovered: test-cycle-script-hook-dispatch
 .PHONY: test-cycle-script-hook-dispatch
+
+# Reviewed cycle reference: script-return-hook (assembly evidence only).
+$(OUT)/script_return_hook.bin: native/script_return_hook.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_return_hook.o
+	ld -m elf_i386 -Ttext=0x4f5680 -e original_script_return_hook $(OUT)/script_return_hook.o -o $(OUT)/script_return_hook.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_return_hook.elf $@
+
+test-cycle-script-return-hook: $(OUT)/reriff-match $(OUT)/script_return_hook.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-return-hook $(OUT)/script_return_hook.bin $(OUT)/script-return-hook-comparison.json
+
+test-recovered: test-cycle-script-return-hook
+.PHONY: test-cycle-script-return-hook
