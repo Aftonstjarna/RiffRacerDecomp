@@ -7964,3 +7964,16 @@ test-cycle-worker-record12-copy-construct-range: $(OUT)/reriff-match $(OUT)/work
 
 test-recovered: test-cycle-worker-record12-copy-construct-range
 .PHONY: test-cycle-worker-record12-copy-construct-range
+
+# Reviewed cycle reference: worker-record12-range-destroy (assembly evidence only).
+$(OUT)/worker_record12_range_destroy.bin: native/worker_record12_range_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record12_range_destroy.o
+	ld -m elf_i386 -Ttext=0x41db40 -e original_worker_record12_range_destroy $(OUT)/worker_record12_range_destroy.o -o $(OUT)/worker_record12_range_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record12_range_destroy.elf $@
+
+test-cycle-worker-record12-range-destroy: $(OUT)/reriff-match $(OUT)/worker_record12_range_destroy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record12-range-destroy $(OUT)/worker_record12_range_destroy.bin $(OUT)/worker-record12-range-destroy-comparison.json
+
+test-recovered: test-cycle-worker-record12-range-destroy
+.PHONY: test-cycle-worker-record12-range-destroy
