@@ -7106,3 +7106,16 @@ test-cycle-script-gc-finish-mark: $(OUT)/reriff-match $(OUT)/script_gc_finish_ma
 
 test-recovered: test-cycle-script-gc-finish-mark
 .PHONY: test-cycle-script-gc-finish-mark
+
+# Reviewed cycle reference: script-gc-clear-weak-entries (assembly evidence only).
+$(OUT)/script_gc_clear_weak_entries.bin: native/script_gc_clear_weak_entries.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_clear_weak_entries.o
+	ld -m elf_i386 -Ttext=0x4f1900 -e original_script_gc_clear_weak_entries $(OUT)/script_gc_clear_weak_entries.o -o $(OUT)/script_gc_clear_weak_entries.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_clear_weak_entries.elf $@
+
+test-cycle-script-gc-clear-weak-entries: $(OUT)/reriff-match $(OUT)/script_gc_clear_weak_entries.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-clear-weak-entries $(OUT)/script_gc_clear_weak_entries.bin $(OUT)/script-gc-clear-weak-entries-comparison.json
+
+test-recovered: test-cycle-script-gc-clear-weak-entries
+.PHONY: test-cycle-script-gc-clear-weak-entries
