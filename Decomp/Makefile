@@ -7769,3 +7769,16 @@ test-cycle-narrow-format-variadic: $(OUT)/reriff-match $(OUT)/narrow_format_vari
 
 test-recovered: test-cycle-narrow-format-variadic
 .PHONY: test-cycle-narrow-format-variadic
+
+# Reviewed cycle reference: graphics-startup-wide-message (assembly evidence only).
+$(OUT)/graphics_startup_wide_message.bin: native/graphics_startup_wide_message.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_startup_wide_message.o
+	ld -m elf_i386 -Ttext=0x44f4f0 -e original_graphics_startup_wide_message $(OUT)/graphics_startup_wide_message.o -o $(OUT)/graphics_startup_wide_message.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_startup_wide_message.elf $@
+
+test-cycle-graphics-startup-wide-message: $(OUT)/reriff-match $(OUT)/graphics_startup_wide_message.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-startup-wide-message $(OUT)/graphics_startup_wide_message.bin $(OUT)/graphics-startup-wide-message-comparison.json
+
+test-recovered: test-cycle-graphics-startup-wide-message
+.PHONY: test-cycle-graphics-startup-wide-message
