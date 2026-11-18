@@ -8029,3 +8029,16 @@ test-cycle-worker-view-resource-construct: $(OUT)/reriff-match $(OUT)/worker_vie
 
 test-recovered: test-cycle-worker-view-resource-construct
 .PHONY: test-cycle-worker-view-resource-construct
+
+# Reviewed cycle reference: worker-view-pointer-vector-reallocate (assembly evidence only).
+$(OUT)/worker_view_pointer_vector_reallocate.bin: native/worker_view_pointer_vector_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_view_pointer_vector_reallocate.o
+	ld -m elf_i386 -Ttext=0x43ee60 -e original_worker_view_pointer_vector_reallocate $(OUT)/worker_view_pointer_vector_reallocate.o -o $(OUT)/worker_view_pointer_vector_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_view_pointer_vector_reallocate.elf $@
+
+test-cycle-worker-view-pointer-vector-reallocate: $(OUT)/reriff-match $(OUT)/worker_view_pointer_vector_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-view-pointer-vector-reallocate $(OUT)/worker_view_pointer_vector_reallocate.bin $(OUT)/worker-view-pointer-vector-reallocate-comparison.json
+
+test-recovered: test-cycle-worker-view-pointer-vector-reallocate
+.PHONY: test-cycle-worker-view-pointer-vector-reallocate
