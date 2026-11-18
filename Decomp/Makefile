@@ -7795,3 +7795,16 @@ test-cycle-worker-initialize-resources: $(OUT)/reriff-match $(OUT)/worker_initia
 
 test-recovered: test-cycle-worker-initialize-resources
 .PHONY: test-cycle-worker-initialize-resources
+
+# Reviewed cycle reference: worker-resource-singleton-58-get (assembly evidence only).
+$(OUT)/worker_resource_singleton_58_get.bin: native/worker_resource_singleton_58_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_resource_singleton_58_get.o
+	ld -m elf_i386 -Ttext=0x4171e0 -e original_worker_resource_singleton_58_get $(OUT)/worker_resource_singleton_58_get.o -o $(OUT)/worker_resource_singleton_58_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_resource_singleton_58_get.elf $@
+
+test-cycle-worker-resource-singleton-58-get: $(OUT)/reriff-match $(OUT)/worker_resource_singleton_58_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-resource-singleton-58-get $(OUT)/worker_resource_singleton_58_get.bin $(OUT)/worker-resource-singleton-58-get-comparison.json
+
+test-recovered: test-cycle-worker-resource-singleton-58-get
+.PHONY: test-cycle-worker-resource-singleton-58-get
