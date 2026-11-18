@@ -7288,3 +7288,16 @@ test-cycle-application-worker-initialize-singleton: $(OUT)/reriff-match $(OUT)/a
 
 test-recovered: test-cycle-application-worker-initialize-singleton
 .PHONY: test-cycle-application-worker-initialize-singleton
+
+# Reviewed cycle reference: script-gc-visit-thread (assembly evidence only).
+$(OUT)/script_gc_visit_thread.bin: native/script_gc_visit_thread.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_visit_thread.o
+	ld -m elf_i386 -Ttext=0x4f1540 -e original_script_gc_visit_thread $(OUT)/script_gc_visit_thread.o -o $(OUT)/script_gc_visit_thread.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_visit_thread.elf $@
+
+test-cycle-script-gc-visit-thread: $(OUT)/reriff-match $(OUT)/script_gc_visit_thread.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-visit-thread $(OUT)/script_gc_visit_thread.bin $(OUT)/script-gc-visit-thread-comparison.json
+
+test-recovered: test-cycle-script-gc-visit-thread
+.PHONY: test-cycle-script-gc-visit-thread
