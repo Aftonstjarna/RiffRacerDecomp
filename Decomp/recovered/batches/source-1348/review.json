@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered routine is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "The source writes the same twelve final float bit patterns and returns the object pointer, consistent with the reference routine's normal execution. The test calls the original and compares every object and guard byte, return pointers, MXCSR, and the original call's FS head across varied initial patterns and rounding modes. Independent SHA-256 checks confirmed the submitted source and original executable hashes recorded in validation. Native Windows compilation covers the actual implementation and reports no matching credit. Fault-time intermediate stores and wider type semantics remain explicitly outside the tested scope; sampled validation does not establish all-input equivalence."
+}

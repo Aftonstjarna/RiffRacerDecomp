@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Initialize a 3 by 3 identity matrix",
+  "summary": "The thiscall routine at 0x422650 initializes twelve consecutive 32-bit float slots to a 3 by 3 identity followed by three zeros and returns the object pointer. Callers use both embedded objects and stack temporaries.",
+  "targets": ["matrix3-identity-construct"],
+  "references": ["matrix3-identity-construct"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare original and recovered objects with zero, all-one, and varied initial byte patterns under multiple MXCSR settings; check every output byte, surrounding guards, exact float bit patterns, return pointers, unchanged MXCSR, and restored FS head after each original call.",
+  "known_limits": ["The semantic role of the final three zero floats and the wider owning types are not established by this routine.", "Only valid writable object storage and normal execution are tested; fault-time intermediate stores are not modeled.", "No byte matching is claimed."]
+}
