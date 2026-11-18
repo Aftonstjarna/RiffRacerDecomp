@@ -1,0 +1,16 @@
+{
+ "schema": 1,
+ "classification": "high_level_unmatched",
+ "title": "Script return hook",
+ "summary": "Recover 0x4f5680: dispatch the return event, inspect the current closure and hook mask, drain the current frame's tail-call counter with event 4 callbacks, and preserve result, top and frame-limit offsets across stack relocation. The caller at 0x4f57a0 uses the returned result pointer. Dispatch and stack resize remain explicit helper bindings.",
+ "targets": ["script-return-hook"],
+ "references": ["script-return-hook", "script-hook-dispatch", "script-stack-resize", "script-stack-relocate-pointers", "script-reallocate", "cookie-check"],
+ "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+ "test_description": "Direct GCC i386 original/source comparisons exercise closure byte, hook mask, hook presence and enable flag, counters 0 through 3, callback changes to mask and frame, and 160/161-byte free-space boundary with moving and in-place allocation. A callback can also force growth in the tail-event phase. Compare returned pointer, entire state, frames, stack buffers, allocator globals, callback records and temporary limits; verify FS restoration after original calls. Local oracle harness passed and implementation compiled with supplied MSVC under O1, O2 and O2 /Oy-.",
+ "known_limits": [
+  "Readable nonmatching recovery; member method has explicit dispatch and resize bindings rather than the original ECX/EDX entry ABI.",
+  "The callback record's opaque bytes are uninitialized in the original; only event, argument and frame index are identified.",
+  "Resize and dispatch are external dependencies. Tests use accepted original helpers and a controlled successful allocator; allocation failure, exceptions, nonlocal exits and actual runtime services are not tested.",
+  "Requires original 32-bit pointer layout and valid closure, frame and stack objects. Negative or very large tail-call counts and malformed callback state are not exhaustively exercised."
+ ]
+}

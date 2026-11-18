@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, unmatched source recovery with zero matching-source byte credit.",
+  "reason": "The recovered control flow, 32-bit layouts, callback state changes, stack relocation offsets, and signed growth conditions agree with the reference assembly. The test calls the original and compares state, frames, stack buffers, callback records, and returned pointers across meaningful hook and growth cases. An independent SHA-256 check matched the submitted source hashes. Native Windows compilation records the actual implementation and reports no matching credit. Validation remains sampled; allocation failures, nonlocal exits, malformed state, and extreme tail counts are documented limitations."
+}
