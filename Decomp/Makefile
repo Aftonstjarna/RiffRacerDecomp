@@ -7249,3 +7249,16 @@ test-cycle-script-gc-finalize-one: $(OUT)/reriff-match $(OUT)/script_gc_finalize
 
 test-recovered: test-cycle-script-gc-finalize-one
 .PHONY: test-cycle-script-gc-finalize-one
+
+# Reviewed cycle reference: script-gc-visit-closure (assembly evidence only).
+$(OUT)/script_gc_visit_closure.bin: native/script_gc_visit_closure.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_visit_closure.o
+	ld -m elf_i386 -Ttext=0x4f13d0 -e original_script_gc_visit_closure $(OUT)/script_gc_visit_closure.o -o $(OUT)/script_gc_visit_closure.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_visit_closure.elf $@
+
+test-cycle-script-gc-visit-closure: $(OUT)/reriff-match $(OUT)/script_gc_visit_closure.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-visit-closure $(OUT)/script_gc_visit_closure.bin $(OUT)/script-gc-visit-closure-comparison.json
+
+test-recovered: test-cycle-script-gc-visit-closure
+.PHONY: test-cycle-script-gc-visit-closure
