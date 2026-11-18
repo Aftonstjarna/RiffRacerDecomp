@@ -7015,3 +7015,16 @@ test-cycle-script-gc-propagate-one: $(OUT)/reriff-match $(OUT)/script_gc_propaga
 
 test-recovered: test-cycle-script-gc-propagate-one
 .PHONY: test-cycle-script-gc-propagate-one
+
+# Reviewed cycle reference: script-gc-visit-prototype (assembly evidence only).
+$(OUT)/script_gc_visit_prototype.bin: native/script_gc_visit_prototype.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_visit_prototype.o
+	ld -m elf_i386 -Ttext=0x4f1320 -e original_script_gc_visit_prototype $(OUT)/script_gc_visit_prototype.o -o $(OUT)/script_gc_visit_prototype.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_visit_prototype.elf $@
+
+test-cycle-script-gc-visit-prototype: $(OUT)/reriff-match $(OUT)/script_gc_visit_prototype.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-visit-prototype $(OUT)/script_gc_visit_prototype.bin $(OUT)/script-gc-visit-prototype-comparison.json
+
+test-recovered: test-cycle-script-gc-visit-prototype
+.PHONY: test-cycle-script-gc-visit-prototype
