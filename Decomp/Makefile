@@ -6963,3 +6963,16 @@ test-cycle-worker-pointer-ensure-spare: $(OUT)/reriff-match $(OUT)/worker_pointe
 
 test-recovered: test-cycle-worker-pointer-ensure-spare
 .PHONY: test-cycle-worker-pointer-ensure-spare
+
+# Reviewed cycle reference: script-type-error (assembly evidence only).
+$(OUT)/script_type_error.bin: native/script_type_error.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_type_error.o
+	ld -m elf_i386 -Ttext=0x4868c0 -e original_script_type_error $(OUT)/script_type_error.o -o $(OUT)/script_type_error.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_type_error.elf $@
+
+test-cycle-script-type-error: $(OUT)/reriff-match $(OUT)/script_type_error.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-type-error $(OUT)/script_type_error.bin $(OUT)/script-type-error-comparison.json
+
+test-recovered: test-cycle-script-type-error
+.PHONY: test-cycle-script-type-error
