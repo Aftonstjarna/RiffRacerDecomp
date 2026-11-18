@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script GC buffer shrinking",
+  "summary": "Recover the thiscall routine at 0x4f1b50, including signed bucket threshold and unsigned buffer halving, using explicit adapters for its existing helpers. Call sites 0x4f22c6 and 0x4f2404 run it when the sweep list becomes empty before setting GC state 4.",
+  "targets": [
+    "script-gc-shrink-buffers"
+  ],
+  "references": [
+    "script-gc-shrink-buffers",
+    "script-string-buckets-resize",
+    "script-reallocate",
+    "script-allocation-too-large"
+  ],
+  "sources": [
+    "impl.cpp",
+    "impl.hpp",
+    "test.cpp"
+  ],
+  "test_description": "Compare original and recovered state, storage and allocator events over bucket and buffer thresholds, odd sizes, signed counts, GC resize suppression and unsigned extremes; check FS restoration and allocator side effects.",
+  "known_limits": [
+    "Bucket rebuilding and allocation are delegated helper services; controlled allocator callbacks do not model real allocation failures or VM error handling.",
+    "The original oversized buffer branch is unreachable for a 32-bit input after unsigned halving.",
+    "32-bit original layouts; no byte-matching claim."
+  ]
+}

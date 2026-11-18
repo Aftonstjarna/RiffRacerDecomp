@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level, unmatched recovery with zero matching-source byte credit.",
+  "reason": "The source follows the reference routine’s signed bucket threshold, unsigned buffer halving, helper calls, and state update order. The test calls the original and compares fixture state and allocator events across threshold, odd-size, signed-count, GC-suppression, and unsigned-extreme cases. Native Windows compilation records successful builds of the implementation, with no matching credit. Helper allocation failures and VM error handling remain delegated and untested, as disclosed; sampled validation does not establish all-input equivalence."
+}
