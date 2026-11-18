@@ -7561,3 +7561,16 @@ test-cycle-matrix3-identity-construct: $(OUT)/reriff-match $(OUT)/matrix3_identi
 
 test-recovered: test-cycle-matrix3-identity-construct
 .PHONY: test-cycle-matrix3-identity-construct
+
+# Reviewed cycle reference: narrow-insert-pointer (assembly evidence only).
+$(OUT)/narrow_insert_pointer.bin: native/narrow_insert_pointer.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_insert_pointer.o
+	ld -m elf_i386 -Ttext=0x47ab30 -e original_narrow_insert_pointer $(OUT)/narrow_insert_pointer.o -o $(OUT)/narrow_insert_pointer.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_insert_pointer.elf $@
+
+test-cycle-narrow-insert-pointer: $(OUT)/reriff-match $(OUT)/narrow_insert_pointer.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-insert-pointer $(OUT)/narrow_insert_pointer.bin $(OUT)/narrow-insert-pointer-comparison.json
+
+test-recovered: test-cycle-narrow-insert-pointer
+.PHONY: test-cycle-narrow-insert-pointer
