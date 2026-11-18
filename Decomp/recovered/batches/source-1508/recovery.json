@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Worker empty string construction",
+  "summary": "At VA 0x4571b0 the cdecl routine takes a destination as its first stack argument and returns it in EAX. It initializes inline narrow-string capacity to 15, length to zero, and the first byte to NUL, then calls the range assignment helper with literal address 0x9998bc and count zero. The helper's zero-length path repeats the length and terminator writes without reading that literal. The caller at 0x4576a6 passes additional arguments, which this routine ignores. The recovered source expresses the resulting behavior directly.",
+  "targets": ["worker-empty-string-construct"],
+  "references": ["worker-empty-string-construct", "narrow-assign-range"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare the C++ result directly with the original constructor and its original range helper across 256 byte patterns and five prior capacity values. Verify return identity, all 24 object bytes, surrounding guards, and FS head restoration after each original call; require successful initialized test-owned FS installation.",
+  "known_limits": ["This is construction into valid writable 24-byte storage; it does not release any previously owned allocation. Invalid pointers and memory faults are outside the controlled tests.", "The original helper call is reduced to its observable zero-count effect; its general assignment, allocation, and failure behavior is outside this task. The representation and calling convention describe 32-bit x86; integration into a 64-bit native string type needs separate work.", "The test covers normal execution only, not Windows exception dispatch or unwind. No byte-matching claim is made."]
+}

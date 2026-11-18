@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, unmatched high-level recovery with zero matching-source byte credit.",
+  "reason": "The source reproduces the original constructor’s normal-path writes, return value, 32-bit layout, and calling convention. The zero-count helper path repeats the length and terminator writes without copying data. The submitted test calls the original and compares the full object and surrounding guards across varied initial patterns and capacities, including boundary capacities. An independent 32-bit compilation and disassembly confirmed the candidate’s field writes; submitted source and executable hashes also matched. Native Windows compilation is recorded for the actual implementation. Validation remains sampled, and the stated exclusions for faults and exception dispatch apply."
+}
