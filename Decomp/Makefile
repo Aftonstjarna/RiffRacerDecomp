@@ -7626,3 +7626,16 @@ test-cycle-application-worker-construct: $(OUT)/reriff-match $(OUT)/application_
 
 test-recovered: test-cycle-application-worker-construct
 .PHONY: test-cycle-application-worker-construct
+
+# Reviewed cycle reference: worker-embedded-construct (assembly evidence only).
+$(OUT)/worker_embedded_construct.bin: native/worker_embedded_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_embedded_construct.o
+	ld -m elf_i386 -Ttext=0x482bc0 -e original_worker_embedded_construct $(OUT)/worker_embedded_construct.o -o $(OUT)/worker_embedded_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_embedded_construct.elf $@
+
+test-cycle-worker-embedded-construct: $(OUT)/reriff-match $(OUT)/worker_embedded_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-embedded-construct $(OUT)/worker_embedded_construct.bin $(OUT)/worker-embedded-construct-comparison.json
+
+test-recovered: test-cycle-worker-embedded-construct
+.PHONY: test-cycle-worker-embedded-construct
