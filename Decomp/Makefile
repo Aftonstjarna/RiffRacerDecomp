@@ -7301,3 +7301,16 @@ test-cycle-script-gc-visit-thread: $(OUT)/reriff-match $(OUT)/script_gc_visit_th
 
 test-recovered: test-cycle-script-gc-visit-thread
 .PHONY: test-cycle-script-gc-visit-thread
+
+# Reviewed cycle reference: script-gc-visit-table (assembly evidence only).
+$(OUT)/script_gc_visit_table.bin: native/script_gc_visit_table.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_visit_table.o
+	ld -m elf_i386 -Ttext=0x4f1180 -e original_script_gc_visit_table $(OUT)/script_gc_visit_table.o -o $(OUT)/script_gc_visit_table.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_visit_table.elf $@
+
+test-cycle-script-gc-visit-table: $(OUT)/reriff-match $(OUT)/script_gc_visit_table.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-visit-table $(OUT)/script_gc_visit_table.bin $(OUT)/script-gc-visit-table-comparison.json
+
+test-recovered: test-cycle-script-gc-visit-table
+.PHONY: test-cycle-script-gc-visit-table
