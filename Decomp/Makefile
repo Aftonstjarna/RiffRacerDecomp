@@ -7327,3 +7327,16 @@ test-cycle-worker-narrow-range-replace: $(OUT)/reriff-match $(OUT)/worker_narrow
 
 test-recovered: test-cycle-worker-narrow-range-replace
 .PHONY: test-cycle-worker-narrow-range-replace
+
+# Reviewed cycle reference: narrow-replace-range (assembly evidence only).
+$(OUT)/narrow_replace_range.bin: native/narrow_replace_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_replace_range.o
+	ld -m elf_i386 -Ttext=0x440ea0 -e original_narrow_replace_range $(OUT)/narrow_replace_range.o -o $(OUT)/narrow_replace_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_replace_range.elf $@
+
+test-cycle-narrow-replace-range: $(OUT)/reriff-match $(OUT)/narrow_replace_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-replace-range $(OUT)/narrow_replace_range.bin $(OUT)/narrow-replace-range-comparison.json
+
+test-recovered: test-cycle-narrow-replace-range
+.PHONY: test-cycle-narrow-replace-range
