@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "56-byte record range transfer",
+  "summary": "Transfers a range of 56-byte records, copying offsets 0 through 53 in ordered groups and preserving the final two bytes of each destination record. Returns the destination advanced by the number of records.",
+  "targets": ["record56-range-transfer"],
+  "references": ["record56-range-transfer"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare the original and recovery for empty, single and multiple records, unaligned and overlapping ranges, self-copy, and safe one-record null destination. Compare entire buffers and returned offsets, including untouched trailing bytes, and verify FS head restoration after each oracle call.",
+  "known_limits": ["Record field meanings are unknown.", "The range must terminate by 56-byte increments; malformed ranges and null destination with multiple records can access invalid memory and are not tested.", "The original uses an internal register calling convention; the recovery exposes a portable function interface."]
+}

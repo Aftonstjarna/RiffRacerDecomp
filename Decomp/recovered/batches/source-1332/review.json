@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as unmatched behavioral source with zero matching-source byte credit.",
+  "reason": "The implementation follows the original loop, including ordered grouped copies, untouched trailing bytes, null-destination handling and destination advancement. The test calls the original and compares complete buffers and return values across empty, unaligned, overlapping and self-copy cases. An independent disassembly and source-hash check agreed with the submitted evidence. The portable interface differs from the original register calling convention, as disclosed. Native Windows compilation covers the submitted implementation; sampled tests do not establish all-input equivalence."
+}
