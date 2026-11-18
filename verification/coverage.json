@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 111288,
-  "remaining_bytes": 8524104,
-  "verified_percent": 1.2887428850942726,
-  "registered_blocks": 560,
-  "exact_blocks": 560,
+  "verified_bytes": 111610,
+  "remaining_bytes": 8523782,
+  "verified_percent": 1.2924717256610934,
+  "registered_blocks": 561,
+  "exact_blocks": 561,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2045,6 +2045,15 @@
       "byte_equal": true,
       "reference_sha256": "fdc0a311a5d6e3519aa50ea6fdf87cfe49ceb782a05db0397db00f403291a739",
       "candidate_sha256": "fdc0a311a5d6e3519aa50ea6fdf87cfe49ceb782a05db0397db00f403291a739"
+    },
+    {
+      "name": "worker-stop-cleanup",
+      "file_offset": 623104,
+      "size": 322,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "2cf580c0f8adb2f724cb3fb45a0586b007d726c7011ae5c91971bd5d9927a166",
+      "candidate_sha256": "2cf580c0f8adb2f724cb3fb45a0586b007d726c7011ae5c91971bd5d9927a166"
     },
     {
       "name": "handle-record-flag10-present",

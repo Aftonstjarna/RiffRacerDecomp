@@ -6742,3 +6742,16 @@ test-cycle-application-worker-stop: $(OUT)/reriff-match $(OUT)/application_worke
 
 test-recovered: test-cycle-application-worker-stop
 .PHONY: test-cycle-application-worker-stop
+
+# Reviewed cycle reference: worker-stop-cleanup (assembly evidence only).
+$(OUT)/worker_stop_cleanup.bin: native/worker_stop_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_stop_cleanup.o
+	ld -m elf_i386 -Ttext=0x498e00 -e original_worker_stop_cleanup $(OUT)/worker_stop_cleanup.o -o $(OUT)/worker_stop_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_stop_cleanup.elf $@
+
+test-cycle-worker-stop-cleanup: $(OUT)/reriff-match $(OUT)/worker_stop_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-stop-cleanup $(OUT)/worker_stop_cleanup.bin $(OUT)/worker-stop-cleanup-comparison.json
+
+test-recovered: test-cycle-worker-stop-cleanup
+.PHONY: test-cycle-worker-stop-cleanup
