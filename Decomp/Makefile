@@ -7730,3 +7730,16 @@ test-cycle-worker-manager-singleton-get: $(OUT)/reriff-match $(OUT)/worker_manag
 
 test-recovered: test-cycle-worker-manager-singleton-get
 .PHONY: test-cycle-worker-manager-singleton-get
+
+# Reviewed cycle reference: graphics-error-message (assembly evidence only).
+$(OUT)/graphics_error_message.bin: native/graphics_error_message.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_error_message.o
+	ld -m elf_i386 -Ttext=0x44f160 -e original_graphics_error_message $(OUT)/graphics_error_message.o -o $(OUT)/graphics_error_message.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_error_message.elf $@
+
+test-cycle-graphics-error-message: $(OUT)/reriff-match $(OUT)/graphics_error_message.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-error-message $(OUT)/graphics_error_message.bin $(OUT)/graphics-error-message-comparison.json
+
+test-recovered: test-cycle-graphics-error-message
+.PHONY: test-cycle-graphics-error-message
