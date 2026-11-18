@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered heap sift is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "The source follows the original sift and push control flow, including signed comparisons, right-child selection on equality, and reloading an aliased value slot. An independent disassembly of Game.exe corroborated both routines, and the submitted source hashes match validation.json. The differential test covers varied holes and lengths, signed extremes, equal priorities, aliased slots, guards, object bytes, and FS state. Native Windows compilation records successful builds of the implementation with no matching credit. The documented valid-memory and nonoverflowing-index assumptions apply; sampled testing does not establish all-input equivalence."
+}
