@@ -8107,3 +8107,16 @@ test-cycle-worker-view-heap-push: $(OUT)/reriff-match $(OUT)/worker_view_heap_pu
 
 test-recovered: test-cycle-worker-view-heap-push
 .PHONY: test-cycle-worker-view-heap-push
+
+# Reviewed cycle reference: worker-view-heap-sift (assembly evidence only).
+$(OUT)/worker_view_heap_sift.bin: native/worker_view_heap_sift.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_view_heap_sift.o
+	ld -m elf_i386 -Ttext=0x42c9d0 -e original_worker_view_heap_sift $(OUT)/worker_view_heap_sift.o -o $(OUT)/worker_view_heap_sift.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_view_heap_sift.elf $@
+
+test-cycle-worker-view-heap-sift: $(OUT)/reriff-match $(OUT)/worker_view_heap_sift.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-view-heap-sift $(OUT)/worker_view_heap_sift.bin $(OUT)/worker-view-heap-sift-comparison.json
+
+test-recovered: test-cycle-worker-view-heap-sift
+.PHONY: test-cycle-worker-view-heap-sift
