@@ -7340,3 +7340,16 @@ test-cycle-narrow-replace-range: $(OUT)/reriff-match $(OUT)/narrow_replace_range
 
 test-recovered: test-cycle-narrow-replace-range
 .PHONY: test-cycle-narrow-replace-range
+
+# Reviewed cycle reference: narrow-self-replace (assembly evidence only).
+$(OUT)/narrow_self_replace.bin: native/narrow_self_replace.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_self_replace.o
+	ld -m elf_i386 -Ttext=0x441040 -e original_narrow_self_replace $(OUT)/narrow_self_replace.o -o $(OUT)/narrow_self_replace.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_self_replace.elf $@
+
+test-cycle-narrow-self-replace: $(OUT)/reriff-match $(OUT)/narrow_self_replace.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-self-replace $(OUT)/narrow_self_replace.bin $(OUT)/narrow-self-replace-comparison.json
+
+test-recovered: test-cycle-narrow-self-replace
+.PHONY: test-cycle-narrow-self-replace
