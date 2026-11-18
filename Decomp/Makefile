@@ -7587,3 +7587,16 @@ test-cycle-narrow-insert-string-range: $(OUT)/reriff-match $(OUT)/narrow_insert_
 
 test-recovered: test-cycle-narrow-insert-string-range
 .PHONY: test-cycle-narrow-insert-string-range
+
+# Reviewed cycle reference: triangle-info-map-member-destruct (assembly evidence only).
+$(OUT)/triangle_info_map_member_destruct.bin: native/triangle_info_map_member_destruct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/triangle_info_map_member_destruct.o
+	ld -m elf_i386 -Ttext=0x439290 -e original_triangle_info_map_member_destruct $(OUT)/triangle_info_map_member_destruct.o -o $(OUT)/triangle_info_map_member_destruct.elf
+	objcopy -O binary --only-section=.text $(OUT)/triangle_info_map_member_destruct.elf $@
+
+test-cycle-triangle-info-map-member-destruct: $(OUT)/reriff-match $(OUT)/triangle_info_map_member_destruct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" triangle-info-map-member-destruct $(OUT)/triangle_info_map_member_destruct.bin $(OUT)/triangle-info-map-member-destruct-comparison.json
+
+test-recovered: test-cycle-triangle-info-map-member-destruct
+.PHONY: test-cycle-triangle-info-map-member-destruct

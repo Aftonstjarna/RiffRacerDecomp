@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 123954,
-  "remaining_bytes": 8511438,
-  "verified_percent": 1.4354183342226965,
-  "registered_blocks": 625,
-  "exact_blocks": 625,
+  "verified_bytes": 124277,
+  "remaining_bytes": 8511115,
+  "verified_percent": 1.439158755039725,
+  "registered_blocks": 626,
+  "exact_blocks": 626,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1091,6 +1091,15 @@
       "byte_equal": true,
       "reference_sha256": "ea61e1094c9d16f1b5f4324b5c228cea17d5abb0843f787fa9cddda416682e94",
       "candidate_sha256": "ea61e1094c9d16f1b5f4324b5c228cea17d5abb0843f787fa9cddda416682e94"
+    },
+    {
+      "name": "triangle-info-map-member-destruct",
+      "file_offset": 231056,
+      "size": 323,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "8c4c6afef50cb6d8f911a2a3ba3e270beea2dcf53d9e9034d49baf1c6b716c12",
+      "candidate_sha256": "8c4c6afef50cb6d8f911a2a3ba3e270beea2dcf53d9e9034d49baf1c6b716c12"
     },
     {
       "name": "triangle-info-map-serialized-size",
