@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level, unmatched recovery with zero matching-source byte credit.",
+  "reason": "The dispatch control flow, field offsets, record contents, and delegated append behavior agree with the reference assembly within the stated caller obligations. The comparison test calls the original and exercises empty and nonempty strings, different indices and offsets, and disabled dispatch; it compares the affected object, buffers, and records. Independent SHA-256 checks confirmed the submitted source hashes and original executable hash. Native Windows compilation reports successful compilation of the actual implementation, without matching credit. Vector growth remains delegated and was not exercised; sampled tests do not establish all-input equivalence."
+}
