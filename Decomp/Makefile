@@ -7392,3 +7392,16 @@ test-cycle-worker-reserve-record-vectors: $(OUT)/reriff-match $(OUT)/worker_rese
 
 test-recovered: test-cycle-worker-reserve-record-vectors
 .PHONY: test-cycle-worker-reserve-record-vectors
+
+# Reviewed cycle reference: record48-range-copy-retain (assembly evidence only).
+$(OUT)/record48_range_copy_retain.bin: native/record48_range_copy_retain.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record48_range_copy_retain.o
+	ld -m elf_i386 -Ttext=0x4b3eb0 -e original_record48_range_copy_retain $(OUT)/record48_range_copy_retain.o -o $(OUT)/record48_range_copy_retain.elf
+	objcopy -O binary --only-section=.text $(OUT)/record48_range_copy_retain.elf $@
+
+test-cycle-record48-range-copy-retain: $(OUT)/reriff-match $(OUT)/record48_range_copy_retain.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record48-range-copy-retain $(OUT)/record48_range_copy_retain.bin $(OUT)/record48-range-copy-retain-comparison.json
+
+test-recovered: test-cycle-record48-range-copy-retain
+.PHONY: test-cycle-record48-range-copy-retain
