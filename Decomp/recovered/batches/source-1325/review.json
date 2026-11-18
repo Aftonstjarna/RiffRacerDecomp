@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as an unmatched high-level recovery with zero matching-source byte credit.",
+  "reason": "The source follows the reference routines’ normal-path control flow, including equality-based termination, null-destination skipping, ordered tail initialization, overlapping copies, and the returned destination. The test calls the original routine and checks return values and the full buffer across empty, multi-record, unaligned, and overlapping cases. An independent hash check confirmed the submitted source and executable hashes recorded in validation.json. Native Windows compilation covers the actual implementation, with no matching credit claimed. Validation is sampled rather than proof of all-input equivalence; fault behavior and the original register ABI remain outside the stated adapter scope."
+}

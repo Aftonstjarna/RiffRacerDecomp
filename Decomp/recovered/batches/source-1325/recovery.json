@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Worker 64-byte record range construction",
+  "summary": "Recovers the forward 64-byte range construction at 0x520b60. Each record copies its first 16 bytes, then initializes and copies the 48-byte tail using the original constructor's ordered operations. The range endpoint is compared for equality and a null destination skips the current record before advancing.",
+  "targets": ["worker-record64-range-construct"],
+  "references": ["worker-record64-range-construct", "record48-zero-copy-construct"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Direct original comparison over empty through three-record ranges, varied source and destination offsets including both overlap directions and unaligned addresses, checking return values and the entire guarded buffer. Also checks empty and single-record null destinations.",
+  "known_limits": ["Record field meanings and original source-level signature are unknown.", "Nonempty ranges must reach the end by 64-byte increments; inaccessible addresses and multi-record null destinations are outside normal-path tests.", "The portable adapter does not reproduce the original register calling convention."]
+}
