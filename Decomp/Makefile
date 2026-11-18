@@ -6911,3 +6911,16 @@ test-cycle-script-return-hook: $(OUT)/reriff-match $(OUT)/script_return_hook.bin
 
 test-recovered: test-cycle-script-return-hook
 .PHONY: test-cycle-script-return-hook
+
+# Reviewed cycle reference: script-gc-shrink-buffers (assembly evidence only).
+$(OUT)/script_gc_shrink_buffers.bin: native/script_gc_shrink_buffers.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_shrink_buffers.o
+	ld -m elf_i386 -Ttext=0x4f1b50 -e original_script_gc_shrink_buffers $(OUT)/script_gc_shrink_buffers.o -o $(OUT)/script_gc_shrink_buffers.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_shrink_buffers.elf $@
+
+test-cycle-script-gc-shrink-buffers: $(OUT)/reriff-match $(OUT)/script_gc_shrink_buffers.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-shrink-buffers $(OUT)/script_gc_shrink_buffers.bin $(OUT)/script-gc-shrink-buffers-comparison.json
+
+test-recovered: test-cycle-script-gc-shrink-buffers
+.PHONY: test-cycle-script-gc-shrink-buffers
