@@ -7782,3 +7782,16 @@ test-cycle-graphics-startup-wide-message: $(OUT)/reriff-match $(OUT)/graphics_st
 
 test-recovered: test-cycle-graphics-startup-wide-message
 .PHONY: test-cycle-graphics-startup-wide-message
+
+# Reviewed cycle reference: worker-initialize-resources (assembly evidence only).
+$(OUT)/worker_initialize_resources.bin: native/worker_initialize_resources.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_initialize_resources.o
+	ld -m elf_i386 -Ttext=0x43f480 -e original_worker_initialize_resources $(OUT)/worker_initialize_resources.o -o $(OUT)/worker_initialize_resources.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_initialize_resources.elf $@
+
+test-cycle-worker-initialize-resources: $(OUT)/reriff-match $(OUT)/worker_initialize_resources.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-initialize-resources $(OUT)/worker_initialize_resources.bin $(OUT)/worker-initialize-resources-comparison.json
+
+test-recovered: test-cycle-worker-initialize-resources
+.PHONY: test-cycle-worker-initialize-resources

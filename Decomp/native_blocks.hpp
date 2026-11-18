@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"graphics-startup-wide-message",0x4f4f0,183},
+  return {NativeBlock{"worker-initialize-resources",0x3f480,891},
+                     NativeBlock{"graphics-startup-wide-message",0x4f4f0,183},
                      NativeBlock{"narrow-format-variadic",0x52ca0,56},
                      NativeBlock{"worker-resource-pool-get",0x17150,132},
                      NativeBlock{"graphics-error-message",0x4f160,315},
