@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 128146,
-  "remaining_bytes": 8507246,
-  "verified_percent": 1.4839627430926123,
-  "registered_blocks": 645,
-  "exact_blocks": 645,
+  "verified_bytes": 128278,
+  "remaining_bytes": 8507114,
+  "verified_percent": 1.4854913361200048,
+  "registered_blocks": 646,
+  "exact_blocks": 646,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -236,6 +236,15 @@
       "byte_equal": true,
       "reference_sha256": "4422170a6dc0b17afcccd1c8f6fe8d2f3edaeac059ba60e2a655e17069a12333",
       "candidate_sha256": "4422170a6dc0b17afcccd1c8f6fe8d2f3edaeac059ba60e2a655e17069a12333"
+    },
+    {
+      "name": "worker-model-resource-get",
+      "file_offset": 92192,
+      "size": 132,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "69f449031ec8a89798c6548fd720bd11325a993cc43e54af6263d5689a0fa1da",
+      "candidate_sha256": "69f449031ec8a89798c6548fd720bd11325a993cc43e54af6263d5689a0fa1da"
     },
     {
       "name": "resource-manager-get",

@@ -7847,3 +7847,16 @@ test-cycle-worker-resource-singleton-e4-get: $(OUT)/reriff-match $(OUT)/worker_r
 
 test-recovered: test-cycle-worker-resource-singleton-e4-get
 .PHONY: test-cycle-worker-resource-singleton-e4-get
+
+# Reviewed cycle reference: worker-model-resource-get (assembly evidence only).
+$(OUT)/worker_model_resource_get.bin: native/worker_model_resource_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_model_resource_get.o
+	ld -m elf_i386 -Ttext=0x417420 -e original_worker_model_resource_get $(OUT)/worker_model_resource_get.o -o $(OUT)/worker_model_resource_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_model_resource_get.elf $@
+
+test-cycle-worker-model-resource-get: $(OUT)/reriff-match $(OUT)/worker_model_resource_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-model-resource-get $(OUT)/worker_model_resource_get.bin $(OUT)/worker-model-resource-get-comparison.json
+
+test-recovered: test-cycle-worker-model-resource-get
+.PHONY: test-cycle-worker-model-resource-get
