@@ -7951,3 +7951,16 @@ test-cycle-worker-record12-reallocate: $(OUT)/reriff-match $(OUT)/worker_record1
 
 test-recovered: test-cycle-worker-record12-reallocate
 .PHONY: test-cycle-worker-record12-reallocate
+
+# Reviewed cycle reference: worker-record12-copy-construct-range (assembly evidence only).
+$(OUT)/worker_record12_copy_construct_range.bin: native/worker_record12_copy_construct_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record12_copy_construct_range.o
+	ld -m elf_i386 -Ttext=0x41dcb0 -e original_worker_record12_copy_construct_range $(OUT)/worker_record12_copy_construct_range.o -o $(OUT)/worker_record12_copy_construct_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record12_copy_construct_range.elf $@
+
+test-cycle-worker-record12-copy-construct-range: $(OUT)/reriff-match $(OUT)/worker_record12_copy_construct_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record12-copy-construct-range $(OUT)/worker_record12_copy_construct_range.bin $(OUT)/worker-record12-copy-construct-range-comparison.json
+
+test-recovered: test-cycle-worker-record12-copy-construct-range
+.PHONY: test-cycle-worker-record12-copy-construct-range
