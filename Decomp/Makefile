@@ -7496,3 +7496,16 @@ test-cycle-record56-range-transfer: $(OUT)/reriff-match $(OUT)/record56_range_tr
 
 test-recovered: test-cycle-record56-range-transfer
 .PHONY: test-cycle-record56-range-transfer
+
+# Reviewed cycle reference: worker-record40-reallocate (assembly evidence only).
+$(OUT)/worker_record40_reallocate.bin: native/worker_record40_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record40_reallocate.o
+	ld -m elf_i386 -Ttext=0x51fc10 -e original_worker_record40_reallocate $(OUT)/worker_record40_reallocate.o -o $(OUT)/worker_record40_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record40_reallocate.elf $@
+
+test-cycle-worker-record40-reallocate: $(OUT)/reriff-match $(OUT)/worker_record40_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record40-reallocate $(OUT)/worker_record40_reallocate.bin $(OUT)/worker-record40-reallocate-comparison.json
+
+test-recovered: test-cycle-worker-record40-reallocate
+.PHONY: test-cycle-worker-record40-reallocate
