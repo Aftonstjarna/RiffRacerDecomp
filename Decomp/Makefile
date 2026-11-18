@@ -7444,3 +7444,16 @@ test-cycle-worker-record84-move-range: $(OUT)/reriff-match $(OUT)/worker_record8
 
 test-recovered: test-cycle-worker-record84-move-range
 .PHONY: test-cycle-worker-record84-move-range
+
+# Reviewed cycle reference: worker-record64-reallocate (assembly evidence only).
+$(OUT)/worker_record64_reallocate.bin: native/worker_record64_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record64_reallocate.o
+	ld -m elf_i386 -Ttext=0x51fe60 -e original_worker_record64_reallocate $(OUT)/worker_record64_reallocate.o -o $(OUT)/worker_record64_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record64_reallocate.elf $@
+
+test-cycle-worker-record64-reallocate: $(OUT)/reriff-match $(OUT)/worker_record64_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record64-reallocate $(OUT)/worker_record64_reallocate.bin $(OUT)/worker-record64-reallocate-comparison.json
+
+test-recovered: test-cycle-worker-record64-reallocate
+.PHONY: test-cycle-worker-record64-reallocate
