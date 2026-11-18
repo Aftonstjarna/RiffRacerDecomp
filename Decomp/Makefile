@@ -6755,3 +6755,16 @@ test-cycle-worker-stop-cleanup: $(OUT)/reriff-match $(OUT)/worker_stop_cleanup.b
 
 test-recovered: test-cycle-worker-stop-cleanup
 .PHONY: test-cycle-worker-stop-cleanup
+
+# Reviewed cycle reference: worker-prepare-cleanup (assembly evidence only).
+$(OUT)/worker_prepare_cleanup.bin: native/worker_prepare_cleanup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_prepare_cleanup.o
+	ld -m elf_i386 -Ttext=0x498f50 -e original_worker_prepare_cleanup $(OUT)/worker_prepare_cleanup.o -o $(OUT)/worker_prepare_cleanup.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_prepare_cleanup.elf $@
+
+test-cycle-worker-prepare-cleanup: $(OUT)/reriff-match $(OUT)/worker_prepare_cleanup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-prepare-cleanup $(OUT)/worker_prepare_cleanup.bin $(OUT)/worker-prepare-cleanup-comparison.json
+
+test-recovered: test-cycle-worker-prepare-cleanup
+.PHONY: test-cycle-worker-prepare-cleanup
