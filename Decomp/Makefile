@@ -7691,3 +7691,16 @@ test-cycle-worker-pair-vector-reallocate: $(OUT)/reriff-match $(OUT)/worker_pair
 
 test-recovered: test-cycle-worker-pair-vector-reallocate
 .PHONY: test-cycle-worker-pair-vector-reallocate
+
+# Reviewed cycle reference: worker-pair-copy-construct-range (assembly evidence only).
+$(OUT)/worker_pair_copy_construct_range.bin: native/worker_pair_copy_construct_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_pair_copy_construct_range.o
+	ld -m elf_i386 -Ttext=0x41c7c0 -e original_worker_pair_copy_construct_range $(OUT)/worker_pair_copy_construct_range.o -o $(OUT)/worker_pair_copy_construct_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_pair_copy_construct_range.elf $@
+
+test-cycle-worker-pair-copy-construct-range: $(OUT)/reriff-match $(OUT)/worker_pair_copy_construct_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-pair-copy-construct-range $(OUT)/worker_pair_copy_construct_range.bin $(OUT)/worker-pair-copy-construct-range-comparison.json
+
+test-recovered: test-cycle-worker-pair-copy-construct-range
+.PHONY: test-cycle-worker-pair-copy-construct-range
