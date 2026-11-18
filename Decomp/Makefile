@@ -7912,3 +7912,16 @@ test-cycle-float-sin-precise-bridge: $(OUT)/reriff-match $(OUT)/float_sin_precis
 
 test-recovered: test-cycle-float-sin-precise-bridge
 .PHONY: test-cycle-float-sin-precise-bridge
+
+# Reviewed cycle reference: float-cos-precise-bridge (assembly evidence only).
+$(OUT)/float_cos_precise_bridge.bin: native/float_cos_precise_bridge.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/float_cos_precise_bridge.o
+	ld -m elf_i386 -Ttext=0x41f4a0 -e original_float_cos_precise_bridge $(OUT)/float_cos_precise_bridge.o -o $(OUT)/float_cos_precise_bridge.elf
+	objcopy -O binary --only-section=.text $(OUT)/float_cos_precise_bridge.elf $@
+
+test-cycle-float-cos-precise-bridge: $(OUT)/reriff-match $(OUT)/float_cos_precise_bridge.bin
+	$(OUT)/reriff-match native-check "$(GAME)" float-cos-precise-bridge $(OUT)/float_cos_precise_bridge.bin $(OUT)/float-cos-precise-bridge-comparison.json
+
+test-recovered: test-cycle-float-cos-precise-bridge
+.PHONY: test-cycle-float-cos-precise-bridge
