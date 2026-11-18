@@ -6989,3 +6989,16 @@ test-cycle-script-debug-name: $(OUT)/reriff-match $(OUT)/script_debug_name.bin
 
 test-recovered: test-cycle-script-debug-name
 .PHONY: test-cycle-script-debug-name
+
+# Reviewed cycle reference: script-operand-validate (assembly evidence only).
+$(OUT)/script_operand_validate.bin: native/script_operand_validate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_operand_validate.o
+	ld -m elf_i386 -Ttext=0x486180 -e original_script_operand_validate $(OUT)/script_operand_validate.o -o $(OUT)/script_operand_validate.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_operand_validate.elf $@
+
+test-cycle-script-operand-validate: $(OUT)/reriff-match $(OUT)/script_operand_validate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-operand-validate $(OUT)/script_operand_validate.bin $(OUT)/script-operand-validate-comparison.json
+
+test-recovered: test-cycle-script-operand-validate
+.PHONY: test-cycle-script-operand-validate
