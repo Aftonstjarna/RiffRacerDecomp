@@ -7990,3 +7990,16 @@ test-cycle-worker-view-construct: $(OUT)/reriff-match $(OUT)/worker_view_constru
 
 test-recovered: test-cycle-worker-view-construct
 .PHONY: test-cycle-worker-view-construct
+
+# Reviewed cycle reference: worker-empty-string-construct (assembly evidence only).
+$(OUT)/worker_empty_string_construct.bin: native/worker_empty_string_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_empty_string_construct.o
+	ld -m elf_i386 -Ttext=0x4571b0 -e original_worker_empty_string_construct $(OUT)/worker_empty_string_construct.o -o $(OUT)/worker_empty_string_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_empty_string_construct.elf $@
+
+test-cycle-worker-empty-string-construct: $(OUT)/reriff-match $(OUT)/worker_empty_string_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-empty-string-construct $(OUT)/worker_empty_string_construct.bin $(OUT)/worker-empty-string-construct-comparison.json
+
+test-recovered: test-cycle-worker-empty-string-construct
+.PHONY: test-cycle-worker-empty-string-construct
