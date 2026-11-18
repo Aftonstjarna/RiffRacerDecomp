@@ -7080,3 +7080,16 @@ test-cycle-worker-byte-vector-ensure-spare: $(OUT)/reriff-match $(OUT)/worker_by
 
 test-recovered: test-cycle-worker-byte-vector-ensure-spare
 .PHONY: test-cycle-worker-byte-vector-ensure-spare
+
+# Reviewed cycle reference: worker-byte-vector-reallocate (assembly evidence only).
+$(OUT)/worker_byte_vector_reallocate.bin: native/worker_byte_vector_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_byte_vector_reallocate.o
+	ld -m elf_i386 -Ttext=0x51a450 -e original_worker_byte_vector_reallocate $(OUT)/worker_byte_vector_reallocate.o -o $(OUT)/worker_byte_vector_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_byte_vector_reallocate.elf $@
+
+test-cycle-worker-byte-vector-reallocate: $(OUT)/reriff-match $(OUT)/worker_byte_vector_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-byte-vector-reallocate $(OUT)/worker_byte_vector_reallocate.bin $(OUT)/worker-byte-vector-reallocate-comparison.json
+
+test-recovered: test-cycle-worker-byte-vector-reallocate
+.PHONY: test-cycle-worker-byte-vector-reallocate
