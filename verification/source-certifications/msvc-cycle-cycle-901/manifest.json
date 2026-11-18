@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-901",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "matrix3-identity-construct",
+      "stem": "cycle_matrix3_identity_construct",
+      "source": "Decomp/recovered/msvc/cycle_matrix3_identity_construct.cpp",
+      "sha256": "0a5a11e09d41dd9b33cdd9073637167977ed15bead9f67d5a83725a6ea891738"
+    }
+  ]
+}

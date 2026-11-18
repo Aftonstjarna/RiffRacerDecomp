@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "25361c6eaf70560f76eef77032e17094a39d50700d2046d51a42cedc265be8e9",
+  "behavior_sha256": "7b006e4c94c63b280fdf0f52580fdc62fc4c8a25f8f1a48015be6b5215e6bff6",
+  "functions": [
+    {
+      "scope": "matrix3-identity-construct",
+      "source_sha256": "0a5a11e09d41dd9b33cdd9073637167977ed15bead9f67d5a83725a6ea891738",
+      "approved": true,
+      "reason": "Independent compilation with the pinned MSVC produced a complete 169-byte code section identical to the original routine at 0x422650–0x4226f9. The constructor uses the expected 32-bit thiscall ABI and has no branches. A separate harness executed both the compiled section and bytes extracted directly from Game.exe; all 256 cases passed, including return values, identity contents, and untouched surrounding words. The submitted source and test hashes match the validation metadata. This certifies the routine, not a whole-executable rebuild."
+    }
+  ],
+  "review_receipt_sha256": "ecddfc42e959ae40ce8dbd5f89de7c199471c6e82913bc961e33659c3737d234",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
