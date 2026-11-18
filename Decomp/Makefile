@@ -7158,3 +7158,16 @@ test-cycle-worker-queue-record-dispatch: $(OUT)/reriff-match $(OUT)/worker_queue
 
 test-recovered: test-cycle-worker-queue-record-dispatch
 .PHONY: test-cycle-worker-queue-record-dispatch
+
+# Reviewed cycle reference: record12-vector-append (assembly evidence only).
+$(OUT)/record12_vector_append.bin: native/record12_vector_append.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record12_vector_append.o
+	ld -m elf_i386 -Ttext=0x4295d0 -e original_record12_vector_append $(OUT)/record12_vector_append.o -o $(OUT)/record12_vector_append.elf
+	objcopy -O binary --only-section=.text $(OUT)/record12_vector_append.elf $@
+
+test-cycle-record12-vector-append: $(OUT)/reriff-match $(OUT)/record12_vector_append.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record12-vector-append $(OUT)/record12_vector_append.bin $(OUT)/record12-vector-append-comparison.json
+
+test-recovered: test-cycle-record12-vector-append
+.PHONY: test-cycle-record12-vector-append
