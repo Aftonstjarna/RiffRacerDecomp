@@ -7366,3 +7366,16 @@ test-cycle-record40-vector-reallocate: $(OUT)/reriff-match $(OUT)/record40_vecto
 
 test-recovered: test-cycle-record40-vector-reallocate
 .PHONY: test-cycle-record40-vector-reallocate
+
+# Reviewed cycle reference: record40-range-copy (assembly evidence only).
+$(OUT)/record40_range_copy.bin: native/record40_range_copy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/record40_range_copy.o
+	ld -m elf_i386 -Ttext=0x42ba60 -e original_record40_range_copy $(OUT)/record40_range_copy.o -o $(OUT)/record40_range_copy.elf
+	objcopy -O binary --only-section=.text $(OUT)/record40_range_copy.elf $@
+
+test-cycle-record40-range-copy: $(OUT)/reriff-match $(OUT)/record40_range_copy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" record40-range-copy $(OUT)/record40_range_copy.bin $(OUT)/record40-range-copy-comparison.json
+
+test-recovered: test-cycle-record40-range-copy
+.PHONY: test-cycle-record40-range-copy
