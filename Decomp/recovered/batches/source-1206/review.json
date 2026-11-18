@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery with zero matching-source byte credit.",
+  "reason": "The implementation agrees with the reference routine’s opcode and high-bit tests, and its value-argument ABI difference is disclosed. The submitted test calls the original routine and covers every opcode, individual non-opcode bits, combined field patterns, and deterministic samples; the routine has no memory outputs to compare. An independent hash check confirmed the submitted sources and original executable match the validation record. Native Windows compilation records successful builds of the actual implementation, with no matching credit. The behavioral evidence is sampled and does not establish all-input equivalence or exact source matching."
+}

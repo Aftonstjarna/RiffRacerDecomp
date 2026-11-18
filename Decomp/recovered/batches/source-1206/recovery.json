@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Script instruction open result",
+  "summary": "Tests an instruction word's six-bit opcode and high nine-bit field. Returns one for opcodes 28, 29, 30 or 34 only when bits 23 through 31 are zero; otherwise returns zero. The original receives the word in ECX and has no memory side effects.",
+  "targets": ["script-instruction-open-result"],
+  "references": ["script-instruction-open-result"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare against the original for all 64 opcodes with zero, all middle bits, all high bits, all non-opcode bits, and every individual non-opcode bit, plus 4096 deterministic words. Install test-owned FS storage before each original call and check its head afterward. The function receives only a value and has no memory accesses.",
+  "known_limits": ["The semantic names of the four opcodes and other instruction fields are not established.", "The portable interface uses a normal C++ value argument; the original uses ECX as a register argument.", "Behavioral samples do not establish matching machine code."]
+}
