@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 111911,
-  "remaining_bytes": 8523481,
-  "verified_percent": 1.2959573809735563,
-  "registered_blocks": 562,
-  "exact_blocks": 562,
+  "verified_bytes": 112203,
+  "remaining_bytes": 8523189,
+  "verified_percent": 1.2993388140341515,
+  "registered_blocks": 563,
+  "exact_blocks": 563,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2045,6 +2045,15 @@
       "byte_equal": true,
       "reference_sha256": "fdc0a311a5d6e3519aa50ea6fdf87cfe49ceb782a05db0397db00f403291a739",
       "candidate_sha256": "fdc0a311a5d6e3519aa50ea6fdf87cfe49ceb782a05db0397db00f403291a739"
+    },
+    {
+      "name": "worker-flush-slot",
+      "file_offset": 596784,
+      "size": 292,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "0d345dd5b307bc03acd46dffe04a59a7eb0b5b3470fd9e38efcad1afffce5102",
+      "candidate_sha256": "0d345dd5b307bc03acd46dffe04a59a7eb0b5b3470fd9e38efcad1afffce5102"
     },
     {
       "name": "worker-stop-cleanup",

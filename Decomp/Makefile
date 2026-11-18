@@ -6768,3 +6768,16 @@ test-cycle-worker-prepare-cleanup: $(OUT)/reriff-match $(OUT)/worker_prepare_cle
 
 test-recovered: test-cycle-worker-prepare-cleanup
 .PHONY: test-cycle-worker-prepare-cleanup
+
+# Reviewed cycle reference: worker-flush-slot (assembly evidence only).
+$(OUT)/worker_flush_slot.bin: native/worker_flush_slot.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_flush_slot.o
+	ld -m elf_i386 -Ttext=0x492730 -e original_worker_flush_slot $(OUT)/worker_flush_slot.o -o $(OUT)/worker_flush_slot.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_flush_slot.elf $@
+
+test-cycle-worker-flush-slot: $(OUT)/reriff-match $(OUT)/worker_flush_slot.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-flush-slot $(OUT)/worker_flush_slot.bin $(OUT)/worker-flush-slot-comparison.json
+
+test-recovered: test-cycle-worker-flush-slot
+.PHONY: test-cycle-worker-flush-slot
