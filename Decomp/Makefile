@@ -6950,3 +6950,16 @@ test-cycle-script-gc-scan-roots: $(OUT)/reriff-match $(OUT)/script_gc_scan_roots
 
 test-recovered: test-cycle-script-gc-scan-roots
 .PHONY: test-cycle-script-gc-scan-roots
+
+# Reviewed cycle reference: worker-pointer-ensure-spare (assembly evidence only).
+$(OUT)/worker_pointer_ensure_spare.bin: native/worker_pointer_ensure_spare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_pointer_ensure_spare.o
+	ld -m elf_i386 -Ttext=0x429ce0 -e original_worker_pointer_ensure_spare $(OUT)/worker_pointer_ensure_spare.o -o $(OUT)/worker_pointer_ensure_spare.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_pointer_ensure_spare.elf $@
+
+test-cycle-worker-pointer-ensure-spare: $(OUT)/reriff-match $(OUT)/worker_pointer_ensure_spare.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-pointer-ensure-spare $(OUT)/worker_pointer_ensure_spare.bin $(OUT)/worker-pointer-ensure-spare-comparison.json
+
+test-recovered: test-cycle-worker-pointer-ensure-spare
+.PHONY: test-cycle-worker-pointer-ensure-spare
