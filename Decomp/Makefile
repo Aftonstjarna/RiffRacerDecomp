@@ -7639,3 +7639,16 @@ test-cycle-worker-embedded-construct: $(OUT)/reriff-match $(OUT)/worker_embedded
 
 test-recovered: test-cycle-worker-embedded-construct
 .PHONY: test-cycle-worker-embedded-construct
+
+# Reviewed cycle reference: worker-pointer-vector-append (assembly evidence only).
+$(OUT)/worker_pointer_vector_append.bin: native/worker_pointer_vector_append.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_pointer_vector_append.o
+	ld -m elf_i386 -Ttext=0x42c2a0 -e original_worker_pointer_vector_append $(OUT)/worker_pointer_vector_append.o -o $(OUT)/worker_pointer_vector_append.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_pointer_vector_append.elf $@
+
+test-cycle-worker-pointer-vector-append: $(OUT)/reriff-match $(OUT)/worker_pointer_vector_append.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-pointer-vector-append $(OUT)/worker_pointer_vector_append.bin $(OUT)/worker-pointer-vector-append-comparison.json
+
+test-recovered: test-cycle-worker-pointer-vector-append
+.PHONY: test-cycle-worker-pointer-vector-append

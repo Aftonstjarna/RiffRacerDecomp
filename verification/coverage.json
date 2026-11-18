@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 125099,
-  "remaining_bytes": 8510293,
-  "verified_percent": 1.4486777207103048,
-  "registered_blocks": 629,
-  "exact_blocks": 629,
+  "verified_bytes": 125198,
+  "remaining_bytes": 8510194,
+  "verified_percent": 1.449824165480849,
+  "registered_blocks": 630,
+  "exact_blocks": 630,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -776,6 +776,15 @@
       "byte_equal": true,
       "reference_sha256": "5e983a555a4f85efdca6396ca4abb1fcc2bd11cce448528a2667c4eca684fa15",
       "candidate_sha256": "5e983a555a4f85efdca6396ca4abb1fcc2bd11cce448528a2667c4eca684fa15"
+    },
+    {
+      "name": "worker-pointer-vector-append",
+      "file_offset": 177824,
+      "size": 99,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "5243d66d47510e4b26bc4a6992cfe4c233b14edd241861d64a380911c35fb9d7",
+      "candidate_sha256": "5243d66d47510e4b26bc4a6992cfe4c233b14edd241861d64a380911c35fb9d7"
     },
     {
       "name": "record40-copy-assign",

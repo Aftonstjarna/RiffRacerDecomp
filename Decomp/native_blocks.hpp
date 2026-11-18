@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"worker-embedded-construct",0x82bc0,297},
+  return {NativeBlock{"worker-pointer-vector-append",0x2c2a0,99},
+                     NativeBlock{"worker-embedded-construct",0x82bc0,297},
                      NativeBlock{"application-worker-construct",0x3f310,365},
                      NativeBlock{"application-service-construct",0x8ce90,160},
                      NativeBlock{"triangle-info-map-member-destruct",0x39290,323},
