@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"worker-resource-singleton-d0-get",0x176f0,132},
+  return {NativeBlock{"worker-resource-parameter-update",0x248e0,224},
+                     NativeBlock{"worker-resource-singleton-d0-get",0x176f0,132},
                      NativeBlock{"worker-animation-resource-singleton-get",0x174b0,132},
                      NativeBlock{"worker-model-resource-get",0x17420,132},
                      NativeBlock{"worker-resource-singleton-e4-get",0x17390,132},

@@ -7886,3 +7886,16 @@ test-cycle-worker-resource-singleton-d0-get: $(OUT)/reriff-match $(OUT)/worker_r
 
 test-recovered: test-cycle-worker-resource-singleton-d0-get
 .PHONY: test-cycle-worker-resource-singleton-d0-get
+
+# Reviewed cycle reference: worker-resource-parameter-update (assembly evidence only).
+$(OUT)/worker_resource_parameter_update.bin: native/worker_resource_parameter_update.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_resource_parameter_update.o
+	ld -m elf_i386 -Ttext=0x4248e0 -e original_worker_resource_parameter_update $(OUT)/worker_resource_parameter_update.o -o $(OUT)/worker_resource_parameter_update.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_resource_parameter_update.elf $@
+
+test-cycle-worker-resource-parameter-update: $(OUT)/reriff-match $(OUT)/worker_resource_parameter_update.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-resource-parameter-update $(OUT)/worker_resource_parameter_update.bin $(OUT)/worker-resource-parameter-update-comparison.json
+
+test-recovered: test-cycle-worker-resource-parameter-update
+.PHONY: test-cycle-worker-resource-parameter-update
