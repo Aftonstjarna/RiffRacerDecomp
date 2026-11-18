@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered begin-mark routine is acceptable as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "The source follows the reference’s field offsets, signed tag checks, helper-call order, root scan, and final phase update. The test calls the original and compares complete fixtures across tag boundaries, mark bits, aliases, and optional roots; its stated dispatch and recursion limitations are material. An independent SHA-256 check matched the recorded source hashes. Native Windows compilation records the actual implementation, but its comparisons are unresolved and confer no matching credit. The sampled validation does not establish all-input equivalence, and integration requires adapters for the original helper calling conventions."
+}
