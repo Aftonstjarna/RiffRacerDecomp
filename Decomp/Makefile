@@ -7574,3 +7574,16 @@ test-cycle-narrow-insert-pointer: $(OUT)/reriff-match $(OUT)/narrow_insert_point
 
 test-recovered: test-cycle-narrow-insert-pointer
 .PHONY: test-cycle-narrow-insert-pointer
+
+# Reviewed cycle reference: narrow-insert-string-range (assembly evidence only).
+$(OUT)/narrow_insert_string_range.bin: native/narrow_insert_string_range.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_insert_string_range.o
+	ld -m elf_i386 -Ttext=0x47ac40 -e original_narrow_insert_string_range $(OUT)/narrow_insert_string_range.o -o $(OUT)/narrow_insert_string_range.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_insert_string_range.elf $@
+
+test-cycle-narrow-insert-string-range: $(OUT)/reriff-match $(OUT)/narrow_insert_string_range.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-insert-string-range $(OUT)/narrow_insert_string_range.bin $(OUT)/narrow-insert-string-range-comparison.json
+
+test-recovered: test-cycle-narrow-insert-string-range
+.PHONY: test-cycle-narrow-insert-string-range
