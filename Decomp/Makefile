@@ -7821,3 +7821,16 @@ test-cycle-worker-resource-singleton-58-f8-get: $(OUT)/reriff-match $(OUT)/worke
 
 test-recovered: test-cycle-worker-resource-singleton-58-f8-get
 .PHONY: test-cycle-worker-resource-singleton-58-f8-get
+
+# Reviewed cycle reference: worker-resource-singleton-417300-get (assembly evidence only).
+$(OUT)/worker_resource_singleton_417300_get.bin: native/worker_resource_singleton_417300_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_resource_singleton_417300_get.o
+	ld -m elf_i386 -Ttext=0x417300 -e original_worker_resource_singleton_417300_get $(OUT)/worker_resource_singleton_417300_get.o -o $(OUT)/worker_resource_singleton_417300_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_resource_singleton_417300_get.elf $@
+
+test-cycle-worker-resource-singleton-417300-get: $(OUT)/reriff-match $(OUT)/worker_resource_singleton_417300_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-resource-singleton-417300-get $(OUT)/worker_resource_singleton_417300_get.bin $(OUT)/worker-resource-singleton-417300-get-comparison.json
+
+test-recovered: test-cycle-worker-resource-singleton-417300-get
+.PHONY: test-cycle-worker-resource-singleton-417300-get
