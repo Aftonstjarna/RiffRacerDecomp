@@ -6976,3 +6976,16 @@ test-cycle-script-type-error: $(OUT)/reriff-match $(OUT)/script_type_error.bin
 
 test-recovered: test-cycle-script-type-error
 .PHONY: test-cycle-script-type-error
+
+# Reviewed cycle reference: script-debug-name (assembly evidence only).
+$(OUT)/script_debug_name.bin: native/script_debug_name.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_debug_name.o
+	ld -m elf_i386 -Ttext=0x486680 -e original_script_debug_name $(OUT)/script_debug_name.o -o $(OUT)/script_debug_name.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_debug_name.elf $@
+
+test-cycle-script-debug-name: $(OUT)/reriff-match $(OUT)/script_debug_name.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-debug-name $(OUT)/script_debug_name.bin $(OUT)/script-debug-name-comparison.json
+
+test-recovered: test-cycle-script-debug-name
+.PHONY: test-cycle-script-debug-name
