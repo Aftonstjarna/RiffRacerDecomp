@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 123081,
-  "remaining_bytes": 8512311,
-  "verified_percent": 1.4253087757915333,
-  "registered_blocks": 621,
-  "exact_blocks": 621,
+  "verified_bytes": 123226,
+  "remaining_bytes": 8512166,
+  "verified_percent": 1.4269879120716233,
+  "registered_blocks": 622,
+  "exact_blocks": 622,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4349,6 +4349,15 @@
       "byte_equal": true,
       "reference_sha256": "5d87327ed9f5b642c323caa275c77339fdd6fc03e9afbc8a3e447efa1f291bbd",
       "candidate_sha256": "5d87327ed9f5b642c323caa275c77339fdd6fc03e9afbc8a3e447efa1f291bbd"
+    },
+    {
+      "name": "shader-global-resource-construct",
+      "file_offset": 1569760,
+      "size": 145,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "02bb96566d790647ff5a10dbc8282b8fa20a74a9d08234b0128d34185fb10d27",
+      "candidate_sha256": "02bb96566d790647ff5a10dbc8282b8fa20a74a9d08234b0128d34185fb10d27"
     },
     {
       "name": "audio-unity-arrays-initialize",

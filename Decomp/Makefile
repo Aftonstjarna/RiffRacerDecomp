@@ -7535,3 +7535,16 @@ test-cycle-pointer-slot-release: $(OUT)/reriff-match $(OUT)/pointer_slot_release
 
 test-recovered: test-cycle-pointer-slot-release
 .PHONY: test-cycle-pointer-slot-release
+
+# Reviewed cycle reference: shader-global-resource-construct (assembly evidence only).
+$(OUT)/shader_global_resource_construct.bin: native/shader_global_resource_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_global_resource_construct.o
+	ld -m elf_i386 -Ttext=0x57ffe0 -e original_shader_global_resource_construct $(OUT)/shader_global_resource_construct.o -o $(OUT)/shader_global_resource_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_global_resource_construct.elf $@
+
+test-cycle-shader-global-resource-construct: $(OUT)/reriff-match $(OUT)/shader_global_resource_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-global-resource-construct $(OUT)/shader_global_resource_construct.bin $(OUT)/shader-global-resource-construct-comparison.json
+
+test-recovered: test-cycle-shader-global-resource-construct
+.PHONY: test-cycle-shader-global-resource-construct
