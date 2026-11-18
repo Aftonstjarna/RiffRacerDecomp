@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery, with zero matching-source byte credit.",
+  "reason": "The source control flow and 32-bit layout agree with the reference routine within the stated valid-input assumptions. The tests call the original and compare thread, stack, frame, object, collector, and allocator effects across several capacity thresholds. An independent hash and 32-bit layout check passed. Validation is sampled, not proof of all-input equivalence; moving allocation, allocation failures, oversized errors, and complex marking remain untested or delegated as disclosed."
+}
