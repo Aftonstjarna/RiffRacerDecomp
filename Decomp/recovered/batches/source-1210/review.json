@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery with zero matching-source byte credit.",
+  "reason": "The implementation follows the original's unsigned range classification, growth call, internal-source rebasing, conditional byte copy, and end-pointer increment. An independent disassembly of Game.exe confirmed the referenced control flow, and the submitted source hashes match validation.json. The direct comparisons cover range boundaries, buffer changes, pointer fields, and a null destination; relocation tests exercise only the recovered caller with a controlled growth stub. Native Windows compilation records successful builds of the implementation, but no certified matching credit. Growth-helper behavior, failure paths, and all-input equivalence remain unverified as disclosed."
+}
