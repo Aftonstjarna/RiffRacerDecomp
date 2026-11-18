@@ -6937,3 +6937,16 @@ test-cycle-script-gc-begin-mark: $(OUT)/reriff-match $(OUT)/script_gc_begin_mark
 
 test-recovered: test-cycle-script-gc-begin-mark
 .PHONY: test-cycle-script-gc-begin-mark
+
+# Reviewed cycle reference: script-gc-scan-roots (assembly evidence only).
+$(OUT)/script_gc_scan_roots.bin: native/script_gc_scan_roots.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_gc_scan_roots.o
+	ld -m elf_i386 -Ttext=0x4f1fe0 -e original_script_gc_scan_roots $(OUT)/script_gc_scan_roots.o -o $(OUT)/script_gc_scan_roots.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_gc_scan_roots.elf $@
+
+test-cycle-script-gc-scan-roots: $(OUT)/reriff-match $(OUT)/script_gc_scan_roots.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-gc-scan-roots $(OUT)/script_gc_scan_roots.bin $(OUT)/script-gc-scan-roots-comparison.json
+
+test-recovered: test-cycle-script-gc-scan-roots
+.PHONY: test-cycle-script-gc-scan-roots
