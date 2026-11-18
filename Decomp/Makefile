@@ -7652,3 +7652,16 @@ test-cycle-worker-pointer-vector-append: $(OUT)/reriff-match $(OUT)/worker_point
 
 test-recovered: test-cycle-worker-pointer-vector-append
 .PHONY: test-cycle-worker-pointer-vector-append
+
+# Reviewed cycle reference: resource-manager-get (assembly evidence only).
+$(OUT)/resource_manager_get.bin: native/resource_manager_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_manager_get.o
+	ld -m elf_i386 -Ttext=0x417540 -e original_resource_manager_get $(OUT)/resource_manager_get.o -o $(OUT)/resource_manager_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_manager_get.elf $@
+
+test-cycle-resource-manager-get: $(OUT)/reriff-match $(OUT)/resource_manager_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-manager-get $(OUT)/resource_manager_get.bin $(OUT)/resource-manager-get-comparison.json
+
+test-recovered: test-cycle-resource-manager-get
+.PHONY: test-cycle-resource-manager-get
