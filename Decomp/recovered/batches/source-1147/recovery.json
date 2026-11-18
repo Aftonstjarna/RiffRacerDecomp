@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Worker slot reset",
+  "summary": "Recover the thiscall slot reset at 0x490d30, preserving copied words and untouched storage.",
+  "targets": ["worker-slot-reset"],
+  "references": ["worker-slot-reset"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare original and recovered resets over zero, all-one, and patterned slots, including repeated calls, every slot byte, guard bytes, and FS head restoration.",
+  "known_limits": ["The semantic types and purposes of the slot fields remain unresolved.", "Only normal calls with valid writable slot storage are tested."]
+}

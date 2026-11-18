@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered worker-slot reset is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "Independent disassembly of Game.exe agrees with the source’s copied words, constant and zero writes, untouched storage, and thiscall layout for valid writable slots. The submitted test calls the original and compares the entire slot and guard bytes across zero, all-one, patterned, and repeated inputs. Source hashes match validation.json; the recorded native Windows builds compile the actual implementation but do not match the original fragment. The sampled tests do not establish all-input equivalence, and field semantics and invalid-storage behavior remain unresolved."
+}
