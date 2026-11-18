@@ -7314,3 +7314,16 @@ test-cycle-script-gc-visit-table: $(OUT)/reriff-match $(OUT)/script_gc_visit_tab
 
 test-recovered: test-cycle-script-gc-visit-table
 .PHONY: test-cycle-script-gc-visit-table
+
+# Reviewed cycle reference: worker-narrow-range-replace (assembly evidence only).
+$(OUT)/worker_narrow_range_replace.bin: native/worker_narrow_range_replace.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_narrow_range_replace.o
+	ld -m elf_i386 -Ttext=0x5c2140 -e original_worker_narrow_range_replace $(OUT)/worker_narrow_range_replace.o -o $(OUT)/worker_narrow_range_replace.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_narrow_range_replace.elf $@
+
+test-cycle-worker-narrow-range-replace: $(OUT)/reriff-match $(OUT)/worker_narrow_range_replace.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-narrow-range-replace $(OUT)/worker_narrow_range_replace.bin $(OUT)/worker-narrow-range-replace-comparison.json
+
+test-recovered: test-cycle-worker-narrow-range-replace
+.PHONY: test-cycle-worker-narrow-range-replace
