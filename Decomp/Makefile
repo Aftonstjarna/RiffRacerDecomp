@@ -7418,3 +7418,16 @@ test-cycle-worker-record32-reallocate: $(OUT)/reriff-match $(OUT)/worker_record3
 
 test-recovered: test-cycle-worker-record32-reallocate
 .PHONY: test-cycle-worker-record32-reallocate
+
+# Reviewed cycle reference: worker-record84-reallocate (assembly evidence only).
+$(OUT)/worker_record84_reallocate.bin: native/worker_record84_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record84_reallocate.o
+	ld -m elf_i386 -Ttext=0x51ff50 -e original_worker_record84_reallocate $(OUT)/worker_record84_reallocate.o -o $(OUT)/worker_record84_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record84_reallocate.elf $@
+
+test-cycle-worker-record84-reallocate: $(OUT)/reriff-match $(OUT)/worker_record84_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record84-reallocate $(OUT)/worker_record84_reallocate.bin $(OUT)/worker-record84-reallocate-comparison.json
+
+test-recovered: test-cycle-worker-record84-reallocate
+.PHONY: test-cycle-worker-record84-reallocate
