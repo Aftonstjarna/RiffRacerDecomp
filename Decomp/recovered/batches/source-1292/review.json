@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered adapter is consistent with the reference control flow and is suitable as unmatched high-level source, with zero matching-source byte credit.",
+  "reason": "The source preserves the 32-bit pointer arithmetic, null endpoint rules, inline versus heap selection, helper dispatch, return identity, and thiscall layout shown by the reference. The differential test calls the original and checks complete fixtures, guards, return values, and the FS head across several inline and heap cases. Allocation, exceptions, invalid ranges, and self-overlap remain untested and are disclosed limitations; sampled validation does not establish all-input equivalence. The recorded native Windows compilation covers the actual implementation and claims no matching credit. An independent 32-bit compilation succeeded, and source and original-executable hashes matched the validation record."
+}
