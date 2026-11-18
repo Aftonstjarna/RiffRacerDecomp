@@ -6807,3 +6807,16 @@ test-cycle-worker-collect-slot: $(OUT)/reriff-match $(OUT)/worker_collect_slot.b
 
 test-recovered: test-cycle-worker-collect-slot
 .PHONY: test-cycle-worker-collect-slot
+
+# Reviewed cycle reference: worker-slot-reset (assembly evidence only).
+$(OUT)/worker_slot_reset.bin: native/worker_slot_reset.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_slot_reset.o
+	ld -m elf_i386 -Ttext=0x490d30 -e original_worker_slot_reset $(OUT)/worker_slot_reset.o -o $(OUT)/worker_slot_reset.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_slot_reset.elf $@
+
+test-cycle-worker-slot-reset: $(OUT)/reriff-match $(OUT)/worker_slot_reset.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-slot-reset $(OUT)/worker_slot_reset.bin $(OUT)/worker-slot-reset-comparison.json
+
+test-recovered: test-cycle-worker-slot-reset
+.PHONY: test-cycle-worker-slot-reset

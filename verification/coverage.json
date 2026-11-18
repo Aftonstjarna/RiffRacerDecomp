@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 112541,
-  "remaining_bytes": 8522851,
-  "verified_percent": 1.3032529386042926,
-  "registered_blocks": 565,
-  "exact_blocks": 565,
+  "verified_bytes": 112752,
+  "remaining_bytes": 8522640,
+  "verified_percent": 1.305696371398079,
+  "registered_blocks": 566,
+  "exact_blocks": 566,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2000,6 +2000,15 @@
       "byte_equal": true,
       "reference_sha256": "1f883d7fbf77b39ea8ea15c19394d9197d46a65a296a188553b216888df780fc",
       "candidate_sha256": "1f883d7fbf77b39ea8ea15c19394d9197d46a65a296a188553b216888df780fc"
+    },
+    {
+      "name": "worker-slot-reset",
+      "file_offset": 590128,
+      "size": 211,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "18eaf0caa9805e077987820ff6415c3a1e30fbec78a68940a5cf6d1968146fe9",
+      "candidate_sha256": "18eaf0caa9805e077987820ff6415c3a1e30fbec78a68940a5cf6d1968146fe9"
     },
     {
       "name": "nested-primary-record-count",
