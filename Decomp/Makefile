@@ -8016,3 +8016,16 @@ test-cycle-worker-ref-pointer-range-copy: $(OUT)/reriff-match $(OUT)/worker_ref_
 
 test-recovered: test-cycle-worker-ref-pointer-range-copy
 .PHONY: test-cycle-worker-ref-pointer-range-copy
+
+# Reviewed cycle reference: worker-view-resource-construct (assembly evidence only).
+$(OUT)/worker_view_resource_construct.bin: native/worker_view_resource_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_view_resource_construct.o
+	ld -m elf_i386 -Ttext=0x4571f0 -e original_worker_view_resource_construct $(OUT)/worker_view_resource_construct.o -o $(OUT)/worker_view_resource_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_view_resource_construct.elf $@
+
+test-cycle-worker-view-resource-construct: $(OUT)/reriff-match $(OUT)/worker_view_resource_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-view-resource-construct $(OUT)/worker_view_resource_construct.bin $(OUT)/worker-view-resource-construct-comparison.json
+
+test-recovered: test-cycle-worker-view-resource-construct
+.PHONY: test-cycle-worker-view-resource-construct

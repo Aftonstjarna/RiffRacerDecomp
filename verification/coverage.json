@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 130590,
-  "remaining_bytes": 8504802,
-  "verified_percent": 1.5122648745997866,
-  "registered_blocks": 658,
-  "exact_blocks": 658,
+  "verified_bytes": 132289,
+  "remaining_bytes": 8503103,
+  "verified_percent": 1.5319397197023599,
+  "registered_blocks": 659,
+  "exact_blocks": 659,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1829,6 +1829,15 @@
       "byte_equal": true,
       "reference_sha256": "0da7f6148be5645cf7bbba30deb9d7adb9432dd617c5a5211ecf7409e8dc3e1f",
       "candidate_sha256": "0da7f6148be5645cf7bbba30deb9d7adb9432dd617c5a5211ecf7409e8dc3e1f"
+    },
+    {
+      "name": "worker-view-resource-construct",
+      "file_offset": 353776,
+      "size": 1699,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "7005c62d29add9a6ea7d24504d86797e79aee41a0a47b9fd9c96fc691b80a445",
+      "candidate_sha256": "7005c62d29add9a6ea7d24504d86797e79aee41a0a47b9fd9c96fc691b80a445"
     },
     {
       "name": "node-chain-terminal-vector",
