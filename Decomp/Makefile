@@ -7860,3 +7860,16 @@ test-cycle-worker-model-resource-get: $(OUT)/reriff-match $(OUT)/worker_model_re
 
 test-recovered: test-cycle-worker-model-resource-get
 .PHONY: test-cycle-worker-model-resource-get
+
+# Reviewed cycle reference: worker-animation-resource-singleton-get (assembly evidence only).
+$(OUT)/worker_animation_resource_singleton_get.bin: native/worker_animation_resource_singleton_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_animation_resource_singleton_get.o
+	ld -m elf_i386 -Ttext=0x4174b0 -e original_worker_animation_resource_singleton_get $(OUT)/worker_animation_resource_singleton_get.o -o $(OUT)/worker_animation_resource_singleton_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_animation_resource_singleton_get.elf $@
+
+test-cycle-worker-animation-resource-singleton-get: $(OUT)/reriff-match $(OUT)/worker_animation_resource_singleton_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-animation-resource-singleton-get $(OUT)/worker_animation_resource_singleton_get.bin $(OUT)/worker-animation-resource-singleton-get-comparison.json
+
+test-recovered: test-cycle-worker-animation-resource-singleton-get
+.PHONY: test-cycle-worker-animation-resource-singleton-get
