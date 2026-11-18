@@ -7704,3 +7704,16 @@ test-cycle-worker-pair-copy-construct-range: $(OUT)/reriff-match $(OUT)/worker_p
 
 test-recovered: test-cycle-worker-pair-copy-construct-range
 .PHONY: test-cycle-worker-pair-copy-construct-range
+
+# Reviewed cycle reference: processor-feature-import (assembly evidence only).
+$(OUT)/processor_feature_import.bin: native/processor_feature_import.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/processor_feature_import.o
+	ld -m elf_i386 -Ttext=0x8fbe8e -e original_processor_feature_import $(OUT)/processor_feature_import.o -o $(OUT)/processor_feature_import.elf
+	objcopy -O binary --only-section=.text $(OUT)/processor_feature_import.elf $@
+
+test-cycle-processor-feature-import: $(OUT)/reriff-match $(OUT)/processor_feature_import.bin
+	$(OUT)/reriff-match native-check "$(GAME)" processor-feature-import $(OUT)/processor_feature_import.bin $(OUT)/processor-feature-import-comparison.json
+
+test-recovered: test-cycle-processor-feature-import
+.PHONY: test-cycle-processor-feature-import
