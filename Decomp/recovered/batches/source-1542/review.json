@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery with zero matching-source byte credit.",
+  "reason": "The source follows the original routine’s signed priority comparison, parent calculation, repeated value-slot reads, and heap writes within its stated valid-index and pointer limits. The tests exercise direct insertion, sift-up, equality, signed extremes, and aliased value slots, while comparing the array and item contents. Independent disassembly and hash checks agreed with the reference and submitted validation. Native Windows compilation covers the actual implementation; none of its profiles matched the original bytes. The behavioral validation is sampled and does not establish all-input equivalence."
+}
