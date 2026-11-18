@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as high-level unmatched source with zero matching-source byte credit.",
+  "reason": "The implementation follows the reference control flow and 32-bit state layout for callable insertion, stack growth and pointer relocation through explicit services. The differential test calls the original and covers insertion positions, growth thresholds, moving allocation and relevant fixture changes. Independent hash and layout checks agreed with the validation record and reference. Native Windows compilation is recorded for the actual implementation. Error transfers and allocator behavior remain untested as disclosed; sampled validation does not establish all-input equivalence."
+}
