@@ -6833,3 +6833,16 @@ test-cycle-worker-record-reset: $(OUT)/reriff-match $(OUT)/worker_record_reset.b
 
 test-recovered: test-cycle-worker-record-reset
 .PHONY: test-cycle-worker-record-reset
+
+# Reviewed cycle reference: worker-reference-range-clear (assembly evidence only).
+$(OUT)/worker_reference_range_clear.bin: native/worker_reference_range_clear.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_reference_range_clear.o
+	ld -m elf_i386 -Ttext=0x499710 -e original_worker_reference_range_clear $(OUT)/worker_reference_range_clear.o -o $(OUT)/worker_reference_range_clear.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_reference_range_clear.elf $@
+
+test-cycle-worker-reference-range-clear: $(OUT)/reriff-match $(OUT)/worker_reference_range_clear.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-reference-range-clear $(OUT)/worker_reference_range_clear.bin $(OUT)/worker-reference-range-clear-comparison.json
+
+test-recovered: test-cycle-worker-reference-range-clear
+.PHONY: test-cycle-worker-reference-range-clear
