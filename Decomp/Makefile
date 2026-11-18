@@ -6885,3 +6885,16 @@ test-cycle-script-pre-call: $(OUT)/reriff-match $(OUT)/script_pre_call.bin
 
 test-recovered: test-cycle-script-pre-call
 .PHONY: test-cycle-script-pre-call
+
+# Reviewed cycle reference: script-hook-dispatch (assembly evidence only).
+$(OUT)/script_hook_dispatch.bin: native/script_hook_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/script_hook_dispatch.o
+	ld -m elf_i386 -Ttext=0x4f5020 -e original_script_hook_dispatch $(OUT)/script_hook_dispatch.o -o $(OUT)/script_hook_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/script_hook_dispatch.elf $@
+
+test-cycle-script-hook-dispatch: $(OUT)/reriff-match $(OUT)/script_hook_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" script-hook-dispatch $(OUT)/script_hook_dispatch.bin $(OUT)/script-hook-dispatch-comparison.json
+
+test-recovered: test-cycle-script-hook-dispatch
+.PHONY: test-cycle-script-hook-dispatch

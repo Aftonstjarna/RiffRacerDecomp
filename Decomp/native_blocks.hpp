@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"script-pre-call",0xf54a0,471},
+  return {NativeBlock{"script-hook-dispatch",0xf5020,215},
+                     NativeBlock{"script-pre-call",0xf54a0,471},
                      NativeBlock{"script-prepare-callable",0xf5380,288},
                      NativeBlock{"script-gc-step",0xf2330,384},
                      NativeBlock{"worker-reference-range-clear",0x99710,69},
