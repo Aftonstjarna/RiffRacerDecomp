@@ -8224,3 +8224,16 @@ test-cycle-font-glyph-lookup: $(OUT)/reriff-match $(OUT)/font_glyph_lookup.bin
 
 test-recovered: test-cycle-font-glyph-lookup
 .PHONY: test-cycle-font-glyph-lookup
+
+# Reviewed cycle reference: ui-sprite-set-handle-134 (assembly evidence only).
+$(OUT)/ui_sprite_set_handle_134.bin: native/ui_sprite_set_handle_134.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_sprite_set_handle_134.o
+	ld -m elf_i386 -Ttext=0x41f7e0 -e original_ui_sprite_set_handle_134 $(OUT)/ui_sprite_set_handle_134.o -o $(OUT)/ui_sprite_set_handle_134.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_sprite_set_handle_134.elf $@
+
+test-cycle-ui-sprite-set-handle-134: $(OUT)/reriff-match $(OUT)/ui_sprite_set_handle_134.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-sprite-set-handle-134 $(OUT)/ui_sprite_set_handle_134.bin $(OUT)/ui-sprite-set-handle-134-comparison.json
+
+test-recovered: test-cycle-ui-sprite-set-handle-134
+.PHONY: test-cycle-ui-sprite-set-handle-134
