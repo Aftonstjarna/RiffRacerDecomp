@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"worker-view-pivot-order",0x2c5c0,526},
+  return {NativeBlock{"ui-create-button-sprite",0x222c0,37},
+                     NativeBlock{"worker-view-pivot-order",0x2c5c0,526},
                      NativeBlock{"input-pointer-get",0x15b470,55},
                      NativeBlock{"worker-view-heap-prepare",0x2c7d0,229},
                      NativeBlock{"worker-view-heap-sift",0x2c9d0,114},

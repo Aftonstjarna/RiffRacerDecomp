@@ -8159,3 +8159,16 @@ test-cycle-worker-view-pivot-order: $(OUT)/reriff-match $(OUT)/worker_view_pivot
 
 test-recovered: test-cycle-worker-view-pivot-order
 .PHONY: test-cycle-worker-view-pivot-order
+
+# Reviewed cycle reference: ui-create-button-sprite (assembly evidence only).
+$(OUT)/ui_create_button_sprite.bin: native/ui_create_button_sprite.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_create_button_sprite.o
+	ld -m elf_i386 -Ttext=0x4222c0 -e original_ui_create_button_sprite $(OUT)/ui_create_button_sprite.o -o $(OUT)/ui_create_button_sprite.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_create_button_sprite.elf $@
+
+test-cycle-ui-create-button-sprite: $(OUT)/reriff-match $(OUT)/ui_create_button_sprite.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-create-button-sprite $(OUT)/ui_create_button_sprite.bin $(OUT)/ui-create-button-sprite-comparison.json
+
+test-recovered: test-cycle-ui-create-button-sprite
+.PHONY: test-cycle-ui-create-button-sprite

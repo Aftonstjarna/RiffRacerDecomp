@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 134080,
-  "remaining_bytes": 8501312,
-  "verified_percent": 1.5526799478240247,
-  "registered_blocks": 669,
-  "exact_blocks": 669,
+  "verified_bytes": 134117,
+  "remaining_bytes": 8501275,
+  "verified_percent": 1.5531084170817029,
+  "registered_blocks": 670,
+  "exact_blocks": 670,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -452,6 +452,15 @@
       "byte_equal": true,
       "reference_sha256": "7e781a1502f48679774684512c28fbbb08c16fa1af44d6f887796d4fd2a8982d",
       "candidate_sha256": "7e781a1502f48679774684512c28fbbb08c16fa1af44d6f887796d4fd2a8982d"
+    },
+    {
+      "name": "ui-create-button-sprite",
+      "file_offset": 136896,
+      "size": 37,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "4f64120cce9fff7075ade55ab0eb505df37eec19f50c42fa9e10ea8a2580d8a1",
+      "candidate_sha256": "4f64120cce9fff7075ade55ab0eb505df37eec19f50c42fa9e10ea8a2580d8a1"
     },
     {
       "name": "pointer-slot-zero-construct",

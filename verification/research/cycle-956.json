@@ -1,0 +1,269 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "02bb1fe18d56fbb05fbdb10aa63146141a95daebbf75676c33dbf6ef7c33e3b0",
+    "finding_index": 1,
+    "va": 4334272,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "02bb1fe18d56fbb05fbdb10aa63146141a95daebbf75676c33dbf6ef7c33e3b0",
+    "note_sha256": "02bb1fe18d56fbb05fbdb10aa63146141a95daebbf75676c33dbf6ef7c33e3b0",
+    "bytes": 3839,
+    "status": "integrated",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "6632a06245c3104a9631256e38449d334d2245b9",
+        "path": "reports/DISPLAY-INPUT-1.2.4.md",
+        "git_status": ""
+      }
+    ],
+    "related_ids": [
+      "56d0cb1adbfd96edbbb226fa2860263cde3181feab33c576fb5dbe01bf0702ad",
+      "8c7d8ad6172495e9e507c905f06955d227fe70f9ad2c5df8b83ff3259a745eb0"
+    ],
+    "history": [
+      {
+        "time": 1793672596,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1793672659,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1793672800,
+        "action": "triage_complete",
+        "reason": "Verified the original executable hash, native instructions and four managed method bodies. Best small recovery leads are the coordinate getters, sprite wrapper and input deactivation helper. Window sizing already has a native reference. Several display and selector changes are intentional modifications."
+      },
+      {
+        "time": 1795100295,
+        "action": "integrated",
+        "reason": "Exact research snapshot committed alongside independently reviewed, byte-checked reference. No source credit; remaining findings retain separate scheduling."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "Verified the original executable hash, native instructions and four managed method bodies. Best small recovery leads are the coordinate getters, sprite wrapper and input deactivation helper. Window sizing already has a native reference. Several display and selector changes are intentional modifications.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "02bb1fe18d56fbb05fbdb10aa63146141a95daebbf75676c33dbf6ef7c33e3b0",
+      "baseline": {
+        "commit": "5cd0f0c3a9da99f4af8ba56edad229f5bf2fc6aa",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "02bb1fe18d56fbb05fbdb10aa63146141a95daebbf75676c33dbf6ef7c33e3b0"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "Verified the original executable hash, native instructions and four managed method bodies. Best small recovery leads are the coordinate getters, sprite wrapper and input deactivation helper. Window sizing already has a native reference. Several display and selector changes are intentional modifications.",
+        "corrections": [
+          "0x0055B470 does not always return stored coordinates: relative mode returns two zero words. 0x004F8780 copies stored coordinates without that check.",
+          "0x00448A10 is not merely a scale-field setter: it updates attached objects, sets dirty flags and invokes virtual callbacks.",
+          "Token 0x0600158D ignores selection -1, routes 2 through conditional system callbacks, and pops the overlay for every other integer; it does not validate a set of valid choices.",
+          "The minimized WM_ACTIVATE behavior is present in the original full-WPARAM test. Normalizing it is an intentional behavior change.",
+          "ReRiff regression results do not establish original behavioral equivalence or source recovery."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x0055B470..0x0055B4A7; VA 0x004F8780..0x004F879E (ends exclusive)",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover two small i386 thiscall output-vector getters. Both take one stack output pointer, return that pointer in EAX and use RET 4. Preserve their different relative-mode behavior.",
+            "evidence": [
+              "0x55B478 tests byte this+0x246; the nonzero path writes zero to output+0 and output+4 and returns at 0x55B48F.",
+              "The second branch copies raw words from this+0x23C/+0x240 and returns at 0x55B4A4; stopping at the first RET would omit it.",
+              "0x4F8783 loads an input object through this+0x34 and copies its +0x23C/+0x240 words without a mode check.",
+              "Address searches found no corresponding recovered C++ or nativeBlocks registry entries."
+            ],
+            "dependencies": [
+              "32-bit object layouts and an eight-byte writable output.",
+              "Wrapper field this+0x34 for 0x004F8780."
+            ],
+            "validation_plan": [
+              "Compare original and reconstructed routines using poisoned objects, both relative-mode values, arbitrary float bit patterns and output canaries.",
+              "Check returned pointer, exact output bytes and unchanged object bytes; include aliasing cases backed by valid storage."
+            ],
+            "limits": [
+              "No differential execution was performed.",
+              "Getter evidence does not establish a client/render scaling policy."
+            ]
+          },
+          {
+            "reference": "VA 0x004222C0..0x004222E5 (end exclusive)",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the five-argument sprite wrapper with the original helper call, argument permutation and post-call writes.",
+            "evidence": [
+              "Pushes stack arguments 2, 5, 4, 1 before calling 0x422030, retaining incoming ECX.",
+              "ORs byte [EAX+0x174] with 6 and stores argument 3 at [EAX+0x40].",
+              "RET 0x14 at 0x4222E2 is followed by padding and a separate prologue at 0x4222F0.",
+              "No corresponding entry was found in recovered C++ or the native registry."
+            ],
+            "dependencies": [
+              "Original helper 0x00422030 and its object allocation/construction behavior.",
+              "Returned object layout through offset 0x174."
+            ],
+            "validation_plan": [
+              "Intercept the helper to record ECX and all four forwarded arguments, then compare return identity and complete returned-object bytes.",
+              "Vary preexisting flag bits and shortcut values; subsequently validate with the original helper."
+            ],
+            "limits": [
+              "Helper internals and failure behavior were not inspected.",
+              "The OR operation preserves existing flags; it is not assignment of the complete flag byte."
+            ]
+          },
+          {
+            "reference": "VA 0x0048D240..0x0048D2A6 (end exclusive); caller 0x0048C740",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the small thiscall deactivation helper independently of the larger window callback. Preserve external-call ordering and exact cleared fields.",
+            "evidence": [
+              "Clears this+0x140 before calling IAT 0x92D61C with stack argument zero.",
+              "Clears DWORD fields +0x18 through +0x38, then calls 0x8F8D7E to zero 0x100 bytes at this+0x40.",
+              "0x8F8D7E jumps through the memset import at 0x92D484.",
+              "Caller loads full WPARAM into EDI at 0x48C770 and tests EDI at 0x48C82B; zero calls this helper.",
+              "No corresponding recovered C++ or native registry entry was found."
+            ],
+            "dependencies": [
+              "IAT 0x92D61C, whose imported ordinal's semantic identity remains unresolved.",
+              "memset thunk 0x008F8D7E.",
+              "Input-state object storage through +0x140."
+            ],
+            "validation_plan": [
+              "Compare complete object snapshots and import-call traces, including the snapshot observed by the first callback.",
+              "Test repeated deactivation and preservation of neighboring fields.",
+              "For caller behavior, distinguish WPARAM 0 from 0x00010000."
+            ],
+            "limits": [
+              "Do not describe this helper as releasing capture: inspected instructions contain no ReleaseCapture call.",
+              "The complete window callback boundary and all dispatch paths were not recovered."
+            ]
+          },
+          {
+            "reference": "VA 0x00448A10..0x00448AFC (end exclusive)",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover a scale propagation routine, including attachment updates and virtual notifications, rather than a two-field mock setter.",
+            "evidence": [
+              "Copies input words to this+0xAC/+0xB0.",
+              "Walks 0x14-byte records between +0x184/+0x188, skipping null object pointers.",
+              "Computes X as (+0xC4 * +0xAC) * +0xE4 and Y as (+0xC8 * +0xB0) * +0xE8 using scalar SSE.",
+              "Compares against target +0x70/+0x74, conditionally ORs target+0x170 with 8, and writes both results.",
+              "Calls owner vtable+0x74, then that slot on pointers in +0x178/+0x17C; RET 4 follows at 0x448AF9.",
+              "No corresponding recovered C++ or native registry entry was found."
+            ],
+            "dependencies": [
+              "Attachment record and target layouts.",
+              "Owner and child virtual callbacks at vtable+0x74.",
+              "Original SSE comparison and multiplication order."
+            ],
+            "validation_plan": [
+              "Compare object bytes and callback snapshots for empty, null-containing and populated attachment lists.",
+              "Exercise equal values, changed values, signed zeros, NaNs and callbacks mutating later entries or list ends."
+            ],
+            "limits": [
+              "Callback implementations were not inspected.",
+              "The note's names for +0x38/+0x3C were not independently verified."
+            ]
+          },
+          {
+            "reference": "Tokens 0x0600158D..0x06001590",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover four compact managed menu methods from the inspected IL, retaining callback multiplicity, ignored selections and exact field routing.",
+            "evidence": [
+              "MethodDef rows 5517–5520 identify handleScreenInput, updateFocus, updateItemColour and tickInput with CallConvThiscall modifiers.",
+              "0x0600158D: RVA 0x360B14, IL size 0x40; -1 returns, 2 calls system vtable+0x40 twice when the first result is nonnull, then invokes the returned object's first virtual entry; other values call popOverlayState(true).",
+              "0x0600158E: RVA 0x335C60, eight IL bytes forwarding to gaMenu.updateFocus.",
+              "0x0600158F: RVA 0x31ACAC, IL size 0x27; ID 2 uses this+268, ID 1 uses this+272, other IDs return; selected objects receive setColourForAll.",
+              "0x06001590: RVA 0x360B6C, IL size 0x2D; obtains device index zero, queries action value 2 and conditionally calls popOverlayState(true).",
+              "RERIFF-EVIDENCE.md already documents the quit and Back research, but address/name searches found no recovered implementation."
+            ],
+            "dependencies": [
+              "System, input-manager and state-manager singleton fields.",
+              "Indirect call signatures 0x11000BFD, 0x11000001, 0x11000300 and 0x11000B34; signature blobs were inspected.",
+              "gaMenu.updateFocus, elUIItem.setColourForAll and gaStateManager.popOverlayState."
+            ],
+            "validation_plan": [
+              "Compare original managed execution against reconstructed methods with callback traces for -1, 1, 2, zero and other integers.",
+              "Test a null first system result and distinct successive system results.",
+              "Verify focus forwarding, color target identity and both outcomes of the action query."
+            ],
+            "limits": [
+              "monodis aborted later in the full export, but all four target bodies were present and inspected.",
+              "Runtime execution and semantic identification of all indirect callbacks remain outstanding.",
+              "The action value 2 alone does not independently establish the human-readable Back binding."
+            ]
+          },
+          {
+            "reference": "VA 0x0055B940..0x0055BC93 (end exclusive)",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Treat pointer conversion as one part of a larger input update. Recover the full routine only with keyboard history, mouse state and action-mask side effects.",
+            "evidence": [
+              "Copies keyboard and mouse history, transfers current state from global 0xBFCC2C and clears accumulated DWORDs +0x2C/+0x30.",
+              "Imports verify GetCursorPos, ScreenToClient, ClientToScreen and SetCursorPos; window offsets +0x14/+0x18 are subtracted.",
+              "Relative flag +0x246 triggers recentering using constant 0.5 at 0xA06508; normalized flag +0x247 subsequently divides using dimensions scaled by 1280 and 720.",
+              "Inactive state clears +0x244/+0x245 and stores -1.0 at +0x23C/+0x240.",
+              "Code continues through a virtual call and eleven key mappings, writing an action mask to [this+4]+8 before RET at 0x55BC92."
+            ],
+            "dependencies": [
+              "Globals 0xBFCC28, 0xBFCC2C and 0xC0D408.",
+              "Dimension provider vtable+0x10 and device vtable+0x10.",
+              "Win32 cursor imports, constants and key mapping fields +0x210..+0x238."
+            ],
+            "validation_plan": [
+              "Use deterministic import and virtual-call fixtures to compare full state, action masks and cursor-warp traces.",
+              "Cover all mode combinations, inactive input, rectangle edges, fractional centers and normalized division edge cases."
+            ],
+            "limits": [
+              "No original execution was performed.",
+              "This is a broader candidate than the getters; its complete object types and callback contracts remain unresolved.",
+              "The note's scaling recommendation is integration policy, not directly established by these instructions."
+            ]
+          },
+          {
+            "reference": "VA 0x0048CB30; fullscreen selector and display integration changes",
+            "priority": "low",
+            "classification": "existing_recovery",
+            "hint": "Reuse the registered window-mode native reference. Keep selected-size restoration, activation normalization and added selector ownership changes separate as intentional modifications.",
+            "evidence": [
+              "native_blocks.hpp registers window-mode at RVA 0x8CB30 with size 315.",
+              "native/window_mode.S and WORKER.md already describe style selection, adjusted rectangles, monitor handling and SetWindowPos.",
+              "The note explicitly identifies its final focus-link correction as intentional integration behavior."
+            ],
+            "dependencies": [
+              "Existing window-mode and synchronized request references.",
+              "Original window-management imports and selected-size state."
+            ],
+            "validation_plan": [
+              "For future source recovery, compare requested Win32 arguments and state writes against the existing original reference.",
+              "Evaluate modified selector and focus behavior separately in desktop integration tests."
+            ],
+            "limits": [
+              "Existing assembly reference coverage is not newly recovered C++.",
+              "Window sizing instructions were not independently disassembled in this triage.",
+              "Selector geometry, priority, shortcuts and mod regression claims were not independently validated."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    },
+    "reason": "Exact research snapshot committed alongside independently reviewed, byte-checked reference. No source credit; remaining findings retain separate scheduling.",
+    "integration": {
+      "commit": "88958c4b2d344b28b688a238eaa660635887bda5",
+      "path": "verification/research/02bb1fe18d56fbb05fbdb10aa63146141a95daebbf75676c33dbf6ef7c33e3b0.md"
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for VA 0x004222C0–0x004222E5. The routine forwards four of its five stack arguments to 0x00422030, ORs 6 into the returned object's byte at +0x174, stores argument 3 at +0x40, and returns with RET 0x14. The OR preserves existing flag bits. The helper's behavior and failure cases remain unresolved; this is not behavioral validation or source recovery.",
+    "reason": "Independently disassembled Game.exe through the padding and next prologue, checked the straight-line boundary and ABI, and found no overlap among 668 parsed native registry entries. Assembled and linked the symbolic reference at its original VA; all 37 bytes matched the original without masking. The executable hash and source and assembled-byte hashes match the receipts. Byte equality supports assembly-reference evidence only and gives zero compiler-built source credit."
+  }
+}
