@@ -8263,3 +8263,16 @@ test-cycle-ui-handle-assign: $(OUT)/reriff-match $(OUT)/ui_handle_assign.bin
 
 test-recovered: test-cycle-ui-handle-assign
 .PHONY: test-cycle-ui-handle-assign
+
+# Reviewed cycle reference: ui-item-set-colour (assembly evidence only).
+$(OUT)/ui_item_set_colour.bin: native/ui_item_set_colour.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_item_set_colour.o
+	ld -m elf_i386 -Ttext=0x448500 -e original_ui_item_set_colour $(OUT)/ui_item_set_colour.o -o $(OUT)/ui_item_set_colour.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_item_set_colour.elf $@
+
+test-cycle-ui-item-set-colour: $(OUT)/reriff-match $(OUT)/ui_item_set_colour.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-item-set-colour $(OUT)/ui_item_set_colour.bin $(OUT)/ui-item-set-colour-comparison.json
+
+test-recovered: test-cycle-ui-item-set-colour
+.PHONY: test-cycle-ui-item-set-colour

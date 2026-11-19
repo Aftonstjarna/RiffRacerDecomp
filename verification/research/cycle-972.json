@@ -1,0 +1,185 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "3db6044ad84f7c0d267cdd9a5e2be4bff02225fa7740d20a477d085354e197a7",
+    "finding_index": 0,
+    "va": 4490496,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "3db6044ad84f7c0d267cdd9a5e2be4bff02225fa7740d20a477d085354e197a7",
+    "note_sha256": "3db6044ad84f7c0d267cdd9a5e2be4bff02225fa7740d20a477d085354e197a7",
+    "bytes": 2769,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "c7d583e4052275cf077cd55435f2fce3371e1314",
+        "path": "reports/UI-SPRITE-COLOUR-SCROLL.md",
+        "git_status": "?? reports/UI-SPRITE-COLOUR-SCROLL.md\n"
+      }
+    ],
+    "related_ids": [],
+    "history": [
+      {
+        "time": 1794593333,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794593359,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794593452,
+        "action": "triage_complete",
+        "reason": "One high-priority native recovery candidate and two smaller managed candidates are supported by original instructions or IL. No corresponding recovery was found in the searched recovered C++, coverage records or native registry. Toggle positioning is already documented as research. No source integration or differential execution was performed."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "One high-priority native recovery candidate and two smaller managed candidates are supported by original instructions or IL. No corresponding recovery was found in the searched recovered C++, coverage records or native registry. Toggle positioning is already documented as research. No source integration or differential execution was performed.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "3db6044ad84f7c0d267cdd9a5e2be4bff02225fa7740d20a477d085354e197a7",
+      "baseline": {
+        "commit": "54fcc0dc48a8137cc11cfb9ce8e8db3d904c57f6",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "3db6044ad84f7c0d267cdd9a5e2be4bff02225fa7740d20a477d085354e197a7"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "One high-priority native recovery candidate and two smaller managed candidates are supported by original instructions or IL. No corresponding recovery was found in the searched recovered C++, coverage records or native registry. Toggle positioning is already documented as research. No source integration or differential execution was performed.",
+        "corrections": [
+          "Mesh packing uses the original float constant 255.99000549316406 at VA 0xA067F0, truncates with CVTTSS2SI and retains each low byte; do not substitute clamped conversion or multiplication by 255.",
+          "The native routine also handles null visual entries and non-mesh visuals, including conditional colour writes and dirty-bit updates. The mesh-only description is incomplete.",
+          "Graphics updateItemColour token is 0x06001179; setTogglebarVars is 0x0600117D. The nine-byte forwarding body is also shared by gaControlsOptions.updateItemColour.",
+          "The note's Wine regression and mod tests were not rerun. Original replacement stores support the shading explanation, but do not independently establish the reported live UI outcome.",
+          "Removing explicit white resets is an intentional ReRiff change. The inspected original setter's destructive replacement behavior must remain intact in faithful recovery."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x448500–0x4486A1 inclusive; RVA 0x48500; elUIItem.setColour",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the complete 418-byte leaf member as x86 thiscall: ECX is item, one stack argument points to four floats, callee returns with RET 4. Copy RGBA to item +0x54..0x60, traverse 20-byte visual entries through item +0x184/+0x188, and preserve both mesh and non-mesh branches.",
+            "evidence": [
+              "Original executable SHA-256 and the 418-byte fragment hash exactly agree with the note's supplied hashes.",
+              "Disassembly establishes entry 0x448500, all branches converging on the epilogue ending at 0x4486A1, INT3 padding, and a separate routine beginning at 0x4486B0.",
+              "0x448542 loads the visual pointer from each entry; null pointers skip processing. 0x44854C tests visual +0x12C.",
+              "Mesh vector begin/end are visual +0x120/+0x124. Signed division by 36 determines iteration count; 0x4485E6 stores packed replacement colour at vertex +8 without reading its old colour.",
+              "Packing shifts the low bytes of truncated scaled R, G, B and A into numeric 0xRRGGBBAA.",
+              "0x44860F–0x448658 compares non-mesh RGBA at +0x90..0x9C using UCOMISS/LAHF parity logic. Unequal or unordered values trigger four writes and OR 0x100 into visual +0x170.",
+              "Original .rdata contains pointer 0x448500 at VA 0x9F9C54; adjacent routine 0x4486B0 dispatches through vtable +0x10.",
+              "Searches found no corresponding entry in native_blocks.hpp or the searched recovered source and coverage records."
+            ],
+            "dependencies": [
+              "Original float constant at VA 0xA067F0.",
+              "32-bit item, visual-entry and vertex layouts; valid begin/end pointers.",
+              "SSE conversion and comparison behavior, including MXCSR state.",
+              "No calls or imports occur inside the inspected routine."
+            ],
+            "validation_plan": [
+              "Execute the original entry through a C/C++ x86 ABI harness and compare complete fixture memory against a candidate implementation.",
+              "Cover empty visual ranges, null entries, mixed visual types, empty meshes and multiple vertices with distinct initial colours.",
+              "Test equal and changed non-mesh colours, signed zero and NaNs; verify dirty-bit preservation and untouched memory.",
+              "Test fractional, negative and out-of-range components against original low-byte conversion behavior under a recorded MXCSR state.",
+              "Check callee-saved registers, stack cleanup and guard regions."
+            ],
+            "limits": [
+              "No execution harness was run during this review.",
+              "The semantic name and slot identity are consistent with the note and inspected dispatch/data, but the full constructor-to-vtable identity chain was not reconstructed.",
+              "Aliasing and malformed vector behavior require original execution before claiming comprehensive equivalence."
+            ]
+          },
+          {
+            "reference": "Token 0x06001179; IL RVA 0x2EC6D4; gaGraphicsOptions.updateItemColour",
+            "priority": "low",
+            "classification": "original_candidate",
+            "hint": "Recover a forwarding wrapper that passes this, item ID and colour pointer unchanged to gaMenu.updateItemColour, token 0x06001121.",
+            "evidence": [
+              "monodis method metadata identifies method row 4473, establishing token 0x06001179.",
+              "Actual IL is ldarg.0; ldarg.1; ldarg.2; call 0x06001121; ret, with code size nine and maxstack three.",
+              "gaControlsOptions.updateItemColour also references this same body RVA.",
+              "No corresponding recovery was found in the searched recovered source or coverage records."
+            ],
+            "dependencies": [
+              "gaMenu.updateItemColour token 0x06001121 supplies all substantive behavior.",
+              "Managed C++ thiscall-modified signature with an integer ID and colour reference."
+            ],
+            "validation_plan": [
+              "Compare forwarding calls and argument identities with the original body.",
+              "Validate downstream effects separately against the original gaMenu implementation."
+            ],
+            "limits": [
+              "This wrapper does not establish how standalone item ID -1 is handled.",
+              "The base method's complete behavior was not reviewed.",
+              "Full monodis export later aborted; the cited method metadata and complete wrapper IL were emitted before the failure."
+            ]
+          },
+          {
+            "reference": "Token 0x0600117D; IL RVA 0x2ECA18; gaGraphicsOptions.setTogglebarVars",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover the complete 273-byte IL body as a small positioning helper, preserving call order and explicit floating-point conversion points. Its behavior is already described in RERIFF-EVIDENCE.md, but no corresponding recovered implementation was found.",
+            "evidence": [
+              "Method row 4477 establishes token 0x0600117D. Actual IL spans IL_0000 through RET at IL_0110, with maxstack four.",
+              "Menu byte +305 selects sprite 75 when zero and 74 otherwise; thumb pointer is menu +252. Calls setSpriteDef at IL_001E, then setOrigin at IL_003F with origin 3 or 5.",
+              "Bar pointer is menu +248; position comes from bar +0x20/+0x24 and width from +0x30. Scale is menu +0x3C.",
+              "The zero-state branch subtracts rounded width-times-scale from X. State then selects +25 or -25 times scale before vector addition and setPos at IL_010B.",
+              "The complete body contains no explicit colour-reset call.",
+              "Existing RERIFF-EVIDENCE.md already records this token and its positioning behavior."
+            ],
+            "dependencies": [
+              "elUIItem.setSpriteDef token 0x060017B8.",
+              "elUIItem.setOrigin token 0x0600169B.",
+              "elUIItem.setPos and the original sprite definitions 74/75.",
+              "Original menu/bar/thumb field layouts and managed floating-point evaluation semantics."
+            ],
+            "validation_plan": [
+              "Compare original call traces for both states, including sprite, origin and final position.",
+              "Use varied positions, widths and scales, checking intermediate float rounding against original execution.",
+              "Resolve and exercise original dependency implementations before claiming end-to-end artwork or colour parity."
+            ],
+            "limits": [
+              "Absence of an explicit colour call does not establish that dependency implementations have no colour side effects.",
+              "Standalone thumb creation with ID -1 was not independently inspected.",
+              "Full monodis export aborted later; this complete method body was available and inspected.",
+              "Existing research documentation is not an existing source recovery."
+            ]
+          },
+          {
+            "reference": "ReRiff standalone-thumb white-reset removal; original context VA 0x448500 and token 0x0600117D",
+            "priority": "low",
+            "classification": "intentional_modification",
+            "hint": "Retain this as mod integration guidance; use the original setter and toggle helper as recovery leads independently of the focus-hook change.",
+            "evidence": [
+              "Original mesh instructions replace packed vertex colour.",
+              "The inspected original toggle helper contains sprite, origin and position calls without an explicit colour reset.",
+              "The note attributes reset removal to custom Servers focus, deferred scroll focus and added AA-row paths."
+            ],
+            "dependencies": [
+              "ReRiff focus and scrolling implementations, which were not supplied as inspected original evidence."
+            ],
+            "validation_plan": [
+              "Validate mod call traces and live focus/scroll appearance separately from original-code differential tests."
+            ],
+            "limits": [
+              "Mod implementation and tests were not inspected or executed.",
+              "No original bug, original UI regression, or recovered-source equivalence is established by the mod's reported tests."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for VA 0x448500–0x4486A1, with zero source credit. The complete 418-byte span includes the mesh and non-mesh paths omitted from the research note’s mesh-only description. Mesh conversion uses the original 255.99000549316406 constant and truncated low bytes; non-mesh visuals have conditional colour and dirty-bit updates. Behavior tests, source equivalence, the full vtable identity chain, malformed or aliased ranges, exception behavior, and the reported live UI outcome remain unverified.",
+    "reason": "Independently assembled and linked the symbolic candidate at its original VA and compared all 418 bytes against Game.exe; they match without masking. Disassembly confirms the entry, internal branches, preserved registers, ret 4, subsequent padding and next entry at 0x4486B0. The original executable hash, external float constant, dispatch-table pointer and direct caller also agree with the candidate’s stated evidence."
+  }
+}
