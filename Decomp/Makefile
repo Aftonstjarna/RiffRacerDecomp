@@ -8198,3 +8198,16 @@ test-cycle-input-deactivate: $(OUT)/reriff-match $(OUT)/input_deactivate.bin
 
 test-recovered: test-cycle-input-deactivate
 .PHONY: test-cycle-input-deactivate
+
+# Reviewed cycle reference: ui-sprite-create (assembly evidence only).
+$(OUT)/ui_sprite_create.bin: native/ui_sprite_create.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_sprite_create.o
+	ld -m elf_i386 -Ttext=0x422030 -e original_ui_sprite_create $(OUT)/ui_sprite_create.o -o $(OUT)/ui_sprite_create.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_sprite_create.elf $@
+
+test-cycle-ui-sprite-create: $(OUT)/reriff-match $(OUT)/ui_sprite_create.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-sprite-create $(OUT)/ui_sprite_create.bin $(OUT)/ui-sprite-create-comparison.json
+
+test-recovered: test-cycle-ui-sprite-create
+.PHONY: test-cycle-ui-sprite-create
