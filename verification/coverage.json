@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 138086,
-  "remaining_bytes": 8497306,
-  "verified_percent": 1.599070430155342,
-  "registered_blocks": 694,
-  "exact_blocks": 694,
+  "verified_bytes": 138210,
+  "remaining_bytes": 8497182,
+  "verified_percent": 1.6005063811810742,
+  "registered_blocks": 695,
+  "exact_blocks": 695,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1667,6 +1667,15 @@
       "byte_equal": true,
       "reference_sha256": "79c486d9b9ba0f91623342fc39aba4ab6447b2075840f650b5207ee04efd4c11",
       "candidate_sha256": "79c486d9b9ba0f91623342fc39aba4ab6447b2075840f650b5207ee04efd4c11"
+    },
+    {
+      "name": "ui-item-set-focus-id",
+      "file_offset": 292224,
+      "size": 124,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "81a5822949098ca81506c2941e1fe5883f9d87bff22dac4603be00b19c7b1ad7",
+      "candidate_sha256": "81a5822949098ca81506c2941e1fe5883f9d87bff22dac4603be00b19c7b1ad7"
     },
     {
       "name": "ui-sprite-update-property",

@@ -8484,3 +8484,16 @@ test-cycle-wide-entry-vector-ensure-spare: $(OUT)/reriff-match $(OUT)/wide_entry
 
 test-recovered: test-cycle-wide-entry-vector-ensure-spare
 .PHONY: test-cycle-wide-entry-vector-ensure-spare
+
+# Reviewed cycle reference: ui-item-set-focus-id (assembly evidence only).
+$(OUT)/ui_item_set_focus_id.bin: native/ui_item_set_focus_id.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_item_set_focus_id.o
+	ld -m elf_i386 -Ttext=0x448180 -e original_ui_item_set_focus_id $(OUT)/ui_item_set_focus_id.o -o $(OUT)/ui_item_set_focus_id.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_item_set_focus_id.elf $@
+
+test-cycle-ui-item-set-focus-id: $(OUT)/reriff-match $(OUT)/ui_item_set_focus_id.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-item-set-focus-id $(OUT)/ui_item_set_focus_id.bin $(OUT)/ui-item-set-focus-id-comparison.json
+
+test-recovered: test-cycle-ui-item-set-focus-id
+.PHONY: test-cycle-ui-item-set-focus-id
