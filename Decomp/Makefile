@@ -8185,3 +8185,16 @@ test-cycle-worker-frame-step: $(OUT)/reriff-match $(OUT)/worker_frame_step.bin
 
 test-recovered: test-cycle-worker-frame-step
 .PHONY: test-cycle-worker-frame-step
+
+# Reviewed cycle reference: input-deactivate (assembly evidence only).
+$(OUT)/input_deactivate.bin: native/input_deactivate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/input_deactivate.o
+	ld -m elf_i386 -Ttext=0x48d240 -e original_input_deactivate $(OUT)/input_deactivate.o -o $(OUT)/input_deactivate.elf
+	objcopy -O binary --only-section=.text $(OUT)/input_deactivate.elf $@
+
+test-cycle-input-deactivate: $(OUT)/reriff-match $(OUT)/input_deactivate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" input-deactivate $(OUT)/input_deactivate.bin $(OUT)/input-deactivate-comparison.json
+
+test-recovered: test-cycle-input-deactivate
+.PHONY: test-cycle-input-deactivate
