@@ -8458,3 +8458,16 @@ test-cycle-archive-index-lookup: $(OUT)/reriff-match $(OUT)/archive_index_lookup
 
 test-recovered: test-cycle-archive-index-lookup
 .PHONY: test-cycle-archive-index-lookup
+
+# Reviewed cycle reference: wide-entry-vector-append (assembly evidence only).
+$(OUT)/wide_entry_vector_append.bin: native/wide_entry_vector_append.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_entry_vector_append.o
+	ld -m elf_i386 -Ttext=0x5614e0 -e original_wide_entry_vector_append $(OUT)/wide_entry_vector_append.o -o $(OUT)/wide_entry_vector_append.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_entry_vector_append.elf $@
+
+test-cycle-wide-entry-vector-append: $(OUT)/reriff-match $(OUT)/wide_entry_vector_append.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-entry-vector-append $(OUT)/wide_entry_vector_append.bin $(OUT)/wide-entry-vector-append-comparison.json
+
+test-recovered: test-cycle-wide-entry-vector-append
+.PHONY: test-cycle-wide-entry-vector-append

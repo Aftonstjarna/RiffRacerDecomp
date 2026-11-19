@@ -1,0 +1,157 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "b2537dc1ae5601f28197c4d68b4d2ff7cff69ccba1b3fd7efe847ec10cb7cde4",
+    "finding_index": 0,
+    "va": 5641440,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "b2537dc1ae5601f28197c4d68b4d2ff7cff69ccba1b3fd7efe847ec10cb7cde4",
+    "note_sha256": "b2537dc1ae5601f28197c4d68b4d2ff7cff69ccba1b3fd7efe847ec10cb7cde4",
+    "bytes": 8321,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff/build/docs-current",
+        "commit": "dd880f9cf881c81df7765fc03aac2cd4b7af3f39",
+        "path": "reports/MODS-LOOSE-CACHE.md",
+        "git_status": "?? reports/MODS-LOOSE-CACHE.md\n"
+      }
+    ],
+    "related_ids": [
+      "0064743b3a52993a7c218b86a77ac1f714b7a4004b405e443452e25881a81ca9"
+    ],
+    "history": [
+      {
+        "time": 1795099875,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1795099965,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1795100013,
+        "action": "triage_complete",
+        "reason": "One potentially useful original-code recovery lead is the 28-byte vector insertion routine at VA 0x5614e0. The cited wide-string move and assignment routines already have recovered C++ implementations. The original executable and note hashes match their stated values."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "One potentially useful original-code recovery lead is the 28-byte vector insertion routine at VA 0x5614e0. The cited wide-string move and assignment routines already have recovered C++ implementations. The original executable and note hashes match their stated values.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "b2537dc1ae5601f28197c4d68b4d2ff7cff69ccba1b3fd7efe847ec10cb7cde4",
+      "baseline": {
+        "commit": "65b8e59aeb4d6c22bbbdc171ed5ffcd3ee0e0599",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "b2537dc1ae5601f28197c4d68b4d2ff7cff69ccba1b3fd7efe847ec10cb7cde4"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "One potentially useful original-code recovery lead is the 28-byte vector insertion routine at VA 0x5614e0. The cited wide-string move and assignment routines already have recovered C++ implementations. The original executable and note hashes match their stated values.",
+        "corrections": [
+          "The call at VA 0x55ede7 targets VA 0x55e130, not the vector insertion routine. The note describes it as a scanner call site; its bytes alone do not establish the scope of ReRiff's patches.",
+          "The vector insertion routine has another live path after its first ret: its inspected extent is VA 0x5614e0–0x561576, with returns at 0x561545 and 0x561573.",
+          "The adapter, cache generation, loose-export behavior, reported live tests and mod test results are ReRiff claims or intentional modifications; they do not establish recovered original behavior. The claim that arbitrary archive stems mount successfully was not independently verified."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x5614e0 (RVA 0x1614e0), through 0x561575",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the 28-byte entry vector insertion as an i386 thiscall member with one stack argument and ret 4. Preserve both the internal-entry and external-entry paths, the source index across growth, and the move of the string at entry offset 4. Do not assume a meaningful return value.",
+            "evidence": [
+              "Original instructions use ECX as the vector, with pointers at offsets 0, 4 and 8; the argument is loaded from [ebp+8].",
+              "At 0x5614ed–0x56150a the argument is checked against [begin,end) and its 28-byte index is calculated. If full, 0x561514 calls 0x561b80 before recalculating the source address.",
+              "Both paths copy the first DWORD, call 0x44f6f0 for the string at offset 4, advance end by 0x1c, and return with ret 4. The external path starts at 0x561548; the last return ends at 0x561576.",
+              "A search of the native reference registry and recovered batches for the cited address found no existing entry."
+            ],
+            "dependencies": [
+              "Original wide-string move constructor at 0x44f6f0; its inline copy uses import slot 0x92d4a4.",
+              "Growth helper 0x561b80, which calls 0x49c050 and 0x561c80 and may invoke the error import at 0x92d168.",
+              "A valid 32-bit vector layout and original-compatible allocation and string ownership for growth tests."
+            ],
+            "validation_plan": [
+              "Differentially execute original and candidate on external and internal entries with spare capacity; compare vector pointers, entry bytes, source string state and ownership.",
+              "Exercise internal aliasing with growth using original-compatible helper and allocation bindings; compare relocation, contents and side effects. Include inline and heap strings, empty vectors and failure paths where practical.",
+              "Check ABI, callee stack cleanup and memory guards independently."
+            ],
+            "limits": [
+              "The growth helper and its transitive allocation and exception behavior were only partially inspected; a faithful growth-path test needs further dependency analysis.",
+              "The semantic name of the first entry DWORD and behavior for invalid vector states remain unverified."
+            ]
+          },
+          {
+            "reference": "VA 0x44f6f0 (RVA 0x4f6f0), through 0x44f759",
+            "priority": "low",
+            "classification": "existing_recovery",
+            "hint": "Reuse the existing source-268 recovery and its reference rather than creating a duplicate.",
+            "evidence": [
+              "Original compares source capacity at +0x14 against 8; inline strings copy (length+1)*2 bytes, while heap strings transfer the pointer. It transfers length and capacity, resets source capacity to 7 and length to zero, writes a source terminator, and returns this with ret 4.",
+              "The native registry identifies a 106-byte wide-move-construct block; recovered/batches/source-268 contains C++ for the same address."
+            ],
+            "dependencies": [
+              "Inline copy import slot 0x92d4a4."
+            ],
+            "validation_plan": [
+              "Use the existing recovery's tests as a starting point and compare directly with original execution when integrating the vector candidate."
+            ],
+            "limits": [
+              "The note's wording about clearing the source pointer applies to the heap path; the inline path resets the first UTF-16 unit instead. No new execution test was run in this review."
+            ]
+          },
+          {
+            "reference": "VA 0x44f9b0 (RVA 0x4f9b0), through 0x44faa5",
+            "priority": "low",
+            "classification": "existing_recovery",
+            "hint": "Reuse source-110's existing wide range assignment recovery; the cited ten bytes are only an entry guard, not the function boundary.",
+            "evidence": [
+              "The original takes this in ECX and pointer and count on the stack, returning with ret 8. It checks for an interior source and delegates to 0x44fb30, otherwise checks count and capacity, may call 0x44fde0, copies count*2 bytes and writes a terminator.",
+              "The native registry records wide-assign-range as 246 bytes, and recovered/batches/source-110 identifies the same function."
+            ],
+            "dependencies": [
+              "Substring assignment at 0x44fb30, growth at 0x44fde0, length-error import slot 0x92d168 and copy routine 0x8f8d66."
+            ],
+            "validation_plan": [
+              "For any reuse, compare original and recovered behavior on inline and heap strings, interior sources, zero count and growth, with compatible dependency bindings."
+            ],
+            "limits": [
+              "Only disassembly and existing recovery records were inspected; no new differential execution was performed."
+            ]
+          },
+          {
+            "reference": "VA 0x55ede7 and 0x55e130; ReRiff loose-cache and authoring claims",
+            "priority": "low",
+            "classification": "unverified",
+            "hint": "Treat the scanner and mounting discussion as a lead for separate original investigation, and the loose-cache and exporter changes as intentional mod work.",
+            "evidence": [
+              "The original bytes at 0x55ede7 call 0x55e130. The latter builds a search expression and invokes an import at 0x92d078; only its initial portion was inspected.",
+              "The note explicitly labels cache generation and loose-export tooling as intentional changes."
+            ],
+            "dependencies": [
+              "Full scanner and mount-pass control flow, original filename constants, filesystem imports and archive fixtures."
+            ],
+            "validation_plan": [
+              "Trace the complete original scanner and mount pass and test filename selection and supplied stems against original execution before making behavioral claims."
+            ],
+            "limits": [
+              "Patch exclusivity, arbitrary-stem acceptance, reported live behavior and the mod's test outcomes were not independently checked. No managed token was cited or inspected."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence only for VA 0x5614e0–0x561575, with zero source-recovery credit. The complete 150-byte function includes the live external-entry path after the first return. The call at 0x55ede7 targets 0x55e130, not this function; the note’s mod and mounting claims remain unverified.",
+    "reason": "Independent disassembly confirms the entry, both branches, calls, stack cleanup, and padding before the next function. Reassembly at the original VA matched all 150 original bytes without masking, and the executable, source, and original-range hashes matched the receipts. Growth allocation and exception behavior, invalid inputs, return-value meaning, and behavioral equivalence remain unvalidated."
+  }
+}

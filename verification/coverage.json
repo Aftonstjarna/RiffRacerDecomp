@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 137830,
-  "remaining_bytes": 8497562,
-  "verified_percent": 1.5961058861022175,
-  "registered_blocks": 692,
-  "exact_blocks": 692,
+  "verified_bytes": 137980,
+  "remaining_bytes": 8497412,
+  "verified_percent": 1.5978429236333451,
+  "registered_blocks": 693,
+  "exact_blocks": 693,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4844,6 +4844,15 @@
       "byte_equal": true,
       "reference_sha256": "85daaf30d38d1b5726c4e3152824c536fa4fbb10585f7b9b59888d3041be8663",
       "candidate_sha256": "85daaf30d38d1b5726c4e3152824c536fa4fbb10585f7b9b59888d3041be8663"
+    },
+    {
+      "name": "wide-entry-vector-append",
+      "file_offset": 1444064,
+      "size": 150,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "fbe2ff8b37eaa23a5059c7b64d5497d7c06e591175edd1c56b4aa70e1a27557b",
+      "candidate_sha256": "fbe2ff8b37eaa23a5059c7b64d5497d7c06e591175edd1c56b4aa70e1a27557b"
     },
     {
       "name": "shader-drawprim-ctor",
