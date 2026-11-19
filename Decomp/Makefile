@@ -8419,3 +8419,16 @@ test-cycle-mounted-archive-search: $(OUT)/reriff-match $(OUT)/mounted_archive_se
 
 test-recovered: test-cycle-mounted-archive-search
 .PHONY: test-cycle-mounted-archive-search
+
+# Reviewed cycle reference: archive-component-lookup (assembly evidence only).
+$(OUT)/archive_component_lookup.bin: native/archive_component_lookup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/archive_component_lookup.o
+	ld -m elf_i386 -Ttext=0x5991e0 -e original_archive_component_lookup $(OUT)/archive_component_lookup.o -o $(OUT)/archive_component_lookup.elf
+	objcopy -O binary --only-section=.text $(OUT)/archive_component_lookup.elf $@
+
+test-cycle-archive-component-lookup: $(OUT)/reriff-match $(OUT)/archive_component_lookup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" archive-component-lookup $(OUT)/archive_component_lookup.bin $(OUT)/archive-component-lookup-comparison.json
+
+test-recovered: test-cycle-archive-component-lookup
+.PHONY: test-cycle-archive-component-lookup
