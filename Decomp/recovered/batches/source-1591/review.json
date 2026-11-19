@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, unmatched high-level source with zero matching-source byte credit.",
+  "reason": "The implementation follows the reference control flow: it calls the base setter first, then forwards the same pointer to the visual unless kind is 3. The 32-bit field offsets and external helper dependencies are consistent with the reference. The tests call the original routine and compare object, visual and input bytes across meaningful branches and floating-point cases. An independent 32-bit compilation and source hash check succeeded. Validation remains sampled: nonempty entry ranges, overlapping input storage, dereferenced null pointers and exceptional floating-point behavior are stated limitations, not evidence of all-input equivalence."
+}
