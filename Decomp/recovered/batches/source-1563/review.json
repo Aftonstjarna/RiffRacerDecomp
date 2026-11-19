@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, unmatched high-level recovery of the glyph lookup, with zero matching-source byte credit.",
+  "reason": "The implementation follows the original routine’s control flow, 32-bit layout, thiscall behavior, return values, and output-byte writes. The submitted test calls the original and covers primary and secondary hits, duplicate records, empty ranges, CR/LF, null options, fallback, and an aliased output byte while comparing relevant state. An independent disassembly of Game.exe and SHA-256 checks agree with the reference and validation records. Native Windows compilation reports an exact fragment for one profile but no certified matching credit. The behavioral evidence is sampled, not proof of equivalence for every input; malformed ranges and invalid pointers remain outside the stated coverage."
+}
