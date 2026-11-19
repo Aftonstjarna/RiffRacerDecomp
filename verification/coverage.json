@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 136519,
-  "remaining_bytes": 8498873,
-  "verified_percent": 1.5809241780801613,
-  "registered_blocks": 684,
-  "exact_blocks": 684,
+  "verified_bytes": 136623,
+  "remaining_bytes": 8498769,
+  "verified_percent": 1.582128524101743,
+  "registered_blocks": 685,
+  "exact_blocks": 685,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -1496,6 +1496,15 @@
       "byte_equal": true,
       "reference_sha256": "667f47956a339f0eb5133a594284fbd1a89d4dcc6df9702b84b8c2b867c0d226",
       "candidate_sha256": "667f47956a339f0eb5133a594284fbd1a89d4dcc6df9702b84b8c2b867c0d226"
+    },
+    {
+      "name": "worker-resource-handle-set",
+      "file_offset": 255296,
+      "size": 104,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f1ecf87ceda77a73ce6bcee3de7bd4e62ac83787d180b48c1754cb02c27c9a00",
+      "candidate_sha256": "f1ecf87ceda77a73ce6bcee3de7bd4e62ac83787d180b48c1754cb02c27c9a00"
     },
     {
       "name": "owner-handle5c-acquire",

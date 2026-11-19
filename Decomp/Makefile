@@ -8354,3 +8354,16 @@ test-cycle-text-colour-forward: $(OUT)/reriff-match $(OUT)/text_colour_forward.b
 
 test-recovered: test-cycle-text-colour-forward
 .PHONY: test-cycle-text-colour-forward
+
+# Reviewed cycle reference: worker-resource-handle-set (assembly evidence only).
+$(OUT)/worker_resource_handle_set.bin: native/worker_resource_handle_set.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_resource_handle_set.o
+	ld -m elf_i386 -Ttext=0x43f140 -e original_worker_resource_handle_set $(OUT)/worker_resource_handle_set.o -o $(OUT)/worker_resource_handle_set.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_resource_handle_set.elf $@
+
+test-cycle-worker-resource-handle-set: $(OUT)/reriff-match $(OUT)/worker_resource_handle_set.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-resource-handle-set $(OUT)/worker_resource_handle_set.bin $(OUT)/worker-resource-handle-set-comparison.json
+
+test-recovered: test-cycle-worker-resource-handle-set
+.PHONY: test-cycle-worker-resource-handle-set
