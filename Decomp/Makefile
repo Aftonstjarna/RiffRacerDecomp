@@ -8289,3 +8289,16 @@ test-cycle-ui-sprite-update-property: $(OUT)/reriff-match $(OUT)/ui_sprite_updat
 
 test-recovered: test-cycle-ui-sprite-update-property
 .PHONY: test-cycle-ui-sprite-update-property
+
+# Reviewed cycle reference: window-dispatch (assembly evidence only).
+$(OUT)/window_dispatch.bin: native/window_dispatch.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/window_dispatch.o
+	ld -m elf_i386 -Ttext=0x48c6e0 -e original_window_dispatch $(OUT)/window_dispatch.o -o $(OUT)/window_dispatch.elf
+	objcopy -O binary --only-section=.text $(OUT)/window_dispatch.elf $@
+
+test-cycle-window-dispatch: $(OUT)/reriff-match $(OUT)/window_dispatch.bin
+	$(OUT)/reriff-match native-check "$(GAME)" window-dispatch $(OUT)/window_dispatch.bin $(OUT)/window-dispatch-comparison.json
+
+test-recovered: test-cycle-window-dispatch
+.PHONY: test-cycle-window-dispatch

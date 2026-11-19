@@ -1,0 +1,252 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "47fdb436aecf50231ba692b37a0eb35b03ff50a9126f110e71f56d356ef7572e",
+    "finding_index": 0,
+    "va": 4769504,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "47fdb436aecf50231ba692b37a0eb35b03ff50a9126f110e71f56d356ef7572e",
+    "note_sha256": "47fdb436aecf50231ba692b37a0eb35b03ff50a9126f110e71f56d356ef7572e",
+    "bytes": 18503,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff/build/prestige-rank-work",
+        "commit": "80f408df11fedc466be1ef1566623c4dd1ce30d3",
+        "path": "reports/NATIVE-TEXT-ENTRY-AND-KANA-SEARCH.md",
+        "git_status": " M reports/NATIVE-TEXT-ENTRY-AND-KANA-SEARCH.md\n"
+      }
+    ],
+    "related_ids": [
+      "194114acb3a196ac1aa8ce847a906ad39f828e89dc9ee8428fc370cc7baa3ed5",
+      "29e73065cf08856e478fd1935148566e91414bafb9f2caa4bf5b38213ea8076f",
+      "30cbf2888628ced3c50a40198ae496208534bb087adecef1867c557dde9061d7",
+      "37bd9d58e8fbca6f3d50b397e9085894b3031508c1b3fd4c19af9e9f150a8e48",
+      "575dfac62bbdf35d0ac0be58045b8a2d83881fe9fa10994942f50a83c0d677da",
+      "b0327ece9074bb76635e11ed6bebef84b25c782c4bfeea3a75988a11e410888f",
+      "fb8a423b0882a3ad52134296c9fa747529f79693fbc34a9d63a3a33188cbf3a8"
+    ],
+    "history": [
+      {
+        "time": 1794760717,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794760739,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794760859,
+        "action": "triage_complete",
+        "reason": "Confirmed useful original recovery leads in the window dispatch wrapper and three small IL routines. Original SHA-256 matches the note. Searches found no corresponding recovered C++ or native registry entries for these candidates. No implementation or differential execution was performed."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "Confirmed useful original recovery leads in the window dispatch wrapper and three small IL routines. Original SHA-256 matches the note. Searches found no corresponding recovered C++ or native registry entries for these candidates. No implementation or differential execution was performed.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "47fdb436aecf50231ba692b37a0eb35b03ff50a9126f110e71f56d356ef7572e",
+      "baseline": {
+        "commit": "430a0656092f87cb2a3350cd005233769fa663ef",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "47fdb436aecf50231ba692b37a0eb35b03ff50a9126f110e71f56d356ef7572e"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "Confirmed useful original recovery leads in the window dispatch wrapper and three small IL routines. Original SHA-256 matches the note. Searches found no corresponding recovered C++ or native registry entries for these candidates. No implementation or differential execution was performed.",
+        "corrections": [
+          "VA 0x0048C6E0 is a window dispatch wrapper; the larger object message handler starts separately at 0x0048C740. Its boundary includes both return paths, not just the first ret.",
+          "onFileSelected does not establish filename encoding or perform a verified encoding conversion. Its second destination uses a NUL-terminated byte scan, whereas its first call receives a copied native string.",
+          "applySongListFilter also has a bundled branch that retains records whose byte at +198 is nonzero; the non-bundled branch sorts and retains at most 20.",
+          "Editor, kana matching, library scanning, keyboard fallback and cache-failure handling are intentional ReRiff changes. Their reported tests do not validate original behavior.",
+          "monodis aborted during the whole-image dump. The specific IL routines cited below have complete bodies in the partial output; other note claims were not comprehensively verified."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x0048C6E0; RVA 0x0008C6E0",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the small x86 stdcall window dispatch wrapper over [0x0048C6E0, 0x0048C73D). Keep the thiscall object handler at 0x0048C740 separate.",
+            "evidence": [
+              "Original disassembly confirms entry bytes 55 8B EC 53 8B 5D 0C.",
+              "For message 0x81, loads the first DWORD through lParam, installs it with SetWindowLongW(hwnd, -21, object), then dispatches.",
+              "Other messages call GetWindowLongW(hwnd, -21); a nonzero result becomes ECX for the call to 0x0048C740.",
+              "A null stored object forwards all four arguments to DefWindowProcW.",
+              "Both exits use ret 0x10; the final return ends at 0x0048C73D, followed by three INT3 bytes.",
+              "native_blocks.hpp registers nearby window routines but no entry at RVA 0x8C6E0; recovered-source address/name searches found no corresponding implementation."
+            ],
+            "dependencies": [
+              "IAT 0x0092D560: SetWindowLongW",
+              "IAT 0x0092D5B4: GetWindowLongW",
+              "IAT 0x0092D590: DefWindowProcW",
+              "VA 0x0048C740: object handler, ECX object plus four stack arguments"
+            ],
+            "validation_plan": [
+              "Compare original and candidate under an x86 harness with controlled import and object-handler callbacks.",
+              "Exercise WM_NCCREATE, stored-object and null-object paths; compare arguments, call order, return values, register preservation and stack cleanup.",
+              "Include SetWindowLongW failure without adding a new failure branch absent from the original."
+            ],
+            "limits": [
+              "No execution harness was run.",
+              "Inspection of the adjacent handler was partial; no complete recovery claim applies to it.",
+              "The note's live Steam message-routing hypothesis remains unverified."
+            ]
+          },
+          {
+            "reference": "token 0x0600159E; IL RVA 0x00363878",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover applySongListFilter as a bounded list mutation routine, preserving both branches, native erase ownership and the original sorting comparator.",
+            "evidence": [
+              "MethodDef row 5534 identifies the cited token; complete IL body has code size 0xC7 and ret at IL_00C6.",
+              "IL_0000 branches on s_showBundled. The true branch tests record byte +198 and erases zero-valued records.",
+              "IL_0057 initializes a counter to 20; IL_0073 uses stride 200 and IL_007E calls std._Sort with sortByLastPlayed.",
+              "IL_0098 decrements the counter; negative values erase the current iterator and continue from erase's returned iterator.",
+              "setupRecentTracksList IL_0000..0022 independently confirms copy construction from gaSaveGame+176 before filtering and duplicate removal.",
+              "Recovered-source name/address searches and native registry inspection found no corresponding entry."
+            ],
+            "dependencies": [
+              "s_showBundled global",
+              "200-byte gaSaveGame::localSong layout, including byte +198",
+              "Native vector erase and localSong ownership operations",
+              "Original std._Sort specialization and sortByLastPlayed"
+            ],
+            "validation_plan": [
+              "Compare both branches using empty lists, mixed +198 flags and lengths 19, 20, 21 and larger.",
+              "Compare ordering, erased-record destruction, surviving string ownership and vector capacity.",
+              "Use the original sorter for tied timestamps until its ordering behavior is established."
+            ],
+            "limits": [
+              "Sort and erase implementations were not fully inspected.",
+              "No runtime comparison was performed.",
+              "This routine is not a whole-library text search."
+            ]
+          },
+          {
+            "reference": "token 0x06001595; IL RVA 0x003626F8",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover sortByLastPlayed alongside the filter. Preserve unsigned descending comparison and destruction of its by-value song arguments.",
+            "evidence": [
+              "Method table identifies row 5525, yielding token 0x06001595.",
+              "Complete 0x40-byte IL body loads DWORD +188 from each argument and uses cgt.un at IL_0010.",
+              "Normal execution destroys song1 at IL_0024 and song2 at IL_0039.",
+              "Nested fault handlers invoke ___CxxCallUnwindDtor for argument cleanup.",
+              "Signature declares cdecl, one-byte boolean return and copy-constructed localSong arguments.",
+              "Recovered-source searches found no sortByLastPlayed implementation."
+            ],
+            "dependencies": [
+              "localSong copy construction and destructor",
+              "___CxxCallUnwindDtor",
+              "Unsigned 32-bit field at localSong+188"
+            ],
+            "validation_plan": [
+              "Compare equal values, ascending pairs and values spanning 0x7FFFFFFF/0x80000000.",
+              "Trace destruction order and verify copied arguments leave caller-owned records intact.",
+              "Validate the mixed-mode callable ABI before invoking it from a native harness."
+            ],
+            "limits": [
+              "Copy/destructor implementations and exception paths were not independently recovered.",
+              "A pure timestamp predicate alone would omit original ownership side effects."
+            ]
+          },
+          {
+            "reference": "token 0x0600109F; IL RVA 0x002CE000",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover dirEntry vector swap as a small ownership primitive: self-alias guard, container-base swap call, then exchange the three pointer fields.",
+            "evidence": [
+              "MethodDef row 4255 confirms the token and RVA.",
+              "Complete IL code size is 0x3A, ending at IL_0039.",
+              "IL_0002 skips all work for identical vector addresses.",
+              "IL_0006 calls std._Container_base0._Swap_all before exchanges at offsets 0, 4 and 8.",
+              "The body contains no element construction, destruction or allocation.",
+              "Recovered-source and registry searches found no corresponding dirEntry swap entry."
+            ],
+            "dependencies": [
+              "std._Container_base0._Swap_all, identified as native unmanaged in metadata",
+              "Original 32-bit vector pointer layout"
+            ],
+            "validation_plan": [
+              "Inspect _Swap_all before simplifying it.",
+              "Compare self-swap, empty/nonempty and two populated vectors.",
+              "Track pointer triples, allocation ownership and subsequent destruction using original vector operations."
+            ],
+            "limits": [
+              "_Swap_all implementation was not disassembled.",
+              "Swap alone does not validate the note's result-list construction or UI ownership."
+            ]
+          },
+          {
+            "reference": "token 0x0600104F; IL RVA 0x002CEBD4",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover onFileSelected as a small state-transition routine with original MSVC string semantics and ordered singleton side effects.",
+            "evidence": [
+              "Complete IL body has size 0x86 and ret at IL_0085; signature takes picker and native narrow-string pointers.",
+              "IL_0000..0025 initializes and copies a native string; IL_002E passes it by value to setChosenMusicFilename with FileSource 0.",
+              "IL_0033..0043 selects inline versus heap storage using capacity at string+20 and threshold 16.",
+              "IL_0049..005E scans to the first NUL; IL_0060..0068 assigns that prefix to gaNewTrackScreen+324.",
+              "IL_0074 calls popOverlayState(true), followed by setNext(18) at IL_0080.",
+              "Recovered-source searches found no corresponding implementation."
+            ],
+            "dependencies": [
+              "Native narrow-string _Tidy and assign overloads",
+              "gaRaceConfig singleton and setChosenMusicFilename",
+              "gaNewTrackScreen singleton and string field +324",
+              "gaStateManager singleton, popOverlayState and setNext"
+            ],
+            "validation_plan": [
+              "Compare empty, inline, heap-backed and embedded-NUL strings using original-owned allocations.",
+              "Trace both filename destinations and verify pop-before-transition ordering.",
+              "Inspect ownership transfer into setChosenMusicFilename before building a native bridge."
+            ],
+            "limits": [
+              "Callee behavior and filename encoding remain unresolved.",
+              "Do not replace the native string argument with a raw UTF-8 pointer.",
+              "No original execution or allocation-failure testing was performed."
+            ]
+          },
+          {
+            "reference": "gaQuitConfirmMenu tokens 0x06001589/0x0600158B; thunk RVA 0x00360BC1",
+            "priority": "low",
+            "classification": "intentional_modification",
+            "hint": "Use the original dialog evidence as context for future UI recovery; exclude the added editor, search and keyboard behavior from original reconstruction.",
+            "evidence": [
+              "Original disassembly confirms thunk bytes FF 25 74 79 BA 00, jumping through VA 0x00BA7974.",
+              "enter IL_031C..033B stores height at +256 and width at +252 using factor 1.3272727272727274.",
+              "Reference RERIFF-EVIDENCE.md already documents state-9 confirmation lifecycle and overlay-manager ownership.",
+              "The note explicitly describes Unicode editing, search indexing, undo, blinking and keyboard fallback as extensions."
+            ],
+            "dependencies": [
+              "Original text creation, reference-counted UI ownership and overlay lifecycle",
+              "Additional original UI routines require separate inspection"
+            ],
+            "validation_plan": [
+              "For future dialog recovery, inspect complete UI methods and their exception cleanup before selecting smaller routines.",
+              "Keep extension fixtures separate from original differential tests."
+            ],
+            "limits": [
+              "Full dialog construction, vtable guards and live rendering were not validated.",
+              "No conclusion establishes the absence of an unused original text editor.",
+              "Reported cache corruption and its ReRiff fixes do not establish an original-game bug."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for VA 0x0048C6E0 only. The complete 93-byte boundary is [0x0048C6E0, 0x0048C73D): it includes both return paths, followed by three padding bytes and the separate handler at 0x0048C740. The candidate preserves the observed branches and x86 callback ABI. This provides zero recovered-source credit; the handler, imported API behavior, live message routing, and behavioral equivalence remain unvalidated.",
+    "reason": "Independent disassembly confirmed the entry, both branches, calls, register preservation and stack cleanup. The original hash matches the stated provenance. Assembling and linking the symbolic candidate at its original VA produced 93 bytes identical to the original, with no masking; the source and binary hashes also match the receipt. The import table confirms the three named Windows APIs, the window-class setup references this entry, and the nearby registered block does not overlap it."
+  }
+}
