@@ -8133,3 +8133,16 @@ test-cycle-worker-view-heap-prepare: $(OUT)/reriff-match $(OUT)/worker_view_heap
 
 test-recovered: test-cycle-worker-view-heap-prepare
 .PHONY: test-cycle-worker-view-heap-prepare
+
+# Reviewed cycle reference: input-pointer-get (assembly evidence only).
+$(OUT)/input_pointer_get.bin: native/input_pointer_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/input_pointer_get.o
+	ld -m elf_i386 -Ttext=0x55b470 -e original_input_pointer_get $(OUT)/input_pointer_get.o -o $(OUT)/input_pointer_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/input_pointer_get.elf $@
+
+test-cycle-input-pointer-get: $(OUT)/reriff-match $(OUT)/input_pointer_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" input-pointer-get $(OUT)/input_pointer_get.bin $(OUT)/input-pointer-get-comparison.json
+
+test-recovered: test-cycle-input-pointer-get
+.PHONY: test-cycle-input-pointer-get

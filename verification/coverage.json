@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 133499,
-  "remaining_bytes": 8501893,
-  "verified_percent": 1.5459518224534567,
-  "registered_blocks": 667,
-  "exact_blocks": 667,
+  "verified_bytes": 133554,
+  "remaining_bytes": 8501838,
+  "verified_percent": 1.5465887362148703,
+  "registered_blocks": 668,
+  "exact_blocks": 668,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4583,6 +4583,15 @@
       "byte_equal": true,
       "reference_sha256": "0bdd38ee510bb46f9d9f37f0e13d274897df39296f6813d80290c0aa4126e20e",
       "candidate_sha256": "0bdd38ee510bb46f9d9f37f0e13d274897df39296f6813d80290c0aa4126e20e"
+    },
+    {
+      "name": "input-pointer-get",
+      "file_offset": 1419376,
+      "size": 55,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "857d9c3ddbaa6a08c31e3eb13952ead914d6c1c44b724bdb584b19ffe6bd1fa5",
+      "candidate_sha256": "857d9c3ddbaa6a08c31e3eb13952ead914d6c1c44b724bdb584b19ffe6bd1fa5"
     },
     {
       "name": "audio-decoder-close-reset",
