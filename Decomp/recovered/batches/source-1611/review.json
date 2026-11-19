@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as high-level unmatched source with zero matching-source byte credit.",
+  "reason": "The source agrees with the reference routine’s 32-bit layout, sentinel handling, packed 18-bit name offset, case-sensitive comparison, and linked traversal. The submitted test calls the reference routine and covers all four offset banks, empty strings and chains, prefixes, case differences, misses, duplicates, and fixture preservation. An independent 32-bit build and execution against the reference assembly passed, and the submitted source and executable hashes matched validation.json. Native Windows compilation records successful builds of the actual implementation without matching credit. The validation is sampled and does not establish all-input equivalence; the stated invalid-input and unresolved-field limitations remain."
+}
