@@ -8614,3 +8614,16 @@ test-cycle-ui-visual-handle-update-1c: $(OUT)/reriff-match $(OUT)/ui_visual_hand
 
 test-recovered: test-cycle-ui-visual-handle-update-1c
 .PHONY: test-cycle-ui-visual-handle-update-1c
+
+# Reviewed cycle reference: vfs-directory-record-construct (assembly evidence only).
+$(OUT)/vfs_directory_record_construct.bin: native/vfs_directory_record_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/vfs_directory_record_construct.o
+	ld -m elf_i386 -Ttext=0x561e30 -e original_vfs_directory_record_construct $(OUT)/vfs_directory_record_construct.o -o $(OUT)/vfs_directory_record_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/vfs_directory_record_construct.elf $@
+
+test-cycle-vfs-directory-record-construct: $(OUT)/reriff-match $(OUT)/vfs_directory_record_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" vfs-directory-record-construct $(OUT)/vfs_directory_record_construct.bin $(OUT)/vfs-directory-record-construct-comparison.json
+
+test-recovered: test-cycle-vfs-directory-record-construct
+.PHONY: test-cycle-vfs-directory-record-construct
