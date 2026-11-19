@@ -1,0 +1,160 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "d1d05b50c87f81b5d5429718593b1892ccc020c31578ee42f258f1cbb18b8e9b",
+    "finding_index": 0,
+    "va": 5392800,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "d1d05b50c87f81b5d5429718593b1892ccc020c31578ee42f258f1cbb18b8e9b",
+    "note_sha256": "d1d05b50c87f81b5d5429718593b1892ccc020c31578ee42f258f1cbb18b8e9b",
+    "bytes": 9868,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "2a350319bc0b4b99b9184e43d0d5a65b7727469b",
+        "path": "reports/IMPALA-GEOMETRY-TEST.md",
+        "git_status": "?? reports/IMPALA-GEOMETRY-TEST.md\n"
+      }
+    ],
+    "related_ids": [
+      "229f6348f595ecd61c793ba0795be6c8f8746d245dfea5c256a35b10c32b8955"
+    ],
+    "history": [
+      {
+        "time": 1795102109,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1795102155,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1795102225,
+        "action": "triage_complete",
+        "reason": "The note yields two bounded recovery leads: the native EADB setup routine and a small managed node-name lookup. The collision path is supported by original IL but has broader dependencies and is a lower-priority target. The Impala geometry, collision fit and effect changes are intentional authoring, not original-code recovery."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "The note yields two bounded recovery leads: the native EADB setup routine and a small managed node-name lookup. The collision path is supported by original IL but has broader dependencies and is a lower-priority target. The Impala geometry, collision fit and effect changes are intentional authoring, not original-code recovery.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "d1d05b50c87f81b5d5429718593b1892ccc020c31578ee42f258f1cbb18b8e9b",
+      "baseline": {
+        "commit": "30b09d180694fb85f09e87d7336eb63c44153d09",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "d1d05b50c87f81b5d5429718593b1892ccc020c31578ee42f258f1cbb18b8e9b"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "The note yields two bounded recovery leads: the native EADB setup routine and a small managed node-name lookup. The collision path is supported by original IL but has broader dependencies and is a lower-priority target. The Impala geometry, collision fit and effect changes are intentional authoring, not original-code recovery.",
+        "corrections": [
+          "The EADB setup routine continues past the early return at 0x5249BD through 0x524A8B. It also allocates and initializes a bit array and computes a derived float; the table bindings alone do not describe the complete routine.",
+          "A bad EADB signature or version clears object field +0x44. A zero required count at header +0x0C, +0x18 or +0x14 returns false without clearing that field. These different failure side effects should be preserved when testing original behavior.",
+          "The note's successful authoring checks and reported owner videos do not establish original loader equivalence, the collision branch taken at runtime, or recovery of original source."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x005249A0–0x00524A8B",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the complete x86 thiscall EADB setup method, including both failure paths, conditional table binding, allocation, initialization and the final floating-point calculation.",
+            "evidence": [
+              "ECX is saved as the object pointer; object +0x3C supplies the buffer, initially copied to +0x44. The routine checks magic EADB and version 0x26.",
+              "Required header DWORDs +0x0C, +0x18 and +0x14 must be nonzero. Header +0x10 controls whether object +0x4C receives base plus header +0x48 or zero.",
+              "Object fields +0x48, +0x50, +0x54, +0x58, +0x5C and +0x60 receive base plus header offsets +0x44, +0x54, +0x4C, +0x58, +0x5C and +0x60 respectively.",
+              "The success path allocates (header[+0x14] >> 3) + 1 bytes, fills them with 0xFF, copies header +0x7C to object +0x68, and stores a square-root result at +0x6C. Original data at 0xA06508 is float 0.5.",
+              "The inspected native registry, recovered source and coverage searches found no exact address reference. The original executable SHA-256 agrees with the note."
+            ],
+            "dependencies": [
+              "Allocation entry 0x8F87C8 and its target 0x8F8C42; characterize allocation and failure behavior.",
+              "0x8F8D7E imports memset; 0x426D60 calls the _libm_sse2_sqrt_precise import through 0x8F8D60.",
+              "A readable EADB buffer and writable object with fields through +0x6C; original floating-point operation order and 32-bit pointer arithmetic."
+            ],
+            "validation_plan": [
+              "Compare direct original and candidate calls on valid fixtures, bad magic, bad version, each zero required count, both +0x10 branches and bit-array size boundaries.",
+              "Compare the return byte, all object fields and canaries, allocation size, initialized bytes and floating-point result; instrument the original allocator and imports.",
+              "Test unusual floating-point values and allocation failure only after establishing a safe harness and the allocator's actual contract."
+            ],
+            "limits": [
+              "No differential execution was performed. The table names and allocator semantics were not independently established.",
+              "The original performs no visible buffer-length checks in this routine; malformed offsets require controlled memory fixtures.",
+              "The registry and source search was address-based and does not rule out equivalent recovery under an unrelated name."
+            ]
+          },
+          {
+            "reference": "MethodDef 0x06000C09, gaVehicleSelectVisCallback.setup; IL RVA 0x00322910",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the complete 115-byte IL method as a small node-name-to-index lookup. Preserve case-insensitive comparisons, repeated matches and untouched fields for absent names.",
+            "evidence": [
+              "IL_0000–IL_000E derives the name-vector count from its begin and end pointers; IL_0010–IL_0070 iterates it.",
+              "IL_0017–IL_005F performs three independent _stricmp calls for electric, zone_front and zone_back and copies the corresponding index-vector element to object offsets +4, +8 and +12.",
+              "The final return is IL_0072; the matrix vector and format arguments are unused in the inspected body."
+            ],
+            "dependencies": [
+              "Original _stricmp behavior and string data, 32-bit vector layouts, readable name pointers and a sufficiently long parallel index vector."
+            ],
+            "validation_plan": [
+              "Compare original IL execution with the candidate for empty input, mixed case, unrelated names, each recognized name, duplicate names and prefilled object fields.",
+              "Compare all object bytes and verify that duplicate names select the last matching index and absent names leave their fields unchanged."
+            ],
+            "limits": [
+              "No managed differential harness was run, and behavior on invalid vectors or null names is untested.",
+              "Address searches do not establish whether a semantically equivalent implementation already exists under another name."
+            ]
+          },
+          {
+            "reference": "MethodDefs 0x06000BEE and 0x06000BF4, gaVehiclePhysBase.init and loadHzascCollision",
+            "priority": "low",
+            "classification": "unverified",
+            "hint": "Use these methods as future collision recovery leads, after mapping the collision-device, vector and physics-body interfaces; do not treat the fitted Impala hull as original behavior.",
+            "evidence": [
+              "In init, IL_014C–IL_0188 calls elPhysFile.exists, branches to setShape_file when present, and otherwise calls loadHzascCollision.",
+              "loadHzascCollision has 485 bytes of IL at RVA 0x0028AA68. Its inspected body calls a collision-device virtual entry, adjusts and appends vertices, calls setShape_hull at IL_01A4, and includes cleanup and reference-count operations."
+            ],
+            "dependencies": [
+              "Physics-file existence and shape interfaces, collision-device virtual dispatch, model resources, vertex-vector allocation and cleanup, reference counting and elPhysBody shape calls."
+            ],
+            "validation_plan": [
+              "Trace both resource-existence branches with original resources and instrument shape calls, vertex arguments, object mutations and cleanup.",
+              "Compare the complete method against any candidate with controlled collision-device fixtures and exceptional paths."
+            ],
+            "limits": [
+              "Only selected IL regions were inspected; complete field layouts, branch behavior and executable differential tests remain unresolved.",
+              "The reported video does not identify the selected collision resource or prove contact geometry."
+            ]
+          },
+          {
+            "reference": "Impala geometry, collision-fit and effects experiments",
+            "priority": "low",
+            "classification": "intentional_modification",
+            "hint": "Treat the fitted hull, authored effect meshes, UVs and marker translations as mod-design context only.",
+            "evidence": [
+              "The note explicitly describes affine collision fitting and newly authored geometry and effect UVs.",
+              "The original IL independently confirms the named effect-node lookup, but does not establish the authored geometry or its rendering behavior."
+            ],
+            "dependencies": [],
+            "validation_plan": [],
+            "limits": [
+              "The note's artifacts and owner recordings were not independently inspected."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence only for VA 0x5249a0–0x524a8b, with zero source-recovery credit. The complete routine continues beyond the first return: it binds relative offsets, allocates and fills a byte array, and computes a square root. Bad magic or version clears object field +0x44; a zero required count returns false with that field still set. Table meanings, allocation failure, malformed buffers and floating-point edge behavior remain unvalidated. The research note’s mod and runtime claims were not verified.",
+    "reason": "Independent disassembly confirms the entry follows the preceding function’s return, both internal branches and returns stay within the 236-byte range, and padding and a new function follow it. The symbolic transcription preserves the observed instructions, calls, branches and register/stack behavior. An independent assembly and link at the original VA produced 236 bytes identical to the corresponding unmasked Game.exe bytes; the executable, source and output hashes also match the receipts. The two stated callers and external call targets were counterchecked. This establishes assembly-reference equality, not reconstructed source or behavioral equivalence."
+  }
+}

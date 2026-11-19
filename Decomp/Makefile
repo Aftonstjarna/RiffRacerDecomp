@@ -8536,3 +8536,16 @@ test-cycle-resource-name-insert: $(OUT)/reriff-match $(OUT)/resource_name_insert
 
 test-recovered: test-cycle-resource-name-insert
 .PHONY: test-cycle-resource-name-insert
+
+# Reviewed cycle reference: eadb-setup (assembly evidence only).
+$(OUT)/eadb_setup.bin: native/eadb_setup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/eadb_setup.o
+	ld -m elf_i386 -Ttext=0x5249a0 -e original_eadb_setup $(OUT)/eadb_setup.o -o $(OUT)/eadb_setup.elf
+	objcopy -O binary --only-section=.text $(OUT)/eadb_setup.elf $@
+
+test-cycle-eadb-setup: $(OUT)/reriff-match $(OUT)/eadb_setup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" eadb-setup $(OUT)/eadb_setup.bin $(OUT)/eadb-setup-comparison.json
+
+test-recovered: test-cycle-eadb-setup
+.PHONY: test-cycle-eadb-setup
