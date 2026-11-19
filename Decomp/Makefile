@@ -8250,3 +8250,16 @@ test-cycle-font-utf16-advance: $(OUT)/reriff-match $(OUT)/font_utf16_advance.bin
 
 test-recovered: test-cycle-font-utf16-advance
 .PHONY: test-cycle-font-utf16-advance
+
+# Reviewed cycle reference: ui-handle-assign (assembly evidence only).
+$(OUT)/ui_handle_assign.bin: native/ui_handle_assign.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_handle_assign.o
+	ld -m elf_i386 -Ttext=0x4183c0 -e original_ui_handle_assign $(OUT)/ui_handle_assign.o -o $(OUT)/ui_handle_assign.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_handle_assign.elf $@
+
+test-cycle-ui-handle-assign: $(OUT)/reriff-match $(OUT)/ui_handle_assign.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-handle-assign $(OUT)/ui_handle_assign.bin $(OUT)/ui-handle-assign-comparison.json
+
+test-recovered: test-cycle-ui-handle-assign
+.PHONY: test-cycle-ui-handle-assign
