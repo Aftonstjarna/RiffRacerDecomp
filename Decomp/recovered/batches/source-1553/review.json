@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, behavior-validated unmatched source with zero matching-source byte credit.",
+  "reason": "The comparison network, signed key access at offset 0x188, threshold, sample spacing, and pointer-slot swaps agree with the reference assembly. The submitted differential test calls the original and covers the threshold, ties, signed extremes, varied lengths, all pointer slots, item contents, and the FS head. An independent SHA-256 countercheck confirmed the submitted source and original executable hashes recorded in validation.json. Native Windows compilation records the actual implementation and claims no matching credit. The portable interface and valid-pointer assumptions are documented; sampled validation does not establish all-input equivalence."
+}
