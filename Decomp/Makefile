@@ -8172,3 +8172,16 @@ test-cycle-ui-create-button-sprite: $(OUT)/reriff-match $(OUT)/ui_create_button_
 
 test-recovered: test-cycle-ui-create-button-sprite
 .PHONY: test-cycle-ui-create-button-sprite
+
+# Reviewed cycle reference: worker-frame-step (assembly evidence only).
+$(OUT)/worker_frame_step.bin: native/worker_frame_step.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_frame_step.o
+	ld -m elf_i386 -Ttext=0x492860 -e original_worker_frame_step $(OUT)/worker_frame_step.o -o $(OUT)/worker_frame_step.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_frame_step.elf $@
+
+test-cycle-worker-frame-step: $(OUT)/reriff-match $(OUT)/worker_frame_step.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-frame-step $(OUT)/worker_frame_step.bin $(OUT)/worker-frame-step-comparison.json
+
+test-recovered: test-cycle-worker-frame-step
+.PHONY: test-cycle-worker-frame-step
