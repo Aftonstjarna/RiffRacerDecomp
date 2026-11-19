@@ -1,0 +1,199 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "06d2aaabebb07a3a3b9adf00e331aeadafd411c573f0bf9dc4c5b128e3f89b63",
+    "finding_index": 0,
+    "va": 4550240,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "06d2aaabebb07a3a3b9adf00e331aeadafd411c573f0bf9dc4c5b128e3f89b63",
+    "note_sha256": "06d2aaabebb07a3a3b9adf00e331aeadafd411c573f0bf9dc4c5b128e3f89b63",
+    "bytes": 9139,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "ad239461a7d670d319a1c97dabfed9e19ea5e9ee",
+        "path": "reports/UNICODE-TEXT-TRACE.md",
+        "git_status": "?? reports/UNICODE-TEXT-TRACE.md\n"
+      },
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "250b05d995797a1c074ff4b2b6f8a20a94e950f6",
+        "path": "reports/UNICODE-TEXT-TRACE.md",
+        "git_status": "?? reports/UNICODE-TEXT-TRACE.md\n"
+      }
+    ],
+    "related_ids": [
+      "94b68eb723b61402e7e8ef3b1f0db62ce029a8f285e9fddcd0a0b891ede58ad5",
+      "e917cdb9b6f532c6fb66dc9d5aa5ffddca8e767f3f54c6b411b00c5d800f6a6f"
+    ],
+    "history": [
+      {
+        "time": 1794422894,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794422955,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794423043,
+        "action": "triage_complete",
+        "reason": "Two small original-code candidates are supported by disassembly: glyph lookup and UTF-16 advance accumulation. No overlapping recovery was found in the inspected C++ sources or native registry. The executable SHA-256 matches the note. No behavioral tests were executed."
+      },
+      {
+        "time": 1794446540,
+        "action": "submitted",
+        "reason": "Additional source provenance; status retained"
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "Two small original-code candidates are supported by disassembly: glyph lookup and UTF-16 advance accumulation. No overlapping recovery was found in the inspected C++ sources or native registry. The executable SHA-256 matches the note. No behavioral tests were executed.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "06d2aaabebb07a3a3b9adf00e331aeadafd411c573f0bf9dc4c5b128e3f89b63",
+      "baseline": {
+        "commit": "f375e465e075446f2a269921a43bef261c40eeff",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "06d2aaabebb07a3a3b9adf00e331aeadafd411c573f0bf9dc4c5b128e3f89b63"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "Two small original-code candidates are supported by disassembly: glyph lookup and UTF-16 advance accumulation. No overlapping recovery was found in the inspected C++ sources or native registry. The executable SHA-256 matches the note. No behavioral tests were executed.",
+        "corrections": [
+          "CR/LF return the inline record address font+0x38, not a pointer loaded from that field.",
+          "Alternate lookup searches only the alternate font's primary vector; it does not recurse or use its default glyph.",
+          "The setter's byte-oriented cache scan is original behavior and must be preserved in faithful recovery; changing it requires separate intentional-fix treatment.",
+          "Private trace logs and mod harness sources were unavailable, so their reported runtime results and hook-preservation claims remain unverified."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x00456E60; span [0x00456E60,0x00456ED8)",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover a call-free x86 thiscall glyph lookup: ECX is font, stack arguments are a character truncated to 16 bits and optional byte-output pointer, EAX returns a record address, and callee removes eight argument bytes. Preserve first-match ordering and the output-pointer gate on alternate lookup.",
+            "evidence": [
+              "Entry bytes are 55 8B EC 56 57. At 0x456E6E the supplied output byte is initialized to zero before character handling.",
+              "0x456E75–0x456E7F branch for CR/LF to LEA EAX,[ESI+0x38].",
+              "0x456E81–0x456E9A scan [font+0x28,font+0x2C) by 0x2C bytes, comparing the first WORD.",
+              "0x456E9C–0x456EBB require a non-null output pointer and font+0x68 before scanning the alternate primary vector.",
+              "0x456EBD loads the primary default pointer at +0x34; 0x456EC6 sets the output byte to one on alternate success.",
+              "All three RET 8 paths were inspected, including code after the first return. Padding begins at 0x456ED8; the next entry is 0x456EE0.",
+              "Searches of recovered sources and coverage records found no cited address or glyph/font recovery; parsed native registry ranges do not overlap this span."
+            ],
+            "dependencies": [
+              "32-bit font layout: primary begin/end +0x28/+0x2C, default pointer +0x34, inline special record +0x38, alternate pointer +0x68.",
+              "44-byte records with a leading 16-bit character.",
+              "No calls, imports, allocation or global data accesses."
+            ],
+            "validation_plan": [
+              "Execute the original entry with controlled 32-bit font and record storage; compare returned addresses as record indices and inspect the output byte.",
+              "Cover empty vectors, first/last/duplicate matches, primary precedence, absent alternate, alternate hit/miss, null output pointer, CR/LF, zero, surrogate units and upper argument bits.",
+              "Verify callee stack cleanup, preserved registers and absence of writes beyond the optional output byte."
+            ],
+            "limits": [
+              "No original execution or differential harness was run.",
+              "Requires valid vector ranges; malformed-range behavior was not tested.",
+              "Does not establish actual font coverage, shaping or supplementary-character support."
+            ]
+          },
+          {
+            "reference": "VA 0x00456450; span [0x00456450,0x0045650B)",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the adjacent call-free UTF-16 advance accumulator as a separate routine. ECX supplies font, one stack pointer supplies a zero-terminated UTF-16 string, RET 4 removes that argument, and ST(0) returns the accumulated float. Preserve its inlined lookup and sequential single-precision additions.",
+            "evidence": [
+              "0x45645B–0x456466 return FLDZ for null input; this early return is not the function boundary.",
+              "0x456469–0x4564E6 implement primary/default/alternate/CR-LF selection using the same font offsets and record stride as glyph lookup.",
+              "0x4564E9 uses ADDSS XMM1,[EAX+0x24]; 0x4564EE–0x4564F8 advance two bytes until a zero WORD.",
+              "0x4564FA stores the float accumulator and 0x4564FF loads it into ST(0). The final RET 4 ends at 0x45650B, followed by padding and a new entry at 0x456510.",
+              "No corresponding recovery or overlapping native registry block was found."
+            ],
+            "dependencies": [
+              "Glyph layout and selection rules from 0x00456E60, inlined here rather than called.",
+              "Record float advance at +0x24.",
+              "SSE floating-point environment and x87 return ABI; no imports or globals."
+            ],
+            "validation_plan": [
+              "Compare original returns for null/empty strings, primary and alternate hits, misses, CR/LF and mixed strings.",
+              "Use advances exposing rounding order, cancellation, infinities, NaNs and signed zero; record MXCSR and compare float result bits.",
+              "Check font and record memory remains unchanged and verify RET 4 and preserved registers."
+            ],
+            "limits": [
+              "The descriptive role is inferred from instruction behavior; no original symbol name was recovered.",
+              "No runtime comparison was performed.",
+              "Avoid replacing the loop with reassociated arithmetic or assuming newline layout semantics beyond adding the special record's advance."
+            ]
+          },
+          {
+            "reference": "VA 0x00450930; layout VA 0x00455520",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover the setter wrapper separately once layout and narrow-assignment dependencies can be exercised. Treat the larger layout routine as a dependency requiring further analysis.",
+            "evidence": [
+              "Setter entry 0x450930 uses ECX as object and [EBP+8] as text; call 0x450994 has the claimed E8 87 4B 00 00 bytes and targets 0x455520.",
+              "Font comes from object+0x1CC; the setter supplies a stack output buffer, text, object references and scalar settings.",
+              "0x450999–0x4509A1 copy two returned DWORDs into object+0x30/+0x34.",
+              "0x4509A4–0x4509B9 scan that same input as bytes; 0x4509BD–0x4509C3 call 0x416520 with destination object+0x194, input pointer and byte length.",
+              "Setter RET 4 ends at 0x4509D0, where a distinct SEH-bearing routine starts.",
+              "Layout reads UTF-16 at 0x455790 and calls glyph lookup at 0x455797. Its inspected body includes allocation, virtual calls, reference-count changes and output writes; both final RET 0x2C paths precede padding at 0x45644D.",
+              "No overlapping native registry entry or corresponding recovered C++ was found."
+            ],
+            "dependencies": [
+              "Original layout entry 0x00455520 and narrow assignment entry 0x00416520.",
+              "Object fields +0x28, +0x30/+0x34, +0x194 and settings around +0x1C4–+0x1E0.",
+              "Full layout testing additionally requires renderer objects, allocator 0x00442BD0, virtual dispatch, global state and cleanup dependencies."
+            ],
+            "validation_plan": [
+              "Compare the setter against the original using initialized objects and callable original dependencies; capture layout outputs and narrow-cache bytes.",
+              "Include ASCII, non-ASCII UTF-16, empty input and code units containing zero low bytes to expose the original byte scan.",
+              "Audit the complete layout control flow and dependency graph before attempting standalone layout recovery."
+            ],
+            "limits": [
+              "The larger layout routine was only partially reviewed semantically; a complete reconstruction is not justified.",
+              "The byte cache behavior is suspicious but its intended downstream contract was not established.",
+              "No dependency implementations or runtime tests were inspected for these entries."
+            ]
+          },
+          {
+            "reference": "IAT VAs 0x0092D068, 0x0092D078, 0x0092D10C; metadata-to-display conversion site unspecified",
+            "priority": "low",
+            "classification": "unverified",
+            "hint": "Use the imports as tracing anchors only. Locate actual metadata conversion callers before proposing an encoding recovery or fix.",
+            "evidence": [
+              "Original PE import inspection confirms FindNextFileW, FindFirstFileW and MultiByteToWideChar at the claimed RVAs 0x52D068, 0x52D078 and 0x52D10C.",
+              "The executable preferred base is 0x00400000, yielding the claimed IAT VAs.",
+              "The submitted note provides no managed token or exact metadata conversion entry point; its private logs were not available."
+            ],
+            "dependencies": [
+              "Actual filename and metadata call paths, source tag bytes, selected font assets and original conversion implementation."
+            ],
+            "validation_plan": [
+              "Identify import cross-references and trace the metadata value through conversion to layout input.",
+              "If a managed method is implicated, inspect its metadata token and actual IL before assigning behavior.",
+              "Compare decoded code units independently from glyph selection on the affected path."
+            ],
+            "limits": [
+              "Import presence does not identify the responsible conversion.",
+              "No managed IL was inspected or inferred.",
+              "Reported Japanese coverage failures, ACP involvement and ReRiff diagnostic correctness were not independently validated."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for VA 0x456e60, spanning [0x456e60, 0x456ed8). The complete entry includes three return paths beyond the first ret. CR/LF returns the inline address font+0x38; alternate lookup searches only the alternate font’s primary records and is gated by the output pointer. This is not source recovery or runtime validation.",
+    "reason": "Independent disassembly confirms the boundaries, branches, ABI, and stated dependencies. GNU as and ld reproduced all 120 original bytes without relocations or masking; the source and binary hashes match the receipts. The parsed native registry has no overlapping span. The original executable and note hashes match their recorded values. Malformed ranges, runtime behavior, font coverage, shaping, and private trace claims remain unverified. Byte equality grants assembly-reference evidence only and zero compiler-built source credit."
+  }
+}

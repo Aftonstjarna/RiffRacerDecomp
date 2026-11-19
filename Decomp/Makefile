@@ -8211,3 +8211,16 @@ test-cycle-ui-sprite-create: $(OUT)/reriff-match $(OUT)/ui_sprite_create.bin
 
 test-recovered: test-cycle-ui-sprite-create
 .PHONY: test-cycle-ui-sprite-create
+
+# Reviewed cycle reference: font-glyph-lookup (assembly evidence only).
+$(OUT)/font_glyph_lookup.bin: native/font_glyph_lookup.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/font_glyph_lookup.o
+	ld -m elf_i386 -Ttext=0x456e60 -e original_font_glyph_lookup $(OUT)/font_glyph_lookup.o -o $(OUT)/font_glyph_lookup.elf
+	objcopy -O binary --only-section=.text $(OUT)/font_glyph_lookup.elf $@
+
+test-cycle-font-glyph-lookup: $(OUT)/reriff-match $(OUT)/font_glyph_lookup.bin
+	$(OUT)/reriff-match native-check "$(GAME)" font-glyph-lookup $(OUT)/font_glyph_lookup.bin $(OUT)/font-glyph-lookup-comparison.json
+
+test-recovered: test-cycle-font-glyph-lookup
+.PHONY: test-cycle-font-glyph-lookup
