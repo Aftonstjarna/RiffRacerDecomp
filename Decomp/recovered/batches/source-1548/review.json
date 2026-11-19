@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as readable, unmatched high-level recovery with zero matching-source byte credit.",
+  "reason": "The implementation’s branch, ordered word accesses, return value, member offsets, and x86 thiscall interface agree with the original routine. Source hashes match validation.json, and an independent 32-bit build and test against the byte-verified reference assembly passed. The tests cover every flag value, varied word patterns, output sentinels, and overlap that changes the second loaded word. The overlap cases do not cover both directions as the test comment claims, and sampled validation does not establish all-input equivalence. The recorded native Windows compilation applies to the submitted implementation; it does not confer source-matching credit."
+}

@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Input pointer getter",
+  "summary": "At VA 0x55b470, thiscall virtual slot +0x20 returns its output pointer after writing two 32-bit words: zeroes when byte +0x246 is nonzero, otherwise the words at +0x23c and +0x240. Reads and writes are ordered. Constructor at 0x55b1dc installs the vtable at 0xa004b0; no direct calls to this address were found. Original disassembly and accepted assembly agree.",
+  "targets": ["input-pointer-get"],
+  "references": ["input-pointer-get"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare original and recovered return pointers, all object bytes, output and sentinels for every flag byte, varied bit patterns and overlapping output storage; assert expected external output and untouched sentinels.",
+  "known_limits": ["Meaning and units of the two stored words and flag are not established by this getter.", "Requires valid writable output and readable object; faulting inputs are not tested.", "Virtual callers cannot be uniquely identified from indirect calls alone."]
+}
