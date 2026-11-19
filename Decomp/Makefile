@@ -8432,3 +8432,16 @@ test-cycle-archive-component-lookup: $(OUT)/reriff-match $(OUT)/archive_componen
 
 test-recovered: test-cycle-archive-component-lookup
 .PHONY: test-cycle-archive-component-lookup
+
+# Reviewed cycle reference: controller-indexed-float-get (assembly evidence only).
+$(OUT)/controller_indexed_float_get.bin: native/controller_indexed_float_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/controller_indexed_float_get.o
+	ld -m elf_i386 -Ttext=0x4f8180 -e original_controller_indexed_float_get $(OUT)/controller_indexed_float_get.o -o $(OUT)/controller_indexed_float_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/controller_indexed_float_get.elf $@
+
+test-cycle-controller-indexed-float-get: $(OUT)/reriff-match $(OUT)/controller_indexed_float_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" controller-indexed-float-get $(OUT)/controller_indexed_float_get.bin $(OUT)/controller-indexed-float-get-comparison.json
+
+test-recovered: test-cycle-controller-indexed-float-get
+.PHONY: test-cycle-controller-indexed-float-get

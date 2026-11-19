@@ -1,0 +1,191 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "a6743c4625ff8da1e995fe4bcc9d21dc47b9cbbc4447c9f881e8eecacca095f0",
+    "finding_index": 0,
+    "va": 5210496,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "a6743c4625ff8da1e995fe4bcc9d21dc47b9cbbc4447c9f881e8eecacca095f0",
+    "note_sha256": "a6743c4625ff8da1e995fe4bcc9d21dc47b9cbbc4447c9f881e8eecacca095f0",
+    "bytes": 4144,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff/build/prestige-rank-work",
+        "commit": "582525aa21566a67135bf65bbb4cea6128f282fe",
+        "path": "reports/FILE-PICKER-ALPHABET-TRIGGERS.md",
+        "git_status": "?? reports/FILE-PICKER-ALPHABET-TRIGGERS.md\n"
+      }
+    ],
+    "related_ids": [
+      "0426d47a76ae2d8e7222eee3e9317371a7427e08d6703f6168d4feeb2ec34b0e",
+      "79744ac2433529d76a6215ffb76d18790bb72e94570f35afebd13770f21dd0c3"
+    ],
+    "history": [
+      {
+        "time": 1794712594,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794712658,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794712785,
+        "action": "triage_complete",
+        "reason": "Two useful original-code candidates: a small native float getter and the managed keyboard jump routine. Original bytes confirm the getter; actual IL and method-body hashes confirm both cited managed methods. No corresponding recovery was found in the searched recovered C++ or native registry. ReRiff trigger navigation remains an intentional modification."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "Two useful original-code candidates: a small native float getter and the managed keyboard jump routine. Original bytes confirm the getter; actual IL and method-body hashes confirm both cited managed methods. No corresponding recovery was found in the searched recovered C++ or native registry. ReRiff trigger navigation remains an intentional modification.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "a6743c4625ff8da1e995fe4bcc9d21dc47b9cbbc4447c9f881e8eecacca095f0",
+      "baseline": {
+        "commit": "680ddcabc42845966ffbf5e05cc725c7c8fa15f1",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "a6743c4625ff8da1e995fe4bcc9d21dc47b9cbbc4447c9f881e8eecacca095f0"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "Two useful original-code candidates: a small native float getter and the managed keyboard jump routine. Original bytes confirm the getter; actual IL and method-body hashes confirm both cited managed methods. No corresponding recovery was found in the searched recovered C++ or native registry. ReRiff trigger navigation remains an intentional modification.",
+        "corrections": [
+          "jumpToSelection uppercases a temporary copy of each entire filename through the native toupper callback, then compares its first UTF-16 code unit against the supplied byte. It does not uppercase the supplied argument.",
+          "The jump method also writes picker+384 = 0.25 and invokes a virtual operation through screen+12, vtable+0x54, with arguments 0 and -1 before assigning focus. These side effects must survive recovery.",
+          "The 518-byte jump CIL digest excludes its 12-byte header, local-signature metadata and trailing exception section. Seven fault clauses are part of the original method and must also be preserved.",
+          "The note's Wine tests and reported live navigation establish no independently verified original behavior in this review. Trigger latching, available-letter selection and phase guards are mod policy.",
+          "monodis aborted later in the assembly, but emitted complete IL for both cited methods before that failure; their headers, sizes and CIL hashes were independently inspected in Game.exe."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x004F8180; RVA 0x000F8180",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the 14-byte unchecked indexed float getter as an x86 thiscall function: return the float at this+0x38+4*index through x87 ST(0), popping the single four-byte argument.",
+            "evidence": [
+              "Original disassembly: push ebp; mov ebp,esp; mov eax,[ebp+8]; fld DWORD PTR [ecx+eax*4+0x38]; pop ebp; ret 4.",
+              "Original bytes are 55 8b ec 8b 45 08 d9 44 81 38 5d c2 04 00.",
+              "The preceding routine ends at 0x004F817D, followed by two INT3 bytes; the getter ends at 0x004F818D, followed by two INT3 bytes and a separate prologue at 0x004F8190.",
+              "A pointer to the getter occurs at original file offset 0x5FC798.",
+              "Address/name searches found no corresponding recovered C++ or native registry entry; parsed registry spans did not overlap this getter."
+            ],
+            "dependencies": [
+              "Readable object storage at this+0x38+4*index.",
+              "An x86 execution harness preserving thiscall stack cleanup and x87 return behavior."
+            ],
+            "validation_plan": [
+              "Compare original execution with candidate execution for indices 0 and 1 using finite values, signed zero, infinities and NaNs.",
+              "Check object memory, stack balance and preserved registers around each call.",
+              "Use additional safely allocated indices to verify the original performs no clamping or bounds check."
+            ],
+            "limits": [
+              "No differential execution was performed.",
+              "The getter alone does not establish LT/RT naming, valid index range, controller lifetime or the full singleton/device/controller virtual-call chain.",
+              "The located pointer was not independently established as vtable slot 8."
+            ]
+          },
+          {
+            "reference": "MethodDef 0x06001053; RVA 0x002CEC68; mapped VA 0x006CEC68",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover gaFileSelectInterface.jumpToSelection as a standalone managed-to-native semantic candidate, preserving string-copy cleanup, first-match scanning, UI call order and exception unwinding.",
+            "evidence": [
+              "Method metadata identifies a static CIL method with thiscall modifier, explicit picker pointer, int8 argument and unsigned-byte-marshaled bool result.",
+              "Original header is 0b3005000602000034100011: 12 bytes, maxstack 5, 518 code bytes, locals token 0x11001034 and additional sections.",
+              "Original CIL SHA-256 is 27868fc02f3bdb306399a688ccbc08628148349407a3a5f98702affd6d8a6545.",
+              "IL_0005–0018 reads picker+276 and computes entry count using stride 28; IL_0036 copies each filename, IL_00A2 transforms the copy through toupper, and IL_00BE–00C0 compares its first code unit with the argument.",
+              "String capacity at +20 selects inline storage below 8; length at +16 determines the transform range.",
+              "IL_0116 calls moveToSelection through picker+248; IL_0127 writes 0.25 at picker+384; IL_0129 updates visibility; IL_0149 invokes screen+12's vtable+0x54 operation with 0 and -1.",
+              "IL_017B looks up row index+4; IL_01B6 calls setFocus. Success returns at IL_0203; exhausted search returns at IL_0205.",
+              "The original trailing exception section contains seven fault clauses. Searches found no corresponding existing recovered implementation or overlapping native registry span."
+            ],
+            "dependencies": [
+              "String copy 0x0600105F, transform 0x060010A2, native toupper field 0x04000F3D, tidy 0x060009A5 and destructor 0x06000985.",
+              "moveToSelection 0x0600113E and updateVisibility 0x06001056.",
+              "getScreen 0x06000313, getItemWithID 0x060016A1 and setFocus 0x060016E7.",
+              "SSP destructors 0x06000321/0x06000322, unwind helper 0x060015F5 and virtual-call signature 0x11000FEC."
+            ],
+            "validation_plan": [
+              "Compare original and candidate on empty lists, absent initials, repeated initials, first/last matches and inline/heap filenames.",
+              "Record selected index, return value, picker+384, reel output, virtual-call arguments, focus changes and SSP/string lifetime events.",
+              "Exercise lowercase filenames, empty names and non-ASCII code units using the original toupper behavior and locale.",
+              "Test allocation failures and dependency exceptions against all seven original fault clauses."
+            ],
+            "limits": [
+              "No candidate was built or executed.",
+              "Native toupper behavior for non-ASCII UTF-16 inputs remains unresolved; replacing it with Unicode casing would change semantics.",
+              "The note's picker+324, screen+20 and item+8 layout claims were not independently established by this method inspection.",
+              "Dependency implementations and unmanaged call signatures require further inspection before a faithful executable recovery."
+            ]
+          },
+          {
+            "reference": "MethodDef 0x06001055; RVA 0x002CFC00; mapped VA 0x006CFC00",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Use tickInput as the original caller contract for jumpToSelection. Prioritize its bounded keyboard dispatch before attempting the full input state machine.",
+            "evidence": [
+              "Original 12-byte header reports 763 code bytes, maxstack 4, locals token 0x11001040 and no additional sections.",
+              "Original CIL SHA-256 is 9ffadb98e2b68f220dd17e63df92a5d56c60362d63809c105817f17c467ae32b.",
+              "IL_0000–0010 obtains device 0 through the input-manager singleton and vtable offset 4.",
+              "IL_02C1 initializes A; IL_02DC queries a key through keyboard vtable offset 12; IL_02E5 calls 0x06001053; IL_02EA branches on success; IL_02F3 loops through Z.",
+              "Successful dispatch returns false at IL_02F8; otherwise the method returns true at IL_02FA.",
+              "The inspected picker tick caller invokes gaMenu.tick only when tickInput returns true.",
+              "Earlier inspected IL updates picker+380 using gaTimer.dt and maintains directional state at picker+376, demonstrating additional state beyond keyboard dispatch."
+            ],
+            "dependencies": [
+              "Input-manager singleton field 0x04000236 at image RVA 0x80D410.",
+              "Original input virtual interfaces and call signatures 0x11000300, 0x1100073D and 0x1100073C.",
+              "jumpToSelection 0x06001053 and the surrounding picker tick/base-menu contract."
+            ],
+            "validation_plan": [
+              "Replay key-state fixtures and compare queried keys, call order, selected letter and return value.",
+              "Test simultaneous letter presses, failed earlier matches and a successful earlier letter suppressing later queries.",
+              "For full-method recovery, inspect every remaining branch and dependency before testing timers and directional input."
+            ],
+            "limits": [
+              "The complete method body was emitted, but only selected regions were semantically inspected.",
+              "A keyboard-loop extraction is not recovery of the complete 763-byte method.",
+              "No original execution or input replay was performed."
+            ]
+          },
+          {
+            "reference": "ReRiff trigger alphabet navigation layered over 0x06001053",
+            "priority": "low",
+            "classification": "intentional_modification",
+            "hint": "Keep the trigger latch, previous/next available-letter policy and post-tick dispatch separate from faithful original recovery.",
+            "evidence": [
+              "The note explicitly describes new LT/RT bindings, neutral-before-press latching, simultaneous-trigger refusal and phase/focus guards.",
+              "Inspected original keyboard IL scans pressed ASCII keys A–Z and calls jumpToSelection; it supplies no evidence for the mod's previous/next-letter policy.",
+              "The original callback performs meaningful UI side effects, explaining why reusing it can support a mod without reconstructing its implementation."
+            ],
+            "dependencies": [
+              "Verified original callback and its UI dependencies.",
+              "Controller interface identity, live object lifetime and picker phase."
+            ],
+            "validation_plan": [
+              "Treat reported mod tests as integration evidence only.",
+              "Establish original controller storage and call-chain semantics independently before using those claims in recovery tests."
+            ],
+            "limits": [
+              "No mod source, test executable, live logs or in-game session was inspected.",
+              "No original bug or intentional bug fix was established."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as a 14-byte assembly reference for VA 0x4f8180, with zero source-recovery credit. Independent assembly and byte comparison matched Game.exe. The original instructions load an unchecked indexed float through ECX into x87 ST(0) and return with four-byte stack cleanup. The function has no branches or calls. The adjacent INT3 padding and the separate table pointer to 0x4f8190 provide boundary evidence beyond the first return; no registered native block overlaps the candidate.",
+    "reason": "The original hash, candidate source hash, assembled-byte hash, file offset, symbolic instructions and validation receipt were independently checked. The table at 0x9fdb78 contains the entry at slot 8 and is installed by code at 0x4f801b. The research note’s LT/RT names, index range, object lifetime and live-navigation claims remain unverified. No behavioral execution or source recovery is established. A separate Ghidra analysis timed out and provides no additional boundary evidence."
+  }
+}
