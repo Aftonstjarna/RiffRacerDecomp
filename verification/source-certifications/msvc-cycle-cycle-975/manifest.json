@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-975",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "collision-face-list-unlink",
+      "stem": "cycle_collision_face_list_unlink",
+      "source": "Decomp/recovered/msvc/cycle_collision_face_list_unlink.cpp",
+      "sha256": "fb6bce1f38230947c3c73526a21248981e77067ceed9a7be86a69db65888fbc2"
+    }
+  ]
+}

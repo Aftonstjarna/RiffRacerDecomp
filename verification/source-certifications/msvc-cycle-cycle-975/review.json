@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "de8da2440a69d269c6194e204f6fab98268529c2d7ca2b9cae70f1bcd8ebca55",
+  "behavior_sha256": "7ed3cc5d63f37685f295bdcdeee7043d17d50b59da09753d4b5583afbc54385c",
+  "functions": [
+    {
+      "scope": "collision-face-list-unlink",
+      "source_sha256": "fb6bce1f38230947c3c73526a21248981e77067ceed9a7be86a69db65888fbc2",
+      "approved": true,
+      "reason": "The readable high-level source matches the original routine’s observed semantics and 32-bit fastcall ABI. An independent pinned-MSVC build produced a complete 41-byte code section identical to Game.exe at 0x549780. I also executed the submitted 5,000-case differential test against the actual compiled bytes and bytes extracted from the original; it passed, including branch, self-link, count-underflow, and untouched-state checks. This certifies the scoped routine, not a full executable rebuild."
+    }
+  ],
+  "review_receipt_sha256": "8739cc7aca73e6c2df8e7c72f8a853d098bd005015735e5ab286d14aa3ea6062",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
