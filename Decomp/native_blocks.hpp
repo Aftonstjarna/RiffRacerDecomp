@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"eadb-setup",0x1249a0,236},
+  return {NativeBlock{"screen-find-focused-item",0x47e90,268},
+                     NativeBlock{"eadb-setup",0x1249a0,236},
                      NativeBlock{"resource-name-insert",0x1a050,178},
                      NativeBlock{"screen-set-focus-id",0x8f580,152},
                      NativeBlock{"wide-entry-growth-policy",0x9c050,75},

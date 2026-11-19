@@ -8549,3 +8549,16 @@ test-cycle-eadb-setup: $(OUT)/reriff-match $(OUT)/eadb_setup.bin
 
 test-recovered: test-cycle-eadb-setup
 .PHONY: test-cycle-eadb-setup
+
+# Reviewed cycle reference: screen-find-focused-item (assembly evidence only).
+$(OUT)/screen_find_focused_item.bin: native/screen_find_focused_item.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/screen_find_focused_item.o
+	ld -m elf_i386 -Ttext=0x447e90 -e original_screen_find_focused_item $(OUT)/screen_find_focused_item.o -o $(OUT)/screen_find_focused_item.elf
+	objcopy -O binary --only-section=.text $(OUT)/screen_find_focused_item.elf $@
+
+test-cycle-screen-find-focused-item: $(OUT)/reriff-match $(OUT)/screen_find_focused_item.bin
+	$(OUT)/reriff-match native-check "$(GAME)" screen-find-focused-item $(OUT)/screen_find_focused_item.bin $(OUT)/screen-find-focused-item-comparison.json
+
+test-recovered: test-cycle-screen-find-focused-item
+.PHONY: test-cycle-screen-find-focused-item
