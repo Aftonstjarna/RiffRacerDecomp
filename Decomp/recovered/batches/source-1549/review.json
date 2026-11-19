@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level, unmatched recovery of worker-view heap preparation, with zero matching-source byte credit.",
+  "reason": "The source follows the original routine’s bottom-up heap construction, signed key comparisons, right-child tie choice, and downward-then-upward adjustment. The fastcall interface and field offset agree with the 32-bit assembly. The test calls the original and compares complete pointer arrays across empty, singleton, duplicate, extreme, ordered, and pseudorandom inputs, while checking object bytes and range boundaries. An independent disassembly of Game.exe and source-hash check corroborated the submitted evidence. Native Windows compilation records successful builds of the actual implementation, but no matching credit. Testing is sampled and does not establish all-input equivalence; malformed and enormous ranges remain outside the stated scope."
+}
