@@ -8471,3 +8471,16 @@ test-cycle-wide-entry-vector-append: $(OUT)/reriff-match $(OUT)/wide_entry_vecto
 
 test-recovered: test-cycle-wide-entry-vector-append
 .PHONY: test-cycle-wide-entry-vector-append
+
+# Reviewed cycle reference: wide-entry-vector-ensure-spare (assembly evidence only).
+$(OUT)/wide_entry_vector_ensure_spare.bin: native/wide_entry_vector_ensure_spare.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_entry_vector_ensure_spare.o
+	ld -m elf_i386 -Ttext=0x561b80 -e original_wide_entry_vector_ensure_spare $(OUT)/wide_entry_vector_ensure_spare.o -o $(OUT)/wide_entry_vector_ensure_spare.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_entry_vector_ensure_spare.elf $@
+
+test-cycle-wide-entry-vector-ensure-spare: $(OUT)/reriff-match $(OUT)/wide_entry_vector_ensure_spare.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-entry-vector-ensure-spare $(OUT)/wide_entry_vector_ensure_spare.bin $(OUT)/wide-entry-vector-ensure-spare-comparison.json
+
+test-recovered: test-cycle-wide-entry-vector-ensure-spare
+.PHONY: test-cycle-wide-entry-vector-ensure-spare
