@@ -8328,3 +8328,16 @@ test-cycle-visual-colour-set: $(OUT)/reriff-match $(OUT)/visual_colour_set.bin
 
 test-recovered: test-cycle-visual-colour-set
 .PHONY: test-cycle-visual-colour-set
+
+# Reviewed cycle reference: ui-sprite-set-handle-138 (assembly evidence only).
+$(OUT)/ui_sprite_set_handle_138.bin: native/ui_sprite_set_handle_138.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_sprite_set_handle_138.o
+	ld -m elf_i386 -Ttext=0x41f880 -e original_ui_sprite_set_handle_138 $(OUT)/ui_sprite_set_handle_138.o -o $(OUT)/ui_sprite_set_handle_138.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_sprite_set_handle_138.elf $@
+
+test-cycle-ui-sprite-set-handle-138: $(OUT)/reriff-match $(OUT)/ui_sprite_set_handle_138.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-sprite-set-handle-138 $(OUT)/ui_sprite_set_handle_138.bin $(OUT)/ui-sprite-set-handle-138-comparison.json
+
+test-recovered: test-cycle-ui-sprite-set-handle-138
+.PHONY: test-cycle-ui-sprite-set-handle-138
