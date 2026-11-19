@@ -8523,3 +8523,16 @@ test-cycle-screen-set-focus-id: $(OUT)/reriff-match $(OUT)/screen_set_focus_id.b
 
 test-recovered: test-cycle-screen-set-focus-id
 .PHONY: test-cycle-screen-set-focus-id
+
+# Reviewed cycle reference: resource-name-insert (assembly evidence only).
+$(OUT)/resource_name_insert.bin: native/resource_name_insert.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_name_insert.o
+	ld -m elf_i386 -Ttext=0x41a050 -e original_resource_name_insert $(OUT)/resource_name_insert.o -o $(OUT)/resource_name_insert.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_name_insert.elf $@
+
+test-cycle-resource-name-insert: $(OUT)/reriff-match $(OUT)/resource_name_insert.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-name-insert $(OUT)/resource_name_insert.bin $(OUT)/resource-name-insert-comparison.json
+
+test-recovered: test-cycle-resource-name-insert
+.PHONY: test-cycle-resource-name-insert
