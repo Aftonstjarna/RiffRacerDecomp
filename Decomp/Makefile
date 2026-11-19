@@ -8627,3 +8627,16 @@ test-cycle-vfs-directory-record-construct: $(OUT)/reriff-match $(OUT)/vfs_direct
 
 test-recovered: test-cycle-vfs-directory-record-construct
 .PHONY: test-cycle-vfs-directory-record-construct
+
+# Reviewed cycle reference: resource-name-normalize (assembly evidence only).
+$(OUT)/resource_name_normalize.bin: native/resource_name_normalize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_name_normalize.o
+	ld -m elf_i386 -Ttext=0x41a110 -e original_resource_name_normalize $(OUT)/resource_name_normalize.o -o $(OUT)/resource_name_normalize.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_name_normalize.elf $@
+
+test-cycle-resource-name-normalize: $(OUT)/reriff-match $(OUT)/resource_name_normalize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-name-normalize $(OUT)/resource_name_normalize.bin $(OUT)/resource-name-normalize-comparison.json
+
+test-recovered: test-cycle-resource-name-normalize
+.PHONY: test-cycle-resource-name-normalize

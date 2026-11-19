@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"vfs-directory-record-construct",0x161e30,26},
+  return {NativeBlock{"resource-name-normalize",0x1a110,331},
+                     NativeBlock{"vfs-directory-record-construct",0x161e30,26},
                      NativeBlock{"ui-visual-handle-update-1c",0x55010,114},
                      NativeBlock{"vfs-directory-discover",0x15e130,975},
                      NativeBlock{"ui-visual-handle-update",0x54f90,114},
