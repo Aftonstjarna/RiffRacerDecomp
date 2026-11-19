@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as an unmatched high-level recovery, with zero matching-source byte credit.",
+  "reason": "The source follows the reference routine’s eligibility gate, depth-first traversal, callback arguments, state check, and early returns. The declared 32-bit field offsets and callback slot agree with the assembly. An independent i386 build and run of the submitted differential test passed against the reference routine; its cases exercise pruning, duplicate and absent IDs, alternate eligibility, state 3, callback effects, and item-byte comparisons. Source and original executable hashes match validation.json. The native Windows compilation records successful builds of the actual implementation but no certified matching credit. Testing is sampled and does not establish all-input equivalence; malformed objects and callback-driven tree mutation remain untested as stated."
+}
