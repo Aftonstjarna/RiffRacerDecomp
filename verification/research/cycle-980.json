@@ -1,0 +1,212 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "57d2ac50999d5a925b6de605e842c7b55ee9a9c0fb2ecf670a4a3ea79f3d7b1f",
+    "finding_index": 0,
+    "va": 4468560,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "57d2ac50999d5a925b6de605e842c7b55ee9a9c0fb2ecf670a4a3ea79f3d7b1f",
+    "note_sha256": "57d2ac50999d5a925b6de605e842c7b55ee9a9c0fb2ecf670a4a3ea79f3d7b1f",
+    "bytes": 28666,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "896bcbfa7b671ab8ff3740c825a3327ec76eddc6",
+        "path": "reports/CJK-FONT-INTEGRATION.md",
+        "git_status": " M reports/CJK-FONT-INTEGRATION.md\n"
+      },
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "5b2e3379cad9d68465961361942a6e699d197f4f",
+        "path": "reports/CJK-FONT-INTEGRATION.md",
+        "git_status": ""
+      }
+    ],
+    "related_ids": [
+      "0712ae928392534e8d53acf7b58a40498f82ae0d8fe4dbc1f575d5173359501d",
+      "0758023e57be34dc21a584926d59d8c3b66ba3cf001e3ca05e7bd95934eebbee",
+      "435d5ae6ec238c5eaf4764ba29fc44a1efa5b2ec5c572448b1958acad58fe47d",
+      "8366d6396aed71d08ab10217509387a244235029ac598a651e995844289543bc",
+      "961806d80ea5d9c7b294f142d53a03bf063dbb8f2469bb8ebcbc2135445ad467",
+      "9918a0447f115d84fbc35d6077078e903f94f71b71c87955bd5b778898072dcb",
+      "9a60469acfbe74db5a2293e12708152e62db840c5858c35f8f34f6b4748185a3",
+      "9b0830251a0fa88df5cdbd0dd14cb5fdc7d55ea53a23c14498aca8c6bc78976e",
+      "d249ee6a37484f2b8fcd5e2004ca0ca1178525d99d1714044f93dc06a7f2748b",
+      "fc4b2bb9fc9eee5f3be3f19d14d36f2cbc8afce2a9be8ca3313fa9406223143b"
+    ],
+    "history": [
+      {
+        "time": 1794528359,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794528405,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794528495,
+        "action": "triage_complete",
+        "reason": "Four bounded original-code recovery leads were verified by disassembly of the hash-confirmed Game.exe. No overlapping entries were found in native_blocks.hpp or address references in recovered source/verification for these targets. No source integration, execution tests, or matching claims were made."
+      },
+      {
+        "time": 1794532686,
+        "action": "submitted",
+        "reason": "Additional source provenance; status retained"
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "Four bounded original-code recovery leads were verified by disassembly of the hash-confirmed Game.exe. No overlapping entries were found in native_blocks.hpp or address references in recovered source/verification for these targets. No source integration, execution tests, or matching claims were made.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "57d2ac50999d5a925b6de605e842c7b55ee9a9c0fb2ecf670a4a3ea79f3d7b1f",
+      "baseline": {
+        "commit": "54fcc0dc48a8137cc11cfb9ce8e8db3d904c57f6",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "57d2ac50999d5a925b6de605e842c7b55ee9a9c0fb2ecf670a4a3ea79f3d7b1f"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "Four bounded original-code recovery leads were verified by disassembly of the hash-confirmed Game.exe. No overlapping entries were found in native_blocks.hpp or address references in recovered source/verification for these targets. No source integration, execution tests, or matching claims were made.",
+        "corrections": [
+          "The colour setter's 'when changed' rule needs precision: unordered floating-point comparisons trigger copying and dirty marking; signed zeros compare equal.",
+          "The archive validator mutates ZIP iteration and backing-stream state. Recovering only the checksum sum would omit original side effects and error handling.",
+          "CJK atlas paging, alternate-visual ownership, positioning and colour extensions are intentional modifications. Their reported fixtures and visual results were not independently reproduced here.",
+          "Managed viewport, inline setter and pause-menu claims remain unverified: no actual IL was inspected.",
+          "The generic ZIP reader in Decomp/support/archive.hpp is a native-port bootstrap, not evidence that the original VFS validator has already been recovered."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x442F50; inspected routine [0x442F50, 0x442FD2)",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the small thiscall RGBA setter: ECX is the visual, one stack argument points to four floats, RET 4. Preserve comparison order, unordered handling, copying of all four components and OR of dirty bit 0x100.",
+            "evidence": [
+              "0x442F56..0x442F9F compares visual +0x90/+0x94/+0x98/+0x9C against input +0/+4/+8/+12 using UCOMISS, LAHF, TEST AH,0x44 and parity branches.",
+              "0x442FA1..0x442FBE copies all four components after any unequal or unordered comparison.",
+              "0x442FC4 ORs DWORD [ECX+0x170] with 0x100; RET 4 is at 0x442FCF. Padding follows before the separate entry at 0x442FE0.",
+              "Registry interval inspection and targeted recovered-source searches found no existing entry for this routine."
+            ],
+            "dependencies": [
+              "Writable visual fields through +0x173 and readable 16-byte input.",
+              "Original SSE comparison environment; no calls, imports or global data occur in this routine."
+            ],
+            "validation_plan": [
+              "Compare original execution with recovered C++ for equal colours, each independently changed component, existing dirty flags, infinities, signed zeros and NaNs.",
+              "Compare the complete fixture bytes to detect unintended writes; include valid overlapping input storage.",
+              "Check stack cleanup and callee-saved registers."
+            ],
+            "limits": [
+              "Disassembly only; no differential execution was performed.",
+              "Do not infer a meaningful return value.",
+              "Signalling-NaN exception behavior requires controlled floating-point state."
+            ]
+          },
+          {
+            "reference": "VA 0x450C40; inspected routine [0x450C40, 0x450C67); vtable VA 0x9FA270 slot 4",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the text colour forwarding wrapper independently of the CJK extension. Thiscall with one stack argument and RET 4: call the base setter first, then update the primary visual only if the post-base state at +0x10 is not 3.",
+            "evidence": [
+              "Original data at 0x9FA280 contains little-endian pointer 0x450C40, confirming zero-based vtable slot 4.",
+              "0x450C49 calls 0x448500 with the original ECX and forwarded stack argument.",
+              "0x450C4E tests [ESI+0x10] against 3 after the base call.",
+              "0x450C57 loads primary visual [ESI+0x1C4]; 0x450C5D calls 0x442F50. There is no alternate-visual access.",
+              "RET 4 at 0x450C64 is followed by padding; the next entry begins at 0x450C70. No duplicate target was found in checked registry/source locations."
+            ],
+            "dependencies": [
+              "Base item colour setter 0x448500, whose body was not inspected.",
+              "Visual colour setter 0x442F50.",
+              "Text object fields +0x10 and +0x1C4."
+            ],
+            "validation_plan": [
+              "Use a controlled base callback to verify argument forwarding, call order and state changes occurring before the branch.",
+              "Compare original and recovered behavior for state 3 and other states, checking primary writes and untouched alternate storage.",
+              "Separately bind the original base setter for an integrated comparison after its ABI and side effects are established."
+            ],
+            "limits": [
+              "Primary-only propagation is original behavior; adding alternate tinting changes it.",
+              "No null-primary guard exists on the updating path.",
+              "No execution or base-setter recovery was performed."
+            ]
+          },
+          {
+            "reference": "VAs 0x453580 [0x453580, 0x4535D6) and 0x4535E0 [0x4535E0, 0x453631)",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover two separate cdecl cache helpers. The first marks an even-numbered context bit for the supplied visual and each +0x0C ancestor; the second clears/conditionally sets the odd-numbered visibility bit for one visual. Retain unsigned 32-bit address arithmetic and bounds checks.",
+            "evidence": [
+              "Both derive indices from (visual - [0xBFCC0C]) >> 5, then double the result; visibility adds 1.",
+              "Both compare the unsigned bit index against [0xC007B4] and access bitmap storage through [0xC007B0].",
+              "0x4535C0 clears the selected context bit and 0x4535C7 sets it; 0x4535CA loads the +0x0C ancestor and loops while non-null.",
+              "Visibility tests the byte argument at [EBP+0x0C] at 0x453620; it does not write visual +0x14.",
+              "Separate RET instructions at 0x4535D5 and 0x453630, with intervening padding, establish distinct inspected routines. No overlapping registered blocks or targeted source references were found."
+            ],
+            "dependencies": [
+              "Relocated globals VA 0xBFCC0C, 0xC007B0 and 0xC007B4.",
+              "Readable ancestor links at visual +0x0C for the context helper.",
+              "Writable bitmap words; neither routine calls imports."
+            ],
+            "validation_plan": [
+              "Compare original and recovered bitmap writes for true/false byte values, pre-existing bits, word boundaries and out-of-range indices.",
+              "Exercise single and multiple ancestor chains, including ancestors outside the cache range.",
+              "Verify unrelated bitmap bits and visual storage remain unchanged, and check caller stack cleanup."
+            ],
+            "limits": [
+              "No execution was performed.",
+              "The context routine dereferences the initial visual without a null check; cyclic ancestor chains are not terminated.",
+              "Preserve the original clear-then-set sequence when testing side effects; concurrency guarantees are not established."
+            ]
+          },
+          {
+            "reference": "VA 0x560CB0; inspected routine [0x560CB0, 0x560D8F)",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover the complete archive-validation state machine with one stack record pointer, AL result and RET 4. Sum decoded member DWORDs modulo 2^32, compare against record +0x10, and preserve cursor resets, iteration updates and the special -100 termination path.",
+            "evidence": [
+              "0x560CB6 loads the record from [EBP+8], then its ZIP context from [record+0]; a null context reaches false return.",
+              "0x560CCE..0x560CD9 resets context +0x20/+0x24/+0x18 before calling 0x5987C0.",
+              "0x560D05..0x560D21 computes a 64-bit position plus 0x10, stores it into backing object +0x30/+0x34, and calls 0x5981C0 with context in ECX and output pointer in EDX.",
+              "0x560D2B adds EAX to EBX; 0x560D79 compares EBX with [record+0x10].",
+              "0x560D37..0x560D6D advances entry index and directory position and updates validity state at context +0x28.",
+              "0x560D74 permits status 0xFFFFFF9C to reach the checksum comparison. Both returns were inspected: 0x560D83 and 0x560D8C; the next routine begins at 0x560D90.",
+              "The inspected prefix of 0x5981C0 assembles a value from byte reads through 0x597FC0. Its complete body was not inspected.",
+              "No duplicate target was found in the checked native registry, recovered source or verification searches."
+            ],
+            "dependencies": [
+              "Directory parser 0x5987C0 and DWORD reader 0x5981C0, including their original error behavior.",
+              "Reader dependency 0x597FC0 and backing-stream state.",
+              "Context fields +0x08, +0x10/+0x14, +0x18, +0x20/+0x24, +0x28, +0x3C, +0x40, +0x50 and +0x54.",
+              "Original ZIP opener 0x598420 is a reported fixture dependency, not independently inspected here."
+            ],
+            "validation_plan": [
+              "First establish complete helper boundaries and ABIs, then compare original and recovered routines using equivalent private ZIP contexts.",
+              "Cover checksum equality/mismatch, overflow, null context, first/subsequent directory failures and status -100.",
+              "Compare all mutated context and backing-stream fields, not just AL.",
+              "Include empty archives only after determining the original parser's empty-directory result."
+            ],
+            "limits": [
+              "The note's archive totals, original VFS assets and Wine harness results were not independently checked.",
+              "Member-CRC interpretation is consistent with the inspected seek and addition, but complete directory-parser and reader semantics remain unresolved.",
+              "The index loader, discovery routine and ZIP opener were not disassembled in this review.",
+              "No differential execution or source reconstruction was performed."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for VA 0x442F50 only. The complete 130-byte routine spans [0x442F50, 0x442FD2); padding follows before the separate entry at 0x442FE0. It compares four components in order, copies them and sets dirty bit 0x100 on an unequal or unordered comparison; signed zeros compare equal. The first input component is loaded before the stores, while later components are loaded during copying. Runtime behavior, overlapping inputs and floating-point exception effects remain untested. This provides no recovered-source credit.",
+    "reason": "Independently confirmed the original executable hash, disassembled the full routine and neighboring bytes, checked the caller and ABI, and assembled the symbolic candidate. All 130 bytes match the original without masking or relocations; the source and binary hashes match the receipt. The 680 registered native blocks contain no overlap with this interval. The research note's broader CJK claims were not verified."
+  }
+}

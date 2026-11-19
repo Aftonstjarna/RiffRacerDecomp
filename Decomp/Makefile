@@ -8315,3 +8315,16 @@ test-cycle-worker-record12-destroy-one: $(OUT)/reriff-match $(OUT)/worker_record
 
 test-recovered: test-cycle-worker-record12-destroy-one
 .PHONY: test-cycle-worker-record12-destroy-one
+
+# Reviewed cycle reference: visual-colour-set (assembly evidence only).
+$(OUT)/visual_colour_set.bin: native/visual_colour_set.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/visual_colour_set.o
+	ld -m elf_i386 -Ttext=0x442f50 -e original_visual_colour_set $(OUT)/visual_colour_set.o -o $(OUT)/visual_colour_set.elf
+	objcopy -O binary --only-section=.text $(OUT)/visual_colour_set.elf $@
+
+test-cycle-visual-colour-set: $(OUT)/reriff-match $(OUT)/visual_colour_set.bin
+	$(OUT)/reriff-match native-check "$(GAME)" visual-colour-set $(OUT)/visual_colour_set.bin $(OUT)/visual-colour-set-comparison.json
+
+test-recovered: test-cycle-visual-colour-set
+.PHONY: test-cycle-visual-colour-set
