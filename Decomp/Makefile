@@ -8393,3 +8393,16 @@ test-cycle-resource-flag-bitmap-update: $(OUT)/reriff-match $(OUT)/resource_flag
 
 test-recovered: test-cycle-resource-flag-bitmap-update
 .PHONY: test-cycle-resource-flag-bitmap-update
+
+# Reviewed cycle reference: worker-resource-name-handle-construct (assembly evidence only).
+$(OUT)/worker_resource_name_handle_construct.bin: native/worker_resource_name_handle_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_resource_name_handle_construct.o
+	ld -m elf_i386 -Ttext=0x418010 -e original_worker_resource_name_handle_construct $(OUT)/worker_resource_name_handle_construct.o -o $(OUT)/worker_resource_name_handle_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_resource_name_handle_construct.elf $@
+
+test-cycle-worker-resource-name-handle-construct: $(OUT)/reriff-match $(OUT)/worker_resource_name_handle_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-resource-name-handle-construct $(OUT)/worker_resource_name_handle_construct.bin $(OUT)/worker-resource-name-handle-construct-comparison.json
+
+test-recovered: test-cycle-worker-resource-name-handle-construct
+.PHONY: test-cycle-worker-resource-name-handle-construct
