@@ -8276,3 +8276,16 @@ test-cycle-ui-item-set-colour: $(OUT)/reriff-match $(OUT)/ui_item_set_colour.bin
 
 test-recovered: test-cycle-ui-item-set-colour
 .PHONY: test-cycle-ui-item-set-colour
+
+# Reviewed cycle reference: ui-sprite-update-property (assembly evidence only).
+$(OUT)/ui_sprite_update_property.bin: native/ui_sprite_update_property.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_sprite_update_property.o
+	ld -m elf_i386 -Ttext=0x4482b0 -e original_ui_sprite_update_property $(OUT)/ui_sprite_update_property.o -o $(OUT)/ui_sprite_update_property.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_sprite_update_property.elf $@
+
+test-cycle-ui-sprite-update-property: $(OUT)/reriff-match $(OUT)/ui_sprite_update_property.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-sprite-update-property $(OUT)/ui_sprite_update_property.bin $(OUT)/ui-sprite-update-property-comparison.json
+
+test-recovered: test-cycle-ui-sprite-update-property
+.PHONY: test-cycle-ui-sprite-update-property
