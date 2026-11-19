@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-987",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "vector3-dot-sse",
+      "stem": "cycle_vector3_dot_sse",
+      "source": "Decomp/recovered/msvc/cycle_vector3_dot_sse.cpp",
+      "sha256": "7e8d88be79f0d6c4ef59559077f7f6c52b93092b382ea78a49d3351873cad1ed"
+    }
+  ]
+}

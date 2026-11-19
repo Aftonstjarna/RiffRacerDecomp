@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "ac09c8d65b294bcf47c6cb0dec9f462ca4eb7c907436db3b25ae741ca859329d",
+  "behavior_sha256": "c7f2ff8581ee28ec4f9f4dfe4c6ac6b943ea4a23aeffaaa697771fa777d9d4d9",
+  "functions": [
+    {
+      "scope": "vector3-dot-sse",
+      "source_sha256": "7e8d88be79f0d6c4ef59559077f7f6c52b93092b382ea78a49d3351873cad1ed",
+      "approved": true,
+      "reason": "An independent MSVC 2013 build with /O2 /Oy- /arch:SSE2 produced a complete, relocation-free 46-byte code section identical to the bytes extracted from Game.exe. The instructions confirm the ECX/stack argument convention, XMM0 result, arithmetic order, and callee stack cleanup. The submitted 272-case test passed when independently linked against both the compiled section and bytes extracted directly from the original, with SSE enabled; it checks edge values, aliasing, and unchanged input and guard bytes. The routine has no conditional branches. The test samples only the low result lane and default floating-point environment, so it does not establish exhaustive behavioral coverage, but the full instruction-byte match independently supports equivalence for this fragment."
+    }
+  ],
+  "review_receipt_sha256": "f715b2ebad4be7c0a176cb3a2700d87471afa1fd01b5c6646830a571a88af426",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}
