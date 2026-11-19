@@ -8302,3 +8302,16 @@ test-cycle-window-dispatch: $(OUT)/reriff-match $(OUT)/window_dispatch.bin
 
 test-recovered: test-cycle-window-dispatch
 .PHONY: test-cycle-window-dispatch
+
+# Reviewed cycle reference: worker-record12-destroy-one (assembly evidence only).
+$(OUT)/worker_record12_destroy_one.bin: native/worker_record12_destroy_one.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_record12_destroy_one.o
+	ld -m elf_i386 -Ttext=0x41dde0 -e original_worker_record12_destroy_one $(OUT)/worker_record12_destroy_one.o -o $(OUT)/worker_record12_destroy_one.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_record12_destroy_one.elf $@
+
+test-cycle-worker-record12-destroy-one: $(OUT)/reriff-match $(OUT)/worker_record12_destroy_one.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-record12-destroy-one $(OUT)/worker_record12_destroy_one.bin $(OUT)/worker-record12-destroy-one-comparison.json
+
+test-recovered: test-cycle-worker-record12-destroy-one
+.PHONY: test-cycle-worker-record12-destroy-one
