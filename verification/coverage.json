@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 137301,
-  "remaining_bytes": 8498091,
-  "verified_percent": 1.5899799337424405,
-  "registered_blocks": 688,
-  "exact_blocks": 688,
+  "verified_bytes": 137422,
+  "remaining_bytes": 8497970,
+  "verified_percent": 1.59138114401755,
+  "registered_blocks": 689,
+  "exact_blocks": 689,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4826,6 +4826,15 @@
       "byte_equal": true,
       "reference_sha256": "52aa5d504ce39f4d156d32f7d14605a8de17fd5b464fe22e7d1bc4b68c15e425",
       "candidate_sha256": "52aa5d504ce39f4d156d32f7d14605a8de17fd5b464fe22e7d1bc4b68c15e425"
+    },
+    {
+      "name": "mounted-archive-search",
+      "file_offset": 1439280,
+      "size": 121,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "85daaf30d38d1b5726c4e3152824c536fa4fbb10585f7b9b59888d3041be8663",
+      "candidate_sha256": "85daaf30d38d1b5726c4e3152824c536fa4fbb10585f7b9b59888d3041be8663"
     },
     {
       "name": "shader-drawprim-ctor",

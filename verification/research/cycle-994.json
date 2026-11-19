@@ -1,0 +1,143 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "74199c7e783e62b444eb8da03effa3893cd8603dd5887cfb98d224dd8e91dd69",
+    "finding_index": 0,
+    "va": 5636656,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "74199c7e783e62b444eb8da03effa3893cd8603dd5887cfb98d224dd8e91dd69",
+    "note_sha256": "74199c7e783e62b444eb8da03effa3893cd8603dd5887cfb98d224dd8e91dd69",
+    "bytes": 12207,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "2a350319bc0b4b99b9184e43d0d5a65b7727469b",
+        "path": "reports/LIVERY-MAKER-REQUIREMENTS.md",
+        "git_status": "?? reports/LIVERY-MAKER-REQUIREMENTS.md\n"
+      }
+    ],
+    "related_ids": [],
+    "history": [
+      {
+        "time": 1794964653,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794964674,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794964718,
+        "action": "triage_complete",
+        "reason": "One useful original-code recovery candidate emerged: the mounted-archive search at VA 0x560230. The original executable hash matches the note. The note’s broader claims about mount insertion order, managed paint selection, assets, and live rendering were not independently verified in this review."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "One useful original-code recovery candidate emerged: the mounted-archive search at VA 0x560230. The original executable hash matches the note. The note’s broader claims about mount insertion order, managed paint selection, assets, and live rendering were not independently verified in this review.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "74199c7e783e62b444eb8da03effa3893cd8603dd5887cfb98d224dd8e91dd69",
+      "baseline": {
+        "commit": "1d56937c8bd1b3551def53148d8651940e57d197",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "74199c7e783e62b444eb8da03effa3893cd8603dd5887cfb98d224dd8e91dd69"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "One useful original-code recovery candidate emerged: the mounted-archive search at VA 0x560230. The original executable hash matches the note. The note’s broader claims about mount insertion order, managed paint selection, assets, and live rendering were not independently verified in this review.",
+        "corrections": [
+          "The first return at 0x560298 ends only the failure path; the success path continues at 0x56029B and returns at 0x5602A6. The complete routine ends at 0x5602A9, exclusive.",
+          "A failed search writes zero to the caller’s output index as well as returning null. The output pointer must therefore be valid even for an empty mount vector.",
+          "First-match lookup alone does not establish descending volume-ID insertion or named-mod precedence. The note’s earlier append-based conclusion is expressly superseded, but its later precedence claim was not independently verified here.",
+          "The note’s original-disassembly section says it did not execute native functions; its later override correction describes subsequent execution. Those are different evidence stages, and neither constitutes recovered-source or matching-byte proof."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x560230–0x5602A9",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the small mounted-archive search as an x86 thiscall routine with ECX as the manager and two stack arguments: path and output index. Walk 20-byte records in vector order, call the index lookup through each record’s +8 pointer, return its first nonzero result and write its index; on exhaustion write zero and return null. Preserve the original’s count recalculation after each failed lookup.",
+            "evidence": [
+              "0x56023F–0x560251 derives the record count from manager fields +0x48 and +0x4C and handles an empty vector.",
+              "0x560255–0x560268 calls 0x598D50 with the path and record +8 pointer, branching immediately on a nonzero result.",
+              "0x56026A–0x560287 reloads vector bounds, increments the index and advances the record offset by 0x14.",
+              "0x560289–0x560298 writes zero and returns null; 0x56029B–0x5602A8 writes the winning index and returns the lookup result. Both exits use ret 8.",
+              "Original callers at 0x55FC45 and 0x55FDEA test the result; 0x5979A8 subsequently uses the index to select a record context at 0x5979E8–0x597A05."
+            ],
+            "dependencies": [
+              "Original index lookup at 0x598D50, its tree helper at 0x5991E0, and valid manager/vector/index layouts.",
+              "For end-to-end file tests, the archive contexts at record offsets +0 and +4 and the call at 0x598720."
+            ],
+            "validation_plan": [
+              "Differentially call the original and candidate with empty, single and multiple mounts, no match, early match, late match and duplicate paths; compare return pointers, output index, lookup order and object writes.",
+              "Use a controlled lookup substitute to test a changed vector count after a failed call, then exercise real original indexes and distinguishable archive payloads through the file-open/read path."
+            ],
+            "limits": [
+              "No original execution or differential test was performed in this review.",
+              "Searches of recovered sources and the native reference material found no address hit; this is a bounded duplicate check, not proof that equivalent code cannot exist under another address or name.",
+              "Mount insertion order and behavior under concurrent mutation remain unverified."
+            ]
+          },
+          {
+            "reference": "VA 0x598D50–0x598E51",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Investigate the dependent archive-index path lookup as a separate candidate. Preserve its component traversal and original buffer behavior; do not silently add normalization or bounds checks to a faithful reconstruction.",
+            "evidence": [
+              "0x598D53 reserves stack storage; 0x598D71–0x598D90 scans and copies the NUL-terminated path without an observed length check.",
+              "0x598DA0–0x598DB2 replaces backslashes with NUL and counts separators; 0x598DD0 calls 0x5991E0 for components.",
+              "On success 0x598E0B–0x598E29 masks the node word at +6 with 0x3FFF and indexes 28-byte records from index object +0xC; the failure branch returns zero at 0x598E3C–0x598E4E.",
+              "The routine has separate success and failure epilogues and ends before padding at 0x598E51."
+            ],
+            "dependencies": [
+              "Original component lookup 0x5991E0 and its node and index data layouts.",
+              "Security-cookie check at 0x8F8958 and compatible x86 calling convention and stack setup."
+            ],
+            "validation_plan": [
+              "Inspect 0x5991E0 and construct valid original-format trees before differential tests.",
+              "Compare found and missing components, multiple separators, case variants and record indices; separately characterize boundary-length input in an isolated harness."
+            ],
+            "limits": [
+              "The unchecked copy is original instruction evidence; its practical input constraints and exploitability were not assessed.",
+              "No test established case sensitivity or full path normalization behavior.",
+              "No address hit was found in the searched recovery records; semantic duplicates remain possible."
+            ]
+          },
+          {
+            "reference": "gaVehiclePaintManager.applyChosenPaintPack; no token supplied",
+            "priority": "low",
+            "classification": "unverified",
+            "hint": "Locate the actual managed method token and inspect its IL before using it as a recovery lead or relying on its formatting behavior.",
+            "evidence": [
+              "The note cites generated ILSpy C# but provides no metadata token or IL body.",
+              "No managed metadata or IL inspection was performed in this review."
+            ],
+            "dependencies": [
+              "Original managed metadata and an IL reader or ILSpy."
+            ],
+            "validation_plan": [
+              "Resolve the method and token from the original executable, inspect the complete IL and callees, and trace the resulting resource path to native formatting and texture binding."
+            ],
+            "limits": [
+              "The claimed format string and saved-pack behavior remain unverified here; no IL has been inferred."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for VA 0x560230–0x5602A9 exclusive. Independent assembly at the original address matched all 121 original bytes without masking. This provides no recovered-source credit.",
+    "reason": "The first return at 0x560298 is only the failure exit; the success path continues through 0x5602A8. The transcription preserves both branches, the x86 calling convention, the external lookup call, count recalculation, and the zero output written on failure. The original executable and candidate hashes match their receipts. This review did not execute the routine or establish source equivalence, mount insertion order, mod precedence, or concurrent-mutation behavior; execution depends on the original lookup and valid manager, vector, path, and index data."
+  }
+}

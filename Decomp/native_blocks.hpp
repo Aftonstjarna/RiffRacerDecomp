@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"worker-resource-name-handle-construct",0x18010,211},
+  return {NativeBlock{"mounted-archive-search",0x160230,121},
+                     NativeBlock{"worker-resource-name-handle-construct",0x18010,211},
                      NativeBlock{"resource-flag-bitmap-update",0x1f500,86},
                      NativeBlock{"unicode-scalar-cp1252-map",0x1c2380,381},
                      NativeBlock{"worker-resource-handle-set",0x3f140,104},

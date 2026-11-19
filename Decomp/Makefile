@@ -8406,3 +8406,16 @@ test-cycle-worker-resource-name-handle-construct: $(OUT)/reriff-match $(OUT)/wor
 
 test-recovered: test-cycle-worker-resource-name-handle-construct
 .PHONY: test-cycle-worker-resource-name-handle-construct
+
+# Reviewed cycle reference: mounted-archive-search (assembly evidence only).
+$(OUT)/mounted_archive_search.bin: native/mounted_archive_search.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/mounted_archive_search.o
+	ld -m elf_i386 -Ttext=0x560230 -e original_mounted_archive_search $(OUT)/mounted_archive_search.o -o $(OUT)/mounted_archive_search.elf
+	objcopy -O binary --only-section=.text $(OUT)/mounted_archive_search.elf $@
+
+test-cycle-mounted-archive-search: $(OUT)/reriff-match $(OUT)/mounted_archive_search.bin
+	$(OUT)/reriff-match native-check "$(GAME)" mounted-archive-search $(OUT)/mounted_archive_search.bin $(OUT)/mounted-archive-search-comparison.json
+
+test-recovered: test-cycle-mounted-archive-search
+.PHONY: test-cycle-mounted-archive-search
