@@ -1,0 +1,218 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "db06f706fe42e346fa2c0d96279a50170e0a5d44ec953fbe701f0ac517cf5196",
+    "finding_index": 0,
+    "va": 4491312,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "db06f706fe42e346fa2c0d96279a50170e0a5d44ec953fbe701f0ac517cf5196",
+    "note_sha256": "db06f706fe42e346fa2c0d96279a50170e0a5d44ec953fbe701f0ac517cf5196",
+    "bytes": 10141,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff/build/prestige-rank-work",
+        "commit": "9f72b95b1b953a4971875b430e38e8d75215479e",
+        "path": "reports/FIRST-PRESTIGE-ACHIEVEMENT-LIST.md",
+        "git_status": "?? reports/FIRST-PRESTIGE-ACHIEVEMENT-LIST.md\n"
+      }
+    ],
+    "related_ids": [
+      "078294879eed74e44689a032afe26875a7b56f8152736010431f8a8af8a6c5af",
+      "09ddfc2c15eefba1e995f04ef8369e3a59dd199485dcd9964ac3b00ecbccc9ad",
+      "3624b6bc72856d9b83aac1fa2e9d7908212afb3db07c8bb26bef82ef9f93bd62",
+      "59826faa7762c854ead6c73b1389be9393d97c5636de545ce92beebf4d829213",
+      "5a1090bbfc6e12621b7c6359521ce4d2e08d784882f25e3a66c3fe2fbfa8e96e",
+      "81ab418f869ff963a942d033756be8527c0cb7f88753be0ef88ced1f23264d0a"
+    ],
+    "history": [
+      {
+        "time": 1794703877,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794703938,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794704048,
+        "action": "triage_complete",
+        "reason": "The strongest small recovery lead is the native sprite-definition setter. The sprite factory is a larger follow-up. Original IL confirms the achievement-row skip and analytics range, but the First Prestige extension and artwork work are intentional modifications. No duplicate implementation was found in the searched recovered C++ or native registry."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "The strongest small recovery lead is the native sprite-definition setter. The sprite factory is a larger follow-up. Original IL confirms the achievement-row skip and analytics range, but the First Prestige extension and artwork work are intentional modifications. No duplicate implementation was found in the searched recovered C++ or native registry.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "db06f706fe42e346fa2c0d96279a50170e0a5d44ec953fbe701f0ac517cf5196",
+      "baseline": {
+        "commit": "50e8f29358ffb88b5b1b15fb3f1e461a92d9a03f",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "db06f706fe42e346fa2c0d96279a50170e0a5d44ec953fbe701f0ac517cf5196"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "The strongest small recovery lead is the native sprite-definition setter. The sprite factory is a larger follow-up. Original IL confirms the achievement-row skip and analytics range, but the First Prestige extension and artwork work are intentional modifications. No duplicate implementation was found in the searched recovered C++ or native registry.",
+        "corrections": [
+          "Both native descriptor selectors use unsigned comparisons and fall back to descriptor zero for out-of-range IDs; they do not reject invalid IDs.",
+          "Removing the slot-18 skip changes original behavior. The inspected original does not establish that this skip is a bug.",
+          "The original action counter increments only for visible rows. Action 338 is possible after removing the skip, but is not an original hidden-row action.",
+          "Runtime descriptor counts, artwork tokens, appearance reports and mod regression results were not independently reproduced and do not validate recovered original behavior."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x00448830 / RVA 0x48830, attributed elUIItemSprite.setDefinition",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the 93-byte native setter at [0x448830,0x44888D). Preserve unsigned descriptor-zero fallback, descriptor assignment and visual refresh/refcount effects. No implementation or registry entry was found in the searched reference recovery files; PE-MENU-RELOCATIONS.md contains existing prologue evidence only.",
+            "evidence": [
+              "Original objdump shows ECX as this, one stack DWORD argument and RET 4 at 0x44888A. INT3 padding follows; the next prologue starts at 0x448890.",
+              "0x448833 loads the UI singleton from 0x00BFBAA4. CMP/JB selects UI+12 plus ID*100 when unsigned ID < [UI+16], otherwise UI+12.",
+              "0x44884F loads [this+0x184]; 0x448857 writes its +4 descriptor pointer even when its visual pointer at +0 is null.",
+              "For a nonnull visual, instructions increment its reference count through the vtable-derived adjustment, call 0x48B8F0, then call 0x41F500 with this+0x174 bit 0."
+            ],
+            "dependencies": [
+              "UI singleton 0x00BFBAA4; descriptor base +12 and count +16",
+              "Owned record at this+0x184; visual pointer +0 and descriptor pointer +4",
+              "Calls 0x0048B8F0 and 0x0041F500",
+              "Visual vtable adjustment and reference-count layout"
+            ],
+            "validation_plan": [
+              "Compare original and candidate with synthetic descriptor tables for IDs 0, count-1, count and 0xFFFFFFFF.",
+              "Exercise null and nonnull visual records and both flag-bit values; compare descriptor writes, refcounts and ordered call arguments.",
+              "Use original dependency implementations for integrated refresh tests and compare geometry and visual state before and after."
+            ],
+            "limits": [
+              "The setter was fully disassembled; its two callees were not analyzed.",
+              "No differential execution was performed.",
+              "The native method name is attributed by the note; the inspected instructions independently establish its behavior."
+            ]
+          },
+          {
+            "reference": "VA 0x00422030 / RVA 0x22030, elUI.createSprite",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover the factory separately at [0x422030,0x422178), including ownership and exception cleanup. Its descriptor-selection logic is a useful shared semantic component with the setter.",
+            "evidence": [
+              "Original metadata lists the integer-ID createSprite overload as native unmanaged thiscall.",
+              "Disassembly shows ECX UI, four stack arguments, RET 16 at 0x422175, padding and a distinct next prologue at 0x422180.",
+              "Unsigned CMP/JB at 0x42205D selects descriptor zero on invalid IDs and otherwise uses a 100-byte stride.",
+              "The factory allocates 0x194 bytes through IAT 0x92D4B4, identified by original imports as operator new.",
+              "Descriptor floats +8/+12 supply constructor width/height. The routine applies UI fields +0x60/+0x68/+0x70, sets origin, clears flag bits with AND 0xF9 and appends a descriptor-bearing owned record.",
+              "Final cleanup decrements the temporary visual reference count and invokes virtual destruction when it reaches zero."
+            ],
+            "dependencies": [
+              "Constructor 0x004431F0",
+              "Calls 0x0041F7E0, 0x0041F880, 0x0041F920 and 0x004482B0",
+              "Owned-record append 0x0044B9A0",
+              "Operator new import, SEH/unwind support and virtual destruction"
+            ],
+            "validation_plan": [
+              "Compare descriptor fallback, constructor arguments, returned object fields and ordered helper calls.",
+              "Exercise count boundaries, origin variants and differing UI transform fields.",
+              "Validate ownership and exception cleanup with original dependencies before claiming factory equivalence."
+            ],
+            "limits": [
+              "No duplicate was found in searched recovered code or native registry.",
+              "Constructor inspection was partial; descriptor resource-token meanings were not independently established.",
+              "Allocation-failure and exception paths require further analysis and execution."
+            ]
+          },
+          {
+            "reference": "MethodDef 0x060013EA, RVA 0x325BBC, gaDriverProfileMenu.setupAchievementsList",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Use the verified IL as a larger UI reconstruction lead after recovering its smaller native dependencies. Preserve the original 38-row behavior, reel ownership and fault handlers.",
+            "evidence": [
+              "Original metadata identifies method row 5098, token 0x060013EA. Raw bytes confirm a 12-byte fat header, 2095 code bytes, maxstack 12 and locals token 0x11001348.",
+              "Original code SHA-256 is 8e6d74034b695f1ec1cc3dfb9a2fd0fd785a9f342de0df10f1aa73cf37777354.",
+              "IL+0x1B3 bytes 071f123b1d050000 branch to IL_06D8 when index equals 18. The loop terminates at index 39, producing 38 row-construction iterations.",
+              "IL_0192..019B resets the reel SSP at Profile+420. IL_05ED..05F6 calls vector.push_back at Profile+472.",
+              "The action counter starts at 299 and increments after the skip branch; IL_05BC stores it at row+8.",
+              "The method includes nested fault handlers, reference increments/decrements, scrollbar-related branches and final font release before RET at IL_082E."
+            ],
+            "dependencies": [
+              "Font/localization and achievement-state access",
+              "gaMenuReel construction and SSP reset",
+              "UI item/text creation, add, menu-item and audio methods",
+              "SSP reference counting, vector.push_back and C++ unwind destructors",
+              "Virtual UI calls and original layout data"
+            ],
+            "validation_plan": [
+              "Compare ordered row creation, action IDs and owned-child operations using original localization and achievement inputs.",
+              "Cover earned/locked states, index 18 exclusion, scale variations and scrollbar thresholds.",
+              "Compare normal and fault-path ownership effects against original execution."
+            ],
+            "limits": [
+              "Mono aborted during later data emission, but emitted this complete method through its final RET.",
+              "No duplicate was found in the searched recovered implementation files.",
+              "Not a small self-contained candidate; all dependency tokens and layout branches still need a complete inventory.",
+              "No original UI execution was performed."
+            ]
+          },
+          {
+            "reference": "MethodDef 0x060013ED, RVA 0x32502C, gaDriverProfileMenu.handleScreenInput",
+            "priority": "low",
+            "classification": "original_candidate",
+            "hint": "Preserve the achievement analytics dispatch as a distinct branch within the full input handler. It supports action 338 without an input-handler patch, but does not establish correctness of adding a row.",
+            "evidence": [
+              "Metadata identifies method row 5101, token 0x060013ED. Raw header confirms 1458 code bytes, maxstack 8 and locals token 0x11001340.",
+              "IL_00AD..00B9 computes selection-300 and compares unsigned against 1699, accepting exactly 300 through 1999.",
+              "IL_00BB..00D1 calls the analytics virtual slot with Profile_Achievements and two zero arguments, then branches to IL_05B1.",
+              "The following branch separately handles selections 200 through 299."
+            ],
+            "dependencies": [
+              "elAnalytics singleton and virtual call signature 0x110003A6",
+              "Profile_Achievements string data",
+              "Remaining input dispatch and shared method exit"
+            ],
+            "validation_plan": [
+              "Compare dispatch and analytics call arguments for 299, 300, 338, 1999, 2000 and negative inputs.",
+              "Verify accepted achievement actions bypass song-selection side effects."
+            ],
+            "limits": [
+              "The analytics branch was inspected directly; the entire handler was not semantically reconstructed.",
+              "No runtime branch tests were performed."
+            ]
+          },
+          {
+            "reference": "First Prestige slot-18 patch and sprite slots 148/187",
+            "priority": "low",
+            "classification": "intentional_modification",
+            "hint": "Keep the skip removal, custom artwork, descriptor replacement and prestige eligibility rules separate from original recovery. Retain only their independently verified original-address leads.",
+            "evidence": [
+              "Original bytes contain the slot-18 exclusion; replacing them with eight NOPs changes list construction.",
+              "The note explicitly describes First Prestige as a ReRiff extension and reports multiple custom-artwork revisions.",
+              "Original executable SHA-256 was independently confirmed as 2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2."
+            ],
+            "dependencies": [
+              "Mod-specific initialization, save-domain and eligibility guards",
+              "Custom VFS resources and descriptor ownership"
+            ],
+            "validation_plan": [
+              "Evaluate mod behavior separately from original-equivalence tests.",
+              "Use the preserved original list and descriptors as the baseline for future recovery comparisons."
+            ],
+            "limits": [
+              "Reported installations, screenshots, archive exports and regression executables were not inspected or reproduced.",
+              "No source integration, matching credit or acceptance is established."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as a 93-byte assembly reference for VA 0x448830, covering [0x448830, 0x44888D). The original selects descriptors using an unsigned comparison and falls back to descriptor zero for an out-of-range index; it does not reject the index. The attributed method name and callers remain unverified. Byte equality establishes assembly-reference evidence only, with zero source-recovery credit.",
+    "reason": "Independent disassembly confirms both branch paths converge at RET 4, followed by three INT3 bytes and a distinct prologue at 0x448890. The transcription preserves the observed instructions, calls and ABI; assembling and linking it at the original VA produced an unmasked 93-byte match. Neither recorded assembly nor source coverage overlaps the span. The original executable hash and candidate hashes match the receipts. The two callees and indirect callers remain dependencies, and no behavioral execution or callee equivalence was established."
+  }
+}

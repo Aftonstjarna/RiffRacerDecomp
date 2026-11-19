@@ -8562,3 +8562,16 @@ test-cycle-screen-find-focused-item: $(OUT)/reriff-match $(OUT)/screen_find_focu
 
 test-recovered: test-cycle-screen-find-focused-item
 .PHONY: test-cycle-screen-find-focused-item
+
+# Reviewed cycle reference: ui-sprite-set-definition (assembly evidence only).
+$(OUT)/ui_sprite_set_definition.bin: native/ui_sprite_set_definition.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_sprite_set_definition.o
+	ld -m elf_i386 -Ttext=0x448830 -e original_ui_sprite_set_definition $(OUT)/ui_sprite_set_definition.o -o $(OUT)/ui_sprite_set_definition.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_sprite_set_definition.elf $@
+
+test-cycle-ui-sprite-set-definition: $(OUT)/reriff-match $(OUT)/ui_sprite_set_definition.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-sprite-set-definition $(OUT)/ui_sprite_set_definition.bin $(OUT)/ui-sprite-set-definition-comparison.json
+
+test-recovered: test-cycle-ui-sprite-set-definition
+.PHONY: test-cycle-ui-sprite-set-definition
