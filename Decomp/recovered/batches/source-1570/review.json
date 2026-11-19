@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery of the UTF-16 advance routine, with zero matching-source byte credit.",
+  "reason": "The source follows the original’s 32-bit layout, thiscall interface, first-match glyph scans, single-level alternate lookup, fallback and CR/LF selection, and sequential float accumulation. Independent disassembly of the original confirms the relevant control flow and offsets. The differential test calls the original and covers meaningful lookup, empty-range, surrogate, rounding, return-bit, MXCSR and storage-preservation cases. Native Windows compilation records successful builds of the actual implementation, with no exact source match. Validation is sampled rather than proof of all-input equivalence; the stated pointer, concurrency and floating-point limitations apply."
+}
