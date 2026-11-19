@@ -8575,3 +8575,16 @@ test-cycle-ui-sprite-set-definition: $(OUT)/reriff-match $(OUT)/ui_sprite_set_de
 
 test-recovered: test-cycle-ui-sprite-set-definition
 .PHONY: test-cycle-ui-sprite-set-definition
+
+# Reviewed cycle reference: ui-visual-handle-update (assembly evidence only).
+$(OUT)/ui_visual_handle_update.bin: native/ui_visual_handle_update.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_visual_handle_update.o
+	ld -m elf_i386 -Ttext=0x454f90 -e original_ui_visual_handle_update $(OUT)/ui_visual_handle_update.o -o $(OUT)/ui_visual_handle_update.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_visual_handle_update.elf $@
+
+test-cycle-ui-visual-handle-update: $(OUT)/reriff-match $(OUT)/ui_visual_handle_update.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-visual-handle-update $(OUT)/ui_visual_handle_update.bin $(OUT)/ui-visual-handle-update-comparison.json
+
+test-recovered: test-cycle-ui-visual-handle-update
+.PHONY: test-cycle-ui-visual-handle-update
