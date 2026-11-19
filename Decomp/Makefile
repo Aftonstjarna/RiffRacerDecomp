@@ -8380,3 +8380,16 @@ test-cycle-unicode-scalar-cp1252-map: $(OUT)/reriff-match $(OUT)/unicode_scalar_
 
 test-recovered: test-cycle-unicode-scalar-cp1252-map
 .PHONY: test-cycle-unicode-scalar-cp1252-map
+
+# Reviewed cycle reference: resource-flag-bitmap-update (assembly evidence only).
+$(OUT)/resource_flag_bitmap_update.bin: native/resource_flag_bitmap_update.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_flag_bitmap_update.o
+	ld -m elf_i386 -Ttext=0x41f500 -e original_resource_flag_bitmap_update $(OUT)/resource_flag_bitmap_update.o -o $(OUT)/resource_flag_bitmap_update.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_flag_bitmap_update.elf $@
+
+test-cycle-resource-flag-bitmap-update: $(OUT)/reriff-match $(OUT)/resource_flag_bitmap_update.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-flag-bitmap-update $(OUT)/resource_flag_bitmap_update.bin $(OUT)/resource-flag-bitmap-update-comparison.json
+
+test-recovered: test-cycle-resource-flag-bitmap-update
+.PHONY: test-cycle-resource-flag-bitmap-update

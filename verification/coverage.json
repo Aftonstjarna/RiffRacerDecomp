@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 137004,
-  "remaining_bytes": 8498388,
-  "verified_percent": 1.5865405994308075,
-  "registered_blocks": 686,
-  "exact_blocks": 686,
+  "verified_bytes": 137090,
+  "remaining_bytes": 8498302,
+  "verified_percent": 1.5875365009486542,
+  "registered_blocks": 687,
+  "exact_blocks": 687,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -461,6 +461,15 @@
       "byte_equal": true,
       "reference_sha256": "af90831a1d85c2206390875c9b4116e7d7d0ecebd0e01b3e965a4a6fc9b23c3f",
       "candidate_sha256": "af90831a1d85c2206390875c9b4116e7d7d0ecebd0e01b3e965a4a6fc9b23c3f"
+    },
+    {
+      "name": "resource-flag-bitmap-update",
+      "file_offset": 125184,
+      "size": 86,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "db6b0a943179cd6bae10686843230242b5267bb99b09a0eb2bcd04b63205e75a",
+      "candidate_sha256": "db6b0a943179cd6bae10686843230242b5267bb99b09a0eb2bcd04b63205e75a"
     },
     {
       "name": "ui-sprite-set-handle-134",
