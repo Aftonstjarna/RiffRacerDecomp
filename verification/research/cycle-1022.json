@@ -1,0 +1,201 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "f0451c0accb74af04a4b457e9d82076612db90daa7eca96a64650934491e2bac",
+    "finding_index": 0,
+    "va": 5628208,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "f0451c0accb74af04a4b457e9d82076612db90daa7eca96a64650934491e2bac",
+    "note_sha256": "f0451c0accb74af04a4b457e9d82076612db90daa7eca96a64650934491e2bac",
+    "bytes": 7038,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff/build/prestige-rank-work",
+        "commit": "0127520ade13e8dd4ed5d7721769ddd90286a435",
+        "path": "reports/MODS-VFS-DIRECTORY.md",
+        "git_status": "?? reports/MODS-VFS-DIRECTORY.md\n"
+      },
+      {
+        "repository": "/var/home/afton/.dev/ReRiff/build/prestige-rank-work",
+        "commit": "af58b0638d4245da837f6ecf6a15cd4efcabbca5",
+        "path": "reports/MODS-VFS-DIRECTORY.md",
+        "git_status": "?? reports/MODS-VFS-DIRECTORY.md\n"
+      }
+    ],
+    "related_ids": [
+      "59eabc5a775c455f5eff351b8eb9ddc88141693729478e4a6185b7c1a50dd637",
+      "a37a743b032c3bdccb9165d8d0cf74461037f99e13c49145b3d619de3cd6e3d1",
+      "cfcd7ad20c77462d88b021a57d714bc5376a08386bd18c96d95ea72d06f5836d"
+    ],
+    "history": [
+      {
+        "time": 1794874237,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794874252,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794874341,
+        "action": "triage_complete",
+        "reason": "The note provides useful native recovery leads, especially directory discovery and two small record helpers. Original SHA-256 matches the note. Address/RVA searches found no corresponding recovered C++ or native registry entries; the existing application-worker assembly only references 0x55E740. No behavioral fixtures were executed."
+      },
+      {
+        "time": 1794878245,
+        "action": "submitted",
+        "reason": "Additional source provenance; status retained"
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "The note provides useful native recovery leads, especially directory discovery and two small record helpers. Original SHA-256 matches the note. Address/RVA searches found no corresponding recovered C++ or native registry entries; the existing application-worker assembly only references 0x55E740. No behavioral fixtures were executed.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "f0451c0accb74af04a4b457e9d82076612db90daa7eca96a64650934491e2bac",
+      "baseline": {
+        "commit": "55fa98cb023ab3c1abbde3ec443ea81ae27ea35f",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "f0451c0accb74af04a4b457e9d82076612db90daa7eca96a64650934491e2bac"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "The note provides useful native recovery leads, especially directory discovery and two small record helpers. Original SHA-256 matches the note. Address/RVA searches found no corresponding recovered C++ or native registry entries; the existing application-worker assembly only references 0x55E740. No behavioral fixtures were executed.",
+        "corrections": [
+          "Numeric suffixes are not mandatory: the original scanner accepts unnumbered vfs.dat using temporary ID 0xFFFFFFFF, then converts the final sentinel entry to ID 0 after enumeration.",
+          "The original hexadecimal suffix policy permits up to seven digits and rejects numeric zero; the 1–31 limit belongs to ReRiff policy.",
+          "The secondary loader inserts mounts according to volume ID rather than simply appending them.",
+          "The scanner extends through 0x55E4FE: instructions after its ret at 0x55E4F6 remain reachable from an earlier branch.",
+          "Mod mounting, migration, and rendering claims were not independently reproduced. Their tests do not establish faithful recovered source."
+        ],
+        "findings": [
+          {
+            "reference": "0x55E130–0x55E4FE",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover directory discovery with ECX pointing to a native wide string and EDX to a vector of 28-byte records. Preserve hexadecimal parsing, stable placement of equal IDs, sentinel conversion, existing-vector behavior, and handle cleanup.",
+            "evidence": [
+              "0x55E15E–0x55E166 saves EDX as the output vector and ECX as the directory string.",
+              "0x55E197–0x55E1D9 builds the search pattern from original UTF-16 constants vfs, '*', and '.dat'.",
+              "Import metadata identifies FindFirstFileW at 0x92D078, FindNextFileW at 0x92D068, FindClose at 0x92D06C, and wcsrchr at 0x92D340.",
+              "0x55E210 skips FILE_ATTRIBUTE_DIRECTORY; no recursive call appears in the inspected routine.",
+              "0x55E2F7 limits the suffix to seven characters; 0x55E314 calls imported narrow tolower, followed by explicit hexadecimal checks and rejection of zero at 0x55E355.",
+              "0x55E390 inserts before the first unsigned-greater ID and advances by 0x1C; 0x55E4C0–0x55E4C6 converts the last 0xFFFFFFFF ID to zero.",
+              "0x55E447 branches to 0x55E4F7, which jumps back to enumeration cleanup; padding starts at 0x55E4FF."
+            ],
+            "dependencies": [
+              "Native wide-string layout: union +0, length +16, capacity +20; capacity below eight selects inline storage.",
+              "String helpers 0x44FB30, 0x536160, 0x44F8F0 and path construction 0x561D40.",
+              "Record construction 0x561E30; vector append 0x5614E0 and insertion 0x561FF0.",
+              "Win32 enumeration imports, CRT tolower, operator delete, security-cookie and exception machinery."
+            ],
+            "validation_plan": [
+              "Compare original and recovered discovery using controlled enumeration order, recording full stems, IDs, vector order, allocations, and handle closure.",
+              "Exercise unnumbered names, zero, mixed-case hexadecimal, seven/eight digits, invalid suffixes, duplicate IDs, directories, missing directories, and prepopulated vectors.",
+              "Preserve narrow tolower behavior until its valid-input domain is established; do not silently substitute Unicode case folding."
+            ],
+            "limits": [
+              "No execution-based differential checks were performed.",
+              "Path-construction and container dependencies were not fully disassembled.",
+              "Malformed-name behavior and exception cleanup require further verification."
+            ]
+          },
+          {
+            "reference": "0x561E30–0x561E49; 0x55E500–0x55E52A",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Start with the small discovery-record constructor and string cleanup helper. The constructor stores the ID and constructs the string; the cleanup helper releases only string storage and leaves the ID intact.",
+            "evidence": [
+              "0x561E33 loads the ID through EDX; 0x561E3E stores it at ECX+0.",
+              "0x561E36 forwards the stack string argument to 0x44F6F0 with ECX=record+4; EAX returns the record pointer. The outer routine uses plain ret, and callers remove its stack argument.",
+              "0x55E503 compares record+24 against eight and conditionally calls imported operator delete on record+4.",
+              "0x55E515–0x55E525 resets capacity to seven, length to zero, and the initial UTF-16 character to zero.",
+              "Both helpers end before explicit INT3 padding; neither address/RVA was found in the searched recovered-source and native registry files."
+            ],
+            "dependencies": [
+              "0x44F6F0 native wide-string copy constructor, whose beginning was inspected.",
+              "Operator delete import at 0x92D4B0.",
+              "28-byte record layout: ID +0, wide string +4."
+            ],
+            "validation_plan": [
+              "Compare constructor results for empty, inline, and heap-backed strings, checking independent ownership and EAX.",
+              "Compare cleanup memory writes and allocator calls at capacities seven and eight, preserving ID and unrelated bytes.",
+              "Verify register preservation and caller stack balance through ABI adapters."
+            ],
+            "limits": [
+              "The complete string-copy dependency was not inspected or executed.",
+              "Do not assume a meaningful return value for the cleanup helper."
+            ]
+          },
+          {
+            "reference": "0x55ED80–0x55F3A6; call site 0x55EDE7",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover secondary mounting after discovery and record helpers. Treat it as a stateful loader with ordered insertion, failure tracking, diagnostics, and ownership cleanup.",
+            "evidence": [
+              "0x55EDDE–0x55EDE7 obtains the directory at [0xBFCD08]+0x14 and executes E8 44 F3 FF FF to 0x55E130.",
+              "0x55EE01–0x55EE5A uses object+0x48/+0x4C/+0x50 as a vector with 20-byte records and reserves existing count plus discovery count.",
+              "0x55EEFD calls 0x560780 for the '.dat' path; failure updates a bitset rooted at object+0x58.",
+              "0x55EF8C and 0x55EFA4 call 0x598420 twice for the '.zip' path; 0x55EFC8 calls 0x560CB0.",
+              "0x55F100 compares IDs at mounted-record offset +12, advances by 20, and 0x55F12F calls insertion helper 0x561960.",
+              "Failure paths update object+0x30, close/free resources, and mark failure bits. Final cleanup ends at ret 0x55F3A6; padding precedes the next entry at 0x55F3B0.",
+              "0x55E791–0x55E7A1 confirms initial discovery from object+0x18; 0x55ECBE confirms its call to the secondary loader."
+            ],
+            "dependencies": [
+              "Discovery 0x55E130 and native strings/container helpers.",
+              "0x560780, 0x598420, 0x560CB0, 0x561960 and reserve helper 0x52C750.",
+              "Failure-bitset growth 0x55DDD0; cleanup routines 0x598770, 0x598BA0 and 0x55ED40.",
+              "Original archive/index data, allocator imports, and initialized directory global."
+            ],
+            "validation_plan": [
+              "Inspect dependency implementations before assigning complete index/checksum semantics.",
+              "Compare valid mounts, missing/corrupt index, missing ZIP, checksum failure, duplicate IDs, and preexisting mounts.",
+              "Record mount order, both ZIP handles, index ownership, diagnostic string, failure bits, and all cleanup calls."
+            ],
+            "limits": [
+              "The directory global's original purpose remains unresolved.",
+              "Index, ZIP-opening, and checksum callees were identified by calls but not independently analyzed.",
+              "The file-manager global claim at 0xBFCD2C was not verified.",
+              "The entire initial loader was not inspected continuously; no complete reconstruction is claimed."
+            ]
+          },
+          {
+            "reference": "ReRiff policies redirecting original call 0x55EDE7",
+            "priority": "low",
+            "classification": "intentional_modification",
+            "hint": "Keep named-folder traversal, free-ID allocation, migration, and font splitting separate from original recovery. Use their reported fixtures only as potential future test infrastructure.",
+            "evidence": [
+              "The note explicitly describes replacing secondary discovery, sorting mod folders, allocating IDs 1–31, and relocating loose metrics.",
+              "Original discovery skips directories and accepts up to seven hexadecimal suffix digits, demonstrating different discovery policy."
+            ],
+            "dependencies": [
+              "Production hook and fixture sources named in the note, which were not inspected.",
+              "Original loader initialization and archive assets."
+            ],
+            "validation_plan": [
+              "Independently review fixture mapping, imports, relocation handling, ABI adapters, and assertions before reuse.",
+              "Test faithful original behavior separately from added mod policies and live rendering."
+            ],
+            "limits": [
+              "Installation, rollback, package hashes, native fixture results, and rendering claims remain unverified in this review.",
+              "No source integration, matching credit, or acceptance is implied."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for 0x55e130–0x55e4fe inclusive, with zero source-recovery credit. The original permits an unnumbered archive and hexadecimal suffixes up to seven digits; the 1–31 limit described in the research note is not the scanner’s policy. Dependencies, malformed inputs, exception unwinding, mod mounting, and behavioral equivalence remain unverified.",
+    "reason": "Independently assembled and linked the symbolic instructions at the original VA: all 975 bytes matched the hash-pinned Game.exe without masking. Original disassembly confirms the branch at 0x55e447 reaches 0x55e4f7 after the first return and rejoins enumeration; padding separates the range from adjacent functions. The instructions preserve the observed register saves, plain return, branches, and external call targets. The candidate and validation hashes also matched the independently generated artifacts."
+  }
+}

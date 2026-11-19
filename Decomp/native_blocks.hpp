@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"ui-visual-handle-update",0x54f90,114},
+  return {NativeBlock{"vfs-directory-discover",0x15e130,975},
+                     NativeBlock{"ui-visual-handle-update",0x54f90,114},
                      NativeBlock{"ui-sprite-set-definition",0x48830,93},
                      NativeBlock{"screen-find-focused-item",0x47e90,268},
                      NativeBlock{"eadb-setup",0x1249a0,236},

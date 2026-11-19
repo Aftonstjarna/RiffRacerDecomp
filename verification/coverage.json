@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 139326,
-  "remaining_bytes": 8496066,
-  "verified_percent": 1.6134299404126646,
-  "registered_blocks": 702,
-  "exact_blocks": 702,
+  "verified_bytes": 140301,
+  "remaining_bytes": 8495091,
+  "verified_percent": 1.6247206843649946,
+  "registered_blocks": 703,
+  "exact_blocks": 703,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4907,6 +4907,15 @@
       "byte_equal": true,
       "reference_sha256": "52aa5d504ce39f4d156d32f7d14605a8de17fd5b464fe22e7d1bc4b68c15e425",
       "candidate_sha256": "52aa5d504ce39f4d156d32f7d14605a8de17fd5b464fe22e7d1bc4b68c15e425"
+    },
+    {
+      "name": "vfs-directory-discover",
+      "file_offset": 1430832,
+      "size": 975,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "c1ee276bd0ba4b66b731ea85047a614aa55b349b3931d7b8497bbc2a1bc8f5ec",
+      "candidate_sha256": "c1ee276bd0ba4b66b731ea85047a614aa55b349b3931d7b8497bbc2a1bc8f5ec"
     },
     {
       "name": "mounted-archive-search",
