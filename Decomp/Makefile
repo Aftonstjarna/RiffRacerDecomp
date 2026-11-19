@@ -8510,3 +8510,16 @@ test-cycle-wide-entry-growth-policy: $(OUT)/reriff-match $(OUT)/wide_entry_growt
 
 test-recovered: test-cycle-wide-entry-growth-policy
 .PHONY: test-cycle-wide-entry-growth-policy
+
+# Reviewed cycle reference: screen-set-focus-id (assembly evidence only).
+$(OUT)/screen_set_focus_id.bin: native/screen_set_focus_id.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/screen_set_focus_id.o
+	ld -m elf_i386 -Ttext=0x48f580 -e original_screen_set_focus_id $(OUT)/screen_set_focus_id.o -o $(OUT)/screen_set_focus_id.elf
+	objcopy -O binary --only-section=.text $(OUT)/screen_set_focus_id.elf $@
+
+test-cycle-screen-set-focus-id: $(OUT)/reriff-match $(OUT)/screen_set_focus_id.bin
+	$(OUT)/reriff-match native-check "$(GAME)" screen-set-focus-id $(OUT)/screen_set_focus_id.bin $(OUT)/screen-set-focus-id-comparison.json
+
+test-recovered: test-cycle-screen-set-focus-id
+.PHONY: test-cycle-screen-set-focus-id

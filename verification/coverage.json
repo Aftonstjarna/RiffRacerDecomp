@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 138285,
-  "remaining_bytes": 8497107,
-  "verified_percent": 1.6013748999466382,
-  "registered_blocks": 696,
-  "exact_blocks": 696,
+  "verified_bytes": 138437,
+  "remaining_bytes": 8496955,
+  "verified_percent": 1.6031350979781809,
+  "registered_blocks": 697,
+  "exact_blocks": 697,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -2693,6 +2693,15 @@
       "byte_equal": true,
       "reference_sha256": "34d0c9a6284b8aa59012f9657e8586309ac7caba2d5352234d272ff005bf9d80",
       "candidate_sha256": "34d0c9a6284b8aa59012f9657e8586309ac7caba2d5352234d272ff005bf9d80"
+    },
+    {
+      "name": "screen-set-focus-id",
+      "file_offset": 584064,
+      "size": 152,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "c901a97bdbb6f3068e28898230e760f10ef7c1b5708d217bb245891dbefbb932",
+      "candidate_sha256": "c901a97bdbb6f3068e28898230e760f10ef7c1b5708d217bb245891dbefbb932"
     },
     {
       "name": "owner-slot58-acquire",

@@ -1,0 +1,229 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "bf3598e3a4d389dec985652241ce5bf6ca8c48ad8b990bc6dc775d02946f0130",
+    "finding_index": 1,
+    "va": 4781440,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "bf3598e3a4d389dec985652241ce5bf6ca8c48ad8b990bc6dc775d02946f0130",
+    "note_sha256": "bf3598e3a4d389dec985652241ce5bf6ca8c48ad8b990bc6dc775d02946f0130",
+    "bytes": 4549,
+    "status": "integrated",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "c7d583e4052275cf077cd55435f2fce3371e1314",
+        "path": "reports/FILE-PICKER-WRAPAROUND.md",
+        "git_status": "?? reports/FILE-PICKER-WRAPAROUND.md\n"
+      }
+    ],
+    "related_ids": [
+      "5166f23d291c1705cde0cffa9059df4754b6df8511874c737ce215d1217f0a0d",
+      "7af354aad8552e2adb419712e582cb03efdce3a6824655c84ea37fc2a66c5503"
+    ],
+    "history": [
+      {
+        "time": 1794583536,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794583606,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794583727,
+        "action": "triage_complete",
+        "reason": "Useful original recovery leads exist, especially the small native focus routines and managed input-repeat logic. No corresponding recovery was found by name/address searches in recovered C++ or the native registry. Original SHA-256 matches the note. No behavior tests were executed."
+      },
+      {
+        "time": 1795112353,
+        "action": "integrated",
+        "reason": "Exact research snapshot committed alongside independently reviewed, byte-checked reference. No source credit; remaining findings retain separate scheduling."
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "Useful original recovery leads exist, especially the small native focus routines and managed input-repeat logic. No corresponding recovery was found by name/address searches in recovered C++ or the native registry. Original SHA-256 matches the note. No behavior tests were executed.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "bf3598e3a4d389dec985652241ce5bf6ca8c48ad8b990bc6dc775d02946f0130",
+      "baseline": {
+        "commit": "54fcc0dc48a8137cc11cfb9ce8e8db3d904c57f6",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "bf3598e3a4d389dec985652241ce5bf6ca8c48ad8b990bc6dc775d02946f0130"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "Useful original recovery leads exist, especially the small native focus routines and managed input-repeat logic. No corresponding recovery was found by name/address searches in recovered C++ or the native registry. Original SHA-256 matches the note. No behavior tests were executed.",
+        "corrections": [
+          "setFocus(-1) is not a demonstrated clear-focus API: the native integer overload forwards the ID into recursive tree selection without a sentinel check.",
+          "changeSelection uses the SSP overload of elUIScreen.setFocus, not the cited integer overload.",
+          "updateVisibility is stateful: it calls gaMenuReel.tick and updates child positions; treating it as a pure visibility refresh would omit original side effects.",
+          "Wraparound is an intentional extension. The note's synthetic tests and reported observation-only live test establish neither faithful recovery nor safety of the abandoned action prototype."
+        ],
+        "findings": [
+          {
+            "reference": "VA 0x00448180, elUIItem::setFocus(int)",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover this compact recursive tree-selection routine first. ABI is x86 thiscall: ECX=this, one stack integer, boolean result in AL, callee pops four bytes. Body spans 0x448180–0x4481FB; padding precedes the next entry at 0x448200.",
+            "evidence": [
+              "Original objdump shows gates on byte +0x174 bits 2 and 4, with byte +0x190 providing an alternate eligibility path.",
+              "Compares requested ID with +8; on a match, checks state +0x10 against 3 and may invoke vtable +0x54 with arguments 1 and -1.",
+              "Traverses four-byte child entries between +0x178 and +0x17C, recursively calling 0x448180 and stopping on success.",
+              "Returns occur at 0x4481A1, 0x4481C1, 0x4481F0 and 0x4481F9; the first return is not the routine boundary.",
+              "No corresponding name/address entry was found in searched recovered sources or native_blocks.hpp."
+            ],
+            "dependencies": [
+              "Child vector and item lifetime invariants",
+              "Virtual callback at vtable +0x54 and its side effects"
+            ],
+            "validation_plan": [
+              "Compare against original execution using valid item trees covering every eligibility gate, matching root, matching child, absent ID and duplicate IDs.",
+              "Record callback order, arguments, return AL and state mutations.",
+              "Include -1 as an ordinary ID, both present and absent."
+            ],
+            "limits": [
+              "Virtual callback implementation was not inspected.",
+              "No original execution or differential harness was run."
+            ]
+          },
+          {
+            "reference": "VA 0x0048F580, elUIScreen::setFocus(int)",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the small screen wrapper with exact SSP ownership semantics. ECX=this and one stack integer; body ends at 0x48F618 exclusive, followed by padding and a separate entry at 0x48F620.",
+            "evidence": [
+              "Calls 0x448180 on screen +0x0C with the supplied ID, then calls 0x447E90 with a temporary SSP output address.",
+              "Compares the returned pointer with screen +0x14; replacement decrements the old object's +4 reference count, conditionally invokes its deleting destructor, stores the new pointer and increments its count.",
+              "Releases the temporary SSP before ret 4 at 0x48F615.",
+              "Original SEH registration references 0x8FF408.",
+              "No corresponding recovery or native registry entry was found by searched names/addresses."
+            ],
+            "dependencies": [
+              "0x448180 recursive selection",
+              "0x447E90 focused-item lookup",
+              "SSP reference counting and virtual deleting destructor",
+              "Original exception cleanup"
+            ],
+            "validation_plan": [
+              "Compare original and recovered wrapper with unchanged focus, changed focus, absent ID and ID -1.",
+              "Record screen +0x14, reference counts, destructor calls and tree callback effects.",
+              "Recover the complete 0x447E90 routine before relying on absent-ID behavior."
+            ],
+            "limits": [
+              "Only the beginning of 0x447E90 was disassembled; its complete boundary and null-result conditions remain unresolved.",
+              "The wrapper ignores the selection routine's boolean result; this alone does not establish whether focus clears.",
+              "No crash location or runtime safety result was independently obtained."
+            ]
+          },
+          {
+            "reference": "Token 0x06001055, gaFileSelectInterface.tickInput; RVA 0x002CFC00",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the complete method, prioritizing its input-repeat state machine as a separable behavioral unit. Preserve boolean return semantics and all non-navigation actions.",
+            "evidence": [
+              "Method table row 4181 identifies tickInput. Original header bytes encode a 12-byte header and 763 code bytes; actual IL ends with returns at IL_02F8 and IL_02FA.",
+              "IL_0047–0079 subtracts gaTimer.dt from float +380 using double intermediates and clamps through an unordered-aware branch.",
+              "Direction +376 is latched as -1 or +1, with the -1 input taking precedence when initially choosing direction.",
+              "IL_0164 and IL_01CE call changeSelection; each accepted call is followed unconditionally by copying float +384 into +380.",
+              "IL_0259–02B2 decreases +384 by dt times 0.070000000298023224, clamps to approximately 0.02, or resets it to 0.25.",
+              "The remainder includes overlay dismissal, a virtual action with argument 3, and A–Z jumpToSelection polling."
+            ],
+            "dependencies": [
+              "Input-manager singleton and device virtual calls",
+              "gaTimer.dt",
+              "changeSelection, jumpToSelection and state-manager popOverlayState",
+              "Virtual action at this vtable +0x60"
+            ],
+            "validation_plan": [
+              "Trace original input callback results and replay fresh presses, holds, releases, simultaneous directions and direction changes.",
+              "Compare +376/+380/+384, selection-call order and boolean return across frames.",
+              "Include countdown boundaries, period clamp, alphabet jumps and non-navigation actions; preserve IL floating-point conversion and unordered-branch behavior."
+            ],
+            "limits": [
+              "Input calli signatures and target implementations were not fully resolved.",
+              "No differential execution was performed.",
+              "A countdown reset proves an accepted attempt, not successful focus movement."
+            ]
+          },
+          {
+            "reference": "Token 0x06001054, gaFileSelectInterface.changeSelection; RVA 0x002CF4A0",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover navigation separately from integration, retaining fixed rows, visible-row scanning, reel movement, audio and SSP cleanup. This is larger than the native focus candidates.",
+            "evidence": [
+              "Method row 4180 and original header confirm 1606 code bytes after a 12-byte header; IL terminates at IL_0645.",
+              "IL_0000–0007 increments static field row 3897, token 0x04000F39; emitted field data identifies RVA 0x7E96C4.",
+              "IL uses the SSP vector at +324, four-byte entries and end pointer at +328, fixed rows +340/+336, and reel +248.",
+              "IL_0214–0222 routes null focus or focus ID zero into the fallback-selection branch.",
+              "IL_0428 selects the Down fallback from +340, then +336, then list; the opposite branch begins with the previously collected list candidate.",
+              "IL_0320 and IL_041E call moveToSelection; IL_056F calls the SSP setFocus overload. Audio virtual calls and numerous fault cleanup handlers are present."
+            ],
+            "dependencies": [
+              "gaMenu.getScreen and elUIScreen.getFocusItem",
+              "SSP setFocus overload at the separate native entry 0x48F620",
+              "gaMenuReel.getCurrentSelection and moveToSelection",
+              "Audio singleton, row virtual callbacks, strings and SSP unwind destructors"
+            ],
+            "validation_plan": [
+              "Compare original focus, reel state, audio callbacks and reference-count effects for fixed-only, list-only, empty and single-row layouts.",
+              "Cover hidden rows, null focus, focus ID zero, both directions and outer boundaries.",
+              "Use original row flags, IDs and reel timing data rather than the abandoned mod's synthetic expectations."
+            ],
+            "limits": [
+              "Full semantic reconstruction of every branch and virtual target remains outstanding.",
+              "The counter counts calls, including calls that do not move focus.",
+              "No independent confirmation of the note's live logs or prototype removal was performed."
+            ]
+          },
+          {
+            "reference": "Token 0x06001056, updateVisibility, RVA 0x002CC7FC; token 0x06001057, tick, RVA 0x002CFF08",
+            "priority": "low",
+            "classification": "original_candidate",
+            "hint": "Retain as supporting recovery leads; resolve updateVisibility's reel, row and child-animation effects before using it in a focus handoff. Defer the larger tick integration.",
+            "evidence": [
+              "Method rows 4182/4183 and original headers confirm respective code sizes 974 and 1579, each with a 12-byte header.",
+              "updateVisibility IL_01B6–01CB checks reel +248 and calls gaMenuReel.tick.",
+              "Its row loop accesses +324 and invokes a row virtual callback at slot +0x0C.",
+              "It inspects child-vector size, obtains the last child, calls elMath.moveTowards with gaTimer.dt, and calls elUIItem.setPos.",
+              "Monodis identifies the gaFileSelectInterface vtable field at RVA 0x7A54BC."
+            ],
+            "dependencies": [
+              "Reel tick implementation and row virtual callback",
+              "Child layout and visibility flags",
+              "elMath.moveTowards, elUIItem.setPos, gaTimer.dt and SSP cleanup"
+            ],
+            "validation_plan": [
+              "Compare row flags, positions, reel advancement and reference-count effects over multiple original frames.",
+              "Test missing reel, empty vectors and child animation states.",
+              "Resolve original vtable entries before attributing any native adapter integration point."
+            ],
+            "limits": [
+              "tick's header and method identity were checked; its full control flow was not reviewed.",
+              "Vtable contents and the claimed ReRiff adapter were not inspected.",
+              "Monodis aborted later in the assembly on an unsupported data type, but emitted the cited complete method bodies before that failure."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    },
+    "reason": "Exact research snapshot committed alongside independently reviewed, byte-checked reference. No source credit; remaining findings retain separate scheduling.",
+    "integration": {
+      "commit": "ceeae135de88e9e0461a3791182c1e4a9e6b8a68",
+      "path": "verification/research/bf3598e3a4d389dec985652241ce5bf6ca8c48ad8b990bc6dc775d02946f0130.md"
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for VA 0x48F580–0x48F617. Independent assembly and linking reproduced all 152 original bytes, with no masking. The adjacent padding and separate entry at 0x48F620 support the stated boundary. This establishes no source-recovery credit.",
+    "reason": "The original executable and research-note hashes match the recorded values. The transcription preserves the observed branches, calls, x86 thiscall stack cleanup, reference-count operations, and exception registration instructions. The original selector treats -1 as an ordinary ID, so clearing focus is not established. The focused-item lookup, virtual destructors, and exception cleanup remain dependencies; no behavioral execution or unwind validation was demonstrated."
+  }
+}
