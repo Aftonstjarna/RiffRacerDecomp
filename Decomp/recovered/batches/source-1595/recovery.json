@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "classification": "high_level_unmatched",
+  "title": "Unicode scalar CP1252 mapping",
+  "summary": "Recover the ECX scalar to EAX mapping at 0x5c2380: 27 special Unicode values map to CP1252 codes and all other 32-bit values pass through. The caller at 0x5c259e applies a separate range check.",
+  "targets": ["unicode-scalar-cp1252-map"],
+  "references": ["unicode-scalar-cp1252-map"],
+  "sources": ["impl.cpp", "impl.hpp", "test.cpp"],
+  "test_description": "Compare directly to the original for the entire BMP, supplementary and invalid boundaries, and 10000 deterministic 32-bit values. Install FS and check its head after each original call; the routine has no object fields or memory writes.",
+  "known_limits": ["The portable C++ entry point uses the normal C++ calling convention; the original uses ECX for its scalar.", "The caller's conversion and replacement policy is outside this recovered routine."]
+}

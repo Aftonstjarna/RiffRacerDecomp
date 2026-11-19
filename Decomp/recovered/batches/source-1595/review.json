@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "The recovered scalar mapping is supported as high-level unmatched source, with zero matching-source byte credit.",
+  "reason": "The 27 cases and default pass-through agree with the accepted reference and an independent disassembly of Game.exe. The original has no memory side effects, and the calling-convention difference is disclosed. The test calls the original, covers the entire BMP and additional boundary and sampled 32-bit values, and compares the result and FS head. Source hashes match validation.json; native Windows compilation records successful builds of the submitted implementation without matching credit. Sampled validation alone does not establish all-input equivalence, but the reference control flow supports the mapping for all 32-bit inputs."
+}
