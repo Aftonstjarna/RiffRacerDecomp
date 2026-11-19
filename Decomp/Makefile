@@ -8341,3 +8341,16 @@ test-cycle-ui-sprite-set-handle-138: $(OUT)/reriff-match $(OUT)/ui_sprite_set_ha
 
 test-recovered: test-cycle-ui-sprite-set-handle-138
 .PHONY: test-cycle-ui-sprite-set-handle-138
+
+# Reviewed cycle reference: text-colour-forward (assembly evidence only).
+$(OUT)/text_colour_forward.bin: native/text_colour_forward.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/text_colour_forward.o
+	ld -m elf_i386 -Ttext=0x450c40 -e original_text_colour_forward $(OUT)/text_colour_forward.o -o $(OUT)/text_colour_forward.elf
+	objcopy -O binary --only-section=.text $(OUT)/text_colour_forward.elf $@
+
+test-cycle-text-colour-forward: $(OUT)/reriff-match $(OUT)/text_colour_forward.bin
+	$(OUT)/reriff-match native-check "$(GAME)" text-colour-forward $(OUT)/text_colour_forward.bin $(OUT)/text-colour-forward-comparison.json
+
+test-recovered: test-cycle-text-colour-forward
+.PHONY: test-cycle-text-colour-forward
