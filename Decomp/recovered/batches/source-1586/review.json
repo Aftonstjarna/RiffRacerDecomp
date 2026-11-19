@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as an unmatched high-level recovery of the visual colour setter, with zero matching-source byte credit.",
+  "reason": "The source matches the reference routine’s field offsets, short-circuit comparisons, conditional component copy, and dirty-bit update for the stated scope. The submitted test calls the original and compares the complete object and input across equal values, changes in each component, quiet NaNs, signed zeros, infinities, and existing flags. Independent checksum checks matched the recorded source and original executable hashes. Native Windows compilation records show successful builds of the submitted implementation, but no exact match. The stated exclusions for signaling NaNs, unmasked floating-point exceptions, and unusual overlap remain limitations; sampled validation does not establish all-input equivalence."
+}
