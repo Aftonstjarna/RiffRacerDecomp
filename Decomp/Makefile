@@ -8601,3 +8601,16 @@ test-cycle-vfs-directory-discover: $(OUT)/reriff-match $(OUT)/vfs_directory_disc
 
 test-recovered: test-cycle-vfs-directory-discover
 .PHONY: test-cycle-vfs-directory-discover
+
+# Reviewed cycle reference: ui-visual-handle-update-1c (assembly evidence only).
+$(OUT)/ui_visual_handle_update_1c.bin: native/ui_visual_handle_update_1c.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_visual_handle_update_1c.o
+	ld -m elf_i386 -Ttext=0x455010 -e original_ui_visual_handle_update_1c $(OUT)/ui_visual_handle_update_1c.o -o $(OUT)/ui_visual_handle_update_1c.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_visual_handle_update_1c.elf $@
+
+test-cycle-ui-visual-handle-update-1c: $(OUT)/reriff-match $(OUT)/ui_visual_handle_update_1c.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-visual-handle-update-1c $(OUT)/ui_visual_handle_update_1c.bin $(OUT)/ui-visual-handle-update-1c-comparison.json
+
+test-recovered: test-cycle-ui-visual-handle-update-1c
+.PHONY: test-cycle-ui-visual-handle-update-1c
