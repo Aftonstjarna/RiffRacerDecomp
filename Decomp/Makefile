@@ -8146,3 +8146,16 @@ test-cycle-input-pointer-get: $(OUT)/reriff-match $(OUT)/input_pointer_get.bin
 
 test-recovered: test-cycle-input-pointer-get
 .PHONY: test-cycle-input-pointer-get
+
+# Reviewed cycle reference: worker-view-pivot-order (assembly evidence only).
+$(OUT)/worker_view_pivot_order.bin: native/worker_view_pivot_order.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_view_pivot_order.o
+	ld -m elf_i386 -Ttext=0x42c5c0 -e original_worker_view_pivot_order $(OUT)/worker_view_pivot_order.o -o $(OUT)/worker_view_pivot_order.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_view_pivot_order.elf $@
+
+test-cycle-worker-view-pivot-order: $(OUT)/reriff-match $(OUT)/worker_view_pivot_order.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-view-pivot-order $(OUT)/worker_view_pivot_order.bin $(OUT)/worker-view-pivot-order-comparison.json
+
+test-recovered: test-cycle-worker-view-pivot-order
+.PHONY: test-cycle-worker-view-pivot-order
