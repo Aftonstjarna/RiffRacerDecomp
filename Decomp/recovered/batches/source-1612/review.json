@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a readable, unmatched recovery of the mounted-archive search, with zero matching-source byte credit.",
+  "reason": "The source follows the reference routine’s ordered search, recalculates the range length after failed lookups, and writes the expected index on success or zero on failure. The submitted test calls the original and covers empty and populated ranges, first and later hits, misses, nested paths, and case sensitivity. Independent SHA-256 checks matched the recorded source and original executable hashes. Native Windows compilation records successful builds of the actual implementation, with no certified matching credit. Validation is sampled: it does not establish all-input equivalence, concurrent mutation behavior, or exceptional and malformed-input behavior."
+}
