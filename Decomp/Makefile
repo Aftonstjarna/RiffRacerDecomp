@@ -8237,3 +8237,16 @@ test-cycle-ui-sprite-set-handle-134: $(OUT)/reriff-match $(OUT)/ui_sprite_set_ha
 
 test-recovered: test-cycle-ui-sprite-set-handle-134
 .PHONY: test-cycle-ui-sprite-set-handle-134
+
+# Reviewed cycle reference: font-utf16-advance (assembly evidence only).
+$(OUT)/font_utf16_advance.bin: native/font_utf16_advance.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/font_utf16_advance.o
+	ld -m elf_i386 -Ttext=0x456450 -e original_font_utf16_advance $(OUT)/font_utf16_advance.o -o $(OUT)/font_utf16_advance.elf
+	objcopy -O binary --only-section=.text $(OUT)/font_utf16_advance.elf $@
+
+test-cycle-font-utf16-advance: $(OUT)/reriff-match $(OUT)/font_utf16_advance.bin
+	$(OUT)/reriff-match native-check "$(GAME)" font-utf16-advance $(OUT)/font_utf16_advance.bin $(OUT)/font-utf16-advance-comparison.json
+
+test-recovered: test-cycle-font-utf16-advance
+.PHONY: test-cycle-font-utf16-advance
