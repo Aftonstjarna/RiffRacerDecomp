@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as a high-level unmatched recovery of archive index lookup, with zero matching-source byte credit.",
+  "reason": "The source follows the reference traversal, separator handling, missing-component return, packed record index and 28-byte record selection. The test calls the original and covers nested and missing paths, empty components, repeated and trailing separators, duplicate names, case sensitivity and fixture preservation. An independent source hash and 32-bit compilation countercheck passed; the recorded native Windows builds compile the implementation. The stated invalid-input and buffer limits apply, and sampled validation does not establish all-input equivalence."
+}
