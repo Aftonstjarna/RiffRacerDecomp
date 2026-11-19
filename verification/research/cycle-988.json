@@ -1,0 +1,270 @@
+{
+  "classification": "research_evidence_not_source_credit",
+  "matching_credit": 0,
+  "lead": {
+    "note_id": "6b5edc4690a853f5ba4d4c78ee743cc0f01b8985639a37814a936731df4aa655",
+    "finding_index": 0,
+    "va": 6038400,
+    "priority": "high"
+  },
+  "triage": {
+    "schema": 1,
+    "id": "6b5edc4690a853f5ba4d4c78ee743cc0f01b8985639a37814a936731df4aa655",
+    "note_sha256": "6b5edc4690a853f5ba4d4c78ee743cc0f01b8985639a37814a936731df4aa655",
+    "bytes": 31204,
+    "status": "pending",
+    "matching_credit": 0,
+    "origins": [
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "ad239461a7d670d319a1c97dabfed9e19ea5e9ee",
+        "path": "reports/UNICODE-METADATA-TRANSPORT.md",
+        "git_status": "?? reports/UNICODE-METADATA-TRANSPORT.md\n"
+      },
+      {
+        "repository": "/var/home/afton/.dev/ReRiff",
+        "commit": "250b05d995797a1c074ff4b2b6f8a20a94e950f6",
+        "path": "reports/UNICODE-METADATA-TRANSPORT.md",
+        "git_status": "?? reports/UNICODE-METADATA-TRANSPORT.md\n"
+      }
+    ],
+    "related_ids": [
+      "0eacc8d6f4654b092aa6ffcb354c936394a2436776fee1cc431e1346d7cfb80c",
+      "19a35b811da7050218d3164c93b2340709081e5d6f2effe6d2c492325d869a91",
+      "3da5ecea65c6370db6c88fb6fc34a0ddc88193268d48d7b8d76745618b2e67a6",
+      "42cf634f88eba6bc8038f0692d5efe997ab4c1b3fcca955a6a7a2f527d4734da",
+      "7201248b499da5101e00afb9154c3bdba557d249e9b1ecd16fb392f6790e5a47",
+      "852efec6e3ce9ad1e0b25c68e57986d1584c7509b07cdfb4675e00805de3fe76",
+      "cf96ad268320bfdf2c1b452f8932bffd1107c2e98d669a67f26679787cc2a303",
+      "e91a13bb9f21410f50b931c7fb4dc45be7325b7409d8a54aefdad00471a32a66",
+      "ebc7a7379dc24e443ac49d2098e4438c28152201e291526105514b4a9c2b855b",
+      "f34be414a850521f4a8d57b323dee796ac8e79fc999dd9c13f4b17334ff975fa"
+    ],
+    "history": [
+      {
+        "time": 1794442041,
+        "action": "submitted",
+        "reason": "Unreviewed research; original evidence and mod claims require separate review"
+      },
+      {
+        "time": 1794442096,
+        "action": "triage_running",
+        "reason": "Inspecting original evidence in isolated reviewer"
+      },
+      {
+        "time": 1794442216,
+        "action": "triage_complete",
+        "reason": "Useful original-code leads: the native codec and its scalar mapper, two pointer getters, and a small JSON accessor. Original Game.exe SHA-256 matches the note. Original IL confirms the Last.fm conversion/artist-overwrite mechanism. No source integration or execution-based validation was performed."
+      },
+      {
+        "time": 1794446540,
+        "action": "submitted",
+        "reason": "Additional source provenance; status retained"
+      }
+    ],
+    "triage": {
+      "status": "complete",
+      "summary": "Useful original-code leads: the native codec and its scalar mapper, two pointer getters, and a small JSON accessor. Original Game.exe SHA-256 matches the note. Original IL confirms the Last.fm conversion/artist-overwrite mechanism. No source integration or execution-based validation was performed.",
+      "classification": "research_hints_not_certified",
+      "note_sha256": "6b5edc4690a853f5ba4d4c78ee743cc0f01b8985639a37814a936731df4aa655",
+      "baseline": {
+        "commit": "3b4243a7b698cb40c20dfd18b13d363b28d61964",
+        "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
+        "note_sha256": "6b5edc4690a853f5ba4d4c78ee743cc0f01b8985639a37814a936731df4aa655"
+      },
+      "matching_credit": 0,
+      "analysis": {
+        "summary": "Useful original-code leads: the native codec and its scalar mapper, two pointer getters, and a small JSON accessor. Original Game.exe SHA-256 matches the note. Original IL confirms the Last.fm conversion/artist-overwrite mechanism. No source integration or execution-based validation was performed.",
+        "corrections": [
+          "The getter routines are seven bytes each: six-byte LEA plus RET.",
+          "The codec does not end at its first RET (0x5C2562): loop bodies continue through 0x5C25FE, followed by a four-entry jump table at 0x5C2600..0x5C260F. The adjacent routine begins at 0x5C2610.",
+          "The original codec has behavior beyond ordinary Windows-1252 conversion: mapped value 0xFF emits '?' but does not clear the success flag, because emission uses unsigned <0xFF while failure uses >0xFF.",
+          "The MP3 ID3v2 copy loads through pointer arrays: [tag+4] or [tag+8], then their first pointer. It uses imported strncpy with count 256; this alone does not guarantee termination.",
+          "The UTF-8 copy and field-scoped bridge changes are intentional modifications. Their reported tests and private live traces do not establish recovered original behavior.",
+          "ParseOctane.dll and the private logs were unavailable. Their token bodies, range arithmetic and live observations remain unverified here."
+        ],
+        "findings": [
+          {
+            "reference": "Game.exe VA 0x5C2380..0x5C24FC",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the codec's scalar-to-Windows-1252 mapper first. This small dependency takes a scalar in ECX, returns EAX, maps special Windows-1252 characters, and otherwise returns the input unchanged.",
+            "evidence": [
+              "Original disassembly shows a complete conditional chain beginning with U+20AC -> 0x80 and ending with U+0178 -> 0x9F; the final fallback is mov eax,ecx; ret.",
+              "Multiple early returns belong to this same chain; padding starts at 0x5C24FD.",
+              "No corresponding address/name was found in searched recovered source or native registry; registry interval inspection found no covering entry."
+            ],
+            "dependencies": [],
+            "validation_plan": [
+              "Compare original and recovered EAX for every special mapping, all values 0..255, U+2010, nearby unmapped scalars, supplementary values and unsigned extremes.",
+              "Check preserved registers and absence of memory writes."
+            ],
+            "limits": [
+              "Register ABI is established from the inspected call and instructions; no independent symbol name was established.",
+              "No differential harness was run."
+            ]
+          },
+          {
+            "reference": "Game.exe token 0x06001802; RVA 0x1C2500; VA 0x5C2500",
+            "priority": "high",
+            "classification": "original_candidate",
+            "hint": "Recover the original lossy codec with its actual length convention, decoder tables, output-string mutations and success flag. Preserve its quirks instead of substituting a standard UTF-8 decoder.",
+            "evidence": [
+              "Original metadata identifies elCodec.UTF8ToWindows1252 as native unmanaged cdecl(input pointer, uint32 length, std::string&), returning an unsigned-byte bool.",
+              "Entry bytes are 55 8B EC 83 EC 0C. String length is at +0x10, capacity at +0x14; capacity >=16 selects heap storage.",
+              "0x5C2532 treats length 0xFFFFFFFF as NUL-terminated mode. Explicit-length mode checks source+trailing-byte-count against the end pointer before decoding.",
+              "The decoder uses byte table 0x9F3310, subtraction table 0x9F3410 and jump table 0x5C2600; calls scalar mapper 0x5C2380 and append member 0x442170.",
+              "0x5C25A9..0x5C25BA substitutes '?' unless the mapped value is unsigned <255; 0x5C25E6..0x5C25FA clears accumulated success only for values >255.",
+              "Native registry has no covering codec entry. Append dependency 0x442170 already has recovered C++ in batches/source-397."
+            ],
+            "dependencies": [
+              "VA 0x5C2380 scalar mapper",
+              "Original tables at 0x9F3310 and 0x9F3410, including legacy five/six-byte lead classifications",
+              "VA 0x442170 narrow append and its existing allocation/alias dependencies",
+              "Original 24-byte native narrow-string ABI and allocator"
+            ],
+            "validation_plan": [
+              "Compare original return byte, output bytes, length, terminator and guarded string storage for ASCII, empty input, U+2010, Windows-1252 special mappings, U+00FF and CJK.",
+              "Exercise explicit lengths versus 0xFFFFFFFF, exact-end and truncated sequences, embedded NULs, malformed continuation bytes, and inline/heap output storage.",
+              "Use padded guarded input when investigating speculative reads; preserve observed original behavior separately from proposed fixes."
+            ],
+            "limits": [
+              "Static inspection only; the note's BUCK?TICK execution result was not rerun.",
+              "Complete allocation failure, aliasing and malformed-input behavior remains to be validated."
+            ]
+          },
+          {
+            "reference": "Game.exe VA 0x44F0C0..0x44F0C6 and 0x44F0D0..0x44F0D6",
+            "priority": "low",
+            "classification": "original_candidate",
+            "hint": "Recover two minimal this-pointer-relative accessors returning ECX+0x16C and ECX+0x26C. Retain secondary-interface-relative offsets.",
+            "evidence": [
+              "Original bytes decode exactly as lea eax,[ecx+0x16c]; ret and lea eax,[ecx+0x26c]; ret, followed by INT3 padding.",
+              "Original data at vtable VA 0x9FA1A8 contains these pointers at byte offsets +40 and +44.",
+              "Neither accessor has a covering native registry entry or an address/name hit in the searched recovered source."
+            ],
+            "dependencies": [
+              "Correct secondary-interface pointer supplied in ECX",
+              "Caller-owned object lifetime"
+            ],
+            "validation_plan": [
+              "Compare returned pointers for guarded object fixtures and verify no memory writes.",
+              "Check calling convention and preserved registers with the original seven-byte routines."
+            ],
+            "limits": [
+              "Title/Artist semantic labels and complete-object offset mapping were not independently established.",
+              "These accessors perform no decoding or bounds checking."
+            ]
+          },
+          {
+            "reference": "Game.exe VA 0x5D0E90..0x5D0EB3; elJSON.getValueAsString",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Recover the small typed JSON accessor separately from the parser: call getValue, return its +4 pointer only for type tag 2, otherwise return the original empty-string address.",
+            "evidence": [
+              "Original metadata names getValueAsString and specifies thiscall with one native key pointer.",
+              "0x5D0E96 calls 0x5D0D00; null and tag !=2 converge on EAX=0x9998BC; successful tag 2 returns [value+4]. Both exits use ret 4.",
+              "Original data at 0x9998BC begins with NUL.",
+              "No covering native registry entry or searched recovery hit was found."
+            ],
+            "dependencies": [
+              "VA 0x5D0D00 elJSON.getValue",
+              "Value layout: type at +0, string pointer at +4",
+              "Original empty-string data VA 0x9998BC"
+            ],
+            "validation_plan": [
+              "Compare pointer identity for missing keys, each non-string tag and string values, including empty and non-ASCII strings.",
+              "Use the actual getValue dependency for integration checks; a stub can validate only this wrapper's branching."
+            ],
+            "limits": [
+              "getValue internals and pointer lifetime were not fully inspected.",
+              "The note's JSON Unicode-escape loss claim was not established by this accessor inspection."
+            ]
+          },
+          {
+            "reference": "Game.exe token 0x060014DE; gaNewTrackScreen.updateEssentiaLastFM; RVA 0x34FE9C",
+            "priority": "medium",
+            "classification": "original_candidate",
+            "hint": "Use the original IL as a larger recovery roadmap after recovering its small dependencies. Preserve response conversion, acceptance branches, request reset, string ownership and exception cleanup in faithful source.",
+            "evidence": [
+              "Original method table row 5342 corresponds to token 0x060014DE. Emitted IL reports RVA 0x34FE9C, code size 0x622 and maxstack 8.",
+              "IL_0089 obtains bodyToString into local 48; IL_00A6..00C4 selects its native storage, loads its length, calls UTF8ToWindows1252 into local 47 and discards the bool.",
+              "IL_00E9 parses local 47. IL_021F/026F/02B6/02F6 reads artist/name.",
+              "IL_0247 selects object offset 480 decimal (0x1E0). Comparison and non-placeholder checks precede IL_0323 assigning the response artist.",
+              "Fault handlers and normal _Tidy calls clean locals 46/47/48; elJSON destruction occurs on normal and fault paths.",
+              "Later IL updates other screen fields, invokes virtual calls and emits Track_Converted analytics; this is not merely a conversion wrapper."
+            ],
+            "dependencies": [
+              "HTTP request virtual methods, bodyToString and shared-pointer reset",
+              "Original codec, elJSON parser/accessors/destructor",
+              "Native string assignment/destruction and C++ unwind support",
+              "Screen layout, analysis data, system calls and analytics"
+            ],
+            "validation_plan": [
+              "Replay deterministic HTTP response fixtures through the original method and candidate, comparing artist/title fields, request ownership, state changes and dependency calls.",
+              "Cover failed/non-200 requests, parse failures, unchanged artists, empty names, placeholder-only names and accepted Unicode names.",
+              "Validate fault cleanup separately from successful response processing."
+            ],
+            "limits": [
+              "monodis aborted later in the module, but emitted this complete method through IL_0621 and its closing boundary; this is not a successful whole-module IL export.",
+              "No original-method execution or complete dependency audit was performed.",
+              "The proposed raw UTF-8 replacement is an intentional correction, not faithful recovery."
+            ]
+          },
+          {
+            "reference": "Game.exe VA 0x48D9C0; registry RVA 0x8D9C0, size 444",
+            "priority": "low",
+            "classification": "existing_recovery",
+            "hint": "Reuse the existing decode-worker assembly reference when tracing metadata forwarding; do not treat this address as newly discovered recovery.",
+            "evidence": [
+              "native_blocks.hpp registers decode-worker-dispatch at RVA 0x8D9C0 with size 444.",
+              "Decomp/native/decode_worker_dispatch.S documents original range 0x48D9C0..0x48DB7C.",
+              "No corresponding recovered C++ address/name hit was found in the searches performed."
+            ],
+            "dependencies": [
+              "Existing worker assembly reference",
+              "MP3 decoder and worker buffer/object layout"
+            ],
+            "validation_plan": [
+              "Audit the complete existing worker reference and original calls before proposing any additional semantic C++ recovery.",
+              "Compare metadata forwarding, event behavior and buffer writes with original execution."
+            ],
+            "limits": [
+              "Existing evidence is assembly reference, not established recovered C++.",
+              "The worker's complete original disassembly was not reviewed in this triage."
+            ]
+          },
+          {
+            "reference": "ParseOctane.dll tokens 0x060000DE, 0x060000FC, 0x060000F0..0x060000F4",
+            "priority": "low",
+            "classification": "unverified",
+            "hint": "Retain these as external bridge investigation leads pending an original DLL and actual IL inspection. Keep helper injections and UTF-8 policy changes classified as intentional modifications.",
+            "evidence": [
+              "/original contains only Game.exe.",
+              "The supplied note describes constructors, HGlobal allocation/copy/free and query arithmetic, but the cited bridge binary and private test artifacts were not available for independent inspection."
+            ],
+            "dependencies": [
+              "Preserved original ParseOctane.dll and dependent Parse assemblies",
+              "Original method metadata and IL",
+              "Native caller encoding, buffer ownership and query contracts"
+            ],
+            "validation_plan": [
+              "Verify DLL identity and decode the cited original method bodies.",
+              "Inspect every branch, exception handler, query overload and allocation/free path before designing original-versus-source tests."
+            ],
+            "limits": [
+              "No bridge IL, range-width semantics, patch isolation or live encoding claims were independently verified.",
+              "Reported mod tests cannot substitute for original-behavior differential validation."
+            ]
+          }
+        ]
+      },
+      "attempt": 1
+    }
+  },
+  "review": {
+    "approved": true,
+    "summary": "Approved as assembly-reference evidence for VA 0x5C2380–0x5C24FC. The complete conditional chain extends beyond the first return; on the U+0178 path it also changes ECX to 0x9F before returning that value in EAX. This is not source recovery or evidence of the surrounding codec’s behavior.",
+    "reason": "Independently assembled all 381 symbolic instruction bytes and compared them unmasked with the corresponding Game.exe bytes; they match. Disassembly confirms the branches, final return, adjacent padding, caller’s ECX/EAX use, and absence of external calls or data dependencies. The original and candidate hashes match the receipts, and the reference registry shows no overlapping entry. No execution-based behavior validation or compiler-built source credit is claimed."
+  }
+}

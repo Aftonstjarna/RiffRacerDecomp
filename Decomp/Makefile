@@ -8367,3 +8367,16 @@ test-cycle-worker-resource-handle-set: $(OUT)/reriff-match $(OUT)/worker_resourc
 
 test-recovered: test-cycle-worker-resource-handle-set
 .PHONY: test-cycle-worker-resource-handle-set
+
+# Reviewed cycle reference: unicode-scalar-cp1252-map (assembly evidence only).
+$(OUT)/unicode_scalar_cp1252_map.bin: native/unicode_scalar_cp1252_map.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/unicode_scalar_cp1252_map.o
+	ld -m elf_i386 -Ttext=0x5c2380 -e original_unicode_scalar_cp1252_map $(OUT)/unicode_scalar_cp1252_map.o -o $(OUT)/unicode_scalar_cp1252_map.elf
+	objcopy -O binary --only-section=.text $(OUT)/unicode_scalar_cp1252_map.elf $@
+
+test-cycle-unicode-scalar-cp1252-map: $(OUT)/reriff-match $(OUT)/unicode_scalar_cp1252_map.bin
+	$(OUT)/reriff-match native-check "$(GAME)" unicode-scalar-cp1252-map $(OUT)/unicode_scalar_cp1252_map.bin $(OUT)/unicode-scalar-cp1252-map-comparison.json
+
+test-recovered: test-cycle-unicode-scalar-cp1252-map
+.PHONY: test-cycle-unicode-scalar-cp1252-map
