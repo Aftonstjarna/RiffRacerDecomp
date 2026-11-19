@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "approved": true,
+  "reviewer_role": "trusted_controller",
+  "reviewer": "Isolated reviewer plus trusted cycle compiler/behavior gates",
+  "build_report_sha256": "a963e0d8d5965e33b3a2e52d8629f131ab7363a1d661375c008b65b2bca39e01",
+  "behavior_sha256": "d0b054d50f85064b990792f8637a0045b2f7cb9b5eb093bdf90d74d898893cec",
+  "functions": [
+    {
+      "scope": "input-pointer-get",
+      "source_sha256": "1cf64a75aecd56417e075ed35f8ecb90d6d76120b65d0941e80147bd62068b6c",
+      "approved": true,
+      "reason": "An independent build with the pinned MSVC compiler produced a complete 55-byte code section identical to the original executable. The original disassembly confirms the field offsets, branches, return value, and 32-bit thiscall ABI. The submitted 24-case test was independently run against both the compiled section and bytes extracted from the original; it passed for zero and nonzero flags, varied values, return pointers, and surrounding untouched state. The submitted receipt's underlying build artifacts were not supplied, so the conclusion rests on the independent rebuild and execution."
+    }
+  ],
+  "review_receipt_sha256": "34430331764b4dbebb4a5ff38ea66e87b8e89511473eef2f5dcf7302dec6df1a",
+  "limits": [
+    "Complete native compiler fragment and byte-checked reference tested at relocated addresses",
+    "Sampled tests independently reviewed for the specific routine; not all-input equivalence or a full game run",
+    "Original 32-bit ABI; external calls/relocations require a separate qualified recipe"
+  ]
+}

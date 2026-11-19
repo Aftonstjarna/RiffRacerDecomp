@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "msvc-cycle-cycle-1009",
+  "recipe": "reviewed-fragment-v1",
+  "profile": "O2-frame",
+  "functions": [
+    {
+      "scope": "input-pointer-get",
+      "stem": "cycle_input_pointer_get",
+      "source": "Decomp/recovered/msvc/cycle_input_pointer_get.cpp",
+      "sha256": "1cf64a75aecd56417e075ed35f8ecb90d6d76120b65d0941e80147bd62068b6c"
+    }
+  ]
+}
