@@ -8497,3 +8497,16 @@ test-cycle-ui-item-set-focus-id: $(OUT)/reriff-match $(OUT)/ui_item_set_focus_id
 
 test-recovered: test-cycle-ui-item-set-focus-id
 .PHONY: test-cycle-ui-item-set-focus-id
+
+# Reviewed cycle reference: wide-entry-growth-policy (assembly evidence only).
+$(OUT)/wide_entry_growth_policy.bin: native/wide_entry_growth_policy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_entry_growth_policy.o
+	ld -m elf_i386 -Ttext=0x49c050 -e original_wide_entry_growth_policy $(OUT)/wide_entry_growth_policy.o -o $(OUT)/wide_entry_growth_policy.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_entry_growth_policy.elf $@
+
+test-cycle-wide-entry-growth-policy: $(OUT)/reriff-match $(OUT)/wide_entry_growth_policy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-entry-growth-policy $(OUT)/wide_entry_growth_policy.bin $(OUT)/wide-entry-growth-policy-comparison.json
+
+test-recovered: test-cycle-wide-entry-growth-policy
+.PHONY: test-cycle-wide-entry-growth-policy
