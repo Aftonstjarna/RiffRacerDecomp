@@ -1,0 +1,5 @@
+{
+  "approved": true,
+  "summary": "Approved as high-level unmatched source with zero matching-source byte credit.",
+  "reason": "The implementation follows the reference routine’s 32-bit address subtraction, signed division, unsigned growth guard, and requested-capacity selection. The submitted test calls the original and covers normal, unaligned, wrapped, negative, and large differences while checking vector fields. An independent deterministic arithmetic countercheck agreed on one million cases. Native Windows compilation records successful builds of the actual implementation, with no exact match. These checks are sampled evidence, not proof of all-input equivalence."
+}
