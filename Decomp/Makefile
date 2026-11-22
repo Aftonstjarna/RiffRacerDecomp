@@ -8815,3 +8815,16 @@ test-cycle-http-request-build: $(OUT)/reriff-match $(OUT)/http_request_build.bin
 
 test-recovered: test-cycle-http-request-build
 .PHONY: test-cycle-http-request-build
+
+# Reviewed symbolic reference: http-response-parse (assembly evidence only).
+$(OUT)/http_response_parse.bin: native/http_response_parse.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/http_response_parse.o
+	ld -m elf_i386 -Ttext=0x5c1d70 -e original_http_response_parse $(OUT)/http_response_parse.o -o $(OUT)/http_response_parse.elf
+	objcopy -O binary --only-section=.text $(OUT)/http_response_parse.elf $@
+
+test-cycle-http-response-parse: $(OUT)/reriff-match $(OUT)/http_response_parse.bin
+	$(OUT)/reriff-match native-check "$(GAME)" http-response-parse $(OUT)/http_response_parse.bin $(OUT)/http-response-parse-comparison.json
+
+test-recovered: test-cycle-http-response-parse
+.PHONY: test-cycle-http-response-parse
