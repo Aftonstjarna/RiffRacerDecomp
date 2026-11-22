@@ -8841,3 +8841,16 @@ test-cycle-narrow-string-assign-cstr: $(OUT)/reriff-match $(OUT)/narrow_string_a
 
 test-recovered: test-cycle-narrow-string-assign-cstr
 .PHONY: test-cycle-narrow-string-assign-cstr
+
+# Reviewed symbolic reference: fixed-stride-array-construct (assembly evidence only).
+$(OUT)/fixed_stride_array_construct.bin: native/fixed_stride_array_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/fixed_stride_array_construct.o
+	ld -m elf_i386 -Ttext=0x442bd0 -e original_fixed_stride_array_construct $(OUT)/fixed_stride_array_construct.o -o $(OUT)/fixed_stride_array_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/fixed_stride_array_construct.elf $@
+
+test-cycle-fixed-stride-array-construct: $(OUT)/reriff-match $(OUT)/fixed_stride_array_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" fixed-stride-array-construct $(OUT)/fixed_stride_array_construct.bin $(OUT)/fixed-stride-array-construct-comparison.json
+
+test-recovered: test-cycle-fixed-stride-array-construct
+.PHONY: test-cycle-fixed-stride-array-construct
