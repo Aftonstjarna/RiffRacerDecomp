@@ -8828,3 +8828,16 @@ test-cycle-http-response-parse: $(OUT)/reriff-match $(OUT)/http_response_parse.b
 
 test-recovered: test-cycle-http-response-parse
 .PHONY: test-cycle-http-response-parse
+
+# Reviewed symbolic reference: narrow-string-assign-cstr (assembly evidence only).
+$(OUT)/narrow_string_assign_cstr.bin: native/narrow_string_assign_cstr.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/narrow_string_assign_cstr.o
+	ld -m elf_i386 -Ttext=0x4b2f50 -e original_narrow_string_assign_cstr $(OUT)/narrow_string_assign_cstr.o -o $(OUT)/narrow_string_assign_cstr.elf
+	objcopy -O binary --only-section=.text $(OUT)/narrow_string_assign_cstr.elf $@
+
+test-cycle-narrow-string-assign-cstr: $(OUT)/reriff-match $(OUT)/narrow_string_assign_cstr.bin
+	$(OUT)/reriff-match native-check "$(GAME)" narrow-string-assign-cstr $(OUT)/narrow_string_assign_cstr.bin $(OUT)/narrow-string-assign-cstr-comparison.json
+
+test-recovered: test-cycle-narrow-string-assign-cstr
+.PHONY: test-cycle-narrow-string-assign-cstr
