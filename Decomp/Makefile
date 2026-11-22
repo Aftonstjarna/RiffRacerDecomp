@@ -8789,3 +8789,16 @@ test-cycle-archive-member-verify: $(OUT)/reriff-match $(OUT)/archive_member_veri
 
 test-recovered: test-cycle-archive-member-verify
 .PHONY: test-cycle-archive-member-verify
+
+# Reviewed symbolic reference: wide-entry-vector-reallocate (assembly evidence only).
+$(OUT)/wide_entry_vector_reallocate.bin: native/wide_entry_vector_reallocate.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_entry_vector_reallocate.o
+	ld -m elf_i386 -Ttext=0x561c80 -e original_wide_entry_vector_reallocate $(OUT)/wide_entry_vector_reallocate.o -o $(OUT)/wide_entry_vector_reallocate.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_entry_vector_reallocate.elf $@
+
+test-cycle-wide-entry-vector-reallocate: $(OUT)/reriff-match $(OUT)/wide_entry_vector_reallocate.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-entry-vector-reallocate $(OUT)/wide_entry_vector_reallocate.bin $(OUT)/wide-entry-vector-reallocate-comparison.json
+
+test-recovered: test-cycle-wide-entry-vector-reallocate
+.PHONY: test-cycle-wide-entry-vector-reallocate
