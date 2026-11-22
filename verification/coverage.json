@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 150772,
-  "remaining_bytes": 8484620,
-  "verified_percent": 1.7459774842879165,
-  "registered_blocks": 724,
-  "exact_blocks": 724,
+  "verified_bytes": 151073,
+  "remaining_bytes": 8484319,
+  "verified_percent": 1.7494631396003795,
+  "registered_blocks": 725,
+  "exact_blocks": 725,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -5213,6 +5213,15 @@
       "byte_equal": true,
       "reference_sha256": "02bb96566d790647ff5a10dbc8282b8fa20a74a9d08234b0128d34185fb10d27",
       "candidate_sha256": "02bb96566d790647ff5a10dbc8282b8fa20a74a9d08234b0128d34185fb10d27"
+    },
+    {
+      "name": "shader-skin-matrix-array-set",
+      "file_offset": 1571856,
+      "size": 301,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "82c0ab5a52d2fa6a21dc6ee7e667ed78096137ef24adbf474098307682077b6a",
+      "candidate_sha256": "82c0ab5a52d2fa6a21dc6ee7e667ed78096137ef24adbf474098307682077b6a"
     },
     {
       "name": "audio-unity-arrays-initialize",

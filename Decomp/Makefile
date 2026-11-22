@@ -8854,3 +8854,16 @@ test-cycle-fixed-stride-array-construct: $(OUT)/reriff-match $(OUT)/fixed_stride
 
 test-recovered: test-cycle-fixed-stride-array-construct
 .PHONY: test-cycle-fixed-stride-array-construct
+
+# Reviewed symbolic reference: shader-skin-matrix-array-set (assembly evidence only).
+$(OUT)/shader_skin_matrix_array_set.bin: native/shader_skin_matrix_array_set.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_skin_matrix_array_set.o
+	ld -m elf_i386 -Ttext=0x580810 -e original_shader_skin_matrix_array_set $(OUT)/shader_skin_matrix_array_set.o -o $(OUT)/shader_skin_matrix_array_set.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_skin_matrix_array_set.elf $@
+
+test-cycle-shader-skin-matrix-array-set: $(OUT)/reriff-match $(OUT)/shader_skin_matrix_array_set.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-skin-matrix-array-set $(OUT)/shader_skin_matrix_array_set.bin $(OUT)/shader-skin-matrix-array-set-comparison.json
+
+test-recovered: test-cycle-shader-skin-matrix-array-set
+.PHONY: test-cycle-shader-skin-matrix-array-set
