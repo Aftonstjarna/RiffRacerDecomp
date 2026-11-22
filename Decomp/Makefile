@@ -8640,3 +8640,16 @@ test-cycle-resource-name-normalize: $(OUT)/reriff-match $(OUT)/resource_name_nor
 
 test-recovered: test-cycle-resource-name-normalize
 .PHONY: test-cycle-resource-name-normalize
+
+# Reviewed symbolic reference: item-set-scale (assembly evidence only).
+$(OUT)/item_set_scale.bin: native/item_set_scale.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/item_set_scale.o
+	ld -m elf_i386 -Ttext=0x448a10 -e original_item_set_scale $(OUT)/item_set_scale.o -o $(OUT)/item_set_scale.elf
+	objcopy -O binary --only-section=.text $(OUT)/item_set_scale.elf $@
+
+test-cycle-item-set-scale: $(OUT)/reriff-match $(OUT)/item_set_scale.bin
+	$(OUT)/reriff-match native-check "$(GAME)" item-set-scale $(OUT)/item_set_scale.bin $(OUT)/item-set-scale-comparison.json
+
+test-recovered: test-cycle-item-set-scale
+.PHONY: test-cycle-item-set-scale
