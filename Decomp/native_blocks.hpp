@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"shader-skin-matrix-array-set",0x180810,301},
+  return {NativeBlock{"shader-material-diffuse-set",0x180ad0,355},
+                     NativeBlock{"shader-skin-matrix-array-set",0x180810,301},
                      NativeBlock{"fixed-stride-array-construct",0x42bd0,225},
                      NativeBlock{"narrow-string-assign-cstr",0xb2f50,68},
                      NativeBlock{"http-response-parse",0x1c1d70,874},

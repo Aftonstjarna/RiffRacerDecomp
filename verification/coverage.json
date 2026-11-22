@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 151073,
-  "remaining_bytes": 8484319,
-  "verified_percent": 1.7494631396003795,
-  "registered_blocks": 725,
-  "exact_blocks": 725,
+  "verified_bytes": 151428,
+  "remaining_bytes": 8483964,
+  "verified_percent": 1.7535741284240485,
+  "registered_blocks": 726,
+  "exact_blocks": 726,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -5222,6 +5222,15 @@
       "byte_equal": true,
       "reference_sha256": "82c0ab5a52d2fa6a21dc6ee7e667ed78096137ef24adbf474098307682077b6a",
       "candidate_sha256": "82c0ab5a52d2fa6a21dc6ee7e667ed78096137ef24adbf474098307682077b6a"
+    },
+    {
+      "name": "shader-material-diffuse-set",
+      "file_offset": 1572560,
+      "size": 355,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "70d404ddda2021e18552d83e01d38c1ff0f2f41ac7b93b79d2938a7360d482cc",
+      "candidate_sha256": "70d404ddda2021e18552d83e01d38c1ff0f2f41ac7b93b79d2938a7360d482cc"
     },
     {
       "name": "audio-unity-arrays-initialize",

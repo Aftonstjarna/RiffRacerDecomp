@@ -8867,3 +8867,16 @@ test-cycle-shader-skin-matrix-array-set: $(OUT)/reriff-match $(OUT)/shader_skin_
 
 test-recovered: test-cycle-shader-skin-matrix-array-set
 .PHONY: test-cycle-shader-skin-matrix-array-set
+
+# Reviewed symbolic reference: shader-material-diffuse-set (assembly evidence only).
+$(OUT)/shader_material_diffuse_set.bin: native/shader_material_diffuse_set.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_material_diffuse_set.o
+	ld -m elf_i386 -Ttext=0x580ad0 -e original_shader_material_diffuse_set $(OUT)/shader_material_diffuse_set.o -o $(OUT)/shader_material_diffuse_set.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_material_diffuse_set.elf $@
+
+test-cycle-shader-material-diffuse-set: $(OUT)/reriff-match $(OUT)/shader_material_diffuse_set.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-material-diffuse-set $(OUT)/shader_material_diffuse_set.bin $(OUT)/shader-material-diffuse-set-comparison.json
+
+test-recovered: test-cycle-shader-material-diffuse-set
+.PHONY: test-cycle-shader-material-diffuse-set
