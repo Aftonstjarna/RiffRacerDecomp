@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 141008,
-  "remaining_bytes": 8494384,
-  "verified_percent": 1.63290792126171,
-  "registered_blocks": 707,
-  "exact_blocks": 707,
+  "verified_bytes": 141891,
+  "remaining_bytes": 8493501,
+  "verified_percent": 1.6431332821949485,
+  "registered_blocks": 714,
+  "exact_blocks": 714,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -317,6 +317,15 @@
       "byte_equal": true,
       "reference_sha256": "1df7da8bc99e6033af7ccf73a3d5da49cb7047dd7b07a7775f3182cd6f2f58df",
       "candidate_sha256": "1df7da8bc99e6033af7ccf73a3d5da49cb7047dd7b07a7775f3182cd6f2f58df"
+    },
+    {
+      "name": "resource-manager-insert",
+      "file_offset": 111456,
+      "size": 299,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "c39c8d5dd3e516a4d70ae5973cbe4c7702e172aacdee9735cb79e82ddec23a38",
+      "candidate_sha256": "c39c8d5dd3e516a4d70ae5973cbe4c7702e172aacdee9735cb79e82ddec23a38"
     },
     {
       "name": "resource-handle-remove",
@@ -1804,6 +1813,24 @@
       "candidate_sha256": "a625fa3215c186818f8dd9633dc578fdb30c5419488f2bcd8a367d562ee35eba"
     },
     {
+      "name": "secondary-interface-offset-16c-get",
+      "file_offset": 320704,
+      "size": 7,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "b080974f6247530dc04b56e405c23ef21df32297b3efccc176458a934eb0aff9",
+      "candidate_sha256": "b080974f6247530dc04b56e405c23ef21df32297b3efccc176458a934eb0aff9"
+    },
+    {
+      "name": "secondary-interface-offset-26c-get",
+      "file_offset": 320720,
+      "size": 7,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "b4523b275fb4411009e899da00cee20ded7bc68fc30f1cdb5223cbb8c8312ab7",
+      "candidate_sha256": "b4523b275fb4411009e899da00cee20ded7bc68fc30f1cdb5223cbb8c8312ab7"
+    },
+    {
       "name": "graphics-error-message",
       "file_offset": 320864,
       "size": 315,
@@ -2009,6 +2036,15 @@
       "byte_equal": true,
       "reference_sha256": "bac594fa8a9d2dcac8aedd99738b2ceaac69d9b27dbf35c2a8967c8cb9f806dc",
       "candidate_sha256": "bac594fa8a9d2dcac8aedd99738b2ceaac69d9b27dbf35c2a8967c8cb9f806dc"
+    },
+    {
+      "name": "ui-item-text-setter",
+      "file_offset": 326960,
+      "size": 160,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "791de8592f042d187e4188d52c5d80c8f9fdb5135f624d2852e42c7ebdd396ba",
+      "candidate_sha256": "791de8592f042d187e4188d52c5d80c8f9fdb5135f624d2852e42c7ebdd396ba"
     },
     {
       "name": "text-colour-forward",
@@ -4972,6 +5008,15 @@
       "candidate_sha256": "64ede570a86d3437f0696b3c8bfda7728779f71deaedb4f14658a8720caafe95"
     },
     {
+      "name": "vfs-directory-path-construct",
+      "file_offset": 1446208,
+      "size": 240,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "9efd8ae83a14d1e835d99e19111b57d32778ff081c0efa69476ac962a38dc114",
+      "candidate_sha256": "9efd8ae83a14d1e835d99e19111b57d32778ff081c0efa69476ac962a38dc114"
+    },
+    {
       "name": "vfs-directory-record-construct",
       "file_offset": 1446448,
       "size": 26,
@@ -4979,6 +5024,15 @@
       "byte_equal": true,
       "reference_sha256": "b9cf617094f27caa0a6d541624d3ffd26d482b4c549738f25072471e68e0b02a",
       "candidate_sha256": "b9cf617094f27caa0a6d541624d3ffd26d482b4c549738f25072471e68e0b02a"
+    },
+    {
+      "name": "vfs-directory-record-insert",
+      "file_offset": 1446896,
+      "size": 134,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "6d7e7cec458d3948266c4e0f80bab043ed3987fcd6c7dd95ffa39ab87c01fa3a",
+      "candidate_sha256": "6d7e7cec458d3948266c4e0f80bab043ed3987fcd6c7dd95ffa39ab87c01fa3a"
     },
     {
       "name": "shader-drawprim-ctor",
@@ -5672,6 +5726,15 @@
       "byte_equal": true,
       "reference_sha256": "e7d8feda0a875bb65344826b2c4af0857bfe0eecb4593cccf32cd8c500065b8b",
       "candidate_sha256": "e7d8feda0a875bb65344826b2c4af0857bfe0eecb4593cccf32cd8c500065b8b"
+    },
+    {
+      "name": "json-typed-accessor",
+      "file_offset": 1901200,
+      "size": 36,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "f054423d533a832eaf1d217cbd5de9596e17f9443a5680e099c67613fd34d9fd",
+      "candidate_sha256": "f054423d533a832eaf1d217cbd5de9596e17f9443a5680e099c67613fd34d9fd"
     },
     {
       "name": "runtime-accessor-thunk",

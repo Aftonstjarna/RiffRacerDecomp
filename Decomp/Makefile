@@ -8653,3 +8653,82 @@ test-cycle-item-set-scale: $(OUT)/reriff-match $(OUT)/item_set_scale.bin
 
 test-recovered: test-cycle-item-set-scale
 .PHONY: test-cycle-item-set-scale
+
+# Reviewed symbolic references: batch 2026-11-22 (assembly evidence only).
+$(OUT)/secondary_interface_offset_16c_get.bin: native/secondary_interface_offset_16c_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/secondary_interface_offset_16c_get.o
+	ld -m elf_i386 -Ttext=0x44f0c0 -e original_secondary_interface_offset_16c_get $(OUT)/secondary_interface_offset_16c_get.o -o $(OUT)/secondary_interface_offset_16c_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/secondary_interface_offset_16c_get.elf $@
+
+test-cycle-secondary-interface-offset-16c-get: $(OUT)/reriff-match $(OUT)/secondary_interface_offset_16c_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" secondary-interface-offset-16c-get $(OUT)/secondary_interface_offset_16c_get.bin $(OUT)/secondary-interface-offset-16c-get-comparison.json
+
+test-recovered: test-cycle-secondary-interface-offset-16c-get
+.PHONY: test-cycle-secondary-interface-offset-16c-get
+$(OUT)/secondary_interface_offset_26c_get.bin: native/secondary_interface_offset_26c_get.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/secondary_interface_offset_26c_get.o
+	ld -m elf_i386 -Ttext=0x44f0d0 -e original_secondary_interface_offset_26c_get $(OUT)/secondary_interface_offset_26c_get.o -o $(OUT)/secondary_interface_offset_26c_get.elf
+	objcopy -O binary --only-section=.text $(OUT)/secondary_interface_offset_26c_get.elf $@
+
+test-cycle-secondary-interface-offset-26c-get: $(OUT)/reriff-match $(OUT)/secondary_interface_offset_26c_get.bin
+	$(OUT)/reriff-match native-check "$(GAME)" secondary-interface-offset-26c-get $(OUT)/secondary_interface_offset_26c_get.bin $(OUT)/secondary-interface-offset-26c-get-comparison.json
+
+test-recovered: test-cycle-secondary-interface-offset-26c-get
+.PHONY: test-cycle-secondary-interface-offset-26c-get
+$(OUT)/json_typed_accessor.bin: native/json_typed_accessor.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/json_typed_accessor.o
+	ld -m elf_i386 -Ttext=0x5d0e90 -e original_json_typed_accessor $(OUT)/json_typed_accessor.o -o $(OUT)/json_typed_accessor.elf
+	objcopy -O binary --only-section=.text $(OUT)/json_typed_accessor.elf $@
+
+test-cycle-json-typed-accessor: $(OUT)/reriff-match $(OUT)/json_typed_accessor.bin
+	$(OUT)/reriff-match native-check "$(GAME)" json-typed-accessor $(OUT)/json_typed_accessor.bin $(OUT)/json-typed-accessor-comparison.json
+
+test-recovered: test-cycle-json-typed-accessor
+.PHONY: test-cycle-json-typed-accessor
+$(OUT)/ui_item_text_setter.bin: native/ui_item_text_setter.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_item_text_setter.o
+	ld -m elf_i386 -Ttext=0x450930 -e original_ui_item_text_setter $(OUT)/ui_item_text_setter.o -o $(OUT)/ui_item_text_setter.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_item_text_setter.elf $@
+
+test-cycle-ui-item-text-setter: $(OUT)/reriff-match $(OUT)/ui_item_text_setter.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-item-text-setter $(OUT)/ui_item_text_setter.bin $(OUT)/ui-item-text-setter-comparison.json
+
+test-recovered: test-cycle-ui-item-text-setter
+.PHONY: test-cycle-ui-item-text-setter
+$(OUT)/vfs_directory_record_insert.bin: native/vfs_directory_record_insert.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/vfs_directory_record_insert.o
+	ld -m elf_i386 -Ttext=0x561ff0 -e original_vfs_directory_record_insert $(OUT)/vfs_directory_record_insert.o -o $(OUT)/vfs_directory_record_insert.elf
+	objcopy -O binary --only-section=.text $(OUT)/vfs_directory_record_insert.elf $@
+
+test-cycle-vfs-directory-record-insert: $(OUT)/reriff-match $(OUT)/vfs_directory_record_insert.bin
+	$(OUT)/reriff-match native-check "$(GAME)" vfs-directory-record-insert $(OUT)/vfs_directory_record_insert.bin $(OUT)/vfs-directory-record-insert-comparison.json
+
+test-recovered: test-cycle-vfs-directory-record-insert
+.PHONY: test-cycle-vfs-directory-record-insert
+$(OUT)/vfs_directory_path_construct.bin: native/vfs_directory_path_construct.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/vfs_directory_path_construct.o
+	ld -m elf_i386 -Ttext=0x561d40 -e original_vfs_directory_path_construct $(OUT)/vfs_directory_path_construct.o -o $(OUT)/vfs_directory_path_construct.elf
+	objcopy -O binary --only-section=.text $(OUT)/vfs_directory_path_construct.elf $@
+
+test-cycle-vfs-directory-path-construct: $(OUT)/reriff-match $(OUT)/vfs_directory_path_construct.bin
+	$(OUT)/reriff-match native-check "$(GAME)" vfs-directory-path-construct $(OUT)/vfs_directory_path_construct.bin $(OUT)/vfs-directory-path-construct-comparison.json
+
+test-recovered: test-cycle-vfs-directory-path-construct
+.PHONY: test-cycle-vfs-directory-path-construct
+$(OUT)/resource_manager_insert.bin: native/resource_manager_insert.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_manager_insert.o
+	ld -m elf_i386 -Ttext=0x41bf60 -e original_resource_manager_insert $(OUT)/resource_manager_insert.o -o $(OUT)/resource_manager_insert.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_manager_insert.elf $@
+
+test-cycle-resource-manager-insert: $(OUT)/reriff-match $(OUT)/resource_manager_insert.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-manager-insert $(OUT)/resource_manager_insert.bin $(OUT)/resource-manager-insert-comparison.json
+
+test-recovered: test-cycle-resource-manager-insert
+.PHONY: test-cycle-resource-manager-insert

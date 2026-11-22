@@ -3,7 +3,14 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"item-set-scale",0x48a10,236},
+  return {NativeBlock{"resource-manager-insert",0x1bf60,299},
+                     NativeBlock{"vfs-directory-path-construct",0x161d40,240},
+                     NativeBlock{"vfs-directory-record-insert",0x161ff0,134},
+                     NativeBlock{"ui-item-text-setter",0x50930,160},
+                     NativeBlock{"json-typed-accessor",0x1d0e90,36},
+                     NativeBlock{"secondary-interface-offset-26c-get",0x4f0d0,7},
+                     NativeBlock{"secondary-interface-offset-16c-get",0x4f0c0,7},
+                     NativeBlock{"item-set-scale",0x48a10,236},
                      NativeBlock{"resource-name-normalize",0x1a110,331},
                      NativeBlock{"vfs-directory-record-construct",0x161e30,26},
                      NativeBlock{"ui-visual-handle-update-1c",0x55010,114},
