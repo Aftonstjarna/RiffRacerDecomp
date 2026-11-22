@@ -8732,3 +8732,60 @@ test-cycle-resource-manager-insert: $(OUT)/reriff-match $(OUT)/resource_manager_
 
 test-recovered: test-cycle-resource-manager-insert
 .PHONY: test-cycle-resource-manager-insert
+
+# Reviewed symbolic references: batch 2, 2026-11-22 (assembly evidence only).
+$(OUT)/resource_initialize_core.bin: native/resource_initialize_core.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/resource_initialize_core.o
+	ld -m elf_i386 -Ttext=0x440120 -e original_resource_initialize_core $(OUT)/resource_initialize_core.o -o $(OUT)/resource_initialize_core.elf
+	objcopy -O binary --only-section=.text $(OUT)/resource_initialize_core.elf $@
+
+test-cycle-resource-initialize-core: $(OUT)/reriff-match $(OUT)/resource_initialize_core.bin
+	$(OUT)/reriff-match native-check "$(GAME)" resource-initialize-core $(OUT)/resource_initialize_core.bin $(OUT)/resource-initialize-core-comparison.json
+
+test-recovered: test-cycle-resource-initialize-core
+.PHONY: test-cycle-resource-initialize-core
+$(OUT)/ui_sprite_definition_apply.bin: native/ui_sprite_definition_apply.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/ui_sprite_definition_apply.o
+	ld -m elf_i386 -Ttext=0x48b8f0 -e original_ui_sprite_definition_apply $(OUT)/ui_sprite_definition_apply.o -o $(OUT)/ui_sprite_definition_apply.elf
+	objcopy -O binary --only-section=.text $(OUT)/ui_sprite_definition_apply.elf $@
+
+test-cycle-ui-sprite-definition-apply: $(OUT)/reriff-match $(OUT)/ui_sprite_definition_apply.bin
+	$(OUT)/reriff-match native-check "$(GAME)" ui-sprite-definition-apply $(OUT)/ui_sprite_definition_apply.bin $(OUT)/ui-sprite-definition-apply-comparison.json
+
+test-recovered: test-cycle-ui-sprite-definition-apply
+.PHONY: test-cycle-ui-sprite-definition-apply
+$(OUT)/worker_frame_update.bin: native/worker_frame_update.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_frame_update.o
+	ld -m elf_i386 -Ttext=0x4987c0 -e original_worker_frame_update $(OUT)/worker_frame_update.o -o $(OUT)/worker_frame_update.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_frame_update.elf $@
+
+test-cycle-worker-frame-update: $(OUT)/reriff-match $(OUT)/worker_frame_update.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-frame-update $(OUT)/worker_frame_update.bin $(OUT)/worker-frame-update-comparison.json
+
+test-recovered: test-cycle-worker-frame-update
+.PHONY: test-cycle-worker-frame-update
+$(OUT)/input_pointer_update.bin: native/input_pointer_update.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/input_pointer_update.o
+	ld -m elf_i386 -Ttext=0x55b940 -e original_input_pointer_update $(OUT)/input_pointer_update.o -o $(OUT)/input_pointer_update.elf
+	objcopy -O binary --only-section=.text $(OUT)/input_pointer_update.elf $@
+
+test-cycle-input-pointer-update: $(OUT)/reriff-match $(OUT)/input_pointer_update.bin
+	$(OUT)/reriff-match native-check "$(GAME)" input-pointer-update $(OUT)/input_pointer_update.bin $(OUT)/input-pointer-update-comparison.json
+
+test-recovered: test-cycle-input-pointer-update
+.PHONY: test-cycle-input-pointer-update
+$(OUT)/archive_member_verify.bin: native/archive_member_verify.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/archive_member_verify.o
+	ld -m elf_i386 -Ttext=0x560cb0 -e original_archive_member_verify $(OUT)/archive_member_verify.o -o $(OUT)/archive_member_verify.elf
+	objcopy -O binary --only-section=.text $(OUT)/archive_member_verify.elf $@
+
+test-cycle-archive-member-verify: $(OUT)/reriff-match $(OUT)/archive_member_verify.bin
+	$(OUT)/reriff-match native-check "$(GAME)" archive-member-verify $(OUT)/archive_member_verify.bin $(OUT)/archive-member-verify-comparison.json
+
+test-recovered: test-cycle-archive-member-verify
+.PHONY: test-cycle-archive-member-verify
