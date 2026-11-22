@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"wide-entry-vector-reallocate",0x161c80,179},
+  return {NativeBlock{"http-request-build",0x1c1790,1494},
+                     NativeBlock{"wide-entry-vector-reallocate",0x161c80,179},
                      NativeBlock{"archive-member-verify",0x160cb0,1202},
                      NativeBlock{"input-pointer-update",0x15b940,851},
                      NativeBlock{"worker-frame-update",0x987c0,1276},

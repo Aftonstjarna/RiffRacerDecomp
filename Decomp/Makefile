@@ -8802,3 +8802,16 @@ test-cycle-wide-entry-vector-reallocate: $(OUT)/reriff-match $(OUT)/wide_entry_v
 
 test-recovered: test-cycle-wide-entry-vector-reallocate
 .PHONY: test-cycle-wide-entry-vector-reallocate
+
+# Reviewed symbolic reference: http-request-build (assembly evidence only).
+$(OUT)/http_request_build.bin: native/http_request_build.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/http_request_build.o
+	ld -m elf_i386 -Ttext=0x5c1790 -e original_http_request_build $(OUT)/http_request_build.o -o $(OUT)/http_request_build.elf
+	objcopy -O binary --only-section=.text $(OUT)/http_request_build.elf $@
+
+test-cycle-http-request-build: $(OUT)/reriff-match $(OUT)/http_request_build.bin
+	$(OUT)/reriff-match native-check "$(GAME)" http-request-build $(OUT)/http_request_build.bin $(OUT)/http-request-build-comparison.json
+
+test-recovered: test-cycle-http-request-build
+.PHONY: test-cycle-http-request-build
