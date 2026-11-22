@@ -8880,3 +8880,16 @@ test-cycle-shader-material-diffuse-set: $(OUT)/reriff-match $(OUT)/shader_materi
 
 test-recovered: test-cycle-shader-material-diffuse-set
 .PHONY: test-cycle-shader-material-diffuse-set
+
+# Reviewed symbolic reference: shader-camera-environment-set (assembly evidence only).
+$(OUT)/shader_camera_environment_set.bin: native/shader_camera_environment_set.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/shader_camera_environment_set.o
+	ld -m elf_i386 -Ttext=0x580150 -e original_shader_camera_environment_set $(OUT)/shader_camera_environment_set.o -o $(OUT)/shader_camera_environment_set.elf
+	objcopy -O binary --only-section=.text $(OUT)/shader_camera_environment_set.elf $@
+
+test-cycle-shader-camera-environment-set: $(OUT)/reriff-match $(OUT)/shader_camera_environment_set.bin
+	$(OUT)/reriff-match native-check "$(GAME)" shader-camera-environment-set $(OUT)/shader_camera_environment_set.bin $(OUT)/shader-camera-environment-set-comparison.json
+
+test-recovered: test-cycle-shader-camera-environment-set
+.PHONY: test-cycle-shader-camera-environment-set

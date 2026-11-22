@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 151428,
-  "remaining_bytes": 8483964,
-  "verified_percent": 1.7535741284240485,
-  "registered_blocks": 726,
-  "exact_blocks": 726,
+  "verified_bytes": 151807,
+  "remaining_bytes": 8483585,
+  "verified_percent": 1.7579630432526978,
+  "registered_blocks": 727,
+  "exact_blocks": 727,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -5213,6 +5213,15 @@
       "byte_equal": true,
       "reference_sha256": "02bb96566d790647ff5a10dbc8282b8fa20a74a9d08234b0128d34185fb10d27",
       "candidate_sha256": "02bb96566d790647ff5a10dbc8282b8fa20a74a9d08234b0128d34185fb10d27"
+    },
+    {
+      "name": "shader-camera-environment-set",
+      "file_offset": 1570128,
+      "size": 379,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "e64499d637d7558f5e5a925318f4537ea946cb55d9adbba1fd6957aa0f535b95",
+      "candidate_sha256": "e64499d637d7558f5e5a925318f4537ea946cb55d9adbba1fd6957aa0f535b95"
     },
     {
       "name": "shader-skin-matrix-array-set",
