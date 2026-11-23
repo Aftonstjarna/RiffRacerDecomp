@@ -8932,3 +8932,16 @@ test-cycle-model-viewer-overlay-text: $(OUT)/reriff-match $(OUT)/model_viewer_ov
 
 test-recovered: test-cycle-model-viewer-overlay-text
 .PHONY: test-cycle-model-viewer-overlay-text
+
+# Reviewed symbolic reference: wide-entry-move-elements (assembly evidence only).
+$(OUT)/wide_entry_move_elements.bin: native/wide_entry_move_elements.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_entry_move_elements.o
+	ld -m elf_i386 -Ttext=0x562260 -e original_wide_entry_move_elements $(OUT)/wide_entry_move_elements.o -o $(OUT)/wide_entry_move_elements.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_entry_move_elements.elf $@
+
+test-cycle-wide-entry-move-elements: $(OUT)/reriff-match $(OUT)/wide_entry_move_elements.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-entry-move-elements $(OUT)/wide_entry_move_elements.bin $(OUT)/wide-entry-move-elements-comparison.json
+
+test-recovered: test-cycle-wide-entry-move-elements
+.PHONY: test-cycle-wide-entry-move-elements
