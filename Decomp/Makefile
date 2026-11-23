@@ -9049,3 +9049,16 @@ test-cycle-decode-worker-record-destroy: $(OUT)/reriff-match $(OUT)/decode_worke
 
 test-recovered: test-cycle-decode-worker-record-destroy
 .PHONY: test-cycle-decode-worker-record-destroy
+
+# Reviewed symbolic reference: archive-member-clone (assembly evidence only).
+$(OUT)/archive_member_clone.bin: native/archive_member_clone.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/archive_member_clone.o
+	ld -m elf_i386 -Ttext=0x48a260 -e original_archive_member_clone $(OUT)/archive_member_clone.o -o $(OUT)/archive_member_clone.elf
+	objcopy -O binary --only-section=.text $(OUT)/archive_member_clone.elf $@
+
+test-cycle-archive-member-clone: $(OUT)/reriff-match $(OUT)/archive_member_clone.bin
+	$(OUT)/reriff-match native-check "$(GAME)" archive-member-clone $(OUT)/archive_member_clone.bin $(OUT)/archive-member-clone-comparison.json
+
+test-recovered: test-cycle-archive-member-clone
+.PHONY: test-cycle-archive-member-clone

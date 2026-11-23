@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"decode-worker-record-destroy",0xf8a90,792},
+  return {NativeBlock{"archive-member-clone",0x8a260,125},
+                     NativeBlock{"decode-worker-record-destroy",0xf8a90,792},
                      NativeBlock{"decode-worker-name-free",0xf87e0,681},
                      NativeBlock{"worker-thread-create-b",0x1a1850,242},
                      NativeBlock{"worker-thread-create",0x128120,180},
