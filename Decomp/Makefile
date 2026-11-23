@@ -8945,3 +8945,16 @@ test-cycle-wide-entry-move-elements: $(OUT)/reriff-match $(OUT)/wide_entry_move_
 
 test-recovered: test-cycle-wide-entry-move-elements
 .PHONY: test-cycle-wide-entry-move-elements
+
+# Reviewed symbolic reference: wide-entry-destroy-elements (assembly evidence only).
+$(OUT)/wide_entry_destroy_elements.bin: native/wide_entry_destroy_elements.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/wide_entry_destroy_elements.o
+	ld -m elf_i386 -Ttext=0x5620e0 -e original_wide_entry_destroy_elements $(OUT)/wide_entry_destroy_elements.o -o $(OUT)/wide_entry_destroy_elements.elf
+	objcopy -O binary --only-section=.text $(OUT)/wide_entry_destroy_elements.elf $@
+
+test-cycle-wide-entry-destroy-elements: $(OUT)/reriff-match $(OUT)/wide_entry_destroy_elements.bin
+	$(OUT)/reriff-match native-check "$(GAME)" wide-entry-destroy-elements $(OUT)/wide_entry_destroy_elements.bin $(OUT)/wide-entry-destroy-elements-comparison.json
+
+test-recovered: test-cycle-wide-entry-destroy-elements
+.PHONY: test-cycle-wide-entry-destroy-elements
