@@ -8919,3 +8919,16 @@ test-cycle-screenshot-capture-write: $(OUT)/reriff-match $(OUT)/screenshot_captu
 
 test-recovered: test-cycle-screenshot-capture-write
 .PHONY: test-cycle-screenshot-capture-write
+
+# Reviewed symbolic reference: model-viewer-overlay-text (assembly evidence only).
+$(OUT)/model_viewer_overlay_text.bin: native/model_viewer_overlay_text.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/model_viewer_overlay_text.o
+	ld -m elf_i386 -Ttext=0x43f800 -e original_model_viewer_overlay_text $(OUT)/model_viewer_overlay_text.o -o $(OUT)/model_viewer_overlay_text.elf
+	objcopy -O binary --only-section=.text $(OUT)/model_viewer_overlay_text.elf $@
+
+test-cycle-model-viewer-overlay-text: $(OUT)/reriff-match $(OUT)/model_viewer_overlay_text.bin
+	$(OUT)/reriff-match native-check "$(GAME)" model-viewer-overlay-text $(OUT)/model_viewer_overlay_text.bin $(OUT)/model-viewer-overlay-text-comparison.json
+
+test-recovered: test-cycle-model-viewer-overlay-text
+.PHONY: test-cycle-model-viewer-overlay-text
