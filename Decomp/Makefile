@@ -8958,3 +8958,16 @@ test-cycle-wide-entry-destroy-elements: $(OUT)/reriff-match $(OUT)/wide_entry_de
 
 test-recovered: test-cycle-wide-entry-destroy-elements
 .PHONY: test-cycle-wide-entry-destroy-elements
+
+# Reviewed symbolic reference: fast-vector-erase (assembly evidence only).
+$(OUT)/fast_vector_erase.bin: native/fast_vector_erase.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/fast_vector_erase.o
+	ld -m elf_i386 -Ttext=0x561170 -e original_fast_vector_erase $(OUT)/fast_vector_erase.o -o $(OUT)/fast_vector_erase.elf
+	objcopy -O binary --only-section=.text $(OUT)/fast_vector_erase.elf $@
+
+test-cycle-fast-vector-erase: $(OUT)/reriff-match $(OUT)/fast_vector_erase.bin
+	$(OUT)/reriff-match native-check "$(GAME)" fast-vector-erase $(OUT)/fast_vector_erase.bin $(OUT)/fast-vector-erase-comparison.json
+
+test-recovered: test-cycle-fast-vector-erase
+.PHONY: test-cycle-fast-vector-erase
