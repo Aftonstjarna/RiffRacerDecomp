@@ -133,6 +133,15 @@ The modified server, launcher and current native-port work remain in
 findings and reference implementations; full-game playability and supported
 modding tools remain goals rather than released features here.
 
+New reverse-engineering notes stay in ReRiff and are submitted with
+`bash scripts/submit-decomp-research.sh reports/NOTE.md`; they are not written
+directly into this checkout, and submission records provenance rather than
+credit. Compare working copies and backups against the unmodified depot copy at
+`/var/home/afton/Applications/SteamDepotDownloader/depots/351991/1687655/`
+(Steam app 351990, depot 351991, build 1687655). ReRiff
+`packaging/vanilla-reference.json` records its file hashes and sizes; the
+supported `Game.exe` hash is recorded above.
+
 ## Verify the existing byte matches
 
 From the `decomp` checkout, build and compare the existing fragments inside a

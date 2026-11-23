@@ -45,3 +45,29 @@
   Substantive new implementation must be C++/C or Rust; Python only for simple tools.
 - Continue to keep driving disabled until the original force/contact integration
   is recovered. Preserve existing uncommitted work.
+
+# Cross-project boundaries and research intake
+- ReRiff is the modding, integration and native-port project. Keep intentional
+  behavior changes there; they do not belong in this recovery history. Use
+  ReRiff findings as leads, but record a recovery claim here only with original
+  evidence and the comparisons required above.
+- Keep new reverse-engineering notes in ReRiff and submit them with
+  `bash scripts/submit-decomp-research.sh reports/NOTE.md`. Do not add research
+  notes or other untracked files directly to this checkout; the recovery cycle
+  requires a clean tree. Submission records provenance but grants no byte or
+  source credit.
+- Preserve original hashes, exact bytes, metadata tokens and provenance across
+  both projects. Keep intentional ReRiff patches separate from byte-for-byte
+  reconstruction and never claim matching without the required comparison.
+
+# Original-file reference
+- The unmodified Windows reference is
+  `/var/home/afton/Applications/SteamDepotDownloader/depots/351991/1687655/`
+  (Steam app 351990, depot 351991, build 1687655, manifest
+  8951408038967536554). ReRiff `packaging/vanilla-reference.json` records its
+  file hashes and sizes. The supported `Game.exe` is 8,635,392 bytes with
+  SHA-256 `2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2`;
+  the recovery coordinator's preserved copy is
+  `/var/home/afton/RiffRacerOriginals/351991/1687655/Game.exe`.
+- Compare working copies and backups against that baseline before treating any
+  file as original. Do not substitute unverified downloads for missing files.
