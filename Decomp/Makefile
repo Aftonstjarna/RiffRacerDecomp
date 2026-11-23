@@ -8971,3 +8971,16 @@ test-cycle-fast-vector-erase: $(OUT)/reriff-match $(OUT)/fast_vector_erase.bin
 
 test-recovered: test-cycle-fast-vector-erase
 .PHONY: test-cycle-fast-vector-erase
+
+# Reviewed symbolic reference: fast-vector-length-guard (assembly evidence only).
+$(OUT)/fast_vector_length_guard.bin: native/fast_vector_length_guard.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/fast_vector_length_guard.o
+	ld -m elf_i386 -Ttext=0x561740 -e original_fast_vector_length_guard $(OUT)/fast_vector_length_guard.o -o $(OUT)/fast_vector_length_guard.elf
+	objcopy -O binary --only-section=.text $(OUT)/fast_vector_length_guard.elf $@
+
+test-cycle-fast-vector-length-guard: $(OUT)/reriff-match $(OUT)/fast_vector_length_guard.bin
+	$(OUT)/reriff-match native-check "$(GAME)" fast-vector-length-guard $(OUT)/fast_vector_length_guard.bin $(OUT)/fast-vector-length-guard-comparison.json
+
+test-recovered: test-cycle-fast-vector-length-guard
+.PHONY: test-cycle-fast-vector-length-guard
