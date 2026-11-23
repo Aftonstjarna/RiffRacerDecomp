@@ -51,11 +51,12 @@
   behavior changes there; they do not belong in this recovery history. Use
   ReRiff findings as leads, but record a recovery claim here only with original
   evidence and the comparisons required above.
-- Keep new reverse-engineering notes in ReRiff and submit them with
-  `bash scripts/submit-decomp-research.sh reports/NOTE.md`. Do not add research
-  notes or other untracked files directly to this checkout; the recovery cycle
-  requires a clean tree. Submission records provenance but grants no byte or
-  source credit.
+- Keep new reverse-engineering notes in the ReRiff wiki Research section and
+  publish them from the ReRiff checkout with
+  `bash scripts/publish-research.sh NOTE.md`. The decomp coordinator receives
+  the wiki snapshot for triage. Do not add research notes or other untracked
+  files directly to this checkout; the recovery cycle requires a clean tree.
+  Submission records provenance but grants no byte or source credit.
 - Preserve original hashes, exact bytes, metadata tokens and provenance across
   both projects. Keep intentional ReRiff patches separate from byte-for-byte
   reconstruction and never claim matching without the required comparison.
