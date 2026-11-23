@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 151807,
-  "remaining_bytes": 8483585,
-  "verified_percent": 1.7579630432526978,
-  "registered_blocks": 727,
-  "exact_blocks": 727,
+  "verified_bytes": 152085,
+  "remaining_bytes": 8483307,
+  "verified_percent": 1.7611823528103878,
+  "registered_blocks": 728,
+  "exact_blocks": 728,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -5123,6 +5123,15 @@
       "byte_equal": true,
       "reference_sha256": "77cdff2559939ba799091b0234c9ad509b3a2f6031c3fcf1bd5d72039dc94f5e",
       "candidate_sha256": "77cdff2559939ba799091b0234c9ad509b3a2f6031c3fcf1bd5d72039dc94f5e"
+    },
+    {
+      "name": "network-parse-open",
+      "file_offset": 1502880,
+      "size": 278,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "5288a2c17f2dcaa394b1cbe49ab66d34d499a5f33dbe1a6dc6102bfd1afe41d4",
+      "candidate_sha256": "5288a2c17f2dcaa394b1cbe49ab66d34d499a5f33dbe1a6dc6102bfd1afe41d4"
     },
     {
       "name": "shader-shadowdraw-ctor",

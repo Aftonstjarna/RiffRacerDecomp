@@ -8893,3 +8893,16 @@ test-cycle-shader-camera-environment-set: $(OUT)/reriff-match $(OUT)/shader_came
 
 test-recovered: test-cycle-shader-camera-environment-set
 .PHONY: test-cycle-shader-camera-environment-set
+
+# Reviewed symbolic reference: network-parse-open (assembly evidence only).
+$(OUT)/network_parse_open.bin: native/network_parse_open.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/network_parse_open.o
+	ld -m elf_i386 -Ttext=0x56faa0 -e original_network_parse_open $(OUT)/network_parse_open.o -o $(OUT)/network_parse_open.elf
+	objcopy -O binary --only-section=.text $(OUT)/network_parse_open.elf $@
+
+test-cycle-network-parse-open: $(OUT)/reriff-match $(OUT)/network_parse_open.bin
+	$(OUT)/reriff-match native-check "$(GAME)" network-parse-open $(OUT)/network_parse_open.bin $(OUT)/network-parse-open-comparison.json
+
+test-recovered: test-cycle-network-parse-open
+.PHONY: test-cycle-network-parse-open

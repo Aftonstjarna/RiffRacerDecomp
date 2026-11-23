@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"shader-camera-environment-set",0x180150,379},
+  return {NativeBlock{"network-parse-open",0x16faa0,278},
+                     NativeBlock{"shader-camera-environment-set",0x180150,379},
                      NativeBlock{"shader-material-diffuse-set",0x180ad0,355},
                      NativeBlock{"shader-skin-matrix-array-set",0x180810,301},
                      NativeBlock{"fixed-stride-array-construct",0x42bd0,225},
