@@ -9036,3 +9036,16 @@ test-cycle-decode-worker-name-free: $(OUT)/reriff-match $(OUT)/decode_worker_nam
 
 test-recovered: test-cycle-decode-worker-name-free
 .PHONY: test-cycle-decode-worker-name-free
+
+# Reviewed symbolic reference: decode-worker-record-destroy (assembly evidence only).
+$(OUT)/decode_worker_record_destroy.bin: native/decode_worker_record_destroy.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_worker_record_destroy.o
+	ld -m elf_i386 -Ttext=0x4f8a90 -e original_decode_worker_record_destroy $(OUT)/decode_worker_record_destroy.o -o $(OUT)/decode_worker_record_destroy.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_worker_record_destroy.elf $@
+
+test-cycle-decode-worker-record-destroy: $(OUT)/reriff-match $(OUT)/decode_worker_record_destroy.bin
+	$(OUT)/reriff-match native-check "$(GAME)" decode-worker-record-destroy $(OUT)/decode_worker_record_destroy.bin $(OUT)/decode-worker-record-destroy-comparison.json
+
+test-recovered: test-cycle-decode-worker-record-destroy
+.PHONY: test-cycle-decode-worker-record-destroy
