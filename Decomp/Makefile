@@ -8984,3 +8984,16 @@ test-cycle-fast-vector-length-guard: $(OUT)/reriff-match $(OUT)/fast_vector_leng
 
 test-recovered: test-cycle-fast-vector-length-guard
 .PHONY: test-cycle-fast-vector-length-guard
+
+# Reviewed symbolic reference: graphics-lock-initialize (assembly evidence only).
+$(OUT)/graphics_lock_initialize.bin: native/graphics_lock_initialize.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/graphics_lock_initialize.o
+	ld -m elf_i386 -Ttext=0x536340 -e original_graphics_lock_initialize $(OUT)/graphics_lock_initialize.o -o $(OUT)/graphics_lock_initialize.elf
+	objcopy -O binary --only-section=.text $(OUT)/graphics_lock_initialize.elf $@
+
+test-cycle-graphics-lock-initialize: $(OUT)/reriff-match $(OUT)/graphics_lock_initialize.bin
+	$(OUT)/reriff-match native-check "$(GAME)" graphics-lock-initialize $(OUT)/graphics_lock_initialize.bin $(OUT)/graphics-lock-initialize-comparison.json
+
+test-recovered: test-cycle-graphics-lock-initialize
+.PHONY: test-cycle-graphics-lock-initialize

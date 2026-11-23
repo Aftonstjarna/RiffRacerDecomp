@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"fast-vector-length-guard",0x161740,101},
+  return {NativeBlock{"graphics-lock-initialize",0x136340,695},
+                     NativeBlock{"fast-vector-length-guard",0x161740,101},
                      NativeBlock{"fast-vector-erase",0x161170,563},
                      NativeBlock{"wide-entry-destroy-elements",0x1620e0,373},
                      NativeBlock{"wide-entry-move-elements",0x162260,168},

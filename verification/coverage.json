@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 155053,
-  "remaining_bytes": 8480339,
-  "verified_percent": 1.7955525354263013,
-  "registered_blocks": 734,
-  "exact_blocks": 734,
+  "verified_bytes": 155748,
+  "remaining_bytes": 8479644,
+  "verified_percent": 1.8036008093205265,
+  "registered_blocks": 735,
+  "exact_blocks": 735,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4754,6 +4754,15 @@
       "byte_equal": true,
       "reference_sha256": "2dbf492affab717e92d84994200f25ab39458cf8d472d73639dbae02ddaee810",
       "candidate_sha256": "2dbf492affab717e92d84994200f25ab39458cf8d472d73639dbae02ddaee810"
+    },
+    {
+      "name": "graphics-lock-initialize",
+      "file_offset": 1267520,
+      "size": 695,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "26870cb33d2b8f23c6b3a0268c8c7ba11f09f3f8cc4344c5a7c2bd8914fa45ce",
+      "candidate_sha256": "26870cb33d2b8f23c6b3a0268c8c7ba11f09f3f8cc4344c5a7c2bd8914fa45ce"
     },
     {
       "name": "pointer-range-has-state-six-or-seven",
