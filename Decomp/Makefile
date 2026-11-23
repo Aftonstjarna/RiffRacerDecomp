@@ -9023,3 +9023,16 @@ test-cycle-worker-thread-create-b: $(OUT)/reriff-match $(OUT)/worker_thread_crea
 
 test-recovered: test-cycle-worker-thread-create-b
 .PHONY: test-cycle-worker-thread-create-b
+
+# Reviewed symbolic reference: decode-worker-name-free (assembly evidence only).
+$(OUT)/decode_worker_name_free.bin: native/decode_worker_name_free.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/decode_worker_name_free.o
+	ld -m elf_i386 -Ttext=0x4f87e0 -e original_decode_worker_name_free $(OUT)/decode_worker_name_free.o -o $(OUT)/decode_worker_name_free.elf
+	objcopy -O binary --only-section=.text $(OUT)/decode_worker_name_free.elf $@
+
+test-cycle-decode-worker-name-free: $(OUT)/reriff-match $(OUT)/decode_worker_name_free.bin
+	$(OUT)/reriff-match native-check "$(GAME)" decode-worker-name-free $(OUT)/decode_worker_name_free.bin $(OUT)/decode-worker-name-free-comparison.json
+
+test-recovered: test-cycle-decode-worker-name-free
+.PHONY: test-cycle-decode-worker-name-free
