@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 155928,
-  "remaining_bytes": 8479464,
-  "verified_percent": 1.8056852543578799,
-  "registered_blocks": 736,
-  "exact_blocks": 736,
+  "verified_bytes": 156170,
+  "remaining_bytes": 8479222,
+  "verified_percent": 1.8084876749080991,
+  "registered_blocks": 737,
+  "exact_blocks": 737,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -5780,6 +5780,15 @@
       "byte_equal": true,
       "reference_sha256": "9d84f1b66356e5889f40de4ba63afd6d8bb3d683079ee3f9ef596127922f0746",
       "candidate_sha256": "9d84f1b66356e5889f40de4ba63afd6d8bb3d683079ee3f9ef596127922f0746"
+    },
+    {
+      "name": "worker-thread-create-b",
+      "file_offset": 1707088,
+      "size": 242,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "3f595174291c24f5fd9039d6ce1d45ccbbe6ff5a523cfc16bbdfb19440386c37",
+      "candidate_sha256": "3f595174291c24f5fd9039d6ce1d45ccbbe6ff5a523cfc16bbdfb19440386c37"
     },
     {
       "name": "record12-capacity-growth",

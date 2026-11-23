@@ -3,7 +3,8 @@
 namespace rr::matching {
 struct NativeBlock { const char *name; uint32_t rva; size_t size; };
 inline std::vector<NativeBlock> nativeBlocks() {
-  return {NativeBlock{"worker-thread-create",0x128120,180},
+  return {NativeBlock{"worker-thread-create-b",0x1a1850,242},
+                     NativeBlock{"worker-thread-create",0x128120,180},
                      NativeBlock{"graphics-lock-initialize",0x136340,695},
                      NativeBlock{"fast-vector-length-guard",0x161740,101},
                      NativeBlock{"fast-vector-erase",0x161170,563},

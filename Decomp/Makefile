@@ -9010,3 +9010,16 @@ test-cycle-worker-thread-create: $(OUT)/reriff-match $(OUT)/worker_thread_create
 
 test-recovered: test-cycle-worker-thread-create
 .PHONY: test-cycle-worker-thread-create
+
+# Reviewed symbolic reference: worker-thread-create-b (assembly evidence only).
+$(OUT)/worker_thread_create_b.bin: native/worker_thread_create_b.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_thread_create_b.o
+	ld -m elf_i386 -Ttext=0x5a1850 -e original_worker_thread_create_b $(OUT)/worker_thread_create_b.o -o $(OUT)/worker_thread_create_b.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_thread_create_b.elf $@
+
+test-cycle-worker-thread-create-b: $(OUT)/reriff-match $(OUT)/worker_thread_create_b.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-thread-create-b $(OUT)/worker_thread_create_b.bin $(OUT)/worker-thread-create-b-comparison.json
+
+test-recovered: test-cycle-worker-thread-create-b
+.PHONY: test-cycle-worker-thread-create-b
