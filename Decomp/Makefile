@@ -8997,3 +8997,16 @@ test-cycle-graphics-lock-initialize: $(OUT)/reriff-match $(OUT)/graphics_lock_in
 
 test-recovered: test-cycle-graphics-lock-initialize
 .PHONY: test-cycle-graphics-lock-initialize
+
+# Reviewed symbolic reference: worker-thread-create (assembly evidence only).
+$(OUT)/worker_thread_create.bin: native/worker_thread_create.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/worker_thread_create.o
+	ld -m elf_i386 -Ttext=0x528120 -e original_worker_thread_create $(OUT)/worker_thread_create.o -o $(OUT)/worker_thread_create.elf
+	objcopy -O binary --only-section=.text $(OUT)/worker_thread_create.elf $@
+
+test-cycle-worker-thread-create: $(OUT)/reriff-match $(OUT)/worker_thread_create.bin
+	$(OUT)/reriff-match native-check "$(GAME)" worker-thread-create $(OUT)/worker_thread_create.bin $(OUT)/worker-thread-create-comparison.json
+
+test-recovered: test-cycle-worker-thread-create
+.PHONY: test-cycle-worker-thread-create

@@ -2,11 +2,11 @@
   "schema": 1,
   "original_sha256": "2d1af8a01ec6b1e3477ff6dbe4a44895828e2ac71449344fec9d7d99e87a58e2",
   "original_size": 8635392,
-  "verified_bytes": 155748,
-  "remaining_bytes": 8479644,
-  "verified_percent": 1.8036008093205265,
-  "registered_blocks": 735,
-  "exact_blocks": 735,
+  "verified_bytes": 155928,
+  "remaining_bytes": 8479464,
+  "verified_percent": 1.8056852543578799,
+  "registered_blocks": 736,
+  "exact_blocks": 736,
   "all_registered_blocks_match": true,
   "whole_executable_compared": false,
   "source_rebuild_verified": false,
@@ -4439,6 +4439,15 @@
       "byte_equal": true,
       "reference_sha256": "2c7891942d0d7d31f5d03a79719eb4f811c5d8589706611baadb225f655212b0",
       "candidate_sha256": "2c7891942d0d7d31f5d03a79719eb4f811c5d8589706611baadb225f655212b0"
+    },
+    {
+      "name": "worker-thread-create",
+      "file_offset": 1209632,
+      "size": 180,
+      "available": true,
+      "byte_equal": true,
+      "reference_sha256": "e362f6017fe575d71ab197617149d35697377d1e24e782084982565acf2bf474",
+      "candidate_sha256": "e362f6017fe575d71ab197617149d35697377d1e24e782084982565acf2bf474"
     },
     {
       "name": "application-worker",
