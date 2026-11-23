@@ -8906,3 +8906,16 @@ test-cycle-network-parse-open: $(OUT)/reriff-match $(OUT)/network_parse_open.bin
 
 test-recovered: test-cycle-network-parse-open
 .PHONY: test-cycle-network-parse-open
+
+# Reviewed symbolic reference: screenshot-capture-write (assembly evidence only).
+$(OUT)/screenshot_capture_write.bin: native/screenshot_capture_write.S
+	mkdir -p $(OUT)
+	as --32 $< -o $(OUT)/screenshot_capture_write.o
+	ld -m elf_i386 -Ttext=0x4a4fb0 -e original_screenshot_capture_write $(OUT)/screenshot_capture_write.o -o $(OUT)/screenshot_capture_write.elf
+	objcopy -O binary --only-section=.text $(OUT)/screenshot_capture_write.elf $@
+
+test-cycle-screenshot-capture-write: $(OUT)/reriff-match $(OUT)/screenshot_capture_write.bin
+	$(OUT)/reriff-match native-check "$(GAME)" screenshot-capture-write $(OUT)/screenshot_capture_write.bin $(OUT)/screenshot-capture-write-comparison.json
+
+test-recovered: test-cycle-screenshot-capture-write
+.PHONY: test-cycle-screenshot-capture-write
